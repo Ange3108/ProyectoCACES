@@ -1,0 +1,283 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Inicio</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand brand-block" href="#">
+                    <span class="brand-icon"><img src="img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-name">CACES</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto nav-center-list">
+                        <li class="nav-item"><a class="nav-link active" href="Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades </a></li>
+                        <li class="nav-item"><a class="nav-link" href="Procedimientos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Citas.html">Citas</a></li>
+                         <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
+                          <li class="nav-item"><a class="nav-link" href="Reportes.html  ">Reportes</a></li>
+                        
+                 
+                    </ul>
+                    <div class="navbar-actions">
+                        <div class="lang-switch" aria-label="Seleccionar idioma">
+                            <button class="lang-btn" type="button">EN</button>
+                            <button class="lang-btn active" type="button">ES</button>
+                        </div>
+                    </div>
+                </div>
+                 <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5">
+
+        <div id="carouselNoticia" class="carousel slide " data-bs-ride="carousel" data-bs-interval="3000">
+            <div class="carousel-inner ">
+                <div class="carousel-item active">
+                    <img src="img/noticia1.png" class="d-block w-100" alt="Noticia 1">
+                </div>
+                <div class="carousel-item">
+                    <img src="img/noticia1.png" class="d-block w-100" alt="Noticia 2">
+                </div>
+                <div class="carousel-item">
+                    <img src="img/noticia1.png" class="d-block w-100" alt="Noticia 3">
+                </div>
+            </div>
+        </div>
+
+        <section class="mt-5">
+            <h3 class="section-title mb-3">Principales especialidades</h3>
+            <div class="row g-3">
+                <div class="col-12 col-md-6 col-xl-3">
+                    <a class="card-link-wrap" href="#traumatologia">
+                        <article class="card info-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <i class="bi bi-bandaid-fill info-icon"></i>
+                                <h5 class="mt-2 mb-1">Traumatología</h5>
+                                <p class="text-muted mb-0">Diagnóstico y tratamiento de lesiones osteomusculares.</p>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <a class="card-link-wrap" href="#colonoscopia">
+                        <article class="card info-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <i class="bi bi-capsule info-icon"></i>
+                                <h5 class="mt-2 mb-1">Colonoscopia</h5>
+                                <p class="text-muted mb-0">Procedimiento de diagnóstico gastrointestinal.</p>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-xl-3">
+                    <a class="card-link-wrap" href="#fisioterapia">
+                        <article class="card info-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <i class="bi bi-person-raised-hand info-icon"></i>
+                                <h5 class="mt-2 mb-1">Fisioterapia</h5>
+                                <p class="text-muted mb-0">Rehabilitación y recuperación funcional.</p>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-5">
+            <h3 class="section-title mb-3">Médicos destacados</h3>
+            <div class="row g-3">
+                <div class="col-12 col-md-6 col-xl-4">
+                    <a class="card-link-wrap" href="#dra-ana-morales">
+                        <article class="card info-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="mb-1">Dra. Ana Morales</h5>
+                                <p class="mb-1">Cardióloga</p>
+                                <small class="text-muted">12 años de experiencia</small>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                    <a class="card-link-wrap" href="#dr-luis-andrade">
+                        <article class="card info-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="mb-1">Dr. Luis Andrade</h5>
+                                <p class="mb-1"></p>
+                                <small class="text-muted">Especialista en cirugía artroscópica</small>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+                <div class="col-12 col-md-6 col-xl-4">
+                    <a class="card-link-wrap" href="#dra-sofia-beltran">
+                        <article class="card info-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+                                <h5 class="mb-1">Dra. Sofía Beltrán</h5>
+                                <p class="mb-1">Neumóloga</p>
+                                <small class="text-muted">Atención respiratoria integral</small>
+                            </div>
+                        </article>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-5">
+            <h3 class="section-title mb-3">Paquetes de turismo médico</h3>
+            <div class="row g-3">
+                <div class="col-12 col-lg-4">
+                    <article class="card info-card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-1">Paquete Evaluación Integral</h5>
+                            <p class="text-muted mb-2">Consulta + exámenes + traslado interno</p>
+                            <span class="badge text-bg-info">3 días</span>
+                              <div class="d-flex justify-content-center mt-3">
+                                <a href="#" class="btn btn-cotizar px-4">Cotizar</a>
+                        </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <article class="card info-card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-1">Paquete Quirúrgico Básico</h5>
+                            <p class="text-muted mb-2">Valoración prequirúrgica + cirugía + control</p>
+                            <span class="badge text-bg-info">5 días</span>
+                              <div class="d-flex justify-content-center mt-3">
+                                <a href="#" class="btn btn-cotizar px-4">Cotizar</a>
+                        </div>
+                        </div>
+                    </article>
+                </div>
+                <div class="col-12 col-lg-4">
+                    <article class="card info-card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+                            <h5 class="mb-1">Paquete Recuperación Premium</h5>
+                            <p class="text-muted mb-2">Cirugía + rehabilitación + hospedaje asistido</p>
+                            <span class="badge text-bg-info">7 días</span>
+                              <div class="d-flex justify-content-center mt-3">
+                                <a href="#" class="btn btn-cotizar px-4">Cotizar</a>
+                        </div>
+                        </div>
+                    </article>
+            
+                </div>
+            </div>
+        </section>
+
+        <section class="mt-4">
+            <div class="card shadow-sm border-0 mb-4">
+                <div class="card-body">
+                    <h4 class="card-title mb-1">Citas de especialidades</h4>
+                    <p class="text-muted mb-3">Citas de hoy</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Especialista</th>
+                                    <th>Paciente</th>
+                                    <th>Hora</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Dra. Ana Morales</td>
+                                    <td>Mariela Perez</td>
+                                    <td>09:00</td>
+                                    <td><span class="badge text-bg-warning">Pendiente</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dr. Luis Andrade</td>
+                                    <td>Carlos Paredes</td>
+                                    <td>10:30</td>
+                                    <td><span class="badge text-bg-primary">En proceso</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dra. Sofía Beltrán</td>
+                                    <td>Elena Quishpe</td>
+                                    <td>12:15</td>
+                                    <td><span class="badge text-bg-danger">Cancelada</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h4 class="card-title mb-1">Procedimientos quirúrgicos</h4>
+                    <p class="text-muted mb-3">Cirugías en proceso</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Especialista</th>
+                                    <th>Paciente</th>
+                                    <th>Procedimiento</th>
+                                    <th>Estado</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Dr. Mateo Herrera</td>
+                                    <td>Gabriela León</td>
+                                    <td>Laparoscopia</td>
+                                    <td><span class="badge text-bg-primary">En proceso</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dra. Camila Torres</td>
+                                    <td>José Mena</td>
+                                    <td>Artroscopia de rodilla</td>
+                                    <td><span class="badge text-bg-warning">Pendiente</span></td>
+                                </tr>
+                                <tr>
+                                    <td>Dr. Diego Paz</td>
+                                    <td>Lucía Romero</td>
+                                    <td>Apendicitis</td>
+                                    <td><span class="badge text-bg-danger">Cancelada</span></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
