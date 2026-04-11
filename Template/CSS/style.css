@@ -137,6 +137,7 @@ body {
     transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 
+
 .card-link-wrap {
     display: block;
     text-decoration: none;
@@ -147,6 +148,8 @@ body {
     transform: translateY(-3px);
     box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12) !important;
 }
+
+
 
 .info-icon {
     font-size: 1.5rem;
@@ -162,10 +165,53 @@ body {
     border: none;
   
 }
+.btn-info {
+    background: #72CEF2;
+    color: #fff;
+    font-weight: 700;
+    border: none;
+}
 
 .btn-cotizar:hover {
     background: #049DD9;
     color: #fff;
+}
+.btn-add {
+    background: #27418C;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 700;
+}
+.btn-add:hover {
+    background: #12364f;
+    color: #fff;
+}
+.btn-doctor {
+    background: #27418C;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 700;
+    border: none;
+}
+
+.top-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.doctor-profile {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+}
+
+.doctor-photo {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid #72CEF2;
 }
 
 @media (max-width: 991.98px) {

@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Usuarios - CACES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand brand-block" href="Inicio.html">
+                    <span class="brand-icon"><img src="img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-name">CACES</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto nav-center-list">
+                        <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Quirurgicos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Citas.html">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="Reportes.html  ">Reportes</a></li>
+                    </ul>
+                    <div class="navbar-actions">
+                        <div class="lang-switch" aria-label="Seleccionar idioma">
+                            <button class="lang-btn" type="button">EN</button>
+                            <button class="lang-btn active" type="button">ES</button>
+                        </div>
+                    </div>
+                </div>
+                <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5">
+        <div class="top-action">
+            <a class="btn btn-add" href="#">+ Registrar Usuario</a>
+        </div>
+        <section class="mt-4">  
+        
+            <div class="row g-4">
+                <!-- Aquí se agregarán la tabla de usuarios -->
+                  <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h4 class="card-title mb-1">Listado de Usuarios</h4>
+                    <p class="text-muted mb-3">Gestión de usuarios del sistema</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Correo Electrónico</th>
+                                    <th>Rol</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mateo Herrera</td>
+                                    <td>mateo.herrera@example.com</td>
+                                    <td>Administrador</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning m-0"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-danger m-0"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Camila Torres</td>
+                                    <td>camila.torres@example.com</td>
+                                    <td>Medico</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning m-0"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-danger m-0"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Diego Paz</td>
+                                    <td>diego.paz@example.com</td>
+                                    <td>Paciente</td>
+                                    <td>
+                                        <p>Acciones no disponibles</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+            </div>
+        </section>
+    </main>
+
+     <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
