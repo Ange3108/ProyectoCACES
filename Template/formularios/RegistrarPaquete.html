@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registrar Paquete - CACES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+
+<header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand brand-block" href="../Inicio.html">
+                    <span class="brand-icon"><img src="../img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-name">CACES</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto nav-center-list">
+                        <li class="nav-item"><a class="nav-link " href="../Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Especialidades.html">Especialidades </a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Procedimientos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Especialistas.html">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Citas.html">Citas</a></li>
+                         <li class="nav-item"><a class="nav-link active" href="../Turismo.html">Turismo Médico</a></li>
+                          <li class="nav-item"><a class="nav-link" href="../reportes.html">Reportes</a></li>
+                        
+                 
+                    </ul>
+                    <div class="navbar-actions">
+                        <div class="lang-switch" aria-label="Seleccionar idioma">
+                            <button class="lang-btn" type="button">EN</button>
+                            <button class="lang-btn active" type="button">ES</button>
+                        </div>
+                    </div>
+                </div>
+                 <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+
+
+<body data-base="../" data-page="turismo">
+	<main class="container py-5">
+		<section class="form-shell">
+			<div class="top-action mb-3">
+				<a class="btn btn-add" href="../Turismo.html">Volver al listado</a>
+			</div>
+			<div class="card form-card shadow-sm">
+				<div class="card-body p-4 p-md-5">
+					<h1 class="section-title mb-3">Registrar Paquete de Turismo Médico</h1>
+					<p class="text-muted mb-4">Crea paquetes para el módulo de turismo médico.</p>
+					<form>
+						<div class="row g-3">
+							<div class="col-12 col-md-6">
+								<label for="nombrePaquete" class="form-label">Nombre del paquete</label>
+								<input type="text" class="form-control" id="nombrePaquete" placeholder="Ej. Evaluación Integral" required>
+							</div>
+							<div class="col-12 col-md-3">
+								<label for="precioPaquete" class="form-label">Precio</label>
+								<input type="text" class="form-control" id="precioPaquete" placeholder="USD 480" required>
+							</div>
+							<div class="col-12 col-md-3">
+								<label for="duracionPaquete" class="form-label">Duración</label>
+								<input type="text" class="form-control" id="duracionPaquete" placeholder="3 días" required>
+							</div>
+							<div class="col-12">
+								<label for="descripcionPaquete" class="form-label">Descripción</label>
+								<textarea class="form-control" id="descripcionPaquete" rows="4" placeholder="Incluye consulta, exámenes, traslado, etc." required></textarea>
+							</div>
+						</div>
+						<div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+							<button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+							<button type="submit" class="btn btn-add">Guardar paquete</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</main>
+
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>
