@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Endoscopia - CACES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="../CSS/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand brand-block" href="Inicio.html">
+                    <span class="brand-icon"><img src="../img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-name">CACES</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto nav-center-list">
+                        <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="#">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="Turismo.html">Turismo Médico</a></li>
+                    </ul>
+                    <div class="navbar-actions">
+                        <div class="lang-switch" aria-label="Seleccionar idioma">
+                            <button class="lang-btn" type="button">EN</button>
+                            <button class="lang-btn active" type="button">ES</button>
+                        </div>
+                    </div>
+                </div>
+                <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5">
+        <section class="mt-4">
+            <h1 class="section-title">Endoscopia</h1>
+            <p class="text-muted mb-4">
+                Reservar procedimiento de endoscopia
+            </p>
+
+            <form action="">
+                <div class="d-flex justify-content-center mt-3">
+                    <div class="col-12 col-md-12 col-lg-10">
+                        <article class="card info-card border-0 shadow-lg">
+                            <div class="card-body p-4">
+
+                                <h3>1. Datos del Paciente</h3>
+
+                                <div class="form-group">
+                                    <label for="nombre">Nombre Completo</label>
+                                    <input type="text" id="nombre" class="form-control" name="nombre" required
+                                        placeholder="Ej. Juan Pérez">
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="telefono">Teléfono</label>
+                                        <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <label for="email">Correo Electrónico</label>
+                                        <input type="email" class="form-control" id="email" name="email" required>
+                                    </div>
+                                </div>
+
+                                <h3 class="mt-4">2. Detalles del Estudio</h3>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="zona_cuerpo">Tipo de Procedimiento</label>
+                                        <select id="zona_cuerpo" class="form-select" name="tipo_estudio">
+                                            <option value="gastroscopia">Gastroscopia (Endoscopia Digestiva Alta)
+                                            </option>
+                                            <option value="colonoscopia">Colonoscopia (Endoscopia Digestiva Baja)
+                                            </option>
+                                            <option value="ambos">Ambos (Panendoscopia + Colonoscopia)</option>
+                                            <option value="cpre">CPRE (Vías Biliares)</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group mt-3">
+                                        <label for="medico_remitente">Médico que solicita el estudio</label>
+                                        <input type="text" id="medico_remitente" class="form-control" name="medico_remitente"
+                                            placeholder="Nombre del Gastroenterólogo o Cirujano">
+                                    </div>
+                                </div>
+
+                                <h3 class="mt-4">3. Evaluación de Riesgo y Sedación</h3>
+                                <div class="row">
+                                    <div class="form-group">
+                                        <label for="peso">Peso (kg)</label>
+                                        <input type="number" id="peso" name="peso" step="0.1" class="form-control"
+                                            required>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="mt-4">¿Consume alguno de estos medicamentos?</label>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="anticoagulante" name="meds"
+                                            value="anticoagulante">
+                                        <label class="form-check-label" for="anticoagulante">Anticoagulantes (Aspirina,
+                                            Warfarina, Clopidogrel, etc.)</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="diabetes" name="meds"
+                                            value="insulina">
+                                        <label class="form-check-label" for="diabetes">Insulina o medicamentos para
+                                            Diabetes</label>
+                                    </div>
+
+                                    <div class="form-group mt-3">
+                                        <label for="alergias">Alergias Conocidas</label>
+                                        <input class="form-control" type="text" id="alergias" name="alergias"
+                                            placeholder="Medicamentos, látex, alimentos (huevo/soja)">
+                                    </div>
+
+                                    <h3 class="mt-4">4. Requisitos para el Día del Estudio</h3>
+                                    <div class="form-group">
+                                        <label for="fecha_hora">Fecha y Hora Propuesta</label>
+                                        <input type="datetime-local" id="fecha_hora" name="fecha_hora"
+                                            class="form-control" required>
+                                    </div>
+
+                                    <div class="alert-box mt-3">
+                                        <strong>Importante:</strong> Para procedimientos con sedación, es
+                                        <u>obligatorio</u> venir acompañado de un adulto responsable.
+                                    </div>
+
+                                </div>
+
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="terminos" name="terminos"
+                                        required>
+                                    <label class="form-check-label small" for="terminos">
+                                        Confirmo que contaré con un acompañante para mi retiro de la clínica.
+                                    </label>
+                                </div>
+
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="terminos" name="terminos"
+                                        required>
+                                    <label class="form-check-label small" for="terminos">
+                                        Comprendo que debo cumplir con 8-12 horas de ayuno absoluto.
+                                    </label>
+                                </div>
+
+                                <div class="form-check mt-3">
+                                    <input class="form-check-input" type="checkbox" id="terminos" name="terminos"
+                                        required>
+                                    <label class="form-check-label small" for="terminos">
+                                        Acepto las políticas de cancelación y privacidad.
+                                    </label>
+                                </div>
+
+                                <button class="btn btn-cotizar mt-4">
+                                    Guardar y Agendar
+                                </button>
+
+                            </div>
+                        </article>
+                    </div>
+                </div>
+            </form>
+
+        </section>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

@@ -230,7 +230,83 @@ body {
         border-radius: 12px;
         padding: 0.7rem 0.9rem;
     }
+
 }
+      
+/* ESTILOS GENERALES PARA FORMULARIOS */
+
+/* Card del formulario */
+.info-card {
+    background: var(--glass-bg);
+    border-radius: 18px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.05);
+}
+
+/* Títulos del form */
+.card-body h3 {
+    color: #27418C;
+    font-weight: 700;
+    margin-bottom: 15px;
+    margin-top: 30px;
+}
+
+/* Labels */
+.form-group label {
+    color: #12364f;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+/* Inputs, selects y textarea */
+.form-control,
+.form-select {
+    border-radius: 10px;
+    border: 1px solid #d9e2ec;
+    padding: 10px;
+    background-color: #fff;
+    transition: all 0.25s ease;
+}
+
+/* Efecto focus con tu azul */
+.form-control:focus,
+.form-select:focus {
+    border-color: #72CEF2;
+    box-shadow: 0 0 0 3px rgba(114, 206, 242, 0.25);
+}
+
+/* Placeholder más suave */
+::placeholder {
+    color: #9aa5b1;
+}
+
+/* Espaciado uniforme */
+.form-group {
+    margin-bottom: 30px;
+}
+
+/* Checkboxes */
+.form-check-input {
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.form-check-input:checked {
+    background-color: #049DD9;
+    border-color: #049DD9;
+}
+
+.form-check-label {
+    color: #12364f;
+}
+
+
+/* Animación suave del card */
+.info-card:hover {
+    transform: translateY(-2px);
+}
+
+
+
 
 
     
