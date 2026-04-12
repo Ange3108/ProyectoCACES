@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Soporte y Contacto | CACES</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg custom-navbar px-3 py-2">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand brand-block" href="#">
+                <span class="brand-icon">
+                    <img src="img/logo.jpg" alt="Logo CACES">
+                </span>
+                <span class="brand-name">CACES</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCaces">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCaces">
+                <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-lg-center gap-lg-3">
+                    <li class="nav-item">
+                        <a class="nav-link" href="Login.html">Login</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="SoporteContacto.html">Soporte</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="GestionCitas.html">Citas</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="AgendaMedica.html">Agenda</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="page-title">Soporte y contacto</h1>
+            <p class="page-subtitle">Estamos para ayudarle. Complete el formulario o utilice nuestros canales de atención.</p>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-7">
+                <div class="info-card p-4 h-100">
+                    <div class="card-body">
+                        <h3>Formulario de contacto</h3>
+
+                        <form>
+                            <div class="form-group">
+                                <label for="nombre">Nombre completo</label>
+                                <input type="text" class="form-control" id="nombre" placeholder="Ingrese su nombre completo">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="correo">Correo electrónico</label>
+                                <input type="email" class="form-control" id="correo" placeholder="Ingrese su correo electrónico">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="asunto">Asunto</label>
+                                <input type="text" class="form-control" id="asunto" placeholder="Ingrese el asunto">
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mensaje">Mensaje</label>
+                                <textarea class="form-control" id="mensaje" rows="5" placeholder="Escriba su mensaje"></textarea>
+                            </div>
+
+                            <div class="d-grid">
+                                <button type="button" class="btn btn-main">Enviar solicitud</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-lg-5">
+                <div class="row g-4">
+                    <div class="col-12">
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="bi bi-telephone-fill"></i>
+                            </div>
+                            <h5 class="fw-bold" style="color:#27418C;">Teléfono</h5>
+                            <p class="mb-0 text-secondary">+506 2222-3344</p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="bi bi-envelope-fill"></i>
+                            </div>
+                            <h5 class="fw-bold" style="color:#27418C;">Correo</h5>
+                            <p class="mb-0 text-secondary">soporte@caces.com</p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="bi bi-clock-fill"></i>
+                            </div>
+                            <h5 class="fw-bold" style="color:#27418C;">Horario de atención</h5>
+                            <p class="mb-0 text-secondary">Lunes a viernes de 7:00 a.m. a 5:00 p.m.</p>
+                        </div>
+                    </div>
+
+                    <div class="col-12">
+                        <div class="contact-card">
+                            <div class="contact-icon">
+                                <i class="bi bi-geo-alt-fill"></i>
+                            </div>
+                            <h5 class="fw-bold" style="color:#27418C;">Ubicación</h5>
+                            <p class="mb-0 text-secondary">Centro Ambulatorio de Cirugía Escalón</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

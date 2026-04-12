@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Médica | CACES</title>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+</head>
+<body>
+
+    <nav class="navbar navbar-expand-lg custom-navbar px-3 py-2">
+        <div class="container-fluid px-4">
+            <a class="navbar-brand brand-block" href="#">
+                <span class="brand-icon">
+                    <img src="img/logo.jpg" alt="Logo CACES">
+                </span>
+                <span class="brand-name">CACES</span>
+            </a>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCaces">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarCaces">
+                <ul class="navbar-nav ms-auto gap-3">
+                    <li><a class="nav-link" href="Login.html">Login</a></li>
+                    <li><a class="nav-link" href="GestionCitas.html">Citas</a></li>
+                    <li><a class="nav-link active" href="AgendaMedica.html">Agenda</a></li>
+                    <li><a class="nav-link" href="SoporteContacto.html">Soporte</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <section class="container py-5">
+        <div class="text-center mb-5">
+            <h1 class="page-title">Agenda médica</h1>
+            <p class="page-subtitle">Consulte la programación de citas médicas por profesional y fecha.</p>
+        </div>
+
+        <div class="info-card p-4 mb-5">
+            <h3>Filtros de agenda</h3>
+
+            <div class="row">
+                <div class="col-md-6 form-group">
+                    <label for="medico">Médico</label>
+                    <select class="form-select" id="medico">
+                        <option selected>Seleccione un médico</option>
+                        <option>Dr. Carlos Méndez</option>
+                        <option>Dra. Laura Fernández</option>
+                        <option>Dr. José Ramírez</option>
+                    </select>
+                </div>
+
+                <div class="col-md-6 form-group">
+                    <label for="fecha">Fecha</label>
+                    <input type="date" class="form-control" id="fecha">
+                </div>
+            </div>
+        </div>
+
+        <div class="row g-4">
+            <div class="col-lg-4">
+                <div class="schedule-card">
+                    <div class="schedule-time">08:00 AM</div>
+                    <div class="schedule-patient">Paciente: María López</div>
+                    <div class="schedule-detail">Especialidad: Cardiología</div>
+                    <div class="schedule-detail">Motivo: Control general</div>
+                    <span class="status-badge status-confirmada mt-2 d-inline-block">Confirmada</span>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="schedule-card">
+                    <div class="schedule-time">10:00 AM</div>
+                    <div class="schedule-patient">Paciente: Juan Gómez</div>
+                    <div class="schedule-detail">Especialidad: Fisioterapia</div>
+                    <div class="schedule-detail">Motivo: Seguimiento terapéutico</div>
+                    <span class="status-badge status-pendiente mt-2 d-inline-block">Pendiente</span>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="schedule-card">
+                    <div class="schedule-time">01:30 PM</div>
+                    <div class="schedule-patient">Paciente: Ana Castillo</div>
+                    <div class="schedule-detail">Especialidad: Radiología</div>
+                    <div class="schedule-detail">Motivo: Evaluación diagnóstica</div>
+                    <span class="status-badge status-cancelada mt-2 d-inline-block">Cancelada</span>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="schedule-card">
+                    <div class="schedule-time">03:00 PM</div>
+                    <div class="schedule-patient">Paciente: Sofía Herrera</div>
+                    <div class="schedule-detail">Especialidad: Medicina General</div>
+                    <div class="schedule-detail">Motivo: Revisión médica</div>
+                    <span class="status-badge status-confirmada mt-2 d-inline-block">Confirmada</span>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="schedule-card">
+                    <div class="schedule-time">04:30 PM</div>
+                    <div class="schedule-patient">Paciente: Daniel Vargas</div>
+                    <div class="schedule-detail">Especialidad: Ortopedia</div>
+                    <div class="schedule-detail">Motivo: Consulta de valoración</div>
+                    <span class="status-badge status-pendiente mt-2 d-inline-block">Pendiente</span>
+                </div>
+            </div>
+
+            <div class="col-lg-4">
+                <div class="schedule-card">
+                    <div class="schedule-time">05:30 PM</div>
+                    <div class="schedule-patient">Paciente: Elena Rojas</div>
+                    <div class="schedule-detail">Especialidad: Ginecología</div>
+                    <div class="schedule-detail">Motivo: Consulta de control</div>
+                    <span class="status-badge status-confirmada mt-2 d-inline-block">Confirmada</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
