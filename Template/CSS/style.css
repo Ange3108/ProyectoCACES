@@ -158,6 +158,22 @@ body {
     background: #049DD9;
 }
 
+.cotizar-banner {
+    background:
+        linear-gradient(rgba(14, 36, 78, 0.58), rgba(14, 36, 78, 0.58)),
+        url("../img/pasilloCaces.jpg");
+    background-size: cover;
+    background-position: center;
+    border-radius: 18px;
+    padding: 3rem 2rem;
+}
+
+.cotizar-banner h4 {
+    margin: 0;
+    color: #f8fbff;
+    font-weight: 700;
+}
+
 .btn-info {
     background: #72CEF2;
     color: #fff;
