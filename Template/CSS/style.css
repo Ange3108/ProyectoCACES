@@ -344,6 +344,59 @@ body {
     color: #12364f;
 }
 
+.section-title {
+    color: #27418C;
+    font-weight: 700;
+}
+
+.specialty-card {
+    border-radius: 16px;
+    background: #fff;
+}
+
+.specialty-card .card-body {
+    padding: 1.1rem;
+}
+
+.btn-doctor {
+    background: #27418C;
+    color: #fff;
+    border-radius: 10px;
+    font-weight: 700;
+    padding: 10px 18px;
+    border: none;
+}
+ 
+.top-action {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.doctor-profile {
+    display: flex;
+    align-items: flex-start;
+    gap: 0.9rem;
+}
+
+.doctor-photo {
+    width: 84px;
+    height: 84px;
+    border-radius: 50%;
+    object-fit: cover;
+    flex-shrink: 0;
+    border: 2px solid #72CEF2;
+}
+
+@media (max-width: 991.98px) {
+
+    .navbar-toggler {
+        margin-left: auto;
+    }
+}
+
+
+
+
 
 
 @media (max-width: 991px) {
