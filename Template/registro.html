@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Agenda Médica</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand brand-block" href="#">
+                    <span class="brand-icon"><img src="img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-name">CACES</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto nav-center-list">
+                        <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Procedimientos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="GestionCitas.html">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reportes.html">Reportes</a></li>
+                    </ul>
+
+                    <div class="navbar-actions">
+                        <div class="lang-switch" aria-label="Seleccionar idioma">
+                            <button class="lang-btn" type="button">EN</button>
+                            <button class="lang-btn active" type="button">ES</button>
+                        </div>
+                    </div>
+                </div>
+                <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<title>Registro</title>
+<link rel="stylesheet" href="CSS/estilos.css">
+
+<style>
+.section {
+    margin-top: 25px;
+}
+
+.section h3 {
+    border-bottom: 2px solid #5fa8c7;
+    padding-bottom: 5px;
+    margin-bottom: 15px;
+}
+
+.row {
+    display: flex;
+    gap: 20px;
+}
+
+.row div {
+    flex: 1;
+}
+
+small {
+    color: gray;
+}
+
+.terms {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+</style>
+
+</head>
+
+<body>
+
+<!-- NAVBAR -->
+<div class="navbar">
+    <h2>CACES</h2>
+    <div>
+        <a href="#">Inicio</a>
+        <a href="#">Especialidades</a>
+        <a href="#">Especialistas</a>
+        <a href="#">Citas</a>
+        <a href="#">Reportes</a>
+    </div>
+</div>
+
+<div class="container">
+    <h1>Registro de Usuario</h1>
+
+    <div class="card">
+
+        <!-- DATOS PERSONALES -->
+        <div class="section">
+            <h3>👤 Datos Personales</h3>
+
+            <div class="row">
+                <div>
+                    <label>Nombre</label>
+                    <input type="text" placeholder="Juan">
+                </div>
+
+                <div>
+                    <label>Apellido</label>
+                    <input type="text" placeholder="Pérez">
+                </div>
+            </div>
+
+            <br>
+
+            <div class="row">
+                <div>
+                    <label>Correo</label>
+                    <input type="email" placeholder="correo@email.com">
+                </div>
+
+                <div>
+                    <label>Teléfono</label>
+                    <input type="text" placeholder="8888-8888">
+                </div>
+            </div>
+        </div>
+
+        <!-- SEGURIDAD -->
+        <div class="section">
+            <h3>🔒 Seguridad</h3>
+
+            <div class="row">
+                <div>
+                    <label>Contraseña</label>
+                    <input type="password">
+                    <small>Mínimo 8 caracteres</small>
+                </div>
+
+                <div>
+                    <label>Confirmar contraseña</label>
+                    <input type="password">
+                </div>
+            </div>
+        </div>
+
+        <!-- DATOS MÉDICOS -->
+        <div class="section">
+            <h3>🩺 Información Médica</h3>
+
+            <div class="row">
+                <div>
+                    <label>Tipo de sangre</label>
+                    <select>
+                        <option>Seleccione</option>
+                        <option>O+</option>
+                        <option>A+</option>
+                        <option>B+</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label>Alergias</label>
+                    <input type="text" placeholder="Ninguna">
+                </div>
+            </div>
+
+            <br>
+
+            <label>Enfermedades previas</label>
+            <input type="text" placeholder="Asma, diabetes, etc.">
+        </div>
+
+        <!-- TÉRMINOS -->
+        <div class="section">
+            <h3>📄 Términos y Condiciones</h3>
+
+            <div class="terms">
+                <input type="checkbox">
+                <label>Acepto los términos y condiciones</label>
+            </div>
+        </div>
+
+        <!-- BOTONES -->
+        <br>
+        <button style="width:100%;">📝 Registrarse</button>
+
+        <br><br>
+        <p style="text-align:center;">
+            ¿Ya tienes cuenta? <a href="Login.html">Iniciar sesión</a>
+        </p>
+
+    </div>
+</div>
+
+</body>
+</html>
