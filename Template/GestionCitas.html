@@ -1,16 +1,30 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gestión de Citas | CACES</title>
+    <title>Gestión de Citas Médicas</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
-<body>
 
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand brand-block" href="#">
+                    <span class="brand-icon"><img src="img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-name">CACES</span>
+                </a>
+
+<<<<<<< HEAD
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg custom-navbar px-3 py-2">
         <div class="container-fluid px-4">
@@ -20,141 +34,153 @@
                 </span>
                 <span class="brand-name">CACES</span>
             </a>
+=======
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+>>>>>>> 139067b160834be54e9601dbcbac321d734325b5
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCaces">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto nav-center-list">
+                        <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Procedimientos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="GestionCitas.html">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reportes.html">Reportes</a></li>
+                    </ul>
 
-            <div class="collapse navbar-collapse" id="navbarCaces">
-                <ul class="navbar-nav ms-auto gap-3">
-                    <li><a class="nav-link" href="Login.html">Login</a></li>
-                    <li><a class="nav-link active" href="GestionCitas.html">Citas</a></li>
-                    <li><a class="nav-link" href="AgendaMedica.html">Agenda</a></li>
-                    <li><a class="nav-link" href="SoporteContacto.html">Soporte</a></li>
-                </ul>
+                    <div class="navbar-actions">
+                        <div class="lang-switch" aria-label="Seleccionar idioma">
+                            <button class="lang-btn" type="button">EN</button>
+                            <button class="lang-btn active" type="button">ES</button>
+                        </div>
+                    </div>
+                </div>
+                <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
             </div>
-        </div>
-    </nav>
+        </nav>
+    </header>
 
-    <!-- CONTENIDO -->
-    <section class="container py-5">
-
-        <h1 class="page-title text-center">Gestión de citas médicas</h1>
-        <p class="page-subtitle text-center mb-5">
-            Administre las citas de los pacientes de manera rápida y organizada
-        </p>
-
-        <!-- FORMULARIO -->
-        <div class="info-card p-4 mb-5">
-            <h3>Nueva cita</h3>
-
-            <div class="row">
-
-                <div class="col-md-6 form-group">
-                    <label>Paciente</label>
-                    <input type="text" class="form-control" placeholder="Nombre del paciente">
-                </div>
-
-                <div class="col-md-6 form-group">
-                    <label>Médico</label>
-                    <input type="text" class="form-control" placeholder="Nombre del médico">
-                </div>
-
-                <div class="col-md-6 form-group">
-                    <label>Especialidad</label>
-                    <select class="form-select">
-                        <option>Seleccione una especialidad</option>
-                        <option>Cardiología</option>
-                        <option>Fisioterapia</option>
-                        <option>Radiología</option>
-                    </select>
-                </div>
-
-                <div class="col-md-3 form-group">
-                    <label>Fecha</label>
-                    <input type="date" class="form-control">
-                </div>
-
-                <div class="col-md-3 form-group">
-                    <label>Hora</label>
-                    <input type="time" class="form-control">
-                </div>
-
-                <div class="col-md-12 form-group">
-                    <label>Motivo</label>
-                    <textarea class="form-control" rows="3" placeholder="Motivo de la cita"></textarea>
-                </div>
-
-            </div>
-
-            <div class="d-flex justify-content-end">
-                <button class="btn btn-main">Guardar cita</button>
-            </div>
+    <main class="container py-5">
+        <div class="text-center mb-5">
+            <h3>Gestión de citas médicas</h3>
+            <p class="text-muted">Administre las citas de los pacientes de manera rápida y organizada.</p>
         </div>
 
-        <!-- TABLA -->
-        <div class="table-card">
-            <h3 class="mb-4">Listado de citas</h3>
+        <div class="card info-card border-0 shadow-sm mb-5">
+            <div class="card-body p-4">
+                <h3>Nueva cita</h3>
 
-            <table class="table custom-table">
-                <thead>
-                    <tr>
-                        <th>Paciente</th>
-                        <th>Médico</th>
-                        <th>Especialidad</th>
-                        <th>Fecha</th>
-                        <th>Hora</th>
-                        <th>Estado</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>Paciente</label>
+                        <input type="text" class="form-control" placeholder="Nombre del paciente">
+                    </div>
 
-                <tbody>
-                    <tr>
-                        <td>María López</td>
-                        <td>Dr. Pérez</td>
-                        <td>Cardiología</td>
-                        <td>10/04/2026</td>
-                        <td>09:00 AM</td>
-                        <td><span class="status-badge status-pendiente">Pendiente</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-info">Editar</button>
-                            <button class="btn btn-sm btn-add">Cancelar</button>
-                        </td>
-                    </tr>
+                    <div class="col-md-6 form-group">
+                        <label>Médico</label>
+                        <input type="text" class="form-control" placeholder="Nombre del médico">
+                    </div>
 
-                    <tr>
-                        <td>Juan Gómez</td>
-                        <td>Dra. Rodríguez</td>
-                        <td>Fisioterapia</td>
-                        <td>11/04/2026</td>
-                        <td>11:00 AM</td>
-                        <td><span class="status-badge status-confirmada">Confirmada</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-info">Editar</button>
-                            <button class="btn btn-sm btn-add">Cancelar</button>
-                        </td>
-                    </tr>
+                    <div class="col-md-4 form-group">
+                        <label>Especialidad</label>
+                        <select class="form-select">
+                            <option>Seleccione una especialidad</option>
+                            <option>Cardiología</option>
+                            <option>Fisioterapia</option>
+                            <option>Radiología</option>
+                            <option>Neumología</option>
+                        </select>
+                    </div>
 
-                    <tr>
-                        <td>Ana Castillo</td>
-                        <td>Dr. Mora</td>
-                        <td>Radiología</td>
-                        <td>12/04/2026</td>
-                        <td>02:00 PM</td>
-                        <td><span class="status-badge status-cancelada">Cancelada</span></td>
-                        <td>
-                            <button class="btn btn-sm btn-info">Editar</button>
-                            <button class="btn btn-sm btn-add">Eliminar</button>
-                        </td>
-                    </tr>
-                </tbody>
+                    <div class="col-md-4 form-group">
+                        <label>Fecha</label>
+                        <input type="date" class="form-control">
+                    </div>
 
-            </table>
+                    <div class="col-md-4 form-group">
+                        <label>Hora</label>
+                        <input type="time" class="form-control">
+                    </div>
+
+                    <div class="col-12 form-group">
+                        <label>Motivo de la cita</label>
+                        <textarea class="form-control" rows="3" placeholder="Describa el motivo de la cita"></textarea>
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-end">
+                    <button type="button" class="btn btn-add px-4">Guardar cita</button>
+                </div>
+            </div>
         </div>
 
-    </section>
+        <div class="card shadow-sm border-0">
+            <div class="card-body">
+                <h4 class="card-title mb-1">Listado de citas</h4>
+                <p class="text-muted mb-3">Citas registradas</p>
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle mb-0">
+                        <thead>
+                            <tr>
+                                <th>Paciente</th>
+                                <th>Médico</th>
+                                <th>Especialidad</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>María López</td>
+                                <td>Dra. Ana Morales</td>
+                                <td>Cardiología</td>
+                                <td>15/04/2026</td>
+                                <td>09:00</td>
+                                <td><span class="badge text-bg-warning">Pendiente</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info">Editar</button>
+                                    <button class="btn btn-sm btn-add">Cancelar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Juan Gómez</td>
+                                <td>Dr. Luis Andrade</td>
+                                <td>Traumatología</td>
+                                <td>15/04/2026</td>
+                                <td>10:30</td>
+                                <td><span class="badge text-bg-primary">En proceso</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info">Editar</button>
+                                    <button class="btn btn-sm btn-add">Cancelar</button>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Ana Castillo</td>
+                                <td>Dra. Sofía Beltrán</td>
+                                <td>Neumología</td>
+                                <td>16/04/2026</td>
+                                <td>12:00</td>
+                                <td><span class="badge text-bg-danger">Cancelada</span></td>
+                                <td>
+                                    <button class="btn btn-sm btn-info">Editar</button>
+                                    <button class="btn btn-sm btn-add">Eliminar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

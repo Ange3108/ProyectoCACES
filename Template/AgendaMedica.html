@@ -1,130 +1,163 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Agenda Médica | CACES</title>
+    <title>Agenda Médica</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="CSS/style.css">
 </head>
+
 <body>
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand brand-block" href="#">
+                    <span class="brand-icon"><img src="img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-name">CACES</span>
+                </a>
 
-    <nav class="navbar navbar-expand-lg custom-navbar px-3 py-2">
-        <div class="container-fluid px-4">
-            <a class="navbar-brand brand-block" href="#">
-                <span class="brand-icon">
-                    <img src="img/logo.jpg" alt="Logo CACES">
-                </span>
-                <span class="brand-name">CACES</span>
-            </a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCaces">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto nav-center-list">
+                        <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Procedimientos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="GestionCitas.html">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reportes.html">Reportes</a></li>
+                    </ul>
 
-            <div class="collapse navbar-collapse" id="navbarCaces">
-                <ul class="navbar-nav ms-auto gap-3">
-                    <li><a class="nav-link" href="Login.html">Login</a></li>
-                    <li><a class="nav-link" href="GestionCitas.html">Citas</a></li>
-                    <li><a class="nav-link active" href="AgendaMedica.html">Agenda</a></li>
-                    <li><a class="nav-link" href="SoporteContacto.html">Soporte</a></li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
-    <section class="container py-5">
-        <div class="text-center mb-5">
-            <h1 class="page-title">Agenda médica</h1>
-            <p class="page-subtitle">Consulte la programación de citas médicas por profesional y fecha.</p>
-        </div>
-
-        <div class="info-card p-4 mb-5">
-            <h3>Filtros de agenda</h3>
-
-            <div class="row">
-                <div class="col-md-6 form-group">
-                    <label for="medico">Médico</label>
-                    <select class="form-select" id="medico">
-                        <option selected>Seleccione un médico</option>
-                        <option>Dr. Carlos Méndez</option>
-                        <option>Dra. Laura Fernández</option>
-                        <option>Dr. José Ramírez</option>
-                    </select>
+                    <div class="navbar-actions">
+                        <div class="lang-switch" aria-label="Seleccionar idioma">
+                            <button class="lang-btn" type="button">EN</button>
+                            <button class="lang-btn active" type="button">ES</button>
+                        </div>
+                    </div>
                 </div>
+                <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
 
-                <div class="col-md-6 form-group">
-                    <label for="fecha">Fecha</label>
-                    <input type="date" class="form-control" id="fecha">
+    <main class="container py-5">
+        <div class="text-center mb-5">
+            <h3>Agenda médica</h3>
+            <p class="text-muted">Consulte la programación de citas por médico y fecha.</p>
+        </div>
+
+        <div class="card info-card border-0 shadow-sm mb-5">
+            <div class="card-body p-4">
+                <h3>Filtros de agenda</h3>
+
+                <div class="row">
+                    <div class="col-md-6 form-group">
+                        <label>Médico</label>
+                        <select class="form-select">
+                            <option>Seleccione un médico</option>
+                            <option>Dra. Ana Morales</option>
+                            <option>Dr. Luis Andrade</option>
+                            <option>Dra. Sofía Beltrán</option>
+                        </select>
+                    </div>
+
+                    <div class="col-md-6 form-group">
+                        <label>Fecha</label>
+                        <input type="date" class="form-control">
+                    </div>
                 </div>
             </div>
         </div>
 
         <div class="row g-4">
-            <div class="col-lg-4">
-                <div class="schedule-card">
-                    <div class="schedule-time">08:00 AM</div>
-                    <div class="schedule-patient">Paciente: María López</div>
-                    <div class="schedule-detail">Especialidad: Cardiología</div>
-                    <div class="schedule-detail">Motivo: Control general</div>
-                    <span class="status-badge status-confirmada mt-2 d-inline-block">Confirmada</span>
+            <div class="col-md-6 col-lg-4">
+                <div class="card info-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="mb-2" style="color:#27418C;">08:00 AM</h5>
+                        <p class="mb-1 fw-bold">Paciente: María López</p>
+                        <p class="mb-1 text-muted">Especialidad: Cardiología</p>
+                        <p class="mb-2 text-muted">Motivo: Control general</p>
+                        <span class="badge text-bg-primary">Confirmada</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="schedule-card">
-                    <div class="schedule-time">10:00 AM</div>
-                    <div class="schedule-patient">Paciente: Juan Gómez</div>
-                    <div class="schedule-detail">Especialidad: Fisioterapia</div>
-                    <div class="schedule-detail">Motivo: Seguimiento terapéutico</div>
-                    <span class="status-badge status-pendiente mt-2 d-inline-block">Pendiente</span>
+            <div class="col-md-6 col-lg-4">
+                <div class="card info-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="mb-2" style="color:#27418C;">10:00 AM</h5>
+                        <p class="mb-1 fw-bold">Paciente: Juan Gómez</p>
+                        <p class="mb-1 text-muted">Especialidad: Fisioterapia</p>
+                        <p class="mb-2 text-muted">Motivo: Seguimiento terapéutico</p>
+                        <span class="badge text-bg-warning">Pendiente</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="schedule-card">
-                    <div class="schedule-time">01:30 PM</div>
-                    <div class="schedule-patient">Paciente: Ana Castillo</div>
-                    <div class="schedule-detail">Especialidad: Radiología</div>
-                    <div class="schedule-detail">Motivo: Evaluación diagnóstica</div>
-                    <span class="status-badge status-cancelada mt-2 d-inline-block">Cancelada</span>
+            <div class="col-md-6 col-lg-4">
+                <div class="card info-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="mb-2" style="color:#27418C;">01:30 PM</h5>
+                        <p class="mb-1 fw-bold">Paciente: Ana Castillo</p>
+                        <p class="mb-1 text-muted">Especialidad: Neumología</p>
+                        <p class="mb-2 text-muted">Motivo: Evaluación respiratoria</p>
+                        <span class="badge text-bg-danger">Cancelada</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="schedule-card">
-                    <div class="schedule-time">03:00 PM</div>
-                    <div class="schedule-patient">Paciente: Sofía Herrera</div>
-                    <div class="schedule-detail">Especialidad: Medicina General</div>
-                    <div class="schedule-detail">Motivo: Revisión médica</div>
-                    <span class="status-badge status-confirmada mt-2 d-inline-block">Confirmada</span>
+            <div class="col-md-6 col-lg-4">
+                <div class="card info-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="mb-2" style="color:#27418C;">03:00 PM</h5>
+                        <p class="mb-1 fw-bold">Paciente: Sofía Herrera</p>
+                        <p class="mb-1 text-muted">Especialidad: Medicina General</p>
+                        <p class="mb-2 text-muted">Motivo: Revisión médica</p>
+                        <span class="badge text-bg-primary">Confirmada</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="schedule-card">
-                    <div class="schedule-time">04:30 PM</div>
-                    <div class="schedule-patient">Paciente: Daniel Vargas</div>
-                    <div class="schedule-detail">Especialidad: Ortopedia</div>
-                    <div class="schedule-detail">Motivo: Consulta de valoración</div>
-                    <span class="status-badge status-pendiente mt-2 d-inline-block">Pendiente</span>
+            <div class="col-md-6 col-lg-4">
+                <div class="card info-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="mb-2" style="color:#27418C;">04:30 PM</h5>
+                        <p class="mb-1 fw-bold">Paciente: Daniel Vargas</p>
+                        <p class="mb-1 text-muted">Especialidad: Traumatología</p>
+                        <p class="mb-2 text-muted">Motivo: Consulta de valoración</p>
+                        <span class="badge text-bg-warning">Pendiente</span>
+                    </div>
                 </div>
             </div>
 
-            <div class="col-lg-4">
-                <div class="schedule-card">
-                    <div class="schedule-time">05:30 PM</div>
-                    <div class="schedule-patient">Paciente: Elena Rojas</div>
-                    <div class="schedule-detail">Especialidad: Ginecología</div>
-                    <div class="schedule-detail">Motivo: Consulta de control</div>
-                    <span class="status-badge status-confirmada mt-2 d-inline-block">Confirmada</span>
+            <div class="col-md-6 col-lg-4">
+                <div class="card info-card border-0 shadow-sm h-100">
+                    <div class="card-body">
+                        <h5 class="mb-2" style="color:#27418C;">05:30 PM</h5>
+                        <p class="mb-1 fw-bold">Paciente: Elena Rojas</p>
+                        <p class="mb-1 text-muted">Especialidad: Ginecología</p>
+                        <p class="mb-2 text-muted">Motivo: Consulta de control</p>
+                        <span class="badge text-bg-primary">Confirmada</span>
+                    </div>
                 </div>
             </div>
         </div>
-    </section>
+    </main>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
