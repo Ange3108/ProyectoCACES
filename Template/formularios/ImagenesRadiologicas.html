@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Endoscopia y Colonoscopia - CACES</title>
+    <title>Endoscopia - CACES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -34,12 +34,14 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto nav-center-list">
-                       <li class="nav-item"><a class="nav-link" href="../Inicio.html">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="../Especialidades.html">Especialidades</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../Quirurgicos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="../Especialidades.html">Especialidades</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../Quirurgicos.html">Procedimientos
+                                Quirúrgicos</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Especialistas.html">Especialistas</a></li>
                         <li class="nav-item"><a class="nav-link" href="../GestionCitas.html">Citas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../Turismo.html">Turismo Médico</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="../Turismo.html">Turismo Médico</a></li>
                     </ul>
                     <div class="navbar-actions">
                         <div class="lang-switch" aria-label="Seleccionar idioma">
@@ -57,9 +59,12 @@
 
     <main class="container py-5">
         <section class="mt-4">
-            <h1 class="section-title">Endoscopia y Colonoscopia</h1>
+            <h1 class="section-title">Radiología</h1>
+            <div class="top-action mb-3">
+                <a class="btn btn-add" href="../verImagenes.html">Consultar imagenes radiologicas</a>
+            </div>
             <p class="text-muted mb-4">
-                Actualizar procedimiento de endoscopia y colonoscopia
+                Subir imagenes radiologicas del paciente.
             </p>
 
             <form action="">
@@ -86,93 +91,101 @@
                                         <label for="email">Correo Electrónico</label>
                                         <input type="email" class="form-control" id="email" name="email" required>
                                     </div>
+
+                                    <div class="row">
+                                        <div class="form-group">
+                                            <label for="peso">Peso (kg)</label>
+                                            <input type="number" id="peso" name="peso" step="0.1" class="form-control"
+                                                required>
+                                        </div>
+                                    </div>
                                 </div>
 
                                 <h3 class="mt-4">2. Detalles del Estudio</h3>
+                                <div class="form-group mt-3">
+                                    <label for="id_estudio">ID del estudio</label>
+                                    <input type="text" id="id_estudio" class="form-control" name="id_estudio"
+                                        placeholder="ID del estudio radiológico">
+                                </div>
 
                                 <div class="row">
                                     <div class="col-md-6 form-group">
-                                        <label for="zona_cuerpo">Tipo de Procedimiento</label>
+                                        <label for="zona_cuerpo">Tipo de estudio</label>
                                         <select id="zona_cuerpo" class="form-select" name="tipo_estudio">
-                                            <option value="gastroscopia">Gastroscopia (Endoscopia Digestiva Alta)
+                                            <option value="gastroscopia">RX: Radiografía convencional.
                                             </option>
-                                            <option value="colonoscopia">Colonoscopia (Endoscopia Digestiva Baja)
+                                            <option value="colonoscopia">TAC / CT: Tomografía Computarizada
                                             </option>
-                                            <option value="ambos">Ambos (Panendoscopia + Colonoscopia)</option>
-                                            <option value="cpre">CPRE (Vías Biliares)</option>
+                                            <option value="ambos">RM / MRI: Resonancia Magnética</option>
+                                            <option value="cpre">US: Ultrasonido / Ecografía</option>
+                                            <option value="cpre">MG: Mastografía</option>
+
                                         </select>
                                     </div>
+
                                     <div class="form-group mt-3">
-                                        <label for="medico_remitente">Médico que solicita el estudio</label>
-                                        <input type="text" id="medico_remitente" class="form-control" name="medico_remitente"
-                                            placeholder="Nombre del Gastroenterólogo o Cirujano">
+                                        <label for="region_anatomica">Región Anatómica</label>
+                                        <input type="text" id="region_anatomica" class="form-control"
+                                            name="region_anatomica"
+                                            placeholder="Región anatómica del estudio (Ej. Tórax, Abdomen, Pelvis, etc.)">
                                     </div>
                                 </div>
 
-                                <h3 class="mt-4">3. Evaluación de Riesgo y Sedación</h3>
-                                <div class="row">
-                                    <div class="form-group">
-                                        <label for="peso">Peso (kg)</label>
-                                        <input type="number" id="peso" name="peso" step="0.1" class="form-control"
-                                            required>
-                                    </div>
+                                <h3 class="mt-4">3. Datos de Adquisición y Seguridad</h3>
+                                <div class="form-group">
+                                    <label>¿Usa Contraste?</label>
+                                    <select name="contraste" class="form-select">
+                                        <option value="no">Sin Contraste</option>
+                                        <option value="si_iv">Contraste IV</option>
+                                        <option value="si_oral">Contraste Oral</option>
+                                    </select>
+                                </div>
+
+                                <div class="form-group">
+                                    <label for="fecha_hora">Fecha y hora del estudio</label>
+                                    <input type="datetime-local" id="fecha_hora" name="fecha_hora" class="form-control"
+                                        required>
                                 </div>
                                 <div class="form-group">
-                                    <label class="mt-4">¿Consume alguno de estos medicamentos?</label>
 
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="anticoagulante" name="meds"
-                                            value="anticoagulante">
-                                        <label class="form-check-label" for="anticoagulante">Anticoagulantes (Aspirina,
-                                            Warfarina, Clopidogrel, etc.)</label>
-                                    </div>
-
-                                    <div class="form-check">
-                                        <input class="form-check-input" type="checkbox" id="diabetes" name="meds"
-                                            value="insulina">
-                                        <label class="form-check-label" for="diabetes">Insulina o medicamentos para
-                                            Diabetes</label>
-                                    </div>
+                                    <h3 class="mt-4">4. Datos Técnicos</h3>
 
                                     <div class="form-group mt-3">
-                                        <label for="alergias">Alergias Conocidas</label>
-                                        <input class="form-control" type="text" id="alergias" name="alergias"
-                                            placeholder="Medicamentos, látex, alimentos (huevo/soja)">
+                                        <label for="medico_radiologo">Médico Radiólogo que realizó o supervisó la
+                                            toma</label>
+                                        <input type="text" id="medico_radiologo" class="form-control"
+                                            name="medico_radiologo" placeholder="Nombre del médico radiólogo">
                                     </div>
-
-                                    <h3 class="mt-4">4. Requisitos para el Día del Estudio</h3>
-                                    <div class="form-group">
-                                        <label for="fecha_hora">Fecha y Hora Propuesta</label>
-                                        <input type="datetime-local" id="fecha_hora" name="fecha_hora"
-                                            class="form-control" required>
+                                    <div class="form-group mt-3">
+                                        <label for="centro_medico">Centro médico donde se realizó el estudio</label>
+                                        <input type="text" id="centro_medico" class="form-control" name="centro_medico"
+                                            placeholder="Nombre del centro médico donde se realizó el estudio">
                                     </div>
-
-                                    <div class="alert-box mt-3">
-                                        <strong>Importante:</strong> Para procedimientos con sedación, es
-                                        <u>obligatorio</u> venir acompañado de un adulto responsable.
+                                    <div class="form-group mt-3">
+                                        <label for="numero_imagenes">Número de Imágenes/Series</label>
+                                        <input type="text" id="numero_imagenes" class="form-control"
+                                            name="numero_imagenes" placeholder="Número de imágenes o series adquiridas">
+                                    </div>
+                                    <div class="drop-zone" onclick="document.getElementById('fileInput').click()">
+                                        <strong>Haga clic o arrastre aquí los archivos DICOM (.dcm)</strong>
+                                        <p>Se permiten archivos individuales o carpetas comprimidas (ZIP).</p>
+                                        <input type="file" id="fileInput" name="imagenes" multiple
+                                            style="display: none;">
                                     </div>
 
                                 </div>
+
 
                                 <div class="form-check mt-3">
                                     <input class="form-check-input" type="checkbox" id="terminos" name="terminos"
                                         required>
                                     <label class="form-check-label small" for="terminos">
-                                        Confirmo que contaré con un acompañante para mi retiro de la clínica.
+                                        Acepto las políticas de cancelación y privacidad.
                                     </label>
                                 </div>
-
-                                <div class="form-check mt-3">
-                                    <input class="form-check-input" type="checkbox" id="terminos" name="terminos"
-                                        required>
-                                    <label class="form-check-label small" for="terminos">
-                                        Comprendo que debo cumplir con 8-12 horas de ayuno absoluto.
-                                    </label>
-                                </div>
-
 
                                 <button class="btn btn-cotizar mt-4">
-                                    Guardar cambios
+                                    Guardar
                                 </button>
 
                             </div>

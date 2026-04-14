@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terapia Respiratoria - CACES</title>
+    <title>ImagenesRadio - CACES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -36,8 +36,7 @@
                     <ul class="navbar-nav mx-auto nav-center-list">
                         <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="Quirurgicos.html">Procedimientos
-                                Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="Quirurgicos.html">Procedimientos Quirúrgicos</a></li>
                         <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
                         <li class="nav-item"><a class="nav-link" href="GestionCitas.html">Citas</a></li>
                         <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
@@ -65,47 +64,32 @@
                 <!-- Aquí se agregarán la tabla de usuarios -->
                 <div class="card shadow-sm border-0">
                     <div class="card-body">
-                        <h4 class="card-title mb-1">Listado de pacientes que tienen sesiones de terapia respiratoria
-                        </h4>
-                        <p class="text-muted mb-3">Gestión de sesiones de terapia respiratoria</p>
+                        <h4 class="card-title mb-1">Listado de imagenes radiológicas del paciente</h4>
+                        <p class="text-muted mb-3">Gestión de imagenes del paciente</p>
                         <div class="table-responsive">
                             <table class="table table-hover align-middle mb-0">
                                 <thead>
                                     <tr>
                                         <th>Nombre</th>
-                                        <th>Fecha de la sesión</th>
-                                        <th>Síntoma</th>
-                                        <th>Duración</th>
-                                        <th>Observaciones</th>
-                                        <th>Estado</th>
+                                        <th>Fecha y hora del estudio</th>
+                                        <th>Médico</th>
+                                        <th>Tipo de estudio</th>
                                         <th>Acciones</th>
                                     </tr>
                                 </thead>
                                 <tbody>
                                     <tr>
-                                        <td>Juan Pérez</td>
-                                        <td>2026-04-15</td>
-                                        <td>Dificultad para respirar</td>
-                                        <td>20 minutos</td>
-                                        <td>Cambios en la intensidad del dolor</td>
-                                        <td>Confirmada</td>
+                                        <td>Juan Perez</td>
+                                        <td>2021-06-15 10:30</td>
+                                        <td>Dr. García</td>
+                                        <td>RX: Radiografía convencional</td>
                                         <td>
-                                            <a class="btn btn-add"
-                                                href="formularios/RegistrarProgresoTerapiaResp.html">Registrar progreso</a>
+                                            <a class="btn btn-sm btn-warning m-0"
+                                                href="formularios/actualizarImagenesRadiologicas.html"><i
+                                                    class="bi bi-pencil"></i></a>
                                             <a class="btn btn-sm btn-danger m-0"><i class="bi bi-trash"></i></a>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Ana García</td>
-                                        <td>2026-04-15</td>
-                                        <td>Ruido al respirar</td>
-                                        <td>25 minutos</td>
-                                        <td>Cambios en la intensidad del dolor</td>
-                                        <td>Sin confirmar</td>
-                                        <td>
-                                            <a class="btn btn-add"
-                                                href="formularios/RegistrarProgresoTerapiaResp.html"><i></i>Registrar progreso</a>
-                                            <a class="btn btn-sm btn-danger m-0"><i class="bi bi-trash"></i></a>
+                                            <a class="btn btn-add" href="consultarImagenes.html">Ver detalles</a>
+
                                         </td>
                                     </tr>
 
