@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terapia Respiratoria - CACES</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+        rel="stylesheet">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="CSS/style.css">
+</head>
+
+<body>
+    <header>
+        <nav class="navbar navbar-expand-lg custom-navbar">
+            <div class="container-fluid px-3 px-lg-4">
+                <a class="navbar-brand brand-block" href="Inicio.html">
+                    <span class="brand-icon"><img src="img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-name">CACES</span>
+                </a>
+
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                    aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav mx-auto nav-center-list">
+                        <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="Especialidades.html">Especialidades</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="Quirurgicos.html">Procedimientos Quirúrgicos</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Citas.html">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reportes.html">Reportes</a></li>
+                    </ul>
+                    <div class="navbar-actions">
+                        <div class="lang-switch" aria-label="Seleccionar idioma">
+                            <button class="lang-btn" type="button">EN</button>
+                            <button class="lang-btn active" type="button">ES</button>
+                        </div>
+                    </div>
+                </div>
+                <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
+            </div>
+        </nav>
+    </header>
+
+    <main class="container py-5">
+        <section class="mt-4">
+            <h1 class="section-title">Terapia Respiratoria</h1>
+            <p class="text-muted">
+                Historial del paciente
+            </p>
+
+            <form action="">
+                <div class="d-flex justify-content-center mt-3">
+                    <div class="col-12 col-md-12 col-lg-10">
+                        <article class="card info-card border-0 shadow-lg">
+                            <div class="card-body p-4">
+
+                                <h3>1. Datos del Paciente</h3>
+
+                                <div class="form-group">
+                                    <label for="nombre">Nombre Completo</label>
+                                    <h6 id="nombre">Juan Pérez</h6>
+                                </div>
+
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="telefono">Teléfono</label>
+                                        <h6>(503) 9876-4567</h6>
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <label for="email">Correo Electrónico</label>
+                                        <h6>juan.perez@example.com</h6>
+                                    </div>
+                                </div>
+
+                                <h3 class="mt-4">2. Estado de salud respiratoria del paciente</h3>
+
+                                <div class="row">
+
+                                    <div class="col-md-6 form-group">
+                                        <label for="diagnostico">Diagnóstico Principal</label>
+                                        <p><span>EPOC</span></p>
+                                    </div>
+
+                                    <div class="col-md-6 form-group">
+                                        <label for="usa_oxigeno">¿Usa Oxígeno?</label>
+                                        <p><span>Sí, permanente</span></p>
+                                    </div>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="saturacion">Saturación habitual (%)</label>
+                                    <p><span>94</span></p>
+                                </div>
+
+                                <h3 class="mt-4">3. Seguridad y Contraindicaciones</h3>
+
+                                <div class="form-group">
+                                    <label for="cirugias">¿Ha tenido cirugías de tórax o abdomen en el último
+                                        mes?</label>
+                                    <p><span>No</span></p>
+                                </div>
+
+                                <div class="form-group mt-3">
+                                    <label for="notas_adic">Notas adicionales / Síntomas actuales</label>
+                                    <p><span>Muchas secreciones, fatiga al caminar</span></p>
+                                </div>
+
+                            </div>
+                            <div>
+                                <a class="btn btn-outline-secondary mb-4" style="margin-left: 20px;" href="sesionesTerapiaRespiratoria.html">
+                                    Volver
+                                </a>
+                            </div>
+                    </div>
+                    </article>
+                </div>
+                </div>
+            </form>
+
+        </section>
+    </main>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+
+</html>

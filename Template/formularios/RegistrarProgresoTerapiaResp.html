@@ -35,8 +35,10 @@
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto nav-center-list">
                         <li class="nav-item"><a class="nav-link" href="../Inicio.html">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="../Especialidades.html">Especialidades</a></li>
-                        <li class="nav-item"><a class="nav-link" href="../ProcedimientosQuirurgicos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="../Especialidades.html">Especialidades</a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="../ProcedimientosQuirurgicos.html">Procedimientos
+                                Quirúrgicos</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Especialistas.html">Especialistas</a></li>
                         <li class="nav-item"><a class="nav-link" href="../GestionCitas.html">Citas</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Turismo.html">Turismo Médico</a></li>
@@ -58,11 +60,11 @@
     <main class="container py-5">
         <section class="mt-4">
             <h1 class="section-title">Terapia Respiratoria</h1>
-               <div class="top-action mb-3">
-				<a class="btn btn-add" href="../sesionesTerapiaRespiratoria.html">Consultar agenda</a>
-			</div> 
-            <p class="text-muted mb-4">
-                Reservar cita de terapia respiratoria
+            <div class="top-action mb-3">
+                <a class="btn btn-add" href="/Template/ConsultarHistorialTerapiaResp.html">Consultar historial</a>
+            </div>
+            <p class="text-muted">
+                Registrar progreso del paciente respecto a su ultima sesión de terapia respiratoria
             </p>
 
             <form action="">
@@ -75,19 +77,18 @@
 
                                 <div class="form-group">
                                     <label for="nombre">Nombre Completo</label>
-                                    <input type="text" id="nombre" class="form-control" name="nombre" required
-                                        placeholder="Ej. Juan Pérez">
+                                    <h6 id="nombre">Juan Pérez</h6>
                                 </div>
 
                                 <div class="row">
                                     <div class="col-md-6 form-group">
                                         <label for="telefono">Teléfono</label>
-                                        <input type="tel" class="form-control" id="telefono" name="telefono" required>
+                                        <h6>(503) 9876-4567</h6>
                                     </div>
 
                                     <div class="col-md-6 form-group">
                                         <label for="email">Correo Electrónico</label>
-                                        <input type="email" class="form-control" id="email" name="email" required>
+                                        <h6>juan.perez@example.com</h6>
                                     </div>
                                 </div>
 
@@ -144,22 +145,6 @@
                                             placeholder="Ej: Mucha flema, fatiga al caminar...">
                                         </textarea>
                                     </div>
-
-                                    <div class="form-group mt-3">
-                                        <label for="fecha_hora">Fecha y Hora Propuesta</label>
-                                        <input type="datetime-local" id="fecha_hora" name="fecha_hora"
-                                            class="form-control" required>
-                                    </div>
-
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="checkbox" id="terminos" name="terminos"
-                                            required>
-                                        <label class="form-check-label small" for="terminos">
-                                            Acepto las políticas de cancelación y privacidad.
-                                        </label>
-                                    </div>
-
-
 
                                 </div>
                                 <button class="btn btn-cotizar mt-4">

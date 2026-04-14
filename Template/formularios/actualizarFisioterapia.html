@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terapia Respiratoria - CACES</title>
+    <title>Fisioterapia - CACES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -34,7 +34,7 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto nav-center-list">
-                        <li class="nav-item"><a class="nav-link" href="../Inicio.html">Inicio</a></li>
+                       <li class="nav-item"><a class="nav-link" href="../Inicio.html">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link active" href="../Especialidades.html">Especialidades</a></li>
                         <li class="nav-item"><a class="nav-link" href="../ProcedimientosQuirurgicos.html">Procedimientos Quirúrgicos</a></li>
                         <li class="nav-item"><a class="nav-link" href="../Especialistas.html">Especialistas</a></li>
@@ -57,12 +57,9 @@
 
     <main class="container py-5">
         <section class="mt-4">
-            <h1 class="section-title">Terapia Respiratoria</h1>
-               <div class="top-action mb-3">
-				<a class="btn btn-add" href="../sesionesTerapiaRespiratoria.html">Consultar agenda</a>
-			</div> 
+            <h1 class="section-title">Fisioterapia</h1> 
             <p class="text-muted mb-4">
-                Reservar cita de terapia respiratoria
+                Actualizar sesión de fisioterapia
             </p>
 
             <form action="">
@@ -91,80 +88,64 @@
                                     </div>
                                 </div>
 
-                                <h3 class="mt-4">2. Estado de salud respiratoria del paciente</h3>
+                                <h3 class="mt-4">2. Información del Caso</h3>
+
+                                <div class="form-group">
+                                    <label for="motivo">Motivo de la consulta</label>
+                                    <textarea id="motivo" class="form-control" name="motivo" rows="3"
+                                        placeholder="Describa brevemente su dolor o lesión"></textarea>
+                                </div>
 
                                 <div class="row">
-
-                                    <span class="section-title">Estado Respiratorio</span>
                                     <div class="col-md-6 form-group">
-                                        <label for="diagnostico">Diagnóstico Principal</label>
-                                        <select id="diagnostico" class="form-select" name="diagnostico">
-                                            <option value="epoc">EPOC
-                                            </option>
-                                            <option value="asma">Asma
-                                            </option>
-                                            <option value="secuela_covid">Secuela COVID-19</option>
-                                            <option value="otro">Otro / En estudio</option>
+                                        <label for="zona_cuerpo">Área a tratar</label>
+                                        <select id="zona_cuerpo" class="form-select" name="zona_cuerpo">
+                                            <option value="cervical">Cervical</option>
+                                            <option value="dorsal">Dorsal</option>
+                                            <option value="lumbar">Lumbar</option>
+                                            <option value="hombro">Hombro</option>
+                                            <option value="rodilla">Rodilla</option>
+                                            <option value="otro">Otro</option>
                                         </select>
                                     </div>
 
                                     <div class="col-md-6 form-group">
-                                        <label for="usa_oxigeno">¿Usa Oxígeno?</label>
-                                        <select id="usa_oxigeno" class="form-select" name="usa_oxigeno">
-                                            <option value="no">No
-                                            </option>
-                                            <option value="si_permanente">Sí, permanente
-                                            </option>
-                                            <option value="si_esfuerzo">Sí, solo al esfuerzo</option>
-                                        </select>
+                                        <label for="dolor">Nivel de Dolor (1-10)</label>
+                                        <input type="number" id="dolor" name="dolor" class="form-control" min="1"
+                                            max="10" value="5">
                                     </div>
-
-                                    <div class="form-group mt-3">
-                                        <label for="saturacion">Saturación habitual (%)</label>
-                                        <input type="number" id="saturacion" class="form-control" name="saturacion"
-                                            placeholder="Ej: 94">
-                                    </div>
-
-                                    <h3 class="mt-4">3. Seguridad y Contraindicaciones</h3>
-
-                                    <div class="form-group">
-                                        <label for="cirugias">¿Ha tenido cirugías de tórax o abdomen en el último
-                                            mes?</label>
-                                        <select id="cirugias" class="form-select" name="cirugias">
-                                            <option value="no">No
-                                            </option>
-                                            <option value="si">Sí (Indicar fecha y tipo en notas)
-                                            </option>
-                                        </select>
-                                    </div>
-
-                                    <div class="form-group mt-3">
-                                        <label for="notas_adic">Notas adicionales / Síntomas actuales</label>
-                                        <textarea class="form-control" type="text" id="notas_adic" name="notas"
-                                            placeholder="Ej: Mucha flema, fatiga al caminar...">
-                                        </textarea>
-                                    </div>
-
-                                    <div class="form-group mt-3">
-                                        <label for="fecha_hora">Fecha y Hora Propuesta</label>
-                                        <input type="datetime-local" id="fecha_hora" name="fecha_hora"
-                                            class="form-control" required>
-                                    </div>
-
-                                    <div class="form-check mt-3">
-                                        <input class="form-check-input" type="checkbox" id="terminos" name="terminos"
-                                            required>
-                                        <label class="form-check-label small" for="terminos">
-                                            Acepto las políticas de cancelación y privacidad.
-                                        </label>
-                                    </div>
-
-
-
                                 </div>
+
+                                <h3 class="mt-4">3. Agenda y Seguridad</h3>
+
+                                <div class="form-group">
+                                    <label for="fecha_hora">Fecha y Hora Preferida</label>
+                                    <input type="datetime-local" id="fecha_hora" name="fecha_hora" class="form-control"
+                                        required>
+                                </div>
+
+                                <div class="form-group">
+                                    <label class="mt-4">Antecedentes Importantes</label>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="cirugia" name="antecedentes"
+                                            value="cirugia">
+                                        <label class="form-check-label" for="cirugia">Cirugías recientes</label>
+                                    </div>
+
+                                    <div class="form-check">
+                                        <input class="form-check-input" type="checkbox" id="implante"
+                                            name="antecedentes" value="implante">
+                                        <label class="form-check-label" for="implante">Prótesis o Implantes
+                                            metálicos</label>
+                                    </div>
+                                </div>
+
+
                                 <button class="btn btn-cotizar mt-4">
-                                    Guardar y Agendar
+                                    Guardar cambios
                                 </button>
+
                             </div>
                         </article>
                     </div>
