@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Terapia Respiratoria - CACES</title>
+    <title>Endoscopia - CACES</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link
@@ -40,7 +40,7 @@
                         <li class="nav-item"><a class="nav-link" href="Quirurgicos.html">Procedimientos Quirúrgicos</a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Citas.html">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="GestionCitas.html">Citas</a></li>
                         <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
                         <li class="nav-item"><a class="nav-link" href="reportes.html">Reportes</a></li>
                     </ul>
@@ -60,9 +60,9 @@
 
     <main class="container py-5">
         <section class="mt-4">
-            <h1 class="section-title">Terapia Respiratoria</h1>
-            <p class="text-muted">
-                Historial del paciente
+            <h1 class="section-title">Radiología</h1>
+            <p class="text-muted mb-4">
+                Imágenes radiológicas del paciente.
             </p>
 
             <form action="">
@@ -75,63 +75,62 @@
 
                                 <div class="form-group">
                                     <label for="nombre">Nombre Completo</label>
-                                    <h6>Juan Pérez</h6>
+                                    <p><span>Juan Pérez</span></p>
                                 </div>
 
-                                <div class="row">
-                                    <div class="col-md-6 form-group">
-                                        <label for="telefono">Teléfono</label>
-                                        <h6>(503) 9876-4567</h6>
-                                    </div>
 
-                                    <div class="col-md-6 form-group">
-                                        <label for="email">Correo Electrónico</label>
-                                        <h6>juan.perez@example.com</h6>
-                                    </div>
-                                </div>
-
-                                <h3 class="mt-4">2. Estado de salud respiratoria del paciente</h3>
-
-                                <div class="row">
-
-                                    <div class="col-md-6 form-group">
-                                        <label for="diagnostico">Diagnóstico Principal</label>
-                                        <p><span>EPOC</span></p>
-                                    </div>
-
-                                    <div class="col-md-6 form-group">
-                                        <label for="usa_oxigeno">¿Usa Oxígeno?</label>
-                                        <p><span>Sí, permanente</span></p>
-                                    </div>
-                                </div>
-
+                                <h3 class="mt-4">2. Detalles del Estudio</h3>
                                 <div class="form-group mt-3">
-                                    <label for="saturacion">Saturación habitual (%)</label>
-                                    <p><span>94</span></p>
+                                    <label for="id_estudio">ID del estudio</label>
+                                    <p><span>ESTUDIO-001</span></p>
                                 </div>
 
-                                <h3 class="mt-4">3. Seguridad y Contraindicaciones</h3>
+                                <div class="row">
+                                    <div class="col-md-6 form-group">
+                                        <label for="zona_cuerpo">Tipo de estudio</label>
+                                        <p><span>RX: Radiografía convencional</span></p>
+                                    </div>
 
+                                    <div class="form-group mt-3">
+                                        <label for="region_anatomica">Región Anatómica</label>
+                                        <p><span>Torax</span></p>
+                                    </div>
+                                </div>
+
+                                <h3 class="mt-4">3. Datos de Adquisición y Seguridad</h3>
                                 <div class="form-group">
-                                    <label for="cirugias">¿Ha tenido cirugías de tórax o abdomen en el último
-                                        mes?</label>
+                                    <label>¿Usa Contraste?</label>
                                     <p><span>No</span></p>
                                 </div>
 
-                                <div class="form-group mt-3">
-                                    <label for="notas_adic">Notas adicionales / Síntomas actuales</label>
-                                    <p><span>Muchas secreciones, fatiga al caminar</span></p>
+                                <div class="form-group">
+                                    <label for="fecha_hora">Fecha y hora del estudio</label>
+                                    <p><span>2021-06-15 10:30</span></p>
+                                </div>
+                                <div class="form-group">
+
+                                    <h3 class="mt-4">4. Datos Técnicos</h3>
+
+                                    <div class="form-group mt-3">
+                                        <label for="numero_imagenes">Número de Imágenes/Series</label>
+                                        <p><span>2</span></p>
+                                    </div>
+                                    <div>
+                                    <img src="img/chest_PA.jpg" class="mb-4 img-thumbnail" width="500" height="500">
+                                    <img src="img/imagen2.jpg" class="mb-4 img-thumbnail" width="500" height="500">
+                                    </div>
                                 </div>
 
-                            </div>
-                            <div>
-                                <a class="btn btn-outline-secondary mb-4" style="margin-left: 20px;" href="sesionesTerapiaRespiratoria.html">
+
+
+
+                                <a class="btn btn-outline-secondary mb-4" style="margin-left: 20px;" href="verImagenes.html">
                                     Volver
                                 </a>
+
                             </div>
+                        </article>
                     </div>
-                    </article>
-                </div>
                 </div>
             </form>
 
