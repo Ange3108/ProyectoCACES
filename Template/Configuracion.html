@@ -7,18 +7,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Configuración</title>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
-    <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Custom CSS -->
     <link rel="stylesheet" href="CSS/style.css">
 </head>
 
@@ -40,13 +34,13 @@
                     <ul class="navbar-nav mx-auto nav-center-list">
                         <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Procedimientos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="Quirurgicos.html">Procedimientos Quirúrgicos</a></li>
                         <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
                         <li class="nav-item"><a class="nav-link" href="GestionCitas.html">Citas</a></li>
-                        <li class="nav-item"><a class="nav-link active" href="AgendaMedica.html">Agenda Médica</a></li>
                         <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
-<li class="nav-item"><a class="nav-link" href="reportes.html">Reportes</a></li>
-<li class="nav-item"><a class="nav-link" href="configuracion.html">configuracion</a></li>
+                        <li class="nav-item"><a class="nav-link" href="reportes.html">Reportes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="AgendaMedica.html">Agenda Médica</a></li>
+                        <li class="nav-item"><a class="nav-link active" href="Configuracion.html">Configuración</a></li>
                     </ul>
 
                     <div class="navbar-actions">
@@ -56,59 +50,69 @@
                         </div>
                     </div>
                 </div>
-                <a class="account-link" href="#" aria-label="Cuenta">
+                <a class="account-link" href="perfil.html" aria-label="Cuenta">
                     <i class="bi bi-person"></i>
                 </a>
             </div>
         </nav>
     </header>
 
-<div class="container">
-    <h1>Configuración</h1>
+    <main class="container py-5">
+        <h1>Configuración</h1>
 
-    
+        <div class="card border-0 shadow-sm p-4">
+            <!-- PREFERENCIAS -->
+            <section class="mb-5">
+                <h3 class="mb-3"><i class="bi bi-gear-fill" style="color: #72CEF2;"></i> Preferencias</h3>
 
-        <!-- PREFERENCIAS -->
-        <div class="section">
-            <h3>⚙️ Preferencias</h3>
+                <div class="mb-3">
+                    <label for="idioma" class="form-label">Idioma</label>
+                    <select id="idioma" class="form-select">
+                        <option>Español</option>
+                        <option>Inglés</option>
+                    </select>
+                </div>
 
-            <label>Idioma</label>
-            <select>
-                <option>Español</option>
-                <option>Inglés</option>
-            </select>
+                <div class="form-check mb-3">
+                    <input class="form-check-input" type="checkbox" id="email-notif">
+                    <label class="form-check-label" for="email-notif">Recibir notificaciones por correo</label>
+                </div>
 
-            <br><br>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" id="dark-mode">
+                    <label class="form-check-label" for="dark-mode">Modo oscuro</label>
+                </div>
+            </section>
 
-            <div class="switch">
-                <input type="checkbox">
-                <label>Recibir notificaciones por correo</label>
-            </div>
+             <section class="mb-4">
+                
 
-            <div class="switch">
-                <input type="checkbox">
-                <label>Modo oscuro</label>
-            </div>
+                <a class="btn btn-main" href="preguntasFrecuentes.html">Preguntas Frecuentes</a>
+            </section>
+            <section class="mb-5">
+                <h3 class="mb-3"><i class="bi bi-lock-fill" style="color: #72CEF2;"></i> Seguridad</h3>
+
+                <div class="mb-3">
+                    <div class="form-check">
+                        <input class="form-check-input" type="checkbox" id="two-factor">
+                        <label class="form-check-label" for="two-factor">Activar autenticación en dos pasos</label>
+                    </div>
+                </div>
+
+                <a class="btn btn-cotizar" href="actualizarPerfil.html">Cambiar contraseña</a>
+            </section>
+
+
+            
         </div>
+    </main>
 
-        <!-- SEGURIDAD -->
-        <div class="section">
-            <h3>🔒 Seguridad</h3>
+ 
 
-            <label>Autenticación en dos pasos</label><br>
-            <input type="checkbox"> Activar
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 
-            <br><br>
-
-            <button>Cambiar contraseña</button>
-        </div>
-
-        <!-- BOTÓN -->
-        <br>
-        <button style="width:100%;">💾 Guardar cambios</button>
-
-    </div>
-</div>
+</html>
 
     <footer class="mt-5 py-4" style="background:#72CEF2;">
         <div class="container text-center">
@@ -131,16 +135,8 @@
                 <a href="https://wa.me/50600000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style="color:#27418C; font-size:1.25rem;">
                     <i class="bi bi-whatsapp"></i>
                 </a>
-                 <!-- Bootstrap CSS -->
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <!-- Custom CSS -->
-    <link rel="stylesheet" href="CSS/style.css">
-            </div>
-        </div>
-    </footer>
-     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-     <link rel="stylesheet" href="CSS/style.css">
+            
+   
 </body>
 
 </html>

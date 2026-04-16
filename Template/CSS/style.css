@@ -429,6 +429,30 @@ body {
 .section{ 
     color:   #1973b8;
 }
+
+.accordion-button {
+    font-weight: 700;
+    color: #27418C;
+}
+
+.accordion-button:not(.collapsed) {
+    color: #12364f;
+    background: #e9f6fc;
+}
+
+.site-footer {
+    background: #72CEF2;
+    color: #27418C;
+}
+
+.site-footer-link,
+.social-link {
+    color: #27418C;
+}
+
+.social-link {
+    font-size: 1.25rem;
+}
     
 
 

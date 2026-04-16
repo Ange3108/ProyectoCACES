@@ -4,14 +4,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Registro</title>
+    <title>Perfil</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <link rel="stylesheet" href="CSS/style.css">
+    <link rel="stylesheet" href="../CSS/style.css">
 </head>
 
 <body>
@@ -19,7 +19,7 @@
         <nav class="navbar navbar-expand-lg custom-navbar">
             <div class="container-fluid px-3 px-lg-4">
                 <a class="navbar-brand brand-block" href="#">
-                    <span class="brand-icon"><img src="img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-icon"><img src="../img/logoCACES.jpg" alt="Logo"></span>
                     <span class="brand-name">CACES</span>
                 </a>
 
@@ -30,15 +30,15 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto nav-center-list">
-                        <li class="nav-item"><a class="nav-link" href="Inicio.html">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Especialidades.html">Especialidades</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Quirurgicos.html">Procedimientos Quirúrgicos</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Especialistas.html">Especialistas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="GestionCitas.html">Citas</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Turismo.html">Turismo Médico</a></li>
-                        <li class="nav-item"><a class="nav-link" href="reportes.html">Reportes</a></li>
-                        <li class="nav-item"><a class="nav-link" href="AgendaMedica.html">Agenda Médica</a></li>
-                        <li class="nav-item"><a class="nav-link" href="Configuracion.html">Configuración</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Inicio.html">Inicio</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Especialidades.html">Especialidades</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Quirurgicos.html">Procedimientos Quirúrgicos</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Especialistas.html">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../GestionCitas.html">Citas</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Turismo.html">Turismo Médico</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../reportes.html">Reportes</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../AgendaMedica.html">Agenda Médica</a></li>
+                        <li class="nav-item"><a class="nav-link" href="../Configuracion.html">Configuración</a></li>
                     </ul>
 
                     <div class="navbar-actions">
@@ -48,7 +48,7 @@
                         </div>
                     </div>
                 </div>
-                <a class="account-link" href="perfil.html" aria-label="Cuenta">
+                <a class="account-link" href="../perfil.html" aria-label="Cuenta">
                     <i class="bi bi-person"></i>
                 </a>
             </div>
@@ -56,71 +56,55 @@
     </header>
 
     <main class="container py-5">
-        <h1>Registro de Usuario</h1>
+        <h1>Actualizar Perfil del Usuario</h1>
 
         <div class="card border-0 shadow-sm p-4">
-            <!-- DATOS PERSONALES -->
-            <section class="mb-5">
-                <h3 class="mb-3"><i class="bi bi-person-fill" style="color: #72CEF2;"></i> Datos Personales</h3>
+          
+            <section class="text-center mb-5">
+                <img src="https://via.placeholder.com/120" class="rounded-circle border border-3" style="border-color: #72CEF2 !important; width: 120px; height: 120px; object-fit: cover;">
+                <h2 class="mt-3">Juan Pérez</h2>
+                <p class="text-muted">Paciente</p>
+                <button class="btn btn-cotizar">Cambiar foto</button>
+            </section>
 
+         
+            <section class="mb-5">
+                <h3 class="mb-3"><i class="bi bi-person-fill" style="color: #72CEF2;"></i> Información Personal</h3>
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="nombre" class="form-label">Nombre</label>
-                        <input type="text" id="nombre" class="form-control" placeholder="Juan">
+                        <input type="text" id="nombre" class="form-control" value="Juan">
                     </div>
-
                     <div class="col-md-6 mb-3">
                         <label for="apellido" class="form-label">Apellido</label>
-                        <input type="text" id="apellido" class="form-control" placeholder="Pérez">
+                        <input type="text" id="apellido" class="form-control" value="Pérez">
                     </div>
                 </div>
 
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="email" class="form-label">Correo</label>
-                        <input type="email" id="email" class="form-control" placeholder="correo@email.com">
+                        <input type="email" id="email" class="form-control" value="juan@email.com">
                     </div>
-
                     <div class="col-md-6 mb-3">
                         <label for="telefono" class="form-label">Teléfono</label>
-                        <input type="text" id="telefono" class="form-control" placeholder="8888-8888">
+                        <input type="text" id="telefono" class="form-control" value="8888-8888">
                     </div>
                 </div>
             </section>
 
-            <!-- SEGURIDAD -->
-            <section class="mb-5">
-                <h3 class="mb-3"><i class="bi bi-lock-fill" style="color: #72CEF2;"></i> Seguridad</h3>
-
-                <div class="row">
-                    <div class="col-md-6 mb-3">
-                        <label for="password" class="form-label">Contraseña</label>
-                        <input type="password" id="password" class="form-control">
-                        <small class="text-muted d-block mt-1">Mínimo 8 caracteres</small>
-                    </div>
-
-                    <div class="col-md-6 mb-3">
-                        <label for="confirm-password" class="form-label">Confirmar contraseña</label>
-                        <input type="password" id="confirm-password" class="form-control">
-                    </div>
-                </div>
-            </section>
-
-            <!-- DATOS MÉDICOS -->
+        
             <section class="mb-5">
                 <h3 class="mb-3"><i class="bi bi-heart-pulse" style="color: #72CEF2;"></i> Información Médica</h3>
-
                 <div class="row">
                     <div class="col-md-6 mb-3">
                         <label for="sangre" class="form-label">Tipo de sangre</label>
                         <select id="sangre" class="form-select">
-                            <option>Seleccione</option>
                             <option>O+</option>
                             <option>A+</option>
                             <option>B+</option>
                         </select>
                     </div>
-
                     <div class="col-md-6 mb-3">
                         <label for="alergias" class="form-label">Alergias</label>
                         <input type="text" id="alergias" class="form-control" placeholder="Ninguna">
@@ -133,24 +117,31 @@
                 </div>
             </section>
 
-            <!-- TÉRMINOS -->
+    
             <section class="mb-5">
-                <h3 class="mb-3"><i class="bi bi-file-text" style="color: #72CEF2;"></i> Términos y Condiciones</h3>
+                <h3 class="mb-3"><i class="bi bi-lock-fill" style="color: #72CEF2;"></i> Seguridad</h3>
 
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label for="password" class="form-label">Contraseña</label>
+                        <input type="password" id="password" class="form-control" placeholder="********">
+                        
+                    </div>
+
+                    <div class="col-md-6 mb-3">
+                        <label for="confirm-password" class="form-label">Confirmar contraseña</label>
+                        <input type="password" id="confirm-password" class="form-control" placeholder="********">
+                    </div>
+                </div>
                 <div class="form-check">
-                    <input class="form-check-input" type="checkbox" id="terms">
-                    <label class="form-check-label" for="terms">
-                        Acepto los términos y condiciones
-                    </label>
+                    <input class="form-check-input" type="checkbox" id="2fa">
+                    <label class="form-check-label" for="2fa">Activar autenticación en dos pasos</label>
                 </div>
             </section>
 
-            <!-- BOTONES -->
-            <button class="btn btn-main w-100 mb-3"> Registrarse</button>
 
-            <p class="text-center">
-                ¿Ya tienes cuenta? <a href="Login.html" class="text-decoration-none">Iniciar sesión</a>
-            </p>
+            <!-- BOTÓN -->
+            <button class="btn btn-main w-100"> Guardar cambios</button>
         </div>
     </main>
 
@@ -164,7 +155,7 @@
         <div class="container text-center">
             <p class="mb-1 fw-semibold" style="color:#27418C;">Centro Ambulatorio de Cirugía Escalón</p>
             <p class="mb-0">
-                <a href="SoporteContacto.html" class="text-decoration-none fw-bold" style="color:#27418C;">
+                <a href="../SoporteContacto.html" class="text-decoration-none fw-bold" style="color:#27418C;">
                     Contacto y soporte
                 </a>
             </p>
@@ -184,5 +175,6 @@
             </div>
         </div>
     </footer>
+     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
