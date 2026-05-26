@@ -1,7 +1,18 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\CACES\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{E0C65693-3521-7FC5-52A2-6729A4D4D8F9}|CACES.csproj|c:\\users\\usuario\\source\\repos\\proyectocaces\\caces\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E0C65693-3521-7FC5-52A2-6729A4D4D8F9}|CACES.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\usuario\\source\\repos\\proyectocaces\\caces.dal\\repositorios\\repositoriodapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{29EC553B-7F0A-4B6A-8CD4-9834E54BBB95}|..\\CACES.IBLL\\CACES.IBLL.csproj|c:\\users\\usuario\\source\\repos\\proyectocaces\\caces.ibll\\interfaces\\da\\irepositoriodapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +20,66 @@
       "DocumentGroups": [
         {
           "DockedWidth": 303,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Bookmark",
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAADAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-26T19:59:54.558Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "RepositorioDapper.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABUAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-26T19:49:10.869Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "IRepositorioDapper.cs",
+              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES.IBLL\\Interfaces\\DA\\IRepositorioDapper.cs",
+              "RelativeDocumentMoniker": "..\\CACES.IBLL\\Interfaces\\DA\\IRepositorioDapper.cs",
+              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES.IBLL\\Interfaces\\DA\\IRepositorioDapper.cs",
+              "RelativeToolTip": "..\\CACES.IBLL\\Interfaces\\DA\\IRepositorioDapper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-26T19:41:18.708Z",
+              "EditorCaption": ""
             }
           ]
         }
