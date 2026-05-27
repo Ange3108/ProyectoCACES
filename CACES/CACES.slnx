@@ -1,6 +1,5 @@
 <Solution>
   <Project Path="../CACES.BLL/CACES.BLL.csproj" Id="f640c08e-2f44-4801-ad63-25cdf08cc2b5" />
   <Project Path="../CACES.DAL/CACES.DAL.csproj" Id="95415554-1420-4a54-8d06-bb2a03ab3d9e" />
-  <Project Path="../CACES.IBLL/CACES.IBLL.csproj" Id="29ec553b-7f0a-4b6a-8cd4-9834e54bbb95" />
   <Project Path="CACES.csproj" />
 </Solution>
