@@ -5,5 +5,6 @@ namespace CACES.IBLL.Interfaces.DA
     public interface IRepositorioDapper
     {
         SqlConnection ObtenerRepositorio();
+
     }
 }
