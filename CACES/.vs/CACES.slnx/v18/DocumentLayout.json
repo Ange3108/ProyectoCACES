@@ -1,7 +1,64 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\CACES\\",
-  "Documents": [],
+  "WorkspaceRootPath": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES\\",
+  "Documents": [
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\repositorios\\pacientes\\pacienterepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\repositorios\\usuario\\usuariorepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F640C08E-2F44-4801-AD63-25CDF08CC2B5}|..\\CACES.BLL\\CACES.BLL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.bll\\servicios\\medico\\medicoservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F640C08E-2F44-4801-AD63-25CDF08CC2B5}|..\\CACES.BLL\\CACES.BLL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.bll\\servicios\\medico\\imedicoservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F640C08E-2F44-4801-AD63-25CDF08CC2B5}|..\\CACES.BLL\\CACES.BLL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.bll\\servicios\\paciente\\ipacienteservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F640C08E-2F44-4801-AD63-25CDF08CC2B5}|..\\CACES.BLL\\CACES.BLL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.bll\\servicios\\paciente\\pacienteservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F640C08E-2F44-4801-AD63-25CDF08CC2B5}|..\\CACES.BLL\\CACES.BLL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.bll\\servicios\\usuario\\usuarioservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F640C08E-2F44-4801-AD63-25CDF08CC2B5}|..\\CACES.BLL\\CACES.BLL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.bll\\servicios\\usuario\\iusuarioservicio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\entidades\\paciente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\entidades\\medico.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0C65693-3521-7FC5-52A2-6729A4D4D8F9}|CACES.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces\\program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{E0C65693-3521-7FC5-52A2-6729A4D4D8F9}|CACES.csproj|solutionrelative:program.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{F640C08E-2F44-4801-AD63-25CDF08CC2B5}|..\\CACES.BLL\\CACES.BLL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.bll\\interfaces\\da\\irepositoriodapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\repositorios\\repositoriodapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\entidades\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\repositorios\\medicos\\imedicorepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\repositorios\\medicos\\medicorepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\repositorios\\pacientes\\ipacienterepositorio.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{E0C65693-3521-7FC5-52A2-6729A4D4D8F9}|CACES.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces\\appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}",
+      "RelativeMoniker": "D:0:0:{E0C65693-3521-7FC5-52A2-6729A4D4D8F9}|CACES.csproj|solutionrelative:appsettings.json||{90A6B3A7-C1A3-4009-A288-E2FF89E96FA0}"
+    }
+  ],
   "DocumentGroupContainers": [
     {
       "Orientation": 0,
@@ -9,11 +66,261 @@
       "DocumentGroups": [
         {
           "DockedWidth": 303,
-          "SelectedChildIndex": -1,
+          "SelectedChildIndex": 6,
           "Children": [
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{75188d03-9892-4ae2-abf1-207126247ce5}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 1,
+              "Title": "UsuarioRepositorio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Usuario\\UsuarioRepositorio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Repositorios\\Usuario\\UsuarioRepositorio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Usuario\\UsuarioRepositorio.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Repositorios\\Usuario\\UsuarioRepositorio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAKAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:15:33.271Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 0,
+              "Title": "PacienteRepositorio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Pacientes\\PacienteRepositorio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Repositorios\\Pacientes\\PacienteRepositorio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Pacientes\\PacienteRepositorio.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Repositorios\\Pacientes\\PacienteRepositorio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:17:01.048Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 2,
+              "Title": "MedicoServicio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Medico\\MedicoServicio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.BLL\\Servicios\\Medico\\MedicoServicio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Medico\\MedicoServicio.cs",
+              "RelativeToolTip": "..\\CACES.BLL\\Servicios\\Medico\\MedicoServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:24:16.587Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IMedicoServicio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Medico\\IMedicoServicio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.BLL\\Servicios\\Medico\\IMedicoServicio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Medico\\IMedicoServicio.cs",
+              "RelativeToolTip": "..\\CACES.BLL\\Servicios\\Medico\\IMedicoServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:24:04.534Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "IPacienteServicio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Paciente\\IPacienteServicio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.BLL\\Servicios\\Paciente\\IPacienteServicio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Paciente\\IPacienteServicio.cs",
+              "RelativeToolTip": "..\\CACES.BLL\\Servicios\\Paciente\\IPacienteServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:23:51.553Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 5,
+              "Title": "PacienteServicio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Paciente\\PacienteServicio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.BLL\\Servicios\\Paciente\\PacienteServicio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Paciente\\PacienteServicio.cs",
+              "RelativeToolTip": "..\\CACES.BLL\\Servicios\\Paciente\\PacienteServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:23:37.809Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
+              "Title": "UsuarioServicio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Usuario\\UsuarioServicio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.BLL\\Servicios\\Usuario\\UsuarioServicio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Usuario\\UsuarioServicio.cs",
+              "RelativeToolTip": "..\\CACES.BLL\\Servicios\\Usuario\\UsuarioServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:23:20.135Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IUsuarioServicio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Usuario\\IUsuarioServicio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.BLL\\Servicios\\Usuario\\IUsuarioServicio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Servicios\\Usuario\\IUsuarioServicio.cs",
+              "RelativeToolTip": "..\\CACES.BLL\\Servicios\\Usuario\\IUsuarioServicio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:22:45.564Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 11,
+              "Title": "IRepositorioDapper.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Interfaces\\DA\\IRepositorioDapper.cs",
+              "RelativeDocumentMoniker": "..\\CACES.BLL\\Interfaces\\DA\\IRepositorioDapper.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.BLL\\Interfaces\\DA\\IRepositorioDapper.cs",
+              "RelativeToolTip": "..\\CACES.BLL\\Interfaces\\DA\\IRepositorioDapper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:20:00.615Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "Paciente.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Paciente.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Entidades\\Paciente.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Paciente.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Entidades\\Paciente.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:18:53.826Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "Medico.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Medico.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Entidades\\Medico.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Medico.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Entidades\\Medico.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:18:02.574Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "Program.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES\\Program.cs",
+              "RelativeDocumentMoniker": "Program.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES\\Program.cs",
+              "RelativeToolTip": "Program.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:12:48.907Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 13,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Usuario.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Entidades\\Usuario.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Usuario.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Entidades\\Usuario.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:19:01.311Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 12,
+              "Title": "RepositorioDapper.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABMAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:07:58.045Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 14,
+              "Title": "IMedicoRepositorio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Medicos\\IMedicoRepositorio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Repositorios\\Medicos\\IMedicoRepositorio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Medicos\\IMedicoRepositorio.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Repositorios\\Medicos\\IMedicoRepositorio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:17:47.17Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 15,
+              "Title": "MedicoRepositorio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Medicos\\MedicoRepositorio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Repositorios\\Medicos\\MedicoRepositorio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Medicos\\MedicoRepositorio.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Repositorios\\Medicos\\MedicoRepositorio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:17:29.546Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 16,
+              "Title": "IPacienteRepositorio.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Pacientes\\IPacienteRepositorio.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Repositorios\\Pacientes\\IPacienteRepositorio.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Repositorios\\Pacientes\\IPacienteRepositorio.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Repositorios\\Pacientes\\IPacienteRepositorio.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2026-05-27T16:16:40.328Z",
+              "EditorCaption": ""
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 17,
+              "Title": "appsettings.json",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES\\appsettings.json",
+              "RelativeDocumentMoniker": "appsettings.json",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES\\appsettings.json",
+              "RelativeToolTip": "appsettings.json",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.001642|",
+              "WhenOpened": "2026-05-27T16:13:13.448Z",
+              "EditorCaption": ""
             }
           ]
         }

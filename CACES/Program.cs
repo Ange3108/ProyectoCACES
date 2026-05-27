@@ -1,7 +1,27 @@
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+/*
+// Register EF Core DbContext (SQLite). Update the connection string in appsettings.json
+//builder.Services.AddDbContext<ApplicationDbContext>(options =>
+//options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
+
+
+//Inyección de dependencias para repositorios, servicios, etc.
+
+// Repositorios
+builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
+builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+
+// Servicios
+builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
+
+
+*/
 
 var app = builder.Build();
 
