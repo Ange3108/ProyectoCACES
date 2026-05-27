@@ -1,12 +1,12 @@
 {
   "Version": 1,
-  "WorkspaceRootPath": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES\\",
+  "WorkspaceRootPath": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{29EC553B-7F0A-4B6A-8CD4-9834E54BBB95}|..\\CACES.IBLL\\CACES.IBLL.csproj|c:\\users\\usuario\\source\\repos\\proyectocaces\\caces.ibll\\interfaces\\da\\irepositoriodapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\entidades\\paciente.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\usuario\\source\\repos\\proyectocaces\\caces.dal\\repositorios\\repositoriodapper.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{95415554-1420-4A54-8D06-BB2A03AB3D9E}|..\\CACES.DAL\\CACES.DAL.csproj|c:\\users\\xsf\\documents\\u\\proyecto cases\\proyectocaces\\caces.dal\\entidades\\usuario.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     }
   ],
   "DocumentGroupContainers": [
@@ -16,15 +16,19 @@
       "DocumentGroups": [
         {
           "DockedWidth": 303,
-          "SelectedChildIndex": 6,
+          "SelectedChildIndex": 5,
           "Children": [
             {
               "$type": "Bookmark",
-              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
+              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
             },
             {
               "$type": "Bookmark",
               "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
+            },
+            {
+              "$type": "Bookmark",
+              "Name": "ST:128:0:{116d2292-e37d-41cd-a077-ebacac4c8cc4}"
             },
             {
               "$type": "Bookmark",
@@ -35,33 +39,29 @@
               "Name": "ST:0:0:{3ae79031-e1bc-11d0-8f78-00a0c9110057}"
             },
             {
-              "$type": "Bookmark",
-              "Name": "ST:0:0:{1c64b9c2-e352-428e-a56d-0ace190b99a6}"
-            },
-            {
               "$type": "Document",
-              "DocumentIndex": 1,
-              "Title": "RepositorioDapper.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
-              "RelativeDocumentMoniker": "..\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
-              "RelativeToolTip": "..\\CACES.DAL\\Repositorios\\RepositorioDapper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA8AAAAxAAAAAAAAAA==",
+              "DocumentIndex": 0,
+              "Title": "Paciente.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Paciente.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Entidades\\Paciente.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Paciente.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Entidades\\Paciente.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-26T19:49:10.869Z",
+              "WhenOpened": "2026-05-27T16:04:21.532Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "IRepositorioDapper.cs",
-              "DocumentMoniker": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES.IBLL\\Interfaces\\DA\\IRepositorioDapper.cs",
-              "RelativeDocumentMoniker": "..\\CACES.IBLL\\Interfaces\\DA\\IRepositorioDapper.cs",
-              "ToolTip": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES.IBLL\\Interfaces\\DA\\IRepositorioDapper.cs",
-              "RelativeToolTip": "..\\CACES.IBLL\\Interfaces\\DA\\IRepositorioDapper.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAQAAAAnAAAAAAAAAA==",
+              "DocumentIndex": 1,
+              "Title": "Usuario.cs",
+              "DocumentMoniker": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Usuario.cs",
+              "RelativeDocumentMoniker": "..\\CACES.DAL\\Entidades\\Usuario.cs",
+              "ToolTip": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\ProyectoCACES\\CACES.DAL\\Entidades\\Usuario.cs",
+              "RelativeToolTip": "..\\CACES.DAL\\Entidades\\Usuario.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2026-05-26T19:41:18.708Z",
+              "WhenOpened": "2026-05-27T16:03:56.786Z",
               "EditorCaption": ""
             }
           ]

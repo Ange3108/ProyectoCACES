@@ -2,10 +2,11 @@
   "ExpandedNodes": [
     "",
     "\\CACES",
+    "\\CACES.BLL",
+    "\\CACES.DAL\\Repositorios",
     "\\CACES\\Views",
-    "\\ProyectoCASES",
     "\\ProyectoCASES\\Template"
   ],
-  "SelectedNode": "\\ProyectoCASES",
+  "SelectedNode": "\\CACES\\CACES.slnx",
   "PreviewInSolutionExplorer": false
 }
