@@ -14,7 +14,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("CACES")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+ee343bca53e1f5e38d52b436ec9d0d616b1d95ba")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+7ba93d3b5dbb7a1689502637f7a514c9f1db7f8e")]
 [assembly: System.Reflection.AssemblyProductAttribute("CACES")]
 [assembly: System.Reflection.AssemblyTitleAttribute("CACES")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
