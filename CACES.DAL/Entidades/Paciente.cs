@@ -24,10 +24,8 @@ namespace CACES.DAL.Entidades
         public int IdHistorial { get; set; }
 
         // Relaciones
-        [ForeignKey("IdUsuario")]
         public virtual Usuario Usuario { get; set; } = null!;
 
-        [ForeignKey("IdHistorial")]
         public virtual HistorialMedico HistorialMedico { get; set; } = null!;
 
 
