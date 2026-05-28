@@ -20,6 +20,8 @@ namespace CACES.BLL.Servicios.Usuario
         private readonly IUsuarioRepositorio _usuarioRepository;
         private readonly IMapper _mapper;
 
+        public object BCrypt { get; private set; }
+
         public UsuarioServicio(IUsuarioRepositorio usuarioRepository, IMapper mapper)
         {
             _usuarioRepository = usuarioRepository;
@@ -71,10 +73,13 @@ namespace CACES.BLL.Servicios.Usuario
                 return new respuestaErrores<UsuarioDTO> { EsCorrecto = false, mensaje = ex.Message };
             }
         }
-
         private string HashContraseña(string password)
         {
-            return BCrypt.Net.BCrypt.HashPassword(password);
+            using (var sha256 = System.Security.Cryptography.SHA256.Create())
+            {
+                var hashedBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                return Convert.ToBase64String(hashedBytes);
+            }
         }
 
         public async Task<respuestaErrores<UsuarioDTO>> ActualizarUsuarioAsync(int id, UsuarioDTO usuarioDto)
@@ -82,9 +87,18 @@ namespace CACES.BLL.Servicios.Usuario
             throw new NotImplementedException();
         }
 
-        public async Task<respuestaErrores<bool>> EliminarUsuarioAsync(int id)
+        public async Task<respuestaErrores<UsuarioDTO>> EliminarUsuarioAsync(int id)
         {
-            throw new NotImplementedException();
+            var respuesta = new respuestaErrores<UsuarioDTO>();
+
+            if (!await _usuarioRepository.DeleteUsuarioAsync(id))
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "No se pudo eliminar el usuario";
+                respuesta.codigoError = 404;
+            }
+
+            return respuesta;
         }
 
         public async Task<respuestaErrores<UsuarioDTO>> ObtenerUsuarioPorDUIAsync(string dui)

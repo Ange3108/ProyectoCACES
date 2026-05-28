@@ -8,9 +8,13 @@
 
   <ItemGroup>
     <Compile Remove="CACES.BLL\**" />
+    <Compile Remove="CACES.DAL\**" />
     <Content Remove="CACES.BLL\**" />
+    <Content Remove="CACES.DAL\**" />
     <EmbeddedResource Remove="CACES.BLL\**" />
+    <EmbeddedResource Remove="CACES.DAL\**" />
     <None Remove="CACES.BLL\**" />
+    <None Remove="CACES.DAL\**" />
   </ItemGroup>
 
   <ItemGroup>
@@ -29,14 +33,6 @@
   <ItemGroup>
     <ProjectReference Include="..\CACES.BLL\CACES.BLL.csproj" />
     <ProjectReference Include="..\CACES.DAL\CACES.DAL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <None Include="CACES.BLL\CACES.BLL.csproj" />
-  </ItemGroup>
-
-  <ItemGroup>
-    <Folder Include="CACES.DAL\DBcontext\" />
   </ItemGroup>
 
 </Project>
