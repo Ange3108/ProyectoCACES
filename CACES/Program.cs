@@ -1,16 +1,20 @@
 
+using Microsoft.EntityFrameworkCore;
+using CACES.BLL;
+using CACES.DAL.DBContext;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
 
+
+// Register EF Core DbContext (SQLServer
+// ). Update the connection string in appsettings.json
+builder.Services.AddDbContext<CACESDbContext>(options =>
+options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 /*
-// Register EF Core DbContext (SQLite). Update the connection string in appsettings.json
-//builder.Services.AddDbContext<ApplicationDbContext>(options =>
-//options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
-
-
 //Inyección de dependencias para repositorios, servicios, etc.
 
 // Repositorios
