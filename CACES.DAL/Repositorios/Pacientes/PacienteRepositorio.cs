@@ -5,78 +5,60 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CACES.DAL.Repositorios.Medicos
+namespace CACES.DAL.Repositorios.Pacientes
 {
-    public class MedicoRepositorio : IMedicoRepositorio
+    public class PacienteRepositorio : IPacienteRepositorio
     {
 
-        // Inyección de dependencia de la BD
         private readonly CACESDbContext _context;
 
-        public MedicoRepositorio(CACESDbContext context)
+        public PacienteRepositorio(CACESDbContext context)
         {
             _context = context;
         }
 
-        // CREAR
-        public async Task<bool> CreateMedicoAsync(Medico medico)
+        public Task<bool> CreatePacienteAsync(Paciente paciente)
         {
-            if (medico == null) return false;
-
-            await _context.Medicos.AddAsync(medico);
-
-            return await _context.SaveChangesAsync() > 0;
+            throw new NotImplementedException();
         }
 
-        // ELIMINAR
-        public async Task<bool> DeleteMedicoAsync(int id)
+        public async Task<bool> DeletePacienteAsync(int id)
         {
-            var entity = await _context.Medicos.FindAsync(id);
-
+            var entity = await _context.Pacientes.FindAsync(id);
             if (entity == null) return false;
 
-            _context.Medicos.Remove(entity);
-
+            _context.Pacientes.Remove(entity);
             return await _context.SaveChangesAsync() > 0;
         }
 
-        // OBTENER POR ESPECIALIDAD
-        public async Task<Medico> GetMedicoByEspecialidadAsync(string especialidad)
+        public Task<Paciente> GetPacienteByDUIAsync(string dui)
         {
-            return await _context.Medicos
-                .FirstOrDefaultAsync(m => m.Especialidad == especialidad);
+            throw new NotImplementedException();
         }
 
-        // OBTENER POR ID
-        public async Task<Medico> GetMedicoByIdAsync(int id)
+        public Task<Paciente> GetPacienteByIdAsync(int id)
         {
-            return await _context.Medicos
-                .FirstOrDefaultAsync(m => m.IdMedico == id);
+            throw new NotImplementedException();
         }
 
-        // LISTAR TODOS
-        public async Task<List<Medico>> GetMedicosAsync()
+        public Task<List<Paciente>> GetPacientesAsync()
         {
-            return await _context.Medicos.ToListAsync();
+            throw new NotImplementedException();
         }
 
-        // ACTUALIZAR
-        public async Task<bool> UpdateMedicoAsync(Medico medico)
+        public async Task<bool> UpdatePacienteAsync(Paciente paciente)
         {
-            if (medico == null) return false;
-
-            var existing = await _context.Medicos.FindAsync(medico.IdMedico);
-
+            if (paciente == null) return false;
+            var existing = await _context.Pacientes.FindAsync(paciente.IdPaciente);
             if (existing == null) return false;
 
-            // Actualizar campos
-            existing.IdUsuario = medico.IdUsuario;
-            existing.Especialidad = medico.Especialidad;
-            existing.AniosExperiencia = medico.AniosExperiencia;
-            existing.Estado = medico.Estado;
 
-            _context.Medicos.Update(existing);
 
+            //Actualizar los campos
+            existing.IdHistorial = paciente.IdHistorial;
+            existing.IdUsuario = paciente.IdUsuario;
+
+            _context.Pacientes.Update(existing);
             return await _context.SaveChangesAsync() > 0;
         }
     }

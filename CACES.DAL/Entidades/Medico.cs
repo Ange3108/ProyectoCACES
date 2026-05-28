@@ -23,14 +23,6 @@ namespace CACES.DAL.Entidades
         [Column("Experiencia")]
         public int Experiencia { get; set; }
 
-        [Required]
-        [Column("Correo")]
-        public string Correo { get; set; } = null!;
-
-        [Required]
-        [Column("Telefono")]
-        public string Telefono { get; set; } = null!;
-
         [Column("Descripcion")]
         public string Descripcion { get; set; } = null!;
 

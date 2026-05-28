@@ -13,6 +13,7 @@ namespace CACES.DAL.DBContext
         public DbSet<Usuario> Usuarios { get; set; }
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<HistorialMedico> HistorialesMedicos { get; set; }
+        public DbSet<Medico> Medicos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -30,14 +31,20 @@ namespace CACES.DAL.DBContext
                 entity.HasIndex(e => e.CorreoElectronico).IsUnique();
                 entity.Property(e => e.DUI).HasMaxLength(10).IsRequired();
                 entity.HasIndex(e => e.DUI).IsUnique().HasDatabaseName("UQ_Usuarios_DUI");
-                entity.Property(e => e.Foto).HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Foto).HasMaxLength(200);
                 entity.Property(e => e.Telefono).HasMaxLength(30).IsRequired();
                 entity.Property(e => e.FechaDeRegistro).IsRequired();
                 entity.Property(e => e.FechaDeModificacion);
                 entity.Property(e => e.Estado).IsRequired().HasDefaultValue(true);
+                entity.Property(e => e.PasswordHash).IsRequired();
+                entity.Property(e => e.SecurityStamp).IsRequired();
+                entity.Property(e => e.twoFactorEnabled).HasDefaultValue(false).IsRequired();
+                entity.Property(e => e.lockoutEnd);
+                entity.Property(e => e.Lockoutfailed).IsRequired();
+                entity.Property(e => e.accessFailedCount).IsRequired();
+                entity.Property(e => e.emailConfirmed).HasDefaultValue(false).IsRequired();
             });
 
-       
             // Configuración de la entidad HistorialMedico
             modelBuilder.Entity<HistorialMedico>(entity =>
             {
@@ -70,7 +77,19 @@ namespace CACES.DAL.DBContext
                     .HasForeignKey(p => p.IdHistorial)
                     .HasConstraintName("FK_Pacientes_Historial");
             });
+
+            // Configuración de la entidad Medico
+            modelBuilder.Entity<Medico>(entity =>
+            {
+                entity.HasKey(e => e.IdMedico);
+                entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
+                entity.Property(e => e.Nombre).HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Especialidad).HasMaxLength(100).IsRequired();
+                entity.Property(e => e.Experiencia).IsRequired();
+                entity.Property(e => e.Descripcion).HasMaxLength(500);
+                entity.Property(e => e.Estado).HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Foto).HasMaxLength(200);
+            });
         }
     }
 }
-
