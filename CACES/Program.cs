@@ -1,33 +1,16 @@
-
+using CACES.DAL.Data;
 using Microsoft.EntityFrameworkCore;
-using CACES.BLL;
-using CACES.DAL.DBContext;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
-
-
-// Register EF Core DbContext (SQLServer
-// ). Update the connection string in appsettings.json
-builder.Services.AddDbContext<CACESDbContext>(options =>
-options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-/*
-//Inyección de dependencias para repositorios, servicios, etc.
-
-// Repositorios
-builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
-builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
-
-// Servicios
-builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
-
-
-*/
+builder.Services.AddDbContext<AppDbContext>(options =>
+    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 var app = builder.Build();
+app.MapGet("/", () => "¡Conexión configurada correctamente!");
+
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
@@ -48,8 +31,6 @@ app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}")
     .WithStaticAssets();
-
-
 
 
 app.Run();

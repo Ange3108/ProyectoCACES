@@ -1,68 +1,10 @@
-﻿using CACES.DAL.DBContext;
-using CACES.DAL.Entidades;
-using Microsoft.EntityFrameworkCore;
+﻿using System;
+using System.Collections.Generic;
+using System.Text;
 
-namespace CACES.DAL.Repositorios.Medicos
+namespace CACES.DAL.Repositorios.Médicos
 {
-    public class MedicoRepositorio : IMedicoRepositorio
+    internal class MedicoRepositorio
     {
-        private readonly CACESDbContext _context;
-
-        public MedicoRepositorio(CACESDbContext context)
-        {
-            _context = context;
-        }
-
-        public async Task<List<Medico>> GetMedicosAsync()
-        {
-            return await _context.Medicos.ToListAsync();
-        }
-
-        public async Task<Medico> GetMedicoByIdAsync(int id)
-        {
-            return await _context.Medicos
-                .FirstOrDefaultAsync(x => x.IdMedico == id);
-        }
-
-        public async Task<bool> CreateMedicoAsync(Medico medico)
-        {
-            await _context.Medicos.AddAsync(medico);
-
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> UpdateMedicoAsync(Medico medico)
-        {
-            var existing = await _context.Medicos
-                .FirstOrDefaultAsync(x => x.IdMedico == medico.IdMedico);
-
-            if (existing == null)
-                return false;
-
-            existing.Nombre = medico.Nombre;
-            existing.Especialidad = medico.Especialidad;
-            existing.Experiencia = medico.Experiencia;
-            existing.Correo = medico.Correo;
-            existing.Telefono = medico.Telefono;
-            existing.Descripcion = medico.Descripcion;
-            existing.Estado = medico.Estado;
-            existing.Foto = medico.Foto;
-
-            _context.Medicos.Update(existing);
-
-            return await _context.SaveChangesAsync() > 0;
-        }
-
-        public async Task<bool> DeleteMedicoAsync(int id)
-        {
-            var medico = await _context.Medicos.FindAsync(id);
-
-            if (medico == null)
-                return false;
-
-            _context.Medicos.Remove(medico);
-
-            return await _context.SaveChangesAsync() > 0;
-        }
     }
 }

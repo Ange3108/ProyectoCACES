@@ -13,25 +13,18 @@ CREATE TABLE Especialidad(
 );
 GO
 CREATE TABLE Usuarios(
-	Id_Usuario INT PRIMARY KEY IDENTITY(1,1),
+    Id_Usuario INT PRIMARY KEY IDENTITY(1,1),
 	Nombres VARCHAR(100) NOT NULL,
-	PrimerApellido VARCHAR(100) NOT NULL,
-	SegundoApellido VARCHAR(100) NOT NULL,
+    PrimerApellido VARCHAR(100) NOT NULL,
+    SegundoApellido VARCHAR(100) NOT NULL,
 	CorreoElectronico VARCHAR(200) NOT NULL UNIQUE,
 	DUI VARCHAR(10) NOT NULL,
 	Foto VARCHAR(200) NOT NULL,
 	FechaDeRegistro DATETIME NOT NULL,
-	FechaDeModificacion DATETIME NULL,
-	Estado BIT NOT NULL,
-	-- Campos de ASP.NET Identity
-	PasswordHash NVARCHAR(MAX) NULL,
-	SecurityStamp NVARCHAR(MAX) NULL,
-	TwoFactorEnabled BIT NOT NULL DEFAULT 0,
-	LockoutEndDateUtc DATETIME NULL,
-	LockoutEnabled BIT NOT NULL DEFAULT 1,
-	AccessFailedCount INT NOT NULL DEFAULT 0,
-	EmailConfirmed BIT NOT NULL DEFAULT 0,
+    FechaDeModificacion DATETIME NULL,
+	Estado BIT NOT NULL
 	CONSTRAINT UQ_Usuarios_DUI UNIQUE (DUI)
+
 );
 GO
 CREATE TABLE Medicos(
@@ -173,30 +166,6 @@ CREATE TABLE [dbo].[AspNetRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
--- Nueva tabla para relacionar Usuarios con Roles
-CREATE TABLE [dbo].[UsuarioRoles](
-	[Id_Usuario] [int] NOT NULL,
-	[RoleId] [nvarchar](128) NOT NULL,
- CONSTRAINT [PK_dbo.UsuarioRoles] PRIMARY KEY CLUSTERED 
-(
-	[Id_Usuario] ASC,
-	[RoleId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[UsuarioRoles] WITH CHECK ADD CONSTRAINT [FK_UsuarioRoles_Usuarios] FOREIGN KEY([Id_Usuario])
-REFERENCES [dbo].[Usuarios] ([Id_Usuario])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_Usuarios]
-GO
-ALTER TABLE [dbo].[UsuarioRoles] WITH CHECK ADD CONSTRAINT [FK_UsuarioRoles_AspNetRoles] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_AspNetRoles]
-GO
 /****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 12/11/2024 13:29:30 ******/
 SET ANSI_NULLS ON
 GO
@@ -204,7 +173,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[AspNetUserClaims](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [int] NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
 	[ClaimType] [nvarchar](max) NULL,
 	[ClaimValue] [nvarchar](max) NULL,
  CONSTRAINT [PK_dbo.AspNetUserClaims] PRIMARY KEY CLUSTERED 
@@ -212,12 +181,6 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.Usuarios_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[Usuarios] ([Id_Usuario])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.Usuarios_UserId]
 GO
 /****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 12/11/2024 13:29:30 ******/
 SET ANSI_NULLS ON
@@ -227,7 +190,7 @@ GO
 CREATE TABLE [dbo].[AspNetUserLogins](
 	[LoginProvider] [nvarchar](128) NOT NULL,
 	[ProviderKey] [nvarchar](128) NOT NULL,
-	[UserId] [int] NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
  CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED 
 (
 	[LoginProvider] ASC,
@@ -236,32 +199,69 @@ CREATE TABLE [dbo].[AspNetUserLogins](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.Usuarios_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[Usuarios] ([Id_Usuario])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.Usuarios_UserId]
-GO
-
 /****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 12/11/2024 13:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- ELIMINADA - Reemplazada por UsuarioRoles
--- CREATE TABLE [dbo].[AspNetUserRoles]
-
+CREATE TABLE [dbo].[AspNetUserRoles](
+	[UserId] [nvarchar](128) NOT NULL,
+	[RoleId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
 /****** Object:  Table [dbo].[AspNetUsers]    Script Date: 12/11/2024 13:29:30 ******/
 SET ANSI_NULLS ON
 GO
 SET QUOTED_IDENTIFIER ON
 GO
--- ELIMINADA - Consolidada con Usuarios
--- CREATE TABLE [dbo].[AspNetUsers]
-
--- CONSTRAINTS ELIMINADOS - Ya no necesarios
--- ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
--- ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
+CREATE TABLE [dbo].[AspNetUsers](
+	[Id] [nvarchar](128) NOT NULL,
+	[Email] [nvarchar](256) NULL,
+	[EmailConfirmed] [bit] NOT NULL,
+	[PasswordHash] [nvarchar](max) NULL,
+	[SecurityStamp] [nvarchar](max) NULL,
+	[PhoneNumber] [nvarchar](max) NULL,
+	[PhoneNumberConfirmed] [bit] NOT NULL,
+	[TwoFactorEnabled] [bit] NOT NULL,
+	[LockoutEndDateUtc] [datetime] NULL,
+	[LockoutEnabled] [bit] NOT NULL,
+	[AccessFailedCount] [int] NOT NULL,
+	[UserName] [nvarchar](256) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED 
+(
+	[Id] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
+GO
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
+REFERENCES [dbo].[AspNetUsers] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
+GO
 
 
 -- ============================================
@@ -282,16 +282,11 @@ INSERT INTO Especialidad (Nombre, Descripcion, Icono, FechaDeRegistro, Estado) V
 ('Cirugía', 'Cirugía general y procedimientos quirúrgicos', 'surgery-icon.png', GETDATE(), 1);
 GO
 
--- USUARIOS (Admin, Médico, Paciente) - Sin AspNetUsers
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Foto, FechaDeRegistro, FechaDeModificacion, Estado, 
-	PasswordHash, SecurityStamp, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, EmailConfirmed) 
-VALUES
-('Juan', 'García', 'López', 'juan.admin@caces.com', '12345678', 'juan.jpg', GETDATE(), NULL, 1, 
-	'hashed_password_here', 'stamp-001', 0, NULL, 1, 0, 1),
-('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg', GETDATE(), NULL, 1, 
-	'hashed_password_here', 'stamp-002', 0, NULL, 1, 0, 1),
-('María', 'Hernández', 'Gómez', 'maria.paciente@caces.com', '11223344', 'maria.jpg', GETDATE(), NULL, 1, 
-	'hashed_password_here', 'stamp-003', 0, NULL, 1, 0, 1);
+-- USUARIOS (Admin, Médico, Paciente)
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Foto, FechaDeRegistro, FechaDeModificacion, Estado) VALUES
+('Juan', 'García', 'López', 'juan.admin@caces.com', '12345678', 'juan.jpg', GETDATE(), NULL, 1),
+('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg', GETDATE(), NULL, 1),
+('María', 'Hernández', 'Gómez', 'maria.paciente@caces.com', '11223344', 'maria.jpg', GETDATE(), NULL, 1);
 GO
 
 -- MEDICOS
@@ -371,13 +366,16 @@ INSERT INTO Noticias (Titulo, Contenido, FechaDePublicacion, FechaDeModificacion
 ('Preparación para cirugía: lo que debes saber', 'Prepararse correctamente antes de una cirugía es fundamental...', GETDATE(), NULL, 'surgery-news.jpg', 1);
 GO
 
-
--- ASIGNAR ROLES A USUARIOS (usando la nueva tabla UsuarioRoles)
-INSERT INTO [dbo].[UsuarioRoles] ([Id_Usuario], [RoleId]) 
-SELECT u.Id_Usuario, '1' FROM Usuarios u WHERE u.CorreoElectronico = 'juan.admin@caces.com'  -- Juan es Administrador
-UNION ALL
-SELECT u.Id_Usuario, '2' FROM Usuarios u WHERE u.CorreoElectronico = 'oscar.medico@caces.com' -- Oscar es Médico
-UNION ALL
-SELECT u.Id_Usuario, '3' FROM Usuarios u WHERE u.CorreoElectronico = 'maria.paciente@caces.com'; -- María es Paciente
+-- USUARIOS DE ASPNET IDENTITY
+INSERT INTO [dbo].[AspNetUsers] ([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber], [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled], [AccessFailedCount], [UserName]) VALUES
+('user-admin-001', 'juan.admin@caces.com', 1, 'hashed_password_here', 'stamp-001', '2-2222-2222', 1, 0, NULL, 1, 0, 'juan.admin@caces.com'),
+('user-medico-002', 'oscar.medico@caces.com', 1, 'hashed_password_here', 'stamp-002', '2-3333-3333', 1, 0, NULL, 1, 0, 'carlos.medico@caces.com'),
+('user-paciente-003', 'maria.paciente@caces.com', 1, 'hashed_password_here', 'stamp-003', '2-5555-5555', 1, 0, NULL, 1, 0, 'maria.paciente@caces.com');
 GO
+
+-- ASIGNAR ROLES A USUARIOS
+INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES
+('user-admin-001', '1'),    -- Juan es Administrador
+('user-medico-002', '2'),   -- Oscar es Médico
+('user-paciente-003', '3'); -- María es Paciente
 GO

@@ -20,8 +20,9 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\CACES.DAL\CACES.DAL.csproj" />
     <ProjectReference Include="..\CACES.BLL\CACES.BLL.csproj" />
+    <ProjectReference Include="..\CACES.DAL\CACES.DAL.csproj" />
+    <ProjectReference Include="..\CACES.IBLL\CACES.IBLL.csproj" />
   </ItemGroup>
 
 </Project>
