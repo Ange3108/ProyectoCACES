@@ -1,4 +1,6 @@
-﻿using CACES.DAL.Entidades;
+﻿using CACES.DAL.DBContext;
+using CACES.DAL.Entidades;
+using CACES.DAL.Repositorios.Usuario;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -8,7 +10,15 @@ namespace CACES.DAL.Repositorios.Pacientes
 {
     public class PacienteRepositorio : IPacienteRepositorio
     {
-        public Task<bool> CreatePacienteAsync(Paciente paciente)
+       
+            //Inyerccion de dependencia de la BD
+            private readonly CACESDbContext _context;
+
+            public PacienteRepositorio(CACESDbContext context)
+            {
+                _context = context;
+            }
+            public Task<bool> CreatePacienteAsync(Paciente paciente)
         {
             throw new NotImplementedException();
         }

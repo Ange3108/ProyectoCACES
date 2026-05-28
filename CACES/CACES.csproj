@@ -19,4 +19,9 @@
     </PackageReference>
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\CACES.DAL\CACES.DAL.csproj" />
+    <ProjectReference Include="..\CACES.BLL\CACES.BLL.csproj" />
+  </ItemGroup>
+
 </Project>
