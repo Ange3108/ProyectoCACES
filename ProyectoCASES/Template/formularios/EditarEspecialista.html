@@ -4,13 +4,18 @@
 <head>
 
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0">
 
     <title>Editar Especialista - CACES</title>
 
     <!-- GOOGLE FONTS -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect"
+          href="https://fonts.googleapis.com">
+
+    <link rel="preconnect"
+          href="https://fonts.gstatic.com"
+          crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
           rel="stylesheet">
@@ -24,7 +29,8 @@
           href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 
     <!-- CSS -->
-    <link rel="stylesheet" href="../CSS/style.css">
+    <link rel="stylesheet"
+          href="../CSS/style.css">
 
 </head>
 
@@ -37,10 +43,12 @@
 
             <div class="container-fluid px-3 px-lg-4">
 
-                <a class="navbar-brand brand-block" href="../Inicio.html">
+                <a class="navbar-brand brand-block"
+                   href="../Inicio.html">
 
                     <span class="brand-icon">
-                        <img src="../img/logoCACES.jpg" alt="Logo">
+                        <img src="../img/logoCACES.jpg"
+                             alt="Logo">
                     </span>
 
                     <span class="brand-name">
@@ -58,75 +66,63 @@
 
                 </button>
 
-                <div class="collapse navbar-collapse" id="navbarNav">
+                <div class="collapse navbar-collapse"
+                     id="navbarNav">
 
                     <ul class="navbar-nav mx-auto nav-center-list">
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../Inicio.html">
+                            <a class="nav-link"
+                               href="../Inicio.html">
                                 Inicio
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../Especialidades.html">
+                            <a class="nav-link"
+                               href="../Especialidades.html">
                                 Especialidades
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../Quirurgicos.html">
+                            <a class="nav-link"
+                               href="../Quirurgicos.html">
                                 Procedimientos Quirúrgicos
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link active" href="../Especialistas.html">
+                            <a class="nav-link active"
+                               href="../Especialistas.html">
                                 Especialistas
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../GestionCitas.html">
+                            <a class="nav-link"
+                               href="../GestionCitas.html">
                                 Citas
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../Turismo.html">
+                            <a class="nav-link"
+                               href="../Turismo.html">
                                 Turismo Médico
                             </a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link" href="../reportes.html">
+                            <a class="nav-link"
+                               href="../reportes.html">
                                 Reportes
                             </a>
                         </li>
 
                     </ul>
 
-                    <div class="navbar-actions">
-
-                        <div class="lang-switch">
-
-                            <button class="lang-btn" type="button">
-                                EN
-                            </button>
-
-                            <button class="lang-btn active" type="button">
-                                ES
-                            </button>
-
-                        </div>
-
-                    </div>
-
                 </div>
-
-                <a class="account-link" href="#" aria-label="Cuenta">
-                    <i class="bi bi-person"></i>
-                </a>
 
             </div>
 
@@ -163,7 +159,7 @@
                     </p>
 
                     <!-- FORMULARIO -->
-                    <form>
+                    <form id="formEditarMedico">
 
                         <div class="row g-3">
 
@@ -353,6 +349,15 @@
 
                         </div>
 
+                        <!-- MENSAJE -->
+                        <div id="mensajeExito"
+                             class="alert alert-success mt-3 d-none"
+                             role="alert">
+
+                            El especialista fue actualizado correctamente.
+
+                        </div>
+
                     </form>
 
                 </div>
@@ -364,61 +369,17 @@
     </main>
 
     <!-- FOOTER -->
-    <footer class="mt-5 py-4" style="background:#72CEF2;">
+    <footer class="mt-5 py-4"
+            style="background:#72CEF2;">
 
         <div class="container text-center">
 
-            <p class="mb-1 fw-semibold" style="color:#27418C;">
+            <p class="mb-1 fw-semibold"
+               style="color:#27418C;">
+
                 Centro Ambulatorio de Cirugía Escalón
-            </p>
-
-            <p class="mb-0">
-
-                <a href="../SoporteContacto.html"
-                   class="text-decoration-none fw-bold"
-                   style="color:#27418C;">
-
-                    Contacto y soporte
-
-                </a>
 
             </p>
-
-            <div class="d-flex justify-content-center gap-3 mt-3">
-
-                <a href="https://www.facebook.com"
-                   target="_blank"
-                   style="color:#27418C; font-size:1.25rem;">
-
-                    <i class="bi bi-facebook"></i>
-
-                </a>
-
-                <a href="https://www.instagram.com"
-                   target="_blank"
-                   style="color:#27418C; font-size:1.25rem;">
-
-                    <i class="bi bi-instagram"></i>
-
-                </a>
-
-                <a href="https://x.com"
-                   target="_blank"
-                   style="color:#27418C; font-size:1.25rem;">
-
-                    <i class="bi bi-twitter-x"></i>
-
-                </a>
-
-                <a href="https://wa.me/50600000000"
-                   target="_blank"
-                   style="color:#27418C; font-size:1.25rem;">
-
-                    <i class="bi bi-whatsapp"></i>
-
-                </a>
-
-            </div>
 
         </div>
 
@@ -427,7 +388,7 @@
     <!-- BOOTSTRAP -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 
-    <!-- SCRIPT EDITAR MÉDICO -->
+    <!-- SCRIPT -->
     <script>
 
         const params = new URLSearchParams(window.location.search);
@@ -491,9 +452,14 @@
 
                 if (response.ok) {
 
-                    alert("Médico actualizado correctamente");
+                    document.getElementById("mensajeExito")
+                        .classList.remove("d-none");
 
-                    window.location.href = "../Especialistas.html";
+                    setTimeout(() => {
+
+                        window.location.href = "../Especialistas.html";
+
+                    }, 2000);
 
                 } else {
 
@@ -509,7 +475,7 @@
 
         }
 
-        document.querySelector("form")
+        document.getElementById("formEditarMedico")
             .addEventListener("submit", actualizarMedico);
 
         cargarMedico();
