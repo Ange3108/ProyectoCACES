@@ -3089,23 +3089,23 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\Usuario\\.nuget\\packages\\": {},
+    "C:\\Users\\XSF\\.nuget\\packages\\": {},
     "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES\\CACES.csproj",
+      "projectUniqueName": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\CACES\\CACES.csproj",
       "projectName": "CACES",
-      "projectPath": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES\\CACES.csproj",
-      "packagesPath": "C:\\Users\\Usuario\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\Usuario\\source\\repos\\ProyectoCACES\\CACES\\obj\\",
+      "projectPath": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\CACES\\CACES.csproj",
+      "packagesPath": "C:\\Users\\XSF\\.nuget\\packages\\",
+      "outputPath": "C:\\Users\\XSF\\Documents\\U\\Proyecto CASES\\CACES\\obj\\",
       "projectStyle": "PackageReference",
       "fallbackFolders": [
         "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
       ],
       "configFilePaths": [
-        "C:\\Users\\Usuario\\AppData\\Roaming\\NuGet\\NuGet.Config",
+        "C:\\Users\\XSF\\AppData\\Roaming\\NuGet\\NuGet.Config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.FallbackLocation.config",
         "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
       ],
@@ -3114,6 +3114,7 @@
       ],
       "sources": {
         "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+        "C:\\Program Files\\dotnet\\library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {

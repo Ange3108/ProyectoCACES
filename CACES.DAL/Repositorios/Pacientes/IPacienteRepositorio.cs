@@ -4,7 +4,13 @@ using System.Text;
 
 namespace CACES.DAL.Repositorios.Pacientes
 {
-    internal interface IPacienteRepositorio
+    public interface IPacienteRepositorio
     {
+        Task<List<Entidades.Paciente>> GetPacientesAsync();
+        Task<Entidades.Paciente> GetPacienteByIdAsync(int id);
+        Task<Entidades.Paciente> GetPacienteByDUIAsync(string dui);
+        Task<bool> CreatePacienteAsync(Entidades.Paciente paciente);
+        Task<bool> UpdatePacienteAsync(Entidades.Paciente paciente);
+        Task<bool> DeletePacienteAsync(int id);
     }
 }
