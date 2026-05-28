@@ -4,20 +4,20 @@ using Microsoft.Extensions.Configuration;
 
 namespace CACES.DAL.Repositorios
 {
-    public class RepositorioDapper : IRepositorioDapper
-    {
-        private readonly IConfiguration _configuration;
-        private readonly SqlConnection _conexionBaseDatos;
-        public RepositorioDapper(IConfiguration configuration)
-        {
-            _configuration = configuration;
-            _conexionBaseDatos = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
-        }
-        public SqlConnection ObtenerRepositorio()
-        {
-            return _conexionBaseDatos;
-        }
+    //public class RepositorioDapper : IRepositorioDapper
+    //{
+//private readonly IConfiguration _configuration;
+  //      private readonly SqlConnection _conexionBaseDatos;
+       // public RepositorioDapper(IConfiguration configuration)
+       // {
+        //    _configuration = configuration;
+        //    _conexionBaseDatos = new SqlConnection(_configuration.GetConnectionString("DefaultConnection"));
+        // }
+        // public SqlConnection ObtenerRepositorio()
+        // {
+        //     return _conexionBaseDatos;
+        // }
 
 
-    }
+//    }
 }
