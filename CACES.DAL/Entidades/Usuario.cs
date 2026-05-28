@@ -37,10 +37,6 @@ namespace CACES.DAL.Entidades
         [Column("DUI")]
         public string DUI { get; set; } = null!;
 
-        [StringLength(200)]
-        [Column("Foto")]
-        public string Foto { get; set; } = null!;
-
         [Required(ErrorMessage = "El teléfono es requerido")]
         [StringLength(30)]
         [Column("Telefono")]

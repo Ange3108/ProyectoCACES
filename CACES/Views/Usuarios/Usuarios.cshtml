@@ -1,0 +1,61 @@
+﻿
+@{
+	ViewData["Title"] = "Registro de Usuarios";
+}
+<div class="container py-5">
+    <div class="top-action">
+        <a class="btn btn-add" asp-action="RegistrarUsuario" asp-controller="Usuarios">+ Registrar Usuario</a>
+    </div>
+    <section class="mt-4">
+
+        <div class="row g-4">
+            <!-- Aquí se agregarán la tabla de usuarios -->
+            <div class="card shadow-sm border-0">
+                <div class="card-body">
+                    <h4 class="card-title mb-1">Listado de Usuarios</h4>
+                    <p class="text-muted mb-3">Gestión de usuarios del sistema</p>
+                    <div class="table-responsive">
+                        <table class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Nombre</th>
+                                    <th>Correo Electrónico</th>
+                                    <th>Rol</th>
+                                    <th>Acciones</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                    <td>Mateo Herrera</td>
+                                    <td>mateo.herrera@example.com</td>
+                                    <td>Administrador</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning m-0"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-danger m-0"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Camila Torres</td>
+                                    <td>camila.torres@example.com</td>
+                                    <td>Medico</td>
+                                    <td>
+                                        <button class="btn btn-sm btn-warning m-0"><i class="bi bi-pencil"></i></button>
+                                        <button class="btn btn-sm btn-danger m-0"><i class="bi bi-trash"></i></button>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Diego Paz</td>
+                                    <td>diego.paz@example.com</td>
+                                    <td>Paciente</td>
+                                    <td>
+                                        <p>Acciones no disponibles</p>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+		</div>
+        </section>
+    </div>

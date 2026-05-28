@@ -19,7 +19,6 @@ CREATE TABLE Usuarios(
 	SegundoApellido VARCHAR(100) NOT NULL,
 	CorreoElectronico VARCHAR(200) NOT NULL UNIQUE,
 	DUI VARCHAR(10) NOT NULL,
-	Foto VARCHAR(200) NOT NULL,
 	FechaDeRegistro DATETIME NOT NULL,
 	FechaDeModificacion DATETIME NULL,
 	Estado BIT NOT NULL,
@@ -42,6 +41,7 @@ CREATE TABLE Medicos(
     Experiencia INT NOT NULL,
     Certificaciones VARCHAR(200) NOT NULL,
     FechaDeRegistro DATETIME NOT NULL,
+    Foto VARCHAR(200) NOT NULL,
 	CONSTRAINT FK_Medicos_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
 	CONSTRAINT FK_Medico_Usuario FOREIGN KEY (Id_Usuario) REFERENCES Usuarios(Id_Usuario)
 );

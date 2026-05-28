@@ -31,7 +31,6 @@ namespace CACES.DAL.DBContext
                 entity.HasIndex(e => e.CorreoElectronico).IsUnique();
                 entity.Property(e => e.DUI).HasMaxLength(10).IsRequired();
                 entity.HasIndex(e => e.DUI).IsUnique().HasDatabaseName("UQ_Usuarios_DUI");
-                entity.Property(e => e.Foto).HasMaxLength(200);
                 entity.Property(e => e.Telefono).HasMaxLength(30).IsRequired();
                 entity.Property(e => e.FechaDeRegistro).IsRequired();
                 entity.Property(e => e.FechaDeModificacion);

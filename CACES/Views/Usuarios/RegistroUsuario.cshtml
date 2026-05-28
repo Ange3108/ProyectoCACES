@@ -1,0 +1,113 @@
+@using CACES.DAL.Entidades
+@model Usuario
+
+@{
+	ViewData["Title"] = "Crear Cuenta";
+}
+
+<section class="container py-5">
+	<div class="row justify-content-center">
+		<div class="col-lg-8">
+			<h1 class="mb-4">Registro de Usuario</h1>
+
+			<form asp-action="Registrar" asp-controller="Usuarios" method="post" class="card border-0 shadow-sm p-4">
+				<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+
+				<!-- DATOS PERSONALES -->
+				<section class="mb-5">
+					<h3 class="mb-3">
+						<i class="bi bi-person-fill" style="color: #72CEF2;"></i> Datos Personales
+					</h3>
+
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="nombres" class="form-label">Nombre</label>
+							<input type="text" asp-for="Nombres" class="form-control" placeholder="Nombre">
+							<span asp-validation-for="Nombres" class="text-danger"></span>
+						</div>
+
+						<div class="col-md-6 mb-3">
+							<label for="primerApellido" class="form-label">Primer Apellido</label>
+							<input type="text" asp-for="PrimerApellido" class="form-control" placeholder="Primer apellido">
+							<span asp-validation-for="PrimerApellido" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="segundoApellido" class="form-label">Segundo Apellido</label>
+							<input type="text" asp-for="SegundoApellido" class="form-control" placeholder="Segundo apellido">
+							<span asp-validation-for="SegundoApellido" class="text-danger"></span>
+						</div>
+
+						<div class="col-md-6 mb-3">
+							<label for="dui" class="form-label">DUI</label>
+							<input type="text" asp-for="DUI" class="form-control" placeholder="00000000-0">
+							<span asp-validation-for="DUI" class="text-danger"></span>
+						</div>
+					</div>
+
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="correoElectronico" class="form-label">Correo</label>
+							<input type="email" asp-for="CorreoElectronico" class="form-control" placeholder="correo@email.com">
+							<span asp-validation-for="CorreoElectronico" class="text-danger"></span>
+						</div>
+
+						<div class="col-md-6 mb-3">
+							<label for="telefono" class="form-label">Teléfono</label>
+							<input type="tel" asp-for="Telefono" class="form-control" placeholder="8888-8888">
+							<span asp-validation-for="Telefono" class="text-danger"></span>
+						</div>
+					</div>
+				</section>
+
+				<!-- SEGURIDAD -->
+				<section class="mb-5">
+					<h3 class="mb-3">
+						<i class="bi bi-lock-fill" style="color: #72CEF2;"></i> Seguridad
+					</h3>
+
+					<div class="row">
+						<div class="col-md-6 mb-3">
+							<label for="passwordHash" class="form-label">Contraseña</label>
+							<input type="password" asp-for="PasswordHash" class="form-control">
+							<small class="text-muted d-block mt-1">Mínimo 8 caracteres</small>
+							<span asp-validation-for="PasswordHash" class="text-danger"></span>
+						</div>
+
+						<div class="col-md-6 mb-3">
+							<label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
+							<input type="password" id="confirmPassword" class="form-control" placeholder="Confirmar contraseña">
+						</div>
+					</div>
+				</section>
+
+				<!-- TÉRMINOS -->
+				<section class="mb-5">
+					<h3 class="mb-3">
+						<i class="bi bi-file-text" style="color: #72CEF2;"></i> Términos y Condiciones
+					</h3>
+
+					<div class="form-check">
+						<input class="form-check-input" type="checkbox" id="terms" required>
+						<label class="form-check-label" for="terms">
+							Acepto los términos y condiciones
+						</label>
+					</div>
+				</section>
+
+				<!-- BOTONES -->
+				<div class="d-grid gap-2">
+					<button type="submit" class="btn btn-primary btn-lg">Registrarse</button>
+				</div>
+
+				<p class="text-center mt-3">
+					¿Ya tienes cuenta? <a asp-action="Login" asp-controller="Usuarios" class="text-decoration-none">Iniciar sesión</a>
+				</p>
+			</form>
+		</div>
+	</div>
+</section>
+
+
