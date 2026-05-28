@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="CACES.BLL\**" />
+    <Content Remove="CACES.BLL\**" />
+    <EmbeddedResource Remove="CACES.BLL\**" />
+    <None Remove="CACES.BLL\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Microsoft.EntityFrameworkCore" Version="10.0.8" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="10.0.8">
       <PrivateAssets>all</PrivateAssets>
@@ -25,7 +32,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="CACES.DAL\" />
+    <None Include="CACES.BLL\CACES.BLL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CACES.DAL\DBcontext\" />
   </ItemGroup>
 
 </Project>
