@@ -20,8 +20,7 @@ namespace CACES.DAL.Repositorios.Medicos
 
         public async Task<Medico> GetMedicoByIdAsync(int id)
         {
-            return await _context.Medicos
-                .FirstOrDefaultAsync(x => x.IdMedico == id);
+            return await _context.Medicos.FirstOrDefaultAsync(x => x.IdMedico == id);
         }
 
         public async Task<bool> CreateMedicoAsync(Medico medico)
@@ -42,8 +41,6 @@ namespace CACES.DAL.Repositorios.Medicos
             existing.Nombre = medico.Nombre;
             existing.Especialidad = medico.Especialidad;
             existing.Experiencia = medico.Experiencia;
-            existing.Correo = medico.Correo;
-            existing.Telefono = medico.Telefono;
             existing.Descripcion = medico.Descripcion;
             existing.Estado = medico.Estado;
             existing.Foto = medico.Foto;

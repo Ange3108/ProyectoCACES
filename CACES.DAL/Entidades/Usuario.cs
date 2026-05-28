@@ -55,6 +55,23 @@ namespace CACES.DAL.Entidades
         [Column("Estado")]
         public bool Estado { get; set; } = true;
 
+        [Required(ErrorMessage = "La contraseña es requerida")]
+        [Column ("PasswordHash")]
+        public string PasswordHash { get; set; } = null!;
+        [Column ("SecurityStamp")]
+        public string SecurityStamp { get; set; } = null!;
+        [Column("TwoFactorEnabled")]
+        public bool twoFactorEnabled { get; set; } = false;
+        [Column("LockoutEndDateUtc")]
+        public DateTime? lockoutEnd { get; set; }
+        [Column("LockoutEnabled")]
+        public bool Lockoutfailed { get; set; }
+        [Column("AccessFailedCount")]
+        public int accessFailedCount { get; set; }
+        [Column("EmailConfirmed")]
+        public bool emailConfirmed { get; set; } = false;
+
+
 
     }
 }

@@ -23,6 +23,7 @@ CREATE TABLE Usuarios(
 	FechaDeRegistro DATETIME NOT NULL,
 	FechaDeModificacion DATETIME NULL,
 	Estado BIT NOT NULL,
+    Telefono VARCHAR(30) NOT NULL,
 	-- Campos de ASP.NET Identity
 	PasswordHash NVARCHAR(MAX) NULL,
 	SecurityStamp NVARCHAR(MAX) NULL,
@@ -39,7 +40,6 @@ CREATE TABLE Medicos(
     Id_Especialidad INT NOT NULL,
 	Id_Usuario INT NOT NULL,
     Experiencia INT NOT NULL,
-    Telefono VARCHAR(30) NOT NULL,
     Certificaciones VARCHAR(200) NOT NULL,
     FechaDeRegistro DATETIME NOT NULL,
 	CONSTRAINT FK_Medicos_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),

@@ -17,7 +17,6 @@ namespace CACES.DAL.Repositorios.Usuario
         }
 
 
-
         public async Task<bool> CreateUsuarioAsync(Entidades.Usuario usuario)
         {
             if (usuario == null) return false;
