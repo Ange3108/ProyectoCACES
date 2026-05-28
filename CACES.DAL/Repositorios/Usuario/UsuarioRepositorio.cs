@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using CACES.DAL.DBContext;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -8,9 +9,9 @@ namespace CACES.DAL.Repositorios.Usuario
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
         //Inyerccion de dependencia de la BD
-        private readonly CACESContext _context;
+        private readonly CACESDbContext _context;
 
-        public UsuarioRepositorio(CACESContext context)
+        public UsuarioRepositorio(CACESDbContext context)
         {
             _context = context;
         }
