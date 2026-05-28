@@ -1,9 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -17,26 +12,33 @@ namespace CACES.DAL.Entidades
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdMedico { get; set; }
 
-        [Required(ErrorMessage = "El usuario es requerido")]
-        [Column("Id_Usuario")]
-        [ForeignKey("Usuario")]
-        public int IdUsuario { get; set; }
+        [Required]
+        [Column("Nombre")]
+        public string Nombre { get; set; } = null!;
 
-        [Required(ErrorMessage = "La especialidad es requerida")]
+        [Required]
         [Column("Especialidad")]
-        [StringLength(100)]
         public string Especialidad { get; set; } = null!;
 
-        [Required(ErrorMessage = "Los años de experiencia son requeridos")]
-        [Column("Anios_Experiencia")]
-        public int AniosExperiencia { get; set; }
+        [Required]
+        [Column("Experiencia")]
+        public int Experiencia { get; set; }
 
-        [Required(ErrorMessage = "El estado es requerido")]
+        [Required]
+        [Column("Correo")]
+        public string Correo { get; set; } = null!;
+
+        [Required]
+        [Column("Telefono")]
+        public string Telefono { get; set; } = null!;
+
+        [Column("Descripcion")]
+        public string Descripcion { get; set; } = null!;
+
         [Column("Estado")]
-        [StringLength(50)]
         public string Estado { get; set; } = null!;
 
-        // RELACION CON USUARIO
-        public virtual Usuario Usuario { get; set; } = null!;
+        [Column("Foto")]
+        public string? Foto { get; set; }
     }
 }

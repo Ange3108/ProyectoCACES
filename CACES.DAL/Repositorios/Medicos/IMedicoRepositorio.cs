@@ -4,18 +4,15 @@ using System.Text;
 
 namespace CACES.DAL.Repositorios.Medicos
 {
-
     public interface IMedicoRepositorio
     {
-        Task<List<Entidades.Medico>> GetMedicosAsync();
+        Task<List<Medico>> GetMedicosAsync();
 
-        Task<Entidades.Medico> GetMedicoByIdAsync(int id);
+        Task<Medico> GetMedicoByIdAsync(int id);
 
-        Task<Entidades.Medico> GetMedicoByEspecialidadAsync(string especialidad);
+        Task<bool> CreateMedicoAsync(Medico medico);
 
-        Task<bool> CreateMedicoAsync(Entidades.Medico medico);
-
-        Task<bool> UpdateMedicoAsync(Entidades.Medico medico);
+        Task<bool> UpdateMedicoAsync(Medico medico);
 
         Task<bool> DeleteMedicoAsync(int id);
     }
