@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Editar Especialista - CACES</title>
+
+    <!-- GOOGLE FONTS -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap"
+          rel="stylesheet">
+
+    <!-- BOOTSTRAP -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+          rel="stylesheet">
+
+    <!-- ICONOS -->
+    <link rel="stylesheet"
+          href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="../CSS/style.css">
+
+</head>
+
+<body>
+
+    <!-- NAVBAR -->
+    <header>
+
+        <nav class="navbar navbar-expand-lg custom-navbar">
+
+            <div class="container-fluid px-3 px-lg-4">
+
+                <a class="navbar-brand brand-block" href="../Inicio.html">
+
+                    <span class="brand-icon">
+                        <img src="../img/logoCACES.jpg" alt="Logo">
+                    </span>
+
+                    <span class="brand-name">
+                        CACES
+                    </span>
+
+                </a>
+
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav">
+
+                    <span class="navbar-toggler-icon"></span>
+
+                </button>
+
+                <div class="collapse navbar-collapse" id="navbarNav">
+
+                    <ul class="navbar-nav mx-auto nav-center-list">
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Inicio.html">
+                                Inicio
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Especialidades.html">
+                                Especialidades
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Quirurgicos.html">
+                                Procedimientos Quirúrgicos
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" href="../Especialistas.html">
+                                Especialistas
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../GestionCitas.html">
+                                Citas
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../Turismo.html">
+                                Turismo Médico
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" href="../reportes.html">
+                                Reportes
+                            </a>
+                        </li>
+
+                    </ul>
+
+                    <div class="navbar-actions">
+
+                        <div class="lang-switch">
+
+                            <button class="lang-btn" type="button">
+                                EN
+                            </button>
+
+                            <button class="lang-btn active" type="button">
+                                ES
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <a class="account-link" href="#" aria-label="Cuenta">
+                    <i class="bi bi-person"></i>
+                </a>
+
+            </div>
+
+        </nav>
+
+    </header>
+
+    <!-- CONTENIDO -->
+    <main class="container py-5">
+
+        <section class="form-shell">
+
+            <div class="top-action mb-3">
+
+                <a class="btn btn-add"
+                   href="../Especialistas.html">
+
+                    Volver al listado
+
+                </a>
+
+            </div>
+
+            <div class="card form-card shadow-sm">
+
+                <div class="card-body p-4 p-md-5">
+
+                    <h1 class="section-title mb-3">
+                        Editar Especialista
+                    </h1>
+
+                    <p class="text-muted mb-4">
+                        Actualiza la información del especialista seleccionado.
+                    </p>
+
+                    <!-- FORMULARIO -->
+                    <form>
+
+                        <div class="row g-3">
+
+                            <!-- NOMBRE -->
+                            <div class="col-12 col-md-6">
+
+                                <label for="nombreEspecialista"
+                                       class="form-label">
+
+                                    Nombre completo
+
+                                </label>
+
+                                <input type="text"
+                                       class="form-control"
+                                       id="nombreEspecialista"
+                                       required>
+
+                            </div>
+
+                            <!-- ESPECIALIDAD -->
+                            <div class="col-12 col-md-6">
+
+                                <label for="especialidad"
+                                       class="form-label">
+
+                                    Especialidad
+
+                                </label>
+
+                                <select class="form-select"
+                                        id="especialidad"
+                                        required>
+
+                                    <option value="">
+                                        Selecciona una especialidad
+                                    </option>
+
+                                    <option value="Endoscopia">
+                                        Endoscopia
+                                    </option>
+
+                                    <option value="Laparoscopia">
+                                        Laparoscopia
+                                    </option>
+
+                                    <option value="Fisioterapia">
+                                        Fisioterapia
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                            <!-- EXPERIENCIA -->
+                            <div class="col-12 col-md-6">
+
+                                <label for="experiencia"
+                                       class="form-label">
+
+                                    Años de experiencia
+
+                                </label>
+
+                                <input type="number"
+                                       class="form-control"
+                                       id="experiencia"
+                                       required>
+
+                            </div>
+
+                            <!-- CORREO -->
+                            <div class="col-12 col-md-6">
+
+                                <label for="correo"
+                                       class="form-label">
+
+                                    Correo electrónico
+
+                                </label>
+
+                                <input type="email"
+                                       class="form-control"
+                                       id="correo"
+                                       required>
+
+                            </div>
+
+                            <!-- TELEFONO -->
+                            <div class="col-12 col-md-6">
+
+                                <label for="telefono"
+                                       class="form-label">
+
+                                    Teléfono
+
+                                </label>
+
+                                <input type="tel"
+                                       class="form-control"
+                                       id="telefono"
+                                       required>
+
+                            </div>
+
+                            <!-- FOTO -->
+                            <div class="col-12 col-md-6">
+
+                                <label for="fotoEspecialista"
+                                       class="form-label">
+
+                                    Foto del especialista
+
+                                </label>
+
+                                <input type="file"
+                                       class="form-control"
+                                       id="fotoEspecialista">
+
+                            </div>
+
+                            <!-- DESCRIPCION -->
+                            <div class="col-12">
+
+                                <label for="descripcion"
+                                       class="form-label">
+
+                                    Descripción profesional
+
+                                </label>
+
+                                <textarea class="form-control"
+                                          id="descripcion"
+                                          rows="4"
+                                          required></textarea>
+
+                            </div>
+
+                            <!-- ESTADO -->
+                            <div class="col-12 col-md-6">
+
+                                <label for="estadoEspecialista"
+                                       class="form-label">
+
+                                    Estado
+
+                                </label>
+
+                                <select class="form-select"
+                                        id="estadoEspecialista"
+                                        required>
+
+                                    <option value="">
+                                        Selecciona una opción
+                                    </option>
+
+                                    <option value="Activo">
+                                        Activo
+                                    </option>
+
+                                    <option value="Inactivo">
+                                        Inactivo
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+                        </div>
+
+                        <!-- BOTONES -->
+                        <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+
+                            <button type="reset"
+                                    class="btn btn-outline-secondary">
+
+                                Limpiar
+
+                            </button>
+
+                            <button type="submit"
+                                    class="btn btn-add">
+
+                                Guardar cambios
+
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+    <!-- FOOTER -->
+    <footer class="mt-5 py-4" style="background:#72CEF2;">
+
+        <div class="container text-center">
+
+            <p class="mb-1 fw-semibold" style="color:#27418C;">
+                Centro Ambulatorio de Cirugía Escalón
+            </p>
+
+            <p class="mb-0">
+
+                <a href="../SoporteContacto.html"
+                   class="text-decoration-none fw-bold"
+                   style="color:#27418C;">
+
+                    Contacto y soporte
+
+                </a>
+
+            </p>
+
+            <div class="d-flex justify-content-center gap-3 mt-3">
+
+                <a href="https://www.facebook.com"
+                   target="_blank"
+                   style="color:#27418C; font-size:1.25rem;">
+
+                    <i class="bi bi-facebook"></i>
+
+                </a>
+
+                <a href="https://www.instagram.com"
+                   target="_blank"
+                   style="color:#27418C; font-size:1.25rem;">
+
+                    <i class="bi bi-instagram"></i>
+
+                </a>
+
+                <a href="https://x.com"
+                   target="_blank"
+                   style="color:#27418C; font-size:1.25rem;">
+
+                    <i class="bi bi-twitter-x"></i>
+
+                </a>
+
+                <a href="https://wa.me/50600000000"
+                   target="_blank"
+                   style="color:#27418C; font-size:1.25rem;">
+
+                    <i class="bi bi-whatsapp"></i>
+
+                </a>
+
+            </div>
+
+        </div>
+
+    </footer>
+
+    <!-- BOOTSTRAP -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- SCRIPT EDITAR MÉDICO -->
+    <script>
+
+        const params = new URLSearchParams(window.location.search);
+
+        const id = params.get("id");
+
+        async function cargarMedico() {
+
+            try {
+
+                const response = await fetch(`https://localhost:7197/api/Medico/${id}`);
+
+                const medico = await response.json();
+
+                document.getElementById("nombreEspecialista").value = medico.nombre;
+                document.getElementById("especialidad").value = medico.especialidad;
+                document.getElementById("experiencia").value = medico.experiencia;
+                document.getElementById("correo").value = medico.correo;
+                document.getElementById("telefono").value = medico.telefono;
+                document.getElementById("descripcion").value = medico.descripcion;
+                document.getElementById("estadoEspecialista").value = medico.estado;
+
+            } catch (error) {
+
+                console.log("Error al cargar médico:", error);
+
+            }
+
+        }
+
+        async function actualizarMedico(event) {
+
+            event.preventDefault();
+
+            const medicoActualizado = {
+
+                idMedico: parseInt(id),
+                nombre: document.getElementById("nombreEspecialista").value,
+                especialidad: document.getElementById("especialidad").value,
+                experiencia: parseInt(document.getElementById("experiencia").value),
+                correo: document.getElementById("correo").value,
+                telefono: document.getElementById("telefono").value,
+                descripcion: document.getElementById("descripcion").value,
+                estado: document.getElementById("estadoEspecialista").value
+
+            };
+
+            try {
+
+                const response = await fetch(`https://localhost:7197/api/Medico/${id}`, {
+
+                    method: "PUT",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify(medicoActualizado)
+
+                });
+
+                if (response.ok) {
+
+                    alert("Médico actualizado correctamente");
+
+                    window.location.href = "../Especialistas.html";
+
+                } else {
+
+                    alert("Error al actualizar médico");
+
+                }
+
+            } catch (error) {
+
+                console.log("Error:", error);
+
+            }
+
+        }
+
+        document.querySelector("form")
+            .addEventListener("submit", actualizarMedico);
+
+        cargarMedico();
+
+    </script>
+
+</body>
+</html>
