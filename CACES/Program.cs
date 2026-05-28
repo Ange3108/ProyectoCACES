@@ -6,8 +6,7 @@ using CACES.DAL.DBContext;
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-builder.Services.AddControllersWithViews();
-
+builder.Services.AddRazorPages();
 
 // Register EF Core DbContext (SQLServer
 // ). Update the connection string in appsettings.json
@@ -15,6 +14,7 @@ builder.Services.AddDbContext<CACESDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 /*
 //Inyección de dependencias para repositorios, servicios, etc.
+
 
 // Repositorios
 builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
@@ -49,6 +49,6 @@ app.MapControllerRoute(
     .WithStaticAssets();
 
 
-
+app.MapRazorPages();
 
 app.Run();

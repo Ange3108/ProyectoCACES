@@ -22,7 +22,10 @@
   <ItemGroup>
     <ProjectReference Include="..\CACES.BLL\CACES.BLL.csproj" />
     <ProjectReference Include="..\CACES.DAL\CACES.DAL.csproj" />
-    <ProjectReference Include="..\CACES.IBLL\CACES.IBLL.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="CACES.DAL\" />
   </ItemGroup>
 
 </Project>
