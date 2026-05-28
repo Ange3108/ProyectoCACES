@@ -59,6 +59,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.FechaDeModificacion);
             });
 
+
             // Configuración de la entidad Paciente
             modelBuilder.Entity<Paciente>(entity =>
             {
