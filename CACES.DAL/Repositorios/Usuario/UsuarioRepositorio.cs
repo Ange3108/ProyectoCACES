@@ -43,6 +43,12 @@ namespace CACES.DAL.Repositorios.Usuario
             return await _context.Usuarios.FirstOrDefaultAsync(u => u.IdUsuario == id);
         }
 
+        public async Task<Entidades.Usuario> GetUsuarioByEmailAsync(string email)
+        {
+            if (string.IsNullOrEmpty(email)) return null;
+            return await _context.Usuarios.FirstOrDefaultAsync(u => u.CorreoElectronico == email);
+        }
+
         public async Task<List<Entidades.Usuario>> GetUsuariosAsync()
         {
             return await _context.Usuarios.ToListAsync();

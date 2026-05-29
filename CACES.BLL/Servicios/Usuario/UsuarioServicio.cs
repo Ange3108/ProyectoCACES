@@ -1,5 +1,6 @@
 using AutoMapper;
 using CACES.BLL.DTOs;
+using CACES.BLL.DTOs.Usuario;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Usuario;
 using System;
@@ -28,6 +29,7 @@ namespace CACES.BLL.Servicios.Usuario
             _mapper = mapper;
         }
 
+        //Metodo para crear parametros para una contrasena segura
         public (bool IsValid, string Message) ValidarContraseña(string password)
         {
             if (string.IsNullOrEmpty(password))
@@ -45,32 +47,52 @@ namespace CACES.BLL.Servicios.Usuario
             return (true, "Contraseña válida");
         }
 
-        public async Task<respuestaErrores<UsuarioDTO>> CrearUsuarioAsync(UsuarioDTO usuarioDto)
+        public async Task<respuestaErrores<MostrarUsuarioDTO>> CrearUsuarioAsync(RegistrarUsuarioDTO usuarioDto)
         {
+            //Validaciones de negocio
+            //Correo, DUI y contraseña segura
             try
             {
                 var validacion = ValidarContraseña(usuarioDto.passwordHash);
                 if (!validacion.IsValid)
-                    return new respuestaErrores<UsuarioDTO> { EsCorrecto = false, mensaje = validacion.Message };
+                    return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = validacion.Message };
+
+                var usuarioExistente = await _usuarioRepository.GetUsuarioByEmailAsync(usuarioDto.CorreoElectronico);
+                if (usuarioExistente != null)
+                    return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "El correo ya está registrado" };
 
                 var usuarioDui = await _usuarioRepository.GetUsuarioByDUIAsync(usuarioDto.DUI);
                 if (usuarioDui != null)
-                    return new respuestaErrores<UsuarioDTO> { EsCorrecto = false, mensaje = "El DUI ya está registrado" };
+                    return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "El DUI ya está registrado" };
 
-                var usuario = _mapper.Map<DAL.Entidades.Usuario>(usuarioDto);
-                usuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
-                usuario.FechaDeRegistro = DateTime.Now;
+                // Mapear con AutoMapper
+                var nuevoUsuario = _mapper.Map<DAL.Entidades.Usuario>(usuarioDto);
 
-                bool resultado = await _usuarioRepository.CreateUsuarioAsync(usuario);
+                // Agregar lógica específica de negocio
+                nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
+                nuevoUsuario.FechaDeRegistro = DateTime.Now;
+                nuevoUsuario.SecurityStamp = Guid.NewGuid().ToString();
+                nuevoUsuario.Estado = true;
+
+                // Guardar
+                bool resultado = await _usuarioRepository.CreateUsuarioAsync(nuevoUsuario);
 
                 if (resultado)
-                    return new respuestaErrores<UsuarioDTO> { EsCorrecto = true, mensaje = "Usuario registrado exitosamente", Dato = usuarioDto };
-                else
-                    return new respuestaErrores<UsuarioDTO> { EsCorrecto = false, mensaje = "Error al registrar el usuario" };
+                {
+                    var usuarioRetorno = _mapper.Map<MostrarUsuarioDTO>(nuevoUsuario);
+                    return new respuestaErrores<MostrarUsuarioDTO>
+                    {
+                        EsCorrecto = true,
+                        mensaje = "Usuario registrado exitosamente",
+                        Dato = usuarioRetorno
+                    };
+                }
+
+                return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Error al registrar" };
             }
             catch (Exception ex)
             {
-                return new respuestaErrores<UsuarioDTO> { EsCorrecto = false, mensaje = ex.Message };
+                return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = ex.Message };
             }
         }
         private string HashContraseña(string password)
@@ -82,14 +104,33 @@ namespace CACES.BLL.Servicios.Usuario
             }
         }
 
-        public async Task<respuestaErrores<UsuarioDTO>> ActualizarUsuarioAsync(int id, UsuarioDTO usuarioDto)
+        public async Task<respuestaErrores<MostrarUsuarioDTO>> ActualizarUsuarioAsync(int id, ActualizarUsuarioDTO usuarioDto)
         {
-            throw new NotImplementedException();
+           
+            var usuario = await _usuarioRepository.GetUsuarioByIdAsync(id);
+            if (usuario == null)
+                return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Usuario no encontrado", codigoError = 404 };
+            
+            _mapper.Map(usuarioDto, usuario);
+            usuario.FechaDeModificacion = DateTime.Now;
+
+            bool resultado = await _usuarioRepository.UpdateUsuarioAsync(usuario);
+
+            if (resultado)
+                return new respuestaErrores<MostrarUsuarioDTO>
+                {
+                    EsCorrecto = true,
+                    mensaje = "Usuario actualizado exitosamente",
+                    Dato = _mapper.Map<MostrarUsuarioDTO>(usuario)
+                };
+
+            return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Error al actualizar" };
+
         }
 
-        public async Task<respuestaErrores<UsuarioDTO>> EliminarUsuarioAsync(int id)
+        public async Task<respuestaErrores<MostrarUsuarioDTO>> EliminarUsuarioAsync(int id)
         {
-            var respuesta = new respuestaErrores<UsuarioDTO>();
+            var respuesta = new respuestaErrores<MostrarUsuarioDTO>();
 
             if (!await _usuarioRepository.DeleteUsuarioAsync(id))
             {
@@ -101,17 +142,17 @@ namespace CACES.BLL.Servicios.Usuario
             return respuesta;
         }
 
-        public async Task<respuestaErrores<UsuarioDTO>> ObtenerUsuarioPorDUIAsync(string dui)
+        public async Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorDUIAsync(string dui)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<respuestaErrores<UsuarioDTO>> ObtenerUsuarioPorIdAsync(int id)
+        public async Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorIdAsync(int id)
         {
             throw new NotImplementedException();
         }
 
-        public async Task<respuestaErrores<List<UsuarioDTO>>> ObtenerUsuariosAsync()
+        public async Task<respuestaErrores<List<MostrarUsuarioDTO>>> GetUsuariosAsync()
         {
             throw new NotImplementedException();
         }

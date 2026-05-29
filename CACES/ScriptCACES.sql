@@ -243,25 +243,8 @@ GO
 ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.Usuarios_UserId]
 GO
 
-/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 12/11/2024 13:29:30 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- ELIMINADA - Reemplazada por UsuarioRoles
--- CREATE TABLE [dbo].[AspNetUserRoles]
 
-/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 12/11/2024 13:29:30 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
--- ELIMINADA - Consolidada con Usuarios
--- CREATE TABLE [dbo].[AspNetUsers]
 
--- CONSTRAINTS ELIMINADOS - Ya no necesarios
--- ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
--- ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
 
 
 -- ============================================
@@ -282,23 +265,24 @@ INSERT INTO Especialidad (Nombre, Descripcion, Icono, FechaDeRegistro, Estado) V
 ('Cirugía', 'Cirugía general y procedimientos quirúrgicos', 'surgery-icon.png', GETDATE(), 1);
 GO
 
--- USUARIOS (Admin, Médico, Paciente) - Sin AspNetUsers
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Foto, FechaDeRegistro, FechaDeModificacion, Estado, 
+--usuarios
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, FechaDeRegistro, FechaDeModificacion, Estado, 
 	PasswordHash, SecurityStamp, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, EmailConfirmed) 
 VALUES
-('Juan', 'García', 'López', 'juan.admin@caces.com', '12345678', 'juan.jpg', GETDATE(), NULL, 1, 
+('Juan', 'García', 'López', 'juan.admin@caces.com', '12345678', '7123-4567', GETDATE(), NULL, 1, 
 	'hashed_password_here', 'stamp-001', 0, NULL, 1, 0, 1),
-('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg', GETDATE(), NULL, 1, 
+('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', '7234-5678', GETDATE(), NULL, 1, 
 	'hashed_password_here', 'stamp-002', 0, NULL, 1, 0, 1),
-('María', 'Hernández', 'Gómez', 'maria.paciente@caces.com', '11223344', 'maria.jpg', GETDATE(), NULL, 1, 
+('María', 'Hernández', 'Gómez', 'maria.paciente@caces.com', '11223344', '7345-6789', GETDATE(), NULL, 1, 
 	'hashed_password_here', 'stamp-003', 0, NULL, 1, 0, 1);
 GO
 
 -- MEDICOS
-INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certificaciones, FechaDeRegistro) VALUES
-(1, 2, 10, '2-2222-2222', 'Licenciado en Medicina, Especialista en Laparoscopia', GETDATE()),
-(2, 2, 8, '2-3333-3333', 'Licenciado en Medicina, Especialista en Oncología', GETDATE()),
-(3, 2, 12, '2-4444-4444', 'Licenciado en Medicina, Especialista en Cirugía General', GETDATE());
+
+INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Certificaciones, FechaDeRegistro, Foto) VALUES
+(1, 2, 10, 'Licenciado en Medicina, Especialista en Oncologia', GETDATE(), 'juan.png'),
+(2, 2, 8, 'Licenciado en Medicina, Especialista en Laparoscopia', GETDATE(), 'oscar.png'),
+(3, 2, 12, 'Licenciado en Medicina, Especialista en Cirugía General', GETDATE(), 'maria.png');
 GO
 
 -- HISTORIAL MEDICO

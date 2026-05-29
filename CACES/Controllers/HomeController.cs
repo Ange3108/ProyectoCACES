@@ -16,6 +16,10 @@ namespace CACES.Controllers
             return View();
         }
 
+        public IActionResult Reportes()
+        {
+            return View();
+        }
 
     
 

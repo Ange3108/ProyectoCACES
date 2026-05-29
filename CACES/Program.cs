@@ -1,6 +1,10 @@
-using Microsoft.EntityFrameworkCore;
 using CACES.BLL;
+using CACES.BLL.Servicios.Usuario;
+using CACES.BLL.Servicios.Paciente;
 using CACES.DAL.DBContext;
+using CACES.DAL.Repositorios.Pacientes;
+using CACES.DAL.Repositorios.Usuario;
+using Microsoft.EntityFrameworkCore;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -12,19 +16,21 @@ builder.Services.AddRazorPages();
 // ). Update the connection string in appsettings.json
 builder.Services.AddDbContext<CACESDbContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
-/*
+
 //Inyección de dependencias para repositorios, servicios, etc.
 
-
-// Repositorios
-builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
+// Agregar esto:
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
+builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
+// Registrar servicios y repositorios (añadir esta línea)
+builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 
 // Servicios
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 
 
-*/
+
+
 
 var app = builder.Build();
 
