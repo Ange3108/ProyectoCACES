@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CACES.BLL.DTOs
+namespace CACES.BLL.DTOs.Usuario
 {
-    public class UsuarioDTO
+    public class RegistrarUsuarioDTO
     {
         public int idUsuario { get; set; }
         public string Nombres { get; set; } = null!;

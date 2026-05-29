@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace CACES.BLL.Servicios.Paciente
+namespace CACES.BLL.DTOs.Usuario
 {
-    public interface IPacienteServicio
+    internal class ActualizarUsuarioDTO
     {
     }
 }
