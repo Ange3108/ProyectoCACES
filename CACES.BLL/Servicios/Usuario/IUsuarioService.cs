@@ -8,12 +8,12 @@ namespace CACES.BLL.Servicios.Usuario
 {
     public interface IUsuarioService
     {
-        Task<respuestaErrores<List<RegistrarUsuarioDTO>>> ObtenerUsuariosAsync();
-        Task<respuestaErrores<RegistrarUsuarioDTO>> ObtenerUsuarioPorIdAsync(int id);
-        Task<respuestaErrores<RegistrarUsuarioDTO>> ObtenerUsuarioPorDUIAsync(string dui);
-        Task<respuestaErrores<RegistrarUsuarioDTO>> CrearUsuarioAsync(RegistrarUsuarioDTO usuario);
-        Task<respuestaErrores<RegistrarUsuarioDTO>> ActualizarUsuarioAsync(int id, RegistrarUsuarioDTO usuario);
-        Task<respuestaErrores<RegistrarUsuarioDTO>> EliminarUsuarioAsync(int id);
+        Task<respuestaErrores<List<MostrarUsuarioDTO>>> GetUsuariosAsync();
+        Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorIdAsync(int id);
+        Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorDUIAsync(string dui);
+        Task<respuestaErrores<MostrarUsuarioDTO>> CrearUsuarioAsync(RegistrarUsuarioDTO usuario);
+        Task<respuestaErrores<MostrarUsuarioDTO>> ActualizarUsuarioAsync(int id, ActualizarUsuarioDTO usuario);
+        Task<respuestaErrores<MostrarUsuarioDTO>> EliminarUsuarioAsync(int id);
 
 
     }

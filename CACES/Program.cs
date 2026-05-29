@@ -22,6 +22,8 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 // Agregar esto:
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
+// Registrar servicios y repositorios (añadir esta línea)
+builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 
 // Servicios
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
