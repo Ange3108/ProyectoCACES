@@ -109,7 +109,7 @@ namespace CACES.BLL.Servicios.Usuario
            
             var usuario = await _usuarioRepository.GetUsuarioByIdAsync(id);
             if (usuario == null)
-                return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Usuario no encontrado", codigoError = 404 };
+                return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Usuario no encontrado", codigo = 404 };
             
             _mapper.Map(usuarioDto, usuario);
             usuario.FechaDeModificacion = DateTime.Now;
@@ -136,7 +136,7 @@ namespace CACES.BLL.Servicios.Usuario
             {
                 respuesta.EsCorrecto = false;
                 respuesta.mensaje = "No se pudo eliminar el usuario";
-                respuesta.codigoError = 404;
+                respuesta.codigo = 404;
             }
 
             return respuesta;
@@ -144,17 +144,42 @@ namespace CACES.BLL.Servicios.Usuario
 
         public async Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorDUIAsync(string dui)
         {
-            throw new NotImplementedException();
+            var respuesta = new respuestaErrores<MostrarUsuarioDTO?>();
+            var usuario = await _usuarioRepository.GetUsuarioByDUIAsync(dui);
+            if (usuario == null)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "Usuario no encontrado";
+                respuesta.codigo = 404;
+                return respuesta;
+            }
+            respuesta.Dato = _mapper.Map<MostrarUsuarioDTO>(usuario);
+            return respuesta;
         }
 
         public async Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            var respuesta = new respuestaErrores<MostrarUsuarioDTO?>();
+            var usuario = await _usuarioRepository.GetUsuarioByIdAsync(id);
+            if (usuario == null)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "Usuario no encontrado";
+                respuesta.codigo = 404;
+                return respuesta;
+            }
+
+            respuesta.Dato = _mapper.Map<MostrarUsuarioDTO>(usuario);
+            return respuesta;
         }
 
         public async Task<respuestaErrores<List<MostrarUsuarioDTO>>> GetUsuariosAsync()
         {
-            throw new NotImplementedException();
+            var respuesta = new respuestaErrores<List<MostrarUsuarioDTO>>();
+            var listaUsuarios = await _usuarioRepository.GetUsuariosAsync();
+            respuesta.Dato = _mapper.Map<List<MostrarUsuarioDTO>>(listaUsuarios);
+
+            return respuesta;
         }
     }
 }

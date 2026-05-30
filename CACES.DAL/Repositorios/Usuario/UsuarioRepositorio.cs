@@ -1,4 +1,5 @@
-﻿using CACES.DAL.DBContext;
+﻿using CACES.DAL.Entidades;
+using CACES.DAL.DBContext;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
