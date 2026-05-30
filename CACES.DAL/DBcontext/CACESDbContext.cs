@@ -7,6 +7,7 @@ namespace CACES.DAL.DBContext
     {
         public CACESDbContext(DbContextOptions<CACESDbContext> options) : base(options)
         {
+
         }
 
         // DbSets para las entidades
