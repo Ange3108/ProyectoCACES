@@ -9,13 +9,13 @@ namespace CACES.BLL.DTOs
         public bool EsCorrecto { get; set; } 
         public string mensaje { get; set; } = string.Empty;
         public T Dato { get; set; }
-        public int codigoError { get; set; } 
+        public int codigo { get; set; } 
 
         public respuestaErrores() 
         { 
             EsCorrecto = true; 
             mensaje = "Operación realizada correctamente.";
-            codigoError = 200;
+            codigo = 200;
         }
 
     }

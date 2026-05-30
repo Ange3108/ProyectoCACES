@@ -1,5 +1,6 @@
-@using CACES.DAL.Entidades
-@model Usuario
+@using CACES.BLL.DTOs.Usuario
+@model RegistrarUsuarioDTO
+
 
 @{
 	ViewData["Title"] = "Crear Cuenta";
@@ -10,14 +11,11 @@
 		<div class="col-lg-8">
 			<h1 class="mb-4">Registro de Usuario</h1>
 
-			<form asp-action="Registrar" asp-controller="Usuarios" method="post" class="card border-0 shadow-sm p-4">
+			<form asp-action="RegistroUsuario" asp-controller="Usuario" method="post" class="card border-0 shadow-sm p-4">
 				<div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
 
 				<!-- DATOS PERSONALES -->
 				<section class="mb-5">
-					<h3 class="mb-3">
-						<i class="bi bi-person-fill" style="color: #72CEF2;"></i> Datos Personales
-					</h3>
 
 					<div class="row">
 						<div class="col-md-6 mb-3">
@@ -64,16 +62,13 @@
 
 				<!-- SEGURIDAD -->
 				<section class="mb-5">
-					<h3 class="mb-3">
-						<i class="bi bi-lock-fill" style="color: #72CEF2;"></i> Seguridad
-					</h3>
-
+					<h3 class="mb-3">Seguridad</h3>
 					<div class="row">
 						<div class="col-md-6 mb-3">
 							<label for="passwordHash" class="form-label">Contraseña</label>
-							<input type="password" asp-for="PasswordHash" class="form-control">
-							<small class="text-muted d-block mt-1">Mínimo 8 caracteres</small>
-							<span asp-validation-for="PasswordHash" class="text-danger"></span>
+							<input type="password" asp-for="passwordHash" class="form-control">
+							<small class="text-muted d-block mt-1">Mínimo 8 caracteres, con números y caracteres especiales</small>
+							<span asp-validation-for="passwordHash" class="text-danger"></span>
 						</div>
 
 						<div class="col-md-6 mb-3">
@@ -103,7 +98,7 @@
 				</div>
 
 				<p class="text-center mt-3">
-					¿Ya tienes cuenta? <a asp-action="Login" asp-controller="Usuarios" class="text-decoration-none">Iniciar sesión</a>
+					¿Ya tienes cuenta? <a asp-action="Login" asp-controller="Usuario" class="text-decoration-none">Iniciar sesión</a>
 				</p>
 			</form>
 		</div>

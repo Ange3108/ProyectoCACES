@@ -4,7 +4,7 @@ using System.Text;
 
 namespace CACES.BLL.Servicios.Paciente
 {
-    internal interface IPacienteServicio
+    public interface IPacienteServicio
     {
     }
 }
