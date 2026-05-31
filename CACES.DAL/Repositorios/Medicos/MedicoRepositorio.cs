@@ -26,6 +26,7 @@ namespace CACES.DAL.Repositorios.Medicos
 
         public async Task<bool> CreateMedicoAsync(Medico medico)
         {
+            if(medico == null) return false;
             await _context.Medicos.AddAsync(medico);
 
             return await _context.SaveChangesAsync() > 0;
