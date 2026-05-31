@@ -1,8 +1,10 @@
 using AutoMapper;
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Usuario;
+using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Usuario;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -20,13 +22,17 @@ namespace CACES.BLL.Servicios.Usuario
     {
         private readonly IUsuarioRepositorio _usuarioRepository;
         private readonly IMapper _mapper;
+        private readonly IEmailServicio _emailServicio;
+        private readonly ILogger _logger;
 
         public object BCrypt { get; private set; }
 
-        public UsuarioServicio(IUsuarioRepositorio usuarioRepository, IMapper mapper)
+        public UsuarioServicio(IUsuarioRepositorio usuarioRepository, IMapper mapper, IEmailServicio emailServicio, ILogger logger)
         {
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
+            _emailServicio = emailServicio;
+            _logger = logger;
         }
 
         //Metodo para crear parametros para una contrasena segura
@@ -79,6 +85,19 @@ namespace CACES.BLL.Servicios.Usuario
 
                 if (resultado)
                 {
+                    try
+                    {
+                        string asunto = "¡Bienvenido a nuestro sistema!";
+                        string cuerpo = $"<h1>Hola {nuevoUsuario.Nombres}!</h1><p>Tu cuenta ha sido creada exitosamente con el correo {nuevoUsuario.CorreoElectronico}.</p>";
+
+                        // Lo ejecutamos de forma asíncrona para no bloquear el flujo principal
+                        await _emailServicio.EnviarCorreoAsync(nuevoUsuario.CorreoElectronico, asunto, cuerpo);
+                    }
+                    catch (Exception ex)
+                    {
+                        
+                        _logger.LogError("Fallo al enviar correo de bienvenida a {Email}: {ErrorMessage}", nuevoUsuario.CorreoElectronico, ex);
+                    }
                     var usuarioRetorno = _mapper.Map<MostrarUsuarioDTO>(nuevoUsuario);
                     return new respuestaErrores<MostrarUsuarioDTO>
                     {

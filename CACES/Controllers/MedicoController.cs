@@ -15,6 +15,16 @@ namespace CACES.Controllers
             _medicoServicio = medicoServicio;
         }
 
+        [HttpPost]
+        public async Task<IActionResult> CreateMedico([FromBody] Medico medico)
+        {
+            var result = await _medicoServicio.CreateMedicoAsync(medico);
+            if (!result)
+                return BadRequest();
+            return Ok();
+        }
+
+
         [HttpGet]
         public async Task<IActionResult> GetMedicos()
         {
