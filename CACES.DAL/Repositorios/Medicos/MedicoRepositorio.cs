@@ -18,6 +18,7 @@ namespace CACES.DAL.Repositorios.Medicos
             return await _context.Medicos.ToListAsync();
         }
 
+
         public async Task<Medico> GetMedicoByIdAsync(int id)
         {
             return await _context.Medicos.FirstOrDefaultAsync(x => x.IdMedico == id);
