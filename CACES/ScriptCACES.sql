@@ -364,4 +364,6 @@ SELECT u.Id_Usuario, '2' FROM Usuarios u WHERE u.CorreoElectronico = 'oscar.medi
 UNION ALL
 SELECT u.Id_Usuario, '3' FROM Usuarios u WHERE u.CorreoElectronico = 'maria.paciente@caces.com'; -- María es Paciente
 GO
-GO
+
+ALTER TABLE Usuarios
+ADD CONSTRAINT DF_Usuarios_Estado DEFAULT (1) FOR Estado;
