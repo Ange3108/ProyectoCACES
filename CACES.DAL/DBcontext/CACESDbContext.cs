@@ -7,6 +7,7 @@ namespace CACES.DAL.DBContext
     {
         public CACESDbContext(DbContextOptions<CACESDbContext> options) : base(options)
         {
+
         }
 
         // DbSets para las entidades
@@ -57,6 +58,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.FechaDeCreacion).IsRequired();
                 entity.Property(e => e.FechaDeModificacion);
             });
+
 
             // Configuración de la entidad Paciente
             modelBuilder.Entity<Paciente>(entity =>
