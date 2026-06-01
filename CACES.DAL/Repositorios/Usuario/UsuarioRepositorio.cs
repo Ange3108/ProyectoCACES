@@ -61,5 +61,20 @@ namespace CACES.DAL.Repositorios.Usuario
             _context.Usuarios.Update(usuario);
             return await _context.SaveChangesAsync() > 0;
         }
+        public async Task<bool> DesactivarUsuarioAsync(int id)
+        {
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.IdUsuario == id);
+
+            if (usuario == null)
+                return false;
+
+            usuario.Estado = false;
+            usuario.FechaDeModificacion = DateTime.Now;
+
+            _context.Usuarios.Update(usuario);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

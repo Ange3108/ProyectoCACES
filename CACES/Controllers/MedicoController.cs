@@ -4,9 +4,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CACES.Controllers
 {
-    [ApiController]
-    [Route("api/[controller]")]
-    public class MedicoController : ControllerBase
+    public class MedicoController : Controller
     {
         private readonly IMedicoServicio _medicoServicio;
 
@@ -16,33 +14,42 @@ namespace CACES.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> GetMedicos()
+        public async Task<IActionResult> Medicos()
         {
-            var lista = await _medicoServicio.GetMedicosAsync();
-
-            return Ok(lista);
+            var medicos = await _medicoServicio.GetMedicosAsync();
+            return View(medicos);
         }
 
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetMedicoById(int id)
+        [HttpGet]
+        public async Task<IActionResult> EditarMedico(int id)
         {
             var medico = await _medicoServicio.GetMedicoByIdAsync(id);
 
             if (medico == null)
-                return NotFound();
+            {
+                TempData["Error"] = "Médico no encontrado.";
+                return RedirectToAction("Medicos");
+            }
 
-            return Ok(medico);
+            return View(medico);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateMedico([FromBody] Medico medico)
+        [HttpPost]
+        public async Task<IActionResult> EditarMedico(Medico medico)
         {
-            var result = await _medicoServicio.UpdateMedicoAsync(medico);
+            if (!ModelState.IsValid)
+                return View(medico);
 
-            if (!result)
-                return BadRequest();
+            var resultado = await _medicoServicio.UpdateMedicoAsync(medico);
 
-            return Ok();
+            if (!resultado)
+            {
+                TempData["Error"] = "No se pudo actualizar el médico.";
+                return View(medico);
+            }
+
+            TempData["Mensaje"] = "Médico actualizado correctamente.";
+            return RedirectToAction("Medicos");
         }
     }
 }
