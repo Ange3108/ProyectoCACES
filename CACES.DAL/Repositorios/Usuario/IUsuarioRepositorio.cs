@@ -13,5 +13,6 @@ namespace CACES.DAL.Repositorios.Usuario
         Task<bool> CreateUsuarioAsync(Entidades.Usuario usuario);
         Task<bool> UpdateUsuarioAsync(Entidades.Usuario usuario);
         Task<bool> DeleteUsuarioAsync(int id);
+        Task<bool> DesactivarUsuarioAsync(int id);
     }
 }

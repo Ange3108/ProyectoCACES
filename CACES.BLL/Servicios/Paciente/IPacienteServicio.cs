@@ -21,5 +21,6 @@ namespace CACES.BLL.Servicios.Paciente
 
         Task<bool> RegistrarPacienteAsync(
             RegistrarPacienteDTO pacienteDto);
+        Task<bool> DesactivarPacienteAsync(int idPaciente);
     }
 }

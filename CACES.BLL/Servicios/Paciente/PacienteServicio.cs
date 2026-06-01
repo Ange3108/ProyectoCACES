@@ -54,6 +54,15 @@ namespace CACES.BLL.Servicios.Paciente
         {
             return await _pacienteRepositorio.DeletePacienteAsync(id);
         }
+        public async Task<bool> DesactivarPacienteAsync(int idPaciente)
+        {
+            var paciente = await _pacienteRepositorio.GetPacienteByIdAsync(idPaciente);
+
+            if (paciente == null)
+                return false;
+
+            return await _usuarioRepositorio.DesactivarUsuarioAsync(paciente.IdUsuario);
+        }
 
         public async Task<bool> RegistrarPacienteAsync(
             RegistrarPacienteDTO dto)
