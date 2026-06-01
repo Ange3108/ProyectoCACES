@@ -77,7 +77,7 @@ namespace CACES.BLL.Servicios.Paciente
                     return false;
 
                 // Crear Usuario
-                var usuario = new Usuario
+                var usuario = new CACES.DAL.Entidades.Usuario
                 {
                     Nombres = dto.Nombres,
                     PrimerApellido = dto.PrimerApellido,
