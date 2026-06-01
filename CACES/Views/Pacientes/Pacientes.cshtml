@@ -1,67 +1,90 @@
-﻿
+﻿@model List<CACES.DAL.Entidades.Paciente>
+
 @{
-	ViewData["Title"] = "Registro de Pacientes";
+ViewData["Title"] = "Pacientes";
 }
+
 <section class="container py-5">
-    <div class="top-action">
-        <a class="btn btn-add" asp-action="Registrar" asp-controller="Usuarios">+ Registrar Paciente</a>
-    </div>
-    <section class="mt-4">
 
-        <div class="row g-4">
-            <!-- Aquí se agregarán la tabla de pacientes -->
-            <div class="card shadow-sm border-0">
-                <div class="card-body">
-                    <h4 class="card-title mb-1">Listado de Pacientes</h4>
-                    <p class="text-muted mb-3">Gestión de pacientes del sistema</p>
-                    <div class="table-responsive">
-                        <table class="table table-hover align-middle mb-0">
-                            <thead>
-                                <tr>
-                                    <th>Nombre</th>
-                                    <th>Correo Electrónico</th>
-                                    <th>Citas del paciente</th>
+```
+<div class="top-action">
+    <a class="btn btn-add"
+       asp-controller="Paciente"
+       asp-action="RegistroPaciente">
+        + Registrar Paciente
+    </a>
+</div>
 
-                                </tr>
-                            </thead>
-                            <tbody>
+<section class="mt-4">
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+
+            <h4 class="card-title mb-1">Listado de Pacientes</h4>
+            <p class="text-muted mb-3">
+                Gestión de pacientes del sistema
+            </p>
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle mb-0">
+
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo Electrónico</th>
+                            <th>DUI</th>
+                            <th>Teléfono</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model != null && Model.Any())
+                        {
+                            @foreach (var paciente in Model)
+                            {
                                 <tr>
-                                    <td>Mateo Herrera</td>
-                                    <td>mateo.herrera@example.com</td>
+
                                     <td>
-                                        <ul class="list-unstyled">
-                                            <li class="mb-2"><span class="btn btn-sm btn-info">Cita 1: Consulta General - 10/06/2026</span></li>
-                                            <li class="mb-2"><span class="btn btn-sm btn-info">Cita 2: Exámenes de Laboratorio - 20/06/2026</span></li>
-                                        </ul>
+                                        @paciente.Usuario.Nombres
+                                        @paciente.Usuario.PrimerApellido
+                                    </td>
+
+                                    <td>
+                                        @paciente.Usuario.CorreoElectronico
+                                    </td>
+
+                                    <td>
+                                        @paciente.Usuario.DUI
+                                    </td>
+
+                                    <td>
+                                        @paciente.Usuario.Telefono
                                     </td>
 
                                 </tr>
-                                <tr>
-                                    <td>Camila Torres</td>
-                                    <td>camila.torres@example.com</td>
-                                    <td>
-                                        <ul class="list-unstyled">
-                                            <li class="mb-2"><span class="btn btn-sm btn-info">Cita 1: Consulta General - 10/06/2026</span></li>
-                                            <li class="mb-2"><span class="btn btn-sm btn-info">Cita 2: Exámenes de Laboratorio - 20/06/2026</span></li>
-                                        </ul>
-                                    </td>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="4" class="text-center">
+                                    No hay pacientes registrados.
+                                </td>
+                            </tr>
+                        }
 
-                                </tr>
-                                <tr>
-                                    <td>Diego Paz</td>
-                                    <td>diego.paz@example.com</td>
-                                    <td>
-                                        <ul class="list-unstyled">
-                                            <li class="mb-2"><span class="btn btn-sm btn-info">Cita 1: Consulta General - 10/06/2026</span></li>
-                                        </ul>
-                                    </td>
+                    </tbody>
 
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                </div>
+                </table>
+
             </div>
-        </section>
 
-    </section>
+        </div>
+    </div>
+
+</section>
+```
+
+</section>

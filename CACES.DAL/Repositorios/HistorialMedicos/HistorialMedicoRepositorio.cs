@@ -3,7 +3,7 @@ using CACES.DAL.DBContext;
 using CACES.DAL.Entidades;
 using Microsoft.EntityFrameworkCore;
 
-namespace CACES.DAL.Repositorios.HistorialMedico
+namespace CACES.DAL.Repositorios.HistorialMedicos
 {
     public class HistorialMedicoRepositorio
         : IHistorialMedicoRepositorio

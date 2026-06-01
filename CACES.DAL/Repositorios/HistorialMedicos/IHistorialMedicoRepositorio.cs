@@ -1,16 +1,16 @@
 ﻿using System;
 using CACES.DAL.Entidades;
 
-namespace CACES.DAL.Repositorios.HistorialMedico
+namespace CACES.DAL.Repositorios.HistorialMedicos
 {
     public interface IHistorialMedicoRepositorio
     {
         Task<HistorialMedico> CreateHistorialAsync(
-            HistorialMedico historial);
+            HistorialMedicos historial);
 
         Task<HistorialMedico> GetHistorialByIdAsync(int id);
 
         Task<bool> UpdateHistorialAsync(
-            HistorialMedico historial);
+            HistorialMedicos historial);
     }
 }

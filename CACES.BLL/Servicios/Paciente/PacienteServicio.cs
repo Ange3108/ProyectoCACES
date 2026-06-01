@@ -5,7 +5,7 @@ using CACES.BLL.DTOs.Paciente;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Usuario;
-using CACES.DAL.Repositorios.HistorialMedico;
+using CACES.DAL.Repositorios.HistorialMedicos;
 
 namespace CACES.BLL.Servicios.Paciente
 {
@@ -85,6 +85,8 @@ namespace CACES.BLL.Servicios.Paciente
                     CorreoElectronico = dto.CorreoElectronico,
                     DUI = dto.DUI,
                     Telefono = dto.Telefono,
+                    Direccion = dto.Direccion,
+                    Edad = dto.Edad,
 
                     PasswordHash = dto.Password,
                     SecurityStamp = Guid.NewGuid().ToString(),
@@ -92,7 +94,6 @@ namespace CACES.BLL.Servicios.Paciente
                     Estado = true,
                     FechaDeRegistro = DateTime.Now
                 };
-
                 await _usuarioRepositorio
                     .CreateUsuarioAsync(usuario);
 

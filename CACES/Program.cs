@@ -6,7 +6,9 @@ using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.EntityFrameworkCore;
-
+using CACES.DAL.Repositorios.HistorialMedicos;
+using CACES.DAL.Repositorios.Medicos;
+using CACES.BLL.Servicios.Medicos;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -29,7 +31,11 @@ builder.Services.AddTransient<IEmailServicio, EmailServicio>();
 // Servicios
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 
+builder.Services.AddScoped<IHistorialMedicoRepositorio, HistorialMedicoRepositorio>();
+builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();
 
+builder.Services.AddScoped<IMedicoRepositorio, MedicoRepositorio>();
+builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();
 
 
 
@@ -57,5 +63,6 @@ app.MapControllerRoute(
 
 
 app.MapRazorPages();
+
 
 app.Run();
