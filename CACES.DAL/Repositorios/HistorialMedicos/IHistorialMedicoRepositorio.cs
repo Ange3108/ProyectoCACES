@@ -1,7 +1,7 @@
 ﻿using System;
 using CACES.DAL.Entidades;
 
-namespace CACES.DAL.Repositorios.HistorialMedico
+namespace CACES.DAL.Repositorios.HistorialMedicos
 {
     public interface IHistorialMedicoRepositorio
     {

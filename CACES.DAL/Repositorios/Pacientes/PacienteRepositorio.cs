@@ -17,9 +17,12 @@ namespace CACES.DAL.Repositorios.Pacientes
             _context = context;
         }
 
-        public Task<bool> CreatePacienteAsync(Paciente paciente)
+        public async Task<bool> CreatePacienteAsync(Paciente paciente)
         {
-            throw new NotImplementedException();
+            if (paciente == null) return false;
+
+            await _context.Pacientes.AddAsync(paciente);
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<bool> DeletePacienteAsync(int id)
@@ -31,19 +34,28 @@ namespace CACES.DAL.Repositorios.Pacientes
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public Task<Paciente> GetPacienteByDUIAsync(string dui)
+        public async Task<Paciente> GetPacienteByDUIAsync(string dui)
         {
-            throw new NotImplementedException();
+            return await _context.Pacientes
+                .Include(p => p.Usuario)
+                .Include(p => p.HistorialMedico)
+                .FirstOrDefaultAsync(p => p.Usuario.DUI == dui);
         }
 
-        public Task<Paciente> GetPacienteByIdAsync(int id)
+        public async Task<Paciente> GetPacienteByIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Pacientes
+                .Include(p => p.Usuario)
+                .Include(p => p.HistorialMedico)
+                .FirstOrDefaultAsync(p => p.IdPaciente == id);
         }
 
-        public Task<List<Paciente>> GetPacientesAsync()
+        public async Task<List<Paciente>> GetPacientesAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Pacientes
+                .Include(p => p.Usuario)
+                .Include(p => p.HistorialMedico)
+                .ToListAsync();
         }
 
         public async Task<bool> UpdatePacienteAsync(Paciente paciente)

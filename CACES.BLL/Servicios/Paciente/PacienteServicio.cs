@@ -5,7 +5,7 @@ using CACES.BLL.DTOs.Paciente;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Usuario;
-using CACES.DAL.Repositorios.HistorialMedico;
+using CACES.DAL.Repositorios.HistorialMedicos;
 
 namespace CACES.BLL.Servicios.Paciente
 {
@@ -54,6 +54,15 @@ namespace CACES.BLL.Servicios.Paciente
         {
             return await _pacienteRepositorio.DeletePacienteAsync(id);
         }
+        public async Task<bool> DesactivarPacienteAsync(int idPaciente)
+        {
+            var paciente = await _pacienteRepositorio.GetPacienteByIdAsync(idPaciente);
+
+            if (paciente == null)
+                return false;
+
+            return await _usuarioRepositorio.DesactivarUsuarioAsync(paciente.IdUsuario);
+        }
 
         public async Task<bool> RegistrarPacienteAsync(
             RegistrarPacienteDTO dto)
@@ -77,7 +86,7 @@ namespace CACES.BLL.Servicios.Paciente
                     return false;
 
                 // Crear Usuario
-                var usuario = new Usuario
+                var usuario = new CACES.DAL.Entidades.Usuario
                 {
                     Nombres = dto.Nombres,
                     PrimerApellido = dto.PrimerApellido,
@@ -85,6 +94,8 @@ namespace CACES.BLL.Servicios.Paciente
                     CorreoElectronico = dto.CorreoElectronico,
                     DUI = dto.DUI,
                     Telefono = dto.Telefono,
+                    Direccion = dto.Direccion,
+                    Edad = dto.Edad,
 
                     PasswordHash = dto.Password,
                     SecurityStamp = Guid.NewGuid().ToString(),
@@ -92,7 +103,6 @@ namespace CACES.BLL.Servicios.Paciente
                     Estado = true,
                     FechaDeRegistro = DateTime.Now
                 };
-
                 await _usuarioRepositorio
                     .CreateUsuarioAsync(usuario);
 

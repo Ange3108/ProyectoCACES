@@ -23,12 +23,12 @@ namespace CACES.BLL.Servicios.Usuario
         private readonly IUsuarioRepositorio _usuarioRepository;
         private readonly IMapper _mapper;
         private readonly IEmailServicio _emailServicio;
-        private readonly ILogger _logger;
+ 
+        private readonly ILogger<UsuarioServicio> _logger;
 
         public object BCrypt { get; private set; }
 
-        public UsuarioServicio(IUsuarioRepositorio usuarioRepository, IMapper mapper, IEmailServicio emailServicio, ILogger logger)
-        {
+        public UsuarioServicio(IUsuarioRepositorio usuarioRepository,IMapper mapper,IEmailServicio emailServicio,ILogger<UsuarioServicio> logger){
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
             _emailServicio = emailServicio;

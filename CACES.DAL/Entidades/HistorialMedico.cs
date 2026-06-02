@@ -33,7 +33,7 @@ namespace CACES.DAL.Entidades
 
         [Required(ErrorMessage = "Los antecedentes son requeridos")]
         [StringLength(50)]
-        [Column("Anteriores")]
+        [Column("Antecedentes")]
         public string Antecedentes { get; set; } = null!;
 
         [Column("FechaDeCreacion")]
