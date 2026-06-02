@@ -41,12 +41,11 @@ namespace CACES.DAL.Repositorios.Medicos
             if (existing == null)
                 return false;
 
-            existing.Nombre = medico.Nombre;
-            existing.Especialidad = medico.Especialidad;
+            existing.IdEspecialidad = medico.IdEspecialidad;
+            existing.IdUsuario = medico.IdUsuario;
             existing.Experiencia = medico.Experiencia;
-            existing.Descripcion = medico.Descripcion;
-            existing.Estado = medico.Estado;
-            existing.Foto = medico.Foto;
+            existing.Certificaciones = medico.Certificaciones;
+
 
             _context.Medicos.Update(existing);
 
