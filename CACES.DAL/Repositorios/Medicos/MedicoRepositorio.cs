@@ -32,7 +32,6 @@ namespace CACES.DAL.Repositorios.Medicos
             return await _context.SaveChangesAsync() > 0;
         }
 
-
         public async Task<bool> UpdateMedicoAsync(Medico medico)
         {
             var existing = await _context.Medicos
