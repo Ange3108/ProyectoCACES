@@ -33,6 +33,8 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.DUI).HasMaxLength(10).IsRequired();
                 entity.HasIndex(e => e.DUI).IsUnique().HasDatabaseName("UQ_Usuarios_DUI");
                 entity.Property(e => e.Telefono).HasMaxLength(30).IsRequired();
+                entity.Property(e => e.Direccion).HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Nacimiento).IsRequired();
                 entity.Property(e => e.FechaDeRegistro).IsRequired();
                 entity.Property(e => e.FechaDeModificacion);
                 entity.Property(e => e.Estado).IsRequired().HasDefaultValue(true);

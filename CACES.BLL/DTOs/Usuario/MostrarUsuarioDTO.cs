@@ -14,6 +14,12 @@ namespace CACES.BLL.DTOs.Usuario
         public string CorreoElectronico { get; set; } = null!;
         public string DUI { get; set; } = null!;
         public string Telefono { get; set; } = null!;
+        [StringLength(250)]
+        public string? Direccion { get; set; }
+
+        public DateTime Nacimiento { get; set; }
+
+        public string? Foto { get; set; }
         public DateTime FechaDeRegistro { get; set; }
         public bool Estado { get; set; }
         public string SegundoApellido { get; set; } = null!;

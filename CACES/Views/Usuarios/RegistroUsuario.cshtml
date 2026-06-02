@@ -58,6 +58,18 @@
 							<span asp-validation-for="Telefono" class="text-danger"></span>
 						</div>
 					</div>
+						<div class="row">
+							<div class="col-md-6 mb-3">
+								<label for="direccion" class="form-label">Dirección</label>
+								<input type="text" asp-for="Direccion" class="form-control" placeholder="Dirección">
+								<span asp-validation-for="Direccion" class="text-danger"></span>
+							</div>
+						<div class="col-md-6 mb-3">
+							<label for="nacimiento" class="form-label">Fecha de Nacimiento</label>
+							<input type="date" asp-for="Nacimiento" class="form-control" placeholder="Fecha de nacimiento">
+							<span asp-validation-for="Nacimiento" class="text-danger"></span>
+						</div>
+					</div>
 				</section>
 
 				<!-- SEGURIDAD -->

@@ -10,35 +10,16 @@ namespace CACES.DAL.Entidades
         [Column("Id_Usuario")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdUsuario { get; set; }
-
-        [Required(ErrorMessage = "El nombre es requerido")]
-        [StringLength(100)]
         [Column("Nombres")]
         public string Nombres { get; set; } = null!;
-
-        [Required(ErrorMessage = "El primer apellido es requerido")]
-        [StringLength(100)]
         [Column("PrimerApellido")]
         public string PrimerApellido { get; set; } = null!;
-
-        [Required(ErrorMessage = "El segundo apellido es requerido")]
-        [StringLength(100)]
         [Column("SegundoApellido")]
         public string SegundoApellido { get; set; } = null!;
-
-        [Required(ErrorMessage = "El correo es requerido")]
-        [StringLength(200)]
-        [EmailAddress(ErrorMessage = "Correo electrónico inválido")]
         [Column("CorreoElectronico")]
         public string CorreoElectronico { get; set; } = null!;
-
-        [Required(ErrorMessage = "El DUI es requerido")]
-        [StringLength(10)]
         [Column("DUI")]
         public string DUI { get; set; } = null!;
-
-        [Required(ErrorMessage = "El teléfono es requerido")]
-        [StringLength(30)]
         [Column("Telefono")]
         public string Telefono { get; set; } = null!;
 
@@ -46,11 +27,8 @@ namespace CACES.DAL.Entidades
         [StringLength(250)]
         public string? Direccion { get; set; }
 
-        [Column("Edad")]
-        public int? Edad { get; set; }
-
-        [Column("Foto")]
-        public string? Foto { get; set; }
+        [Column("Nacimiento")]
+        public DateTime Nacimiento { get; set; } 
 
         [Column("FechaDeRegistro")]
         public DateTime FechaDeRegistro { get; set; } = DateTime.Now;

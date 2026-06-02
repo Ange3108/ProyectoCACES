@@ -7,13 +7,9 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Compile Remove="CACES.BLL\**" />
     <Compile Remove="CACES.DAL\**" />
-    <Content Remove="CACES.BLL\**" />
     <Content Remove="CACES.DAL\**" />
-    <EmbeddedResource Remove="CACES.BLL\**" />
     <EmbeddedResource Remove="CACES.DAL\**" />
-    <None Remove="CACES.BLL\**" />
     <None Remove="CACES.DAL\**" />
   </ItemGroup>
 

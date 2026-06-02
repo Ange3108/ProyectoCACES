@@ -1,28 +1,39 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Threading.Tasks;
+﻿using AutoMapper;
 using CACES.BLL.DTOs.Paciente;
+using CACES.BLL.DTOs.Usuario;
+using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.Entidades;
+using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Usuario;
-using CACES.DAL.Repositorios.HistorialMedicos;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace CACES.BLL.Servicios.Paciente
 {
     public class PacienteServicio : IPacienteServicio
     {
+        //Se inyecto el servicio para no tener que repertir los métodos de validación de usuario, como validar correo, DUI y contraseña segura
         private readonly IPacienteRepositorio _pacienteRepositorio;
+        private readonly IUsuarioService _usuarioServicio;
         private readonly IUsuarioRepositorio _usuarioRepositorio;
         private readonly IHistorialMedicoRepositorio _historialRepositorio;
+        private readonly IMapper _mapper;
+
 
         public PacienteServicio(
             IPacienteRepositorio pacienteRepositorio,
+            IUsuarioService usuarioServicio,
             IUsuarioRepositorio usuarioRepositorio,
-            IHistorialMedicoRepositorio historialRepositorio)
+            IHistorialMedicoRepositorio historialRepositorio,
+            IMapper mapper)
         {
             _pacienteRepositorio = pacienteRepositorio;
+            _usuarioServicio = usuarioServicio;
             _usuarioRepositorio = usuarioRepositorio;
             _historialRepositorio = historialRepositorio;
+            _mapper = mapper;
         }
 
         public async Task<List<DAL.Entidades.Paciente>> GetPacientesAsync()
@@ -40,20 +51,6 @@ namespace CACES.BLL.Servicios.Paciente
             return await _pacienteRepositorio.GetPacienteByDUIAsync(dui);
         }
 
-        public async Task<bool> CreatePacienteAsync(DAL.Entidades.Paciente paciente)
-        {
-            return await _pacienteRepositorio.CreatePacienteAsync(paciente);
-        }
-
-        public async Task<bool> UpdatePacienteAsync(DAL.Entidades.Paciente paciente)
-        {
-            return await _pacienteRepositorio.UpdatePacienteAsync(paciente);
-        }
-
-        public async Task<bool> DeletePacienteAsync(int id)
-        {
-            return await _pacienteRepositorio.DeletePacienteAsync(id);
-        }
         public async Task<bool> DesactivarPacienteAsync(int idPaciente)
         {
             var paciente = await _pacienteRepositorio.GetPacienteByIdAsync(idPaciente);
@@ -64,76 +61,39 @@ namespace CACES.BLL.Servicios.Paciente
             return await _usuarioRepositorio.DesactivarUsuarioAsync(paciente.IdUsuario);
         }
 
-        public async Task<bool> RegistrarPacienteAsync(
+        public async Task<MostrarUsuarioDTO> CreatePacienteAsync(
             RegistrarPacienteDTO dto)
         {
-            try
+            //Delega la creación del usuario al servicio correspondiente.
+            //Este método se encargará de encriptar la contraseña y guardar el usuario.
+            var usuario = await _usuarioServicio.CrearUsuarioAsync(dto.Usuario);
+
+            if(usuario?.Dato == null)
             {
-                // Validar correo
-                var correoExistente =
-                    await _usuarioRepositorio
-                        .GetUsuarioByEmailAsync(dto.CorreoElectronico);
-
-                if (correoExistente != null)
-                    return false;
-
-                // Validar DUI
-                var duiExistente =
-                    await _usuarioRepositorio
-                        .GetUsuarioByDUIAsync(dto.DUI);
-
-                if (duiExistente != null)
-                    return false;
-
-                // Crear Usuario
-                var usuario = new CACES.DAL.Entidades.Usuario
-                {
-                    Nombres = dto.Nombres,
-                    PrimerApellido = dto.PrimerApellido,
-                    SegundoApellido = dto.SegundoApellido,
-                    CorreoElectronico = dto.CorreoElectronico,
-                    DUI = dto.DUI,
-                    Telefono = dto.Telefono,
-                    Direccion = dto.Direccion,
-                    Edad = dto.Edad,
-
-                    PasswordHash = dto.Password,
-                    SecurityStamp = Guid.NewGuid().ToString(),
-
-                    Estado = true,
-                    FechaDeRegistro = DateTime.Now
-                };
-                await _usuarioRepositorio
-                    .CreateUsuarioAsync(usuario);
-
-                // Crear Historial Médico
-                var historial = new HistorialMedico
-                {
-                    TipoSangre = dto.TipoSangre,
-                    Alergias = dto.Alergias,
-                    EnfermedadesCronicas = dto.EnfermedadesCronicas,
-                    Antecedentes = dto.Antecedentes,
-                    Detalles = dto.Detalles,
-                    FechaDeCreacion = DateTime.Now
-                };
-
-                historial = await _historialRepositorio
-                    .CreateHistorialAsync(historial);
-
-                // Crear Paciente
-                var paciente = new DAL.Entidades.Paciente
-                {
-                    IdUsuario = usuario.IdUsuario,
-                    IdHistorial = historial.IdHistorial
-                };
-
-                return await _pacienteRepositorio
-                    .CreatePacienteAsync(paciente);
+                return null;
             }
-            catch
+            var usuarioCreado = usuario.Dato;
+            // Crear Paciente
+            var paciente = _mapper.Map<DAL.Entidades.Paciente>(dto.Usuario);
+            // Crear Historial Médico
+            var nuevoHistorial = _mapper.Map<HistorialMedico>(dto.Historial);
+
+            //Asigna los IDs correspondientes para establecer las relaciones entre las entidades
+            paciente.IdUsuario = usuarioCreado.idUsuario;
+            paciente.HistorialMedico = nuevoHistorial;
+
+            //crear el paciente y el historial médico en la base de datos. El repositorio se encargará de guardar ambas entidades en una sola transacción para garantizar la integridad de los datos.
+            bool pacienteCreado = await _pacienteRepositorio.CreatePacienteAsync(paciente);
+
+            if (pacienteCreado)
             {
-                return false;
+                return usuarioCreado;
             }
+            else
+            {
+                return null;
+            }
+
         }
     }
 }
