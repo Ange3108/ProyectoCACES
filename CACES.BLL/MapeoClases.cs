@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CACES.BLL.DTOs.Usuario;
+using CACES.BLL.DTOs.Paciente;
 using CACES.DAL.Entidades;
 using System;
 using System.Collections.Generic;
@@ -25,9 +26,13 @@ namespace CACES.BLL
 
             //Mapeo de los DTOs de paciente
 
+            CreateMap<Paciente, RegistrarPacienteDTO>().
+                ForMember(dest => dest.Usuario, opt => opt.Ignore())
+                .ForMember(dest => dest.Historial, opt => opt.Ignore());
+
 
             //Mapeo de los DTOs de médicos
-           
+
         }
 
     }

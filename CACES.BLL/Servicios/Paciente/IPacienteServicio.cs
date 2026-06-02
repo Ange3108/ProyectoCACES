@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CACES.BLL.DTOs.Paciente;
+using CACES.BLL.DTOs.Usuario;
 
 namespace CACES.BLL.Servicios.Paciente
 {
@@ -13,14 +14,8 @@ namespace CACES.BLL.Servicios.Paciente
 
         Task<DAL.Entidades.Paciente> GetPacienteByDUIAsync(string dui);
 
-        Task<bool> CreatePacienteAsync(DAL.Entidades.Paciente paciente);
-
-        Task<bool> UpdatePacienteAsync(DAL.Entidades.Paciente paciente);
-
-        Task<bool> DeletePacienteAsync(int id);
-
-        Task<bool> RegistrarPacienteAsync(
-            RegistrarPacienteDTO pacienteDto);
+        Task<MostrarUsuarioDTO> CreatePacienteAsync(
+              RegistrarPacienteDTO pacienteDto);
         Task<bool> DesactivarPacienteAsync(int idPaciente);
     }
 }

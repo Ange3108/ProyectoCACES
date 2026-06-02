@@ -23,6 +23,8 @@ CREATE TABLE Usuarios(
 	FechaDeModificacion DATETIME NULL,
 	Estado BIT NOT NULL,
     Telefono VARCHAR(30) NOT NULL,
+    Direccion VARCHAR(200) NOT NULL,
+    Nacimiento Date NOT NULL,
 	-- Campos de ASP.NET Identity
 	PasswordHash NVARCHAR(MAX) NULL,
 	SecurityStamp NVARCHAR(MAX) NULL,
@@ -266,15 +268,17 @@ INSERT INTO Especialidad (Nombre, Descripcion, Icono, FechaDeRegistro, Estado) V
 GO
 
 --usuarios
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, FechaDeRegistro, FechaDeModificacion, Estado, 
-	PasswordHash, SecurityStamp, TwoFactorEnabled, LockoutEndDateUtc, LockoutEnabled, AccessFailedCount, EmailConfirmed) 
-VALUES
-('Juan', 'García', 'López', 'juan.admin@caces.com', '12345678', '7123-4567', GETDATE(), NULL, 1, 
-	'hashed_password_here', 'stamp-001', 0, NULL, 1, 0, 1),
-('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', '7234-5678', GETDATE(), NULL, 1, 
-	'hashed_password_here', 'stamp-002', 0, NULL, 1, 0, 1),
-('María', 'Hernández', 'Gómez', 'maria.paciente@caces.com', '11223344', '7345-6789', GETDATE(), NULL, 1, 
-	'hashed_password_here', 'stamp-003', 0, NULL, 1, 0, 1);
+-- Usuario 1
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Carlos', 'Rivera', 'Gomez', 'carlos.rivera@example.com', '12345678-1', '7777-1111', 'San Salvador', '1990-05-15', GETDATE(), 1, 'HASH_DE_PRUEBA_1', NEWID());
+
+-- Usuario 2
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Ana', 'Martinez', 'Lopez', 'ana.martinez@example.com', '87654321-2', '7777-2222', 'Santa Tecla', '1985-11-20', GETDATE(), 1, 'HASH_DE_PRUEBA_2', NEWID());
+
+-- Usuario 3
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Luis', 'Fernandez', 'Solis', 'luis.fernandez@example.com', '11223344-3', '7777-3333', 'Antiguo Cuscatlán', '2001-03-03', GETDATE(), 1, 'HASH_DE_PRUEBA_3', NEWID());
 GO
 
 -- MEDICOS
