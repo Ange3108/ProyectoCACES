@@ -12,24 +12,23 @@ namespace CACES.DAL.Entidades
         public int IdMedico { get; set; }
 
         [Required]
-        [Column("Nombre")]
-        public string Nombre { get; set; } = null!;
+        [Column("Id_Especialidad")]
+        public int IdEspecialidad { get; set; }
 
         [Required]
-        [Column("Especialidad")]
-        public string Especialidad { get; set; } = null!;
+        [Column("Id_Usuario")]
+        public int IdUsuario { get; set; }
 
         [Required]
         [Column("Experiencia")]
         public int Experiencia { get; set; }
 
-        [Column("Descripcion")]
-        public string Descripcion { get; set; } = null!;
+        [Required]
+        [Column("Certificaciones")]
+        public string Certificaciones { get; set; } = null!;
 
-        [Column("Estado")]
-        public string Estado { get; set; } = null!;
-
-        [Column("Foto")]
-        public string? Foto { get; set; }
+        [Required]
+        [Column("FechaDeRegistro")]
+        public DateTime FechaDeRegistro { get; set; }
     }
 }
