@@ -14,13 +14,27 @@ namespace CACES.Controllers
             _medicoServicio = medicoServicio;
         }
 
+
         [HttpGet]
         public async Task<IActionResult> Medicos()
         {
             var medicos = await _medicoServicio.GetMedicosAsync();
             return View(medicos);
         }
-
+        [HttpPost]
+        public async Task<IActionResult> CrearMedico(Medico medico)
+        {
+            if (!ModelState.IsValid)
+                return View(medico);
+            var resultado = await _medicoServicio.CreateMedicoAsync(medico);
+            if (!resultado)
+            {
+                TempData["Error"] = "No se pudo crear el médico.";
+                return View(medico);
+            }
+            TempData["Mensaje"] = "Médico creado correctamente.";
+            return RedirectToAction("Medicos");
+        }
         [HttpGet]
         public async Task<IActionResult> EditarMedico(int id)
         {
@@ -35,7 +49,7 @@ namespace CACES.Controllers
             return View(medico);
         }
 
-        [HttpPost]
+        [HttpPut]
         public async Task<IActionResult> EditarMedico(Medico medico)
         {
             if (!ModelState.IsValid)
