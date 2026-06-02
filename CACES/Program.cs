@@ -9,6 +9,7 @@ using Microsoft.EntityFrameworkCore;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.BLL.Servicios.Medicos;
+using CACES.BLL.Servicios.Auth;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -38,7 +39,10 @@ builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();
 builder.Services.AddScoped<IMedicoRepositorio, MedicoRepositorio>();
 builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();
 
+builder.Services.AddControllersWithViews();
+builder.Services.AddSession();
 
+builder.Services.AddScoped<IAuthServicio, AuthServicio>();
 
 var app = builder.Build();
 
@@ -52,6 +56,8 @@ if (!app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 app.UseRouting();
+
+app.UseSession();
 
 app.UseAuthorization();
 
