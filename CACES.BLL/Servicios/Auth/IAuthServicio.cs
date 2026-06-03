@@ -10,5 +10,8 @@ namespace CACES.BLL.Servicios.Auth
     {
         Task<bool> LoginAsync(LoginDTO dto);
         Task<DAL.Entidades.Usuario> AutenticarAsync(LoginDTO dto);
+
+        Task<(bool Exito, string Token, string Mensaje)> GenerarTokenRecuperacionAsync(OlvidoContrasenaDTO dto);
+        Task<(bool Exito, string Mensaje)> RestablecerContraseñaAsync(RestablecerContrasenaDTO dto);
     }
 }
