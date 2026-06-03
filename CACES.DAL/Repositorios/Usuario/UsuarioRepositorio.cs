@@ -12,6 +12,7 @@ namespace CACES.DAL.Repositorios.Usuario
         //Inyerccion de dependencia de la BD
         private readonly CACESDbContext _context;
 
+
         public UsuarioRepositorio(CACESDbContext context)
         {
             _context = context;
