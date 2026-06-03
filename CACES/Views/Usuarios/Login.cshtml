@@ -1,0 +1,65 @@
+﻿@using CACES.BLL.DTOs.Auth
+@model LoginDTO
+
+@{
+	ViewData["Title"] = "Iniciar sesión";
+}
+<section class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-5">
+            <div class="card info-card border-0 shadow-sm">
+                <div class="card-body p-4 p-lg-5">
+                    <div class="text-center mb-4">
+                        <img src="img/logoCACES.jpg" alt="Logo CACES"
+                             style="width: 90px; height: 90px; object-fit: cover; border-radius: 12px;">
+                    </div>
+                    <form asp-controller="Login_Logout"
+						  asp-action="Login"
+						  method="post">
+                    <h3 class="text-center">Iniciar sesión</h3>
+                        <div asp-validation-summary="ModelOnly" class="text-danger text-center mb-3"></div>
+                    <p class="text-center text-muted mb-4">Acceda al sistema del Centro Ambulatorio de Cirugía Escalón</p>
+
+          
+                        <div class="form-group">
+                            <label for="CorreoElectronico">Correo electrónico</label>
+                            <label for="CorreoElectronico">Correo electrónico</label>
+                            <input type="email" class="form-control" id="CorreoElectronico" name="CorreoElectronico" asp-for="CorreoElectronico" placeholder="Ingrese su correo" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="Password">Contraseña</label>
+                            <input type="password" class="form-control" id="Password" name="Password" asp-for="Password" placeholder="Ingrese su contraseña" required>
+                        </div>
+
+                        <div class="d-flex justify-content-between align-items-center mb-4">
+                            <div class="form-check">
+                                <input class="form-check-input" type="checkbox" id="recordar">
+                                <label class="form-check-label" for="recordar">Recordarme</label>
+                            </div>
+
+                            <a href="#" class="text-decoration-none fw-semibold" style="color:#049DD9;">
+                                ¿Olvidó su contraseña?
+                            </a>
+                        </div>
+
+                        <div class="d-grid">
+                            <button type="submit" class="btn btn-add">Ingresar</button>
+                        </div>
+                        <div class=" mt-4 mb-1 text-center">
+                            <p>¿No tiene cuenta?
+                            <a asp-controller="Usuario" asp-action="RegistroUsuario" class="text-decoration-none fw-bold" style="color:#049DD9;">Registrarse</a>
+                        </p>
+                        </div>
+                        <p class="text-center mt-4 mb-0 text-muted">
+                            ¿Necesita ayuda?
+                            <a href="SoporteContacto.html" class="text-decoration-none fw-bold" style="color:#049DD9;">
+                                Contáctenos
+                            </a>
+                        </p>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>

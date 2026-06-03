@@ -27,27 +27,44 @@
 
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav mx-auto nav-center-list">
+                        <!--Enlaces publicos-->
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Especialidades" asp-action="Especialidades">Especialidades</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Cirugias" asp-action="Procedimientos">Procedimientos Quirúrgicos</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Medicos" asp-action="Especialistas">Especialistas</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Citas" asp-action="GestionCitas">Citas</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Turismo" asp-action="Turismo">Turismo Médico</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="AgendaMedica" asp-action="AgendaMedica">Agenda Médica</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Configuracion" asp-action="Configuracion">Configuración</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Medicos" asp-action="Especialistas">Especialistas</a></li>
+
+                        <!--Si el usuario esta autenticado-->
+                        @if (User.Identity.IsAuthenticated == true)
+                         {
+                           <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Cirugias" asp-action="Procedimientos">Procedimientos Quirúrgicos</a></li>
+                           <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Citas" asp-action="GestionCitas">Citas</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Configuracion" asp-action="Configuracion">Configuración</a></li>
+                         }
+                         <!--Si el usuario es un médico-->
+						@if (User.IsInRole("Medico"))
+						{
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="AgendaMedica" asp-action="AgendaMedica">Agenda Médica</a></li>
+						}
+                        <!--Si el usuario es un administrador-->
+						@if(User.IsInRole("Admin"))
+                        {
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Reportes">Reportes</a></li>
+                        }
                     </ul>
 
-                    <div class="navbar-actions">
-                        <div class="lang-switch" aria-label="Seleccionar idioma">
-                            <button class="lang-btn" type="button">EN</button>
-                            <button class="lang-btn active" type="button">ES</button>
-                        </div>
-                    </div>
                 </div>
+				@if (User.Identity.IsAuthenticated == true)
+                {
                 <a class="account-link" asp-area="" asp-controller="Cuenta" asp-action="Perfil" aria-label="Cuenta">
                     <i class="bi bi-person"></i>
                 </a>
+                    }
+                    else
+                    {
+                        <a class="account-link" asp-area="" asp-controller="Login_Logout" asp-action="Login" aria-label="Iniciar sesión">
+                            <i class="bi bi-person"></i>
+                        </a>
+                    }
             </div>
         </nav>
     </header>

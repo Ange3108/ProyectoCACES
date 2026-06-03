@@ -40,7 +40,7 @@ namespace CACES.DAL.Entidades
 
         public DateTime? lockoutEnd { get; set; }
 
-        public bool Lockoutfailed { get; set; }
+        public bool LockoutEnabled { get; set; }
 
         public int accessFailedCount { get; set; }
 
