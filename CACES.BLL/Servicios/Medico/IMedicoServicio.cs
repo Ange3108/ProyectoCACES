@@ -1,6 +1,5 @@
-﻿using System;
+﻿using CACES.BLL.DTOs.Medico;
 using CACES.DAL.Entidades;
-using System.Collections.Generic;
 
 namespace CACES.BLL.Servicios.Medicos
 {
@@ -8,11 +7,11 @@ namespace CACES.BLL.Servicios.Medicos
     {
         Task<List<Medico>> GetMedicosAsync();
 
-        Task<Medico> GetMedicoByIdAsync(int id);
+        Task<EditarMedicoDTO?> GetMedicoParaEditarAsync(int id);
+
+        Task<bool> UpdateMedicoConUsuarioAsync(EditarMedicoDTO dto);
 
         Task<bool> CreateMedicoAsync(Medico medico);
-
-        Task<bool> UpdateMedicoAsync(Medico medico);
 
         Task<bool> DeleteMedicoAsync(int id);
     }

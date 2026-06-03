@@ -15,20 +15,30 @@ namespace CACES.DAL.Repositorios.Medicos
 
         public async Task<List<Medico>> GetMedicosAsync()
         {
-            return await _context.Medicos.ToListAsync();
+            return await _context.Medicos
+                .Include(x => x.Usuario)
+                .ToListAsync();
         }
 
-
-        public async Task<Medico> GetMedicoByIdAsync(int id)
+        public async Task<Medico?> GetMedicoByIdAsync(int id)
         {
-            return await _context.Medicos.FirstOrDefaultAsync(x => x.IdMedico == id);
+            return await _context.Medicos
+                .FirstOrDefaultAsync(x => x.IdMedico == id);
+        }
+
+        public async Task<Medico?> GetMedicoConUsuarioByIdAsync(int id)
+        {
+            return await _context.Medicos
+                .Include(x => x.Usuario)
+                .FirstOrDefaultAsync(x => x.IdMedico == id);
         }
 
         public async Task<bool> CreateMedicoAsync(Medico medico)
         {
-            if(medico == null) return false;
-            await _context.Medicos.AddAsync(medico);
+            if (medico == null)
+                return false;
 
+            await _context.Medicos.AddAsync(medico);
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -40,14 +50,36 @@ namespace CACES.DAL.Repositorios.Medicos
             if (existing == null)
                 return false;
 
-            existing.Nombre = medico.Nombre;
-            existing.Especialidad = medico.Especialidad;
+            existing.IdEspecialidad = medico.IdEspecialidad;
+            existing.IdUsuario = medico.IdUsuario;
             existing.Experiencia = medico.Experiencia;
-            existing.Descripcion = medico.Descripcion;
-            existing.Estado = medico.Estado;
-            existing.Foto = medico.Foto;
+            existing.Telefono = medico.Telefono;
+            existing.Certificaciones = medico.Certificaciones;
 
-            _context.Medicos.Update(existing);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
+        public async Task<bool> UpdateMedicoConUsuarioAsync(Medico medico)
+        {
+            var existing = await _context.Medicos
+                .Include(x => x.Usuario)
+                .FirstOrDefaultAsync(x => x.IdMedico == medico.IdMedico);
+
+            if (existing == null)
+                return false;
+
+            existing.IdEspecialidad = medico.IdEspecialidad;
+            existing.Experiencia = medico.Experiencia;
+            existing.Telefono = medico.Telefono;
+            existing.Certificaciones = medico.Certificaciones;
+
+            existing.Usuario.Nombres = medico.Usuario.Nombres;
+            existing.Usuario.PrimerApellido = medico.Usuario.PrimerApellido;
+            existing.Usuario.SegundoApellido = medico.Usuario.SegundoApellido;
+            existing.Usuario.Telefono = medico.Usuario.Telefono;
+            existing.Usuario.Foto = medico.Usuario.Foto;
+            existing.Usuario.Estado = medico.Usuario.Estado;
+            existing.Usuario.FechaDeModificacion = DateTime.Now;
 
             return await _context.SaveChangesAsync() > 0;
         }
@@ -60,7 +92,6 @@ namespace CACES.DAL.Repositorios.Medicos
                 return false;
 
             _context.Medicos.Remove(medico);
-
             return await _context.SaveChangesAsync() > 0;
         }
     }

@@ -1,5 +1,5 @@
+using CACES.BLL.DTOs.Medico;
 using CACES.BLL.Servicios.Medicos;
-using CACES.DAL.Entidades;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CACES.Controllers
@@ -23,7 +23,7 @@ namespace CACES.Controllers
         [HttpGet]
         public async Task<IActionResult> EditarMedico(int id)
         {
-            var medico = await _medicoServicio.GetMedicoByIdAsync(id);
+            var medico = await _medicoServicio.GetMedicoParaEditarAsync(id);
 
             if (medico == null)
             {
@@ -35,20 +35,23 @@ namespace CACES.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EditarMedico(Medico medico)
+        public async Task<IActionResult> EditarMedico(EditarMedicoDTO dto)
         {
             if (!ModelState.IsValid)
-                return View(medico);
+            {
+                TempData["Error"] = "Debe completar todos los campos obligatorios.";
+                return View(dto);
+            }
 
-            var resultado = await _medicoServicio.UpdateMedicoAsync(medico);
+            var resultado = await _medicoServicio.UpdateMedicoConUsuarioAsync(dto);
 
             if (!resultado)
             {
-                TempData["Error"] = "No se pudo actualizar el médico.";
-                return View(medico);
+                TempData["Error"] = "No se pudo actualizar la información del médico.";
+                return View(dto);
             }
 
-            TempData["Mensaje"] = "Médico actualizado correctamente.";
+            TempData["Mensaje"] = "La información del médico se actualizó correctamente.";
             return RedirectToAction("Medicos");
         }
     }

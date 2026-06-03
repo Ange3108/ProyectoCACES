@@ -20,9 +20,12 @@ namespace CACES.DAL.Entidades
         public string CorreoElectronico { get; set; } = null!;
         [Column("DUI")]
         public string DUI { get; set; } = null!;
+
+        [Column("Foto")]
+        public string? Foto { get; set; }
+
         [Column("Telefono")]
         public string Telefono { get; set; } = null!;
-
         [Column("Direccion")]
         [StringLength(250)]
         public string? Direccion { get; set; }

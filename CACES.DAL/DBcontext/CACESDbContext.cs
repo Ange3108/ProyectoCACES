@@ -45,6 +45,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Lockoutfailed).IsRequired();
                 entity.Property(e => e.accessFailedCount).IsRequired();
                 entity.Property(e => e.emailConfirmed).HasDefaultValue(false).IsRequired();
+                entity.Property(e => e.Foto).HasMaxLength(200);
             });
 
             // Configuración de la entidad HistorialMedico
@@ -85,13 +86,36 @@ namespace CACES.DAL.DBContext
             modelBuilder.Entity<Medico>(entity =>
             {
                 entity.HasKey(e => e.IdMedico);
-                entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
-                entity.Property(e => e.Nombre).HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Especialidad).HasMaxLength(100).IsRequired();
-                entity.Property(e => e.Experiencia).IsRequired();
-                entity.Property(e => e.Descripcion).HasMaxLength(500);
-                entity.Property(e => e.Estado).HasMaxLength(50).IsRequired();
-                entity.Property(e => e.Foto).HasMaxLength(200);
+
+                entity.Property(e => e.IdMedico)
+                    .HasColumnName("Id_Medico");
+
+                entity.Property(e => e.IdEspecialidad)
+                    .HasColumnName("Id_Especialidad");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasColumnName("Id_Usuario");
+
+                entity.Property(e => e.Experiencia)
+                    .HasColumnName("Experiencia")
+                    .IsRequired();
+
+                entity.Property(e => e.Telefono)
+                    .HasColumnName("Telefono")
+                    .HasMaxLength(20)
+                    .IsRequired();
+
+                entity.Property(e => e.Certificaciones)
+                    .HasColumnName("Certificaciones")
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.FechaDeRegistro)
+                    .HasColumnName("FechaDeRegistro");
+
+                entity.HasOne(e => e.Usuario)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdUsuario);
+
             });
         }
     }
