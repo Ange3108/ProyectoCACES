@@ -43,7 +43,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.SecurityStamp).HasColumnName("SecurityStamp").IsRequired();
                 entity.Property(e => e.twoFactorEnabled).HasColumnName("TwoFactorEnabled").HasDefaultValue(false).IsRequired();
                 entity.Property(e => e.lockoutEnd).HasColumnName("LockoutEndDateUtc");
-                entity.Property(e => e.Lockoutfailed).HasColumnName("LockoutFailed").IsRequired();
+                entity.Property(e => e.LockoutEnabled).HasColumnName("LockoutEnabled").IsRequired();
                 entity.Property(e => e.accessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
                 entity.Property(e => e.emailConfirmed).HasColumnName("EmailConfirmed").HasDefaultValue(false).IsRequired();
             });
