@@ -1,4 +1,5 @@
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -16,6 +17,7 @@ namespace CACES.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Administrador")]
         public IActionResult Reportes()
         {
             return View();
