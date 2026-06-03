@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using CACES.BLL.DTOs.Auth;
+using CACES.BLL.DTOs.Usuario;
 using CACES.DAL.Repositorios.Usuario;
 
 namespace CACES.BLL.Servicios.Auth
@@ -28,6 +29,21 @@ namespace CACES.BLL.Servicios.Auth
             var passwordHash = HashContraseña(dto.Password);
 
             return usuario.PasswordHash == passwordHash;
+        }
+
+        public async Task<DAL.Entidades.Usuario> AutenticarAsync(LoginDTO dto)
+        {
+            var usuario = await _usuarioRepositorio.GetUsuarioByEmailAsync(dto.CorreoElectronico);
+
+            if (usuario == null || !usuario.Estado)
+                return null;
+
+            var passwordHash = HashContraseña(dto.Password);
+
+            if (usuario.PasswordHash != passwordHash)
+                return null;
+
+            return usuario;
         }
 
         private string HashContraseña(string password)

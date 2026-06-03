@@ -1,4 +1,5 @@
 using CACES.DAL.Entidades;
+using CACES.DAL.Entidades.Roles;
 using Microsoft.EntityFrameworkCore;
 
 namespace CACES.DAL.DBContext
@@ -25,26 +26,26 @@ namespace CACES.DAL.DBContext
             {
                 entity.HasKey(e => e.IdUsuario);
                 entity.Property(e => e.IdUsuario).HasColumnName("Id_Usuario");
-                entity.Property(e => e.Nombres).HasMaxLength(100).IsRequired();
-                entity.Property(e => e.PrimerApellido).HasMaxLength(100).IsRequired();
-                entity.Property(e => e.SegundoApellido).HasMaxLength(100).IsRequired();
-                entity.Property(e => e.CorreoElectronico).HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Nombres).HasColumnName("Nombres").HasMaxLength(100).IsRequired();
+                entity.Property(e => e.PrimerApellido).HasColumnName("PrimerApellido").HasMaxLength(100).IsRequired();
+                entity.Property(e => e.SegundoApellido).HasColumnName("SegundoApellido").HasMaxLength(100).IsRequired();
+                entity.Property(e => e.CorreoElectronico).HasColumnName("CorreoElectronico").HasMaxLength(200).IsRequired();
                 entity.HasIndex(e => e.CorreoElectronico).IsUnique();
-                entity.Property(e => e.DUI).HasMaxLength(10).IsRequired();
+                entity.Property(e => e.DUI).HasColumnName("DUI").HasMaxLength(10).IsRequired();
                 entity.HasIndex(e => e.DUI).IsUnique().HasDatabaseName("UQ_Usuarios_DUI");
-                entity.Property(e => e.Telefono).HasMaxLength(30).IsRequired();
-                entity.Property(e => e.Direccion).HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Nacimiento).IsRequired();
-                entity.Property(e => e.FechaDeRegistro).IsRequired();
-                entity.Property(e => e.FechaDeModificacion);
-                entity.Property(e => e.Estado).IsRequired().HasDefaultValue(true);
-                entity.Property(e => e.PasswordHash).IsRequired();
-                entity.Property(e => e.SecurityStamp).IsRequired();
-                entity.Property(e => e.twoFactorEnabled).HasDefaultValue(false).IsRequired();
-                entity.Property(e => e.lockoutEnd);
-                entity.Property(e => e.Lockoutfailed).IsRequired();
-                entity.Property(e => e.accessFailedCount).IsRequired();
-                entity.Property(e => e.emailConfirmed).HasDefaultValue(false).IsRequired();
+                entity.Property(e => e.Telefono).HasColumnName("Telefono").HasMaxLength(30).IsRequired();
+                entity.Property(e => e.Direccion).HasColumnName("Direccion").HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Nacimiento).HasColumnName("Nacimiento").IsRequired();
+                entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
+                entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
+                entity.Property(e => e.PasswordHash).HasColumnName("PasswordHash").IsRequired();
+                entity.Property(e => e.SecurityStamp).HasColumnName("SecurityStamp").IsRequired();
+                entity.Property(e => e.twoFactorEnabled).HasColumnName("TwoFactorEnabled").HasDefaultValue(false).IsRequired();
+                entity.Property(e => e.lockoutEnd).HasColumnName("LockoutEndDateUtc");
+                entity.Property(e => e.Lockoutfailed).HasColumnName("LockoutFailed").IsRequired();
+                entity.Property(e => e.accessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
+                entity.Property(e => e.emailConfirmed).HasColumnName("EmailConfirmed").HasDefaultValue(false).IsRequired();
             });
 
             // Configuración de la entidad HistorialMedico
@@ -86,13 +87,26 @@ namespace CACES.DAL.DBContext
             {
                 entity.HasKey(e => e.IdMedico);
                 entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
-                entity.Property(e => e.Nombre).HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Especialidad).HasMaxLength(100).IsRequired();
                 entity.Property(e => e.Experiencia).IsRequired();
-                entity.Property(e => e.Descripcion).HasMaxLength(500);
-                entity.Property(e => e.Estado).HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Certificaciones).HasMaxLength(200).IsRequired();
+                entity.Property(e => e.FechaDeRegistro).HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Foto).HasMaxLength(200);
             });
+
+            modelBuilder.Entity<UsuarioRol>()
+          .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
+
+            modelBuilder.Entity<UsuarioRol>()
+                .HasOne(ur => ur.Usuario)
+                .WithMany(u => u.UsuarioRoles)
+                .HasForeignKey(ur => ur.IdUsuario)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UsuarioRol>()
+                .HasOne(ur => ur.Rol)
+                .WithMany(r => r.UsuarioRoles)
+                .HasForeignKey(ur => ur.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
         }
     }
 }

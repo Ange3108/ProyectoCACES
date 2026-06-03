@@ -1,5 +1,6 @@
 using CACES.BLL.Servicios.Medicos;
 using CACES.DAL.Entidades;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CACES.Controllers
@@ -21,6 +22,8 @@ namespace CACES.Controllers
             var medicos = await _medicoServicio.GetMedicosAsync();
             return View(medicos);
         }
+
+        [Authorize(Roles = "Paciente")]
         [HttpPost]
         public async Task<IActionResult> CrearMedico(Medico medico)
         {
