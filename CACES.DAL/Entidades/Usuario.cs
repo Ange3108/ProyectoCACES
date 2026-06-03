@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CACES.DAL.Entidades.Roles;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CACES.DAL.Entidades
@@ -10,8 +11,8 @@ namespace CACES.DAL.Entidades
         [Column("Id_Usuario")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdUsuario { get; set; }
-        [Column("Nombres")]
         public string Nombres { get; set; } = null!;
+<<<<<<< HEAD
         [Column("PrimerApellido")]
         public string PrimerApellido { get; set; } = null!;
         [Column("SegundoApellido")]
@@ -28,40 +29,43 @@ namespace CACES.DAL.Entidades
         public string Telefono { get; set; } = null!;
         [Column("Direccion")]
         [StringLength(250)]
+=======
+
+        public string PrimerApellido { get; set; } = null!;
+        public string SegundoApellido { get; set; } = null!;
+
+        public string CorreoElectronico { get; set; } = null!;
+   
+        public string DUI { get; set; } = null!;
+
+        public string Telefono { get; set; } = null!;
+>>>>>>> 78e43479a88e6319ed1a30dc30587c1a8375219d
         public string? Direccion { get; set; }
 
-        [Column("Nacimiento")]
         public DateTime Nacimiento { get; set; } 
 
-        [Column("FechaDeRegistro")]
         public DateTime FechaDeRegistro { get; set; } = DateTime.Now;
 
-        [Column("FechaDeModificacion")]
         public DateTime? FechaDeModificacion { get; set; }
 
-        [Column("Estado")]
         public bool Estado { get; set; } = true;
 
-        [Required(ErrorMessage = "La contraseña es requerida")]
-        [Column("PasswordHash")]
         public string PasswordHash { get; set; } = null!;
 
-        [Column("SecurityStamp")]
         public string SecurityStamp { get; set; } = null!;
 
-        [Column("TwoFactorEnabled")]
+
         public bool twoFactorEnabled { get; set; } = false;
 
-        [Column("LockoutEndDateUtc")]
         public DateTime? lockoutEnd { get; set; }
 
-        [Column("LockoutEnabled")]
-        public bool Lockoutfailed { get; set; }
+        public bool LockoutEnabled { get; set; }
 
-        [Column("AccessFailedCount")]
         public int accessFailedCount { get; set; }
 
-        [Column("EmailConfirmed")]
         public bool emailConfirmed { get; set; } = false;
+
+        [NotMapped]
+        public virtual ICollection<UsuarioRol> UsuarioRoles { get; set; } = new List<UsuarioRol>();
     }
 }
