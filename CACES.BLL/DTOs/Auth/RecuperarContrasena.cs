@@ -13,6 +13,6 @@ namespace CACES.BLL.DTOs.Auth
     {
         public string CorreoElectronico { get; set; } = null!;
         public string Token { get; set; } = null!;
-        public string NuevaContrasena { get; set; } = null!;
+        public string NuevaContrasena { get; set; } = null!;  
     }
 }
