@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.ComponentModel.DataAnnotations;
 
+
 namespace CACES.BLL.DTOs.Medico
 {
     public class EditarMedicoDTO

@@ -11,58 +11,66 @@ namespace CACES.DAL.Entidades
         [Column("Id_Usuario")]
         [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdUsuario { get; set; }
+
+        [Column("Nombres")]
         public string Nombres { get; set; } = null!;
-<<<<<<< HEAD
+
         [Column("PrimerApellido")]
         public string PrimerApellido { get; set; } = null!;
+
         [Column("SegundoApellido")]
         public string SegundoApellido { get; set; } = null!;
+
         [Column("CorreoElectronico")]
         public string CorreoElectronico { get; set; } = null!;
+
         [Column("DUI")]
         public string DUI { get; set; } = null!;
 
         [Column("Foto")]
         public string? Foto { get; set; }
 
-        [Column("Telefono")]
-        public string Telefono { get; set; } = null!;
-        [Column("Direccion")]
-        [StringLength(250)]
-=======
-
-        public string PrimerApellido { get; set; } = null!;
-        public string SegundoApellido { get; set; } = null!;
-
-        public string CorreoElectronico { get; set; } = null!;
-   
-        public string DUI { get; set; } = null!;
-
-        public string Telefono { get; set; } = null!;
->>>>>>> 78e43479a88e6319ed1a30dc30587c1a8375219d
-        public string? Direccion { get; set; }
-
-        public DateTime Nacimiento { get; set; } 
-
+        [Column("FechaDeRegistro")]
         public DateTime FechaDeRegistro { get; set; } = DateTime.Now;
 
+        [Column("FechaDeModificacion")]
         public DateTime? FechaDeModificacion { get; set; }
 
+        [Column("Estado")]
         public bool Estado { get; set; } = true;
 
+        [Column("Direccion")]
+        [StringLength(250)]
+        public string Direccion { get; set; } = null!;
+
+        [Column("Edad")]
+        public int Edad { get; set; }
+
+        [Column("Telefono")]
+        public string Telefono { get; set; } = null!;
+
+        [Column("Nacimiento")]
+        public DateTime Nacimiento { get; set; }
+
+        [Column("PasswordHash")]
         public string PasswordHash { get; set; } = null!;
 
+        [Column("SecurityStamp")]
         public string SecurityStamp { get; set; } = null!;
 
-
+        [Column("TwoFactorEnabled")]
         public bool twoFactorEnabled { get; set; } = false;
 
+        [Column("LockoutEndDateUtc")]
         public DateTime? lockoutEnd { get; set; }
 
+        [Column("LockoutEnabled")]
         public bool LockoutEnabled { get; set; }
 
+        [Column("AccessFailedCount")]
         public int accessFailedCount { get; set; }
 
+        [Column("EmailConfirmed")]
         public bool emailConfirmed { get; set; } = false;
 
         [NotMapped]
