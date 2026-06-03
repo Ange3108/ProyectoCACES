@@ -30,5 +30,8 @@ namespace CACES.DAL.Entidades
         [Required]
         [Column("FechaDeRegistro")]
         public DateTime FechaDeRegistro { get; set; }
+        [Required]
+        [Column("Foto")]
+        public string Foto { get; set; } = null!;
     }
 }

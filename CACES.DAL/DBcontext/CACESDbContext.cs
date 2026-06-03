@@ -86,11 +86,9 @@ namespace CACES.DAL.DBContext
             {
                 entity.HasKey(e => e.IdMedico);
                 entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
-                entity.Property(e => e.Nombre).HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Especialidad).HasMaxLength(100).IsRequired();
                 entity.Property(e => e.Experiencia).IsRequired();
-                entity.Property(e => e.Descripcion).HasMaxLength(500);
-                entity.Property(e => e.Estado).HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Certificaciones).HasMaxLength(200).IsRequired();
+                entity.Property(e => e.FechaDeRegistro).HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Foto).HasMaxLength(200);
             });
         }
