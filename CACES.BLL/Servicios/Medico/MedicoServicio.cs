@@ -34,7 +34,7 @@ namespace CACES.BLL.Servicios.Medicos
                 PrimerApellido = medico.Usuario.PrimerApellido,
                 SegundoApellido = medico.Usuario.SegundoApellido,
                 Telefono = medico.Usuario.Telefono,
-                Foto = medico.Usuario.Foto,
+                Foto = medico.Foto,
                 Estado = medico.Usuario.Estado,
 
                 IdEspecialidad = medico.IdEspecialidad,
@@ -53,6 +53,7 @@ namespace CACES.BLL.Servicios.Medicos
                 Experiencia = dto.Experiencia,
                 Telefono = dto.Telefono,
                 Certificaciones = dto.Certificaciones,
+                Foto = dto.Foto, 
 
                 Usuario = new CACES.DAL.Entidades.Usuario
                 {
@@ -61,7 +62,6 @@ namespace CACES.BLL.Servicios.Medicos
                     PrimerApellido = dto.PrimerApellido,
                     SegundoApellido = dto.SegundoApellido,
                     Telefono = dto.Telefono,
-                    Foto = dto.Foto,
                     Estado = dto.Estado
                 }
             };

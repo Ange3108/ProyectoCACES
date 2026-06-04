@@ -17,7 +17,7 @@ namespace CACES.Controllers
             _authServicio = authServicio;
         }
 
-        [HttpPost]
+    
         public async Task<IActionResult> Login(LoginDTO dto)
         {
             if (!ModelState.IsValid)
