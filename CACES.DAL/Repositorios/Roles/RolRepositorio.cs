@@ -6,6 +6,7 @@ using CACES.DAL.DBContext;
 using CACES.DAL.Entidades.Roles;
 using Microsoft.EntityFrameworkCore;
 
+
 namespace CACES.DAL.Repositorios.Roles
 {
     public class RolRepositorio : IRolRepositorio
