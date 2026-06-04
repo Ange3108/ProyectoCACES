@@ -15,7 +15,7 @@ namespace CACES.Controllers
             _medicoServicio = medicoServicio;
         }
 
-
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> Medicos()
         {
@@ -23,25 +23,14 @@ namespace CACES.Controllers
             return View(medicos);
         }
 
-        [Authorize(Roles = "Paciente")]
-        [HttpPost]
-        public async Task<IActionResult> CrearMedico(Medico medico)
+        [HttpGet]
+        public async Task<IActionResult> Especialistas()
         {
-            if (!ModelState.IsValid)
-                return View(medico);
-
-            var resultado = await _medicoServicio.CreateMedicoAsync(medico);
-
-            if (!resultado)
-            {
-                TempData["Error"] = "No se pudo crear el médico.";
-                return View(medico);
-            }
-
-            TempData["Mensaje"] = "Médico creado correctamente.";
-            return RedirectToAction("Medicos");
+            var medicos = await _medicoServicio.GetMedicosAsync();
+            return View(medicos);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> EditarMedico(int id)
         {
@@ -56,13 +45,32 @@ namespace CACES.Controllers
             return View(medico);
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public async Task<IActionResult> EditarMedico(EditarMedicoDTO dto)
+        public async Task<IActionResult> EditarMedico(EditarMedicoDTO dto, IFormFile? FotoArchivo)
         {
             if (!ModelState.IsValid)
             {
                 TempData["Error"] = "Debe completar todos los campos obligatorios.";
                 return View(dto);
+            }
+
+            if (FotoArchivo != null && FotoArchivo.Length > 0)
+            {
+                var carpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes", "medicos");
+
+                if (!Directory.Exists(carpeta))
+                    Directory.CreateDirectory(carpeta);
+
+                var nombreArchivo = Guid.NewGuid().ToString() + Path.GetExtension(FotoArchivo.FileName);
+                var rutaCompleta = Path.Combine(carpeta, nombreArchivo);
+
+                using (var stream = new FileStream(rutaCompleta, FileMode.Create))
+                {
+                    await FotoArchivo.CopyToAsync(stream);
+                }
+
+                dto.Foto = "/imagenes/medicos/" + nombreArchivo;
             }
 
             var resultado = await _medicoServicio.UpdateMedicoConUsuarioAsync(dto);
@@ -74,6 +82,22 @@ namespace CACES.Controllers
             }
 
             TempData["Mensaje"] = "La información del médico se actualizó correctamente.";
+            return RedirectToAction("Medicos");
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public async Task<IActionResult> EliminarMedico(int id)
+        {
+            var resultado = await _medicoServicio.DeleteMedicoAsync(id);
+
+            if (!resultado)
+            {
+                TempData["Error"] = "No se pudo eliminar el médico.";
+                return RedirectToAction("Medicos");
+            }
+
+            TempData["Mensaje"] = "Médico eliminado correctamente.";
             return RedirectToAction("Medicos");
         }
     }

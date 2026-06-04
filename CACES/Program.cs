@@ -3,14 +3,17 @@ using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
+using CACES.BLL.Servicios.Roles;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
+using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -47,6 +50,8 @@ builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 
+builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
+builder.Services.AddScoped<IRolServicio, RolServicio>();
 
 //Configura el esquema de autenticación y autorización basado en Cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)

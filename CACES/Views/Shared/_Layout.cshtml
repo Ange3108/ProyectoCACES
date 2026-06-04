@@ -31,7 +31,8 @@
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Especialidades" asp-action="Especialidades">Especialidades</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Turismo" asp-action="Turismo">Turismo Médico</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Medico" asp-action="Medicos">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Medico" asp-action="Especialistas">Especialistas</a></li>
+                        <li class="nav-item"><a class="nav-link" asp-controller="Rol" asp-action="GestionRoles">Gestión de Rol</a></li>
 
                         <!--Si el usuario esta autenticado-->
                         @if (User.Identity.IsAuthenticated == true)
@@ -49,9 +50,12 @@
 						}
                         <!--Si el usuario es un administrador-->
 						@if(User.IsInRole("Admin"))
-                        {
-                        <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Home" asp-action="Reportes">Reportes</a></li>
-                        }
+                            @if (User.IsInRole("Admin"))
+                            {
+                                <li class="nav-item"><a class="nav-link" asp-controller="Medico" asp-action="Medicos">Administrar Médicos</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Reportes">Reportes</a></li>
+                                <li class="nav-item"><a class="nav-link" asp-controller="Rol"asp-action="GestionRoles">Gestión de Rol</a></li>
+                            }
                     </ul>
 
                 </div>
