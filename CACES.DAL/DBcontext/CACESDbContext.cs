@@ -34,21 +34,6 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.DUI).HasColumnName("DUI").HasMaxLength(10).IsRequired();
                 entity.HasIndex(e => e.DUI).IsUnique().HasDatabaseName("UQ_Usuarios_DUI");
 
-                entity.Property(e => e.Telefono).HasMaxLength(30).IsRequired();
-                entity.Property(e => e.Direccion).HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Nacimiento).IsRequired();
-                entity.Property(e => e.FechaDeRegistro).IsRequired();
-                entity.Property(e => e.FechaDeModificacion);
-                entity.Property(e => e.Estado).IsRequired().HasDefaultValue(true);
-                entity.Property(e => e.PasswordHash).IsRequired();
-                entity.Property(e => e.SecurityStamp).IsRequired();
-                entity.Property(e => e.twoFactorEnabled).HasDefaultValue(false).IsRequired();
-                entity.Property(e => e.lockoutEnd);
-                entity.Property(e => e.LockoutEnabled).IsRequired();
-                entity.Property(e => e.accessFailedCount).IsRequired();
-                entity.Property(e => e.emailConfirmed).HasDefaultValue(false).IsRequired();
-                entity.Property(e => e.Foto).HasMaxLength(200);
-
                 entity.Property(e => e.Telefono).HasColumnName("Telefono").HasMaxLength(30).IsRequired();
                 entity.Property(e => e.Direccion).HasColumnName("Direccion").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Nacimiento).HasColumnName("Nacimiento").IsRequired();
@@ -129,6 +114,7 @@ namespace CACES.DAL.DBContext
 
                 entity.Property(e => e.FechaDeRegistro)
                     .HasColumnName("FechaDeRegistro");
+                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200);
 
                 entity.HasOne(e => e.Usuario)
                     .WithMany()
@@ -139,16 +125,16 @@ namespace CACES.DAL.DBContext
 
             });
 
-            modelBuilder.Entity<UsuarioRol>()
+            modelBuilder.Entity<UsuarioRoles>()
           .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
 
-            modelBuilder.Entity<UsuarioRol>()
+            modelBuilder.Entity<UsuarioRoles>()
                 .HasOne(ur => ur.Usuario)
                 .WithMany(u => u.UsuarioRoles)
                 .HasForeignKey(ur => ur.IdUsuario)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<UsuarioRol>()
+            modelBuilder.Entity<UsuarioRoles>()
                 .HasOne(ur => ur.Rol)
                 .WithMany(r => r.UsuarioRoles)
                 .HasForeignKey(ur => ur.RoleId)

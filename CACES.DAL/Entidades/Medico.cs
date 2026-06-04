@@ -36,5 +36,7 @@ namespace CACES.DAL.Entidades
 
         [ForeignKey("IdUsuario")]
         public Usuario Usuario { get; set; } = null!;
+
+        public string Foto { get; set; } = null!;
     }
 }

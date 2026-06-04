@@ -6,7 +6,7 @@ using System.Text;
 
 namespace CACES.DAL.Entidades.Roles
 {
-    public class AspNetRole
+    public class AspNetRoles
     {
         [Key]
         [Column("Id")]
@@ -16,6 +16,6 @@ namespace CACES.DAL.Entidades.Roles
         public string Name { get; set; } = null!;
 
         // Navegación a usuarios con este rol
-        public virtual ICollection<UsuarioRol> UsuarioRoles { get; set; } = new List<UsuarioRol>();
+        public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
     }
 }
