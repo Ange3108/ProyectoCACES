@@ -62,6 +62,6 @@ namespace CACES.DAL.Entidades
 
         public bool emailConfirmed { get; set; } = false;
 
-        public virtual ICollection<UsuarioRol> UsuarioRoles { get; set; } = new List<UsuarioRol>();
+        public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
     }
 }

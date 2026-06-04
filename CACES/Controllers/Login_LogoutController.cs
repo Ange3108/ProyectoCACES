@@ -17,7 +17,7 @@ namespace CACES.Controllers
             _authServicio = authServicio;
         }
 
-    
+     
         public async Task<IActionResult> Login(LoginDTO dto)
         {
             if (!ModelState.IsValid)
@@ -35,8 +35,16 @@ namespace CACES.Controllers
             new Claim(ClaimTypes.Name, $"{usuario.Nombres} {usuario.PrimerApellido}")
         };
 
-
-                var claimsIdentity = new ClaimsIdentity(claims, Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
+                foreach (var UsuarioRoles in usuario.UsuarioRoles)
+                {
+                    claims.Add(
+                        new Claim(
+                            ClaimTypes.Role,
+                            UsuarioRoles.Rol.Name
+                        )
+                    );
+                }
+                    var claimsIdentity = new ClaimsIdentity(claims, Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
 
                 await HttpContext.SignInAsync(
                     Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme,

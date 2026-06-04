@@ -125,16 +125,16 @@ namespace CACES.DAL.DBContext
 
             });
 
-            modelBuilder.Entity<UsuarioRol>()
+            modelBuilder.Entity<UsuarioRoles>()
           .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
 
-            modelBuilder.Entity<UsuarioRol>()
+            modelBuilder.Entity<UsuarioRoles>()
                 .HasOne(ur => ur.Usuario)
                 .WithMany(u => u.UsuarioRoles)
                 .HasForeignKey(ur => ur.IdUsuario)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<UsuarioRol>()
+            modelBuilder.Entity<UsuarioRoles>()
                 .HasOne(ur => ur.Rol)
                 .WithMany(r => r.UsuarioRoles)
                 .HasForeignKey(ur => ur.RoleId)
