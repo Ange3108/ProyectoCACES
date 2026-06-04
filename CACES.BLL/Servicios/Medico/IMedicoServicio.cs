@@ -1,4 +1,5 @@
-﻿using CACES.BLL.DTOs.Medico;
+﻿using CACES.BLL.DTOs;
+using CACES.BLL.DTOs.Medico;
 using CACES.DAL.Entidades;
 
 namespace CACES.BLL.Servicios.Medicos
@@ -11,7 +12,7 @@ namespace CACES.BLL.Servicios.Medicos
 
         Task<bool> UpdateMedicoConUsuarioAsync(EditarMedicoDTO dto);
 
-        Task<bool> CreateMedicoAsync(Medico medico);
+        Task<respuestaErrores<RegistrarMedicoDTO>> CreateMedicoAsync(RegistrarMedicoDTO registrarMedicoDto);
 
         Task<bool> DeleteMedicoAsync(int id);
     }

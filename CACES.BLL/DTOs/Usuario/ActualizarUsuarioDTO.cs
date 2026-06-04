@@ -35,9 +35,9 @@ namespace CACES.BLL.DTOs.Usuario
         [StringLength(250)]
         public string? Direccion { get; set; }
 
-        public int? Edad { get; set; }
+        public DateTime Nacimiento { get; set; }
 
-        public string? Foto { get; set; }
+
 
     }
 }

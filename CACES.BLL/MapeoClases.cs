@@ -5,6 +5,8 @@ using CACES.DAL.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using CACES.BLL.DTOs.Perfil;
+using CACES.BLL.DTOs.Medico;
 
 namespace CACES.BLL
 {
@@ -32,6 +34,15 @@ namespace CACES.BLL
 
 
             //Mapeo de los DTOs de médicos
+            CreateMap<Medico, RegistrarMedicoDTO>()
+                .ForMember(dest => dest.IdUsuario, opt => opt.Ignore())
+                .ForMember(dest => dest.IdEspecialidad, opt => opt.Ignore());
+
+            //Mapeo de los DTOs de perfil
+            CreateMap<Usuario, PerfilUsuarioDTO>()
+                .ReverseMap();
+            CreateMap<Usuario, ActualizarPerfilDTO>()
+               .ReverseMap();
 
         }
 
