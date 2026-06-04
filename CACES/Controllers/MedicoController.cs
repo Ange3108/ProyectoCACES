@@ -23,22 +23,24 @@ namespace CACES.Controllers
             return View(medicos);
         }
 
-        [Authorize(Roles = "Paciente")]
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public async Task<IActionResult> CrearMedico(Medico medico)
+        public async Task<IActionResult> CrearMedico(RegistrarMedicoDTO medicoDto)
         {
             if (!ModelState.IsValid)
-                return View(medico);
-
-            var resultado = await _medicoServicio.CreateMedicoAsync(medico);
-
-            if (!resultado)
             {
-                TempData["Error"] = "No se pudo crear el médico.";
-                return View(medico);
+                return View(medicoDto);
             }
 
-            TempData["Mensaje"] = "Médico creado correctamente.";
+            var resultado = await _medicoServicio.CreateMedicoAsync(medicoDto);
+
+            if (!resultado.EsCorrecto)
+            {
+                ModelState.AddModelError(string.Empty, resultado.mensaje ?? "No se pudo crear el médico.");
+                return View(medicoDto);
+            }
+
+            TempData["Mensaje"] = resultado.mensaje ?? "Médico creado correctamente.";
             return RedirectToAction("Medicos");
         }
 
