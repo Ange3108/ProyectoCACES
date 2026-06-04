@@ -8,7 +8,6 @@ namespace CACES.DAL.Entidades
     {
         [Key]
         [Column("Id_Medico")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int IdMedico { get; set; }
 
         [Required]
@@ -24,14 +23,18 @@ namespace CACES.DAL.Entidades
         public int Experiencia { get; set; }
 
         [Required]
+        [Column("Telefono")]
+        public string Telefono { get; set; } = null!;
+
+        [Required]
         [Column("Certificaciones")]
         public string Certificaciones { get; set; } = null!;
 
         [Required]
         [Column("FechaDeRegistro")]
         public DateTime FechaDeRegistro { get; set; }
-        [Required]
-        [Column("Foto")]
-        public string Foto { get; set; } = null!;
+
+        [ForeignKey("IdUsuario")]
+        public Usuario Usuario { get; set; } = null!;
     }
 }

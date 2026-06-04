@@ -1,3 +1,4 @@
+using CACES.BLL.DTOs.Medico;
 using CACES.BLL.Servicios.Medicos;
 using CACES.DAL.Entidades;
 using Microsoft.AspNetCore.Authorization;
@@ -8,7 +9,6 @@ namespace CACES.Controllers
     public class MedicoController : Controller
     {
         private readonly IMedicoServicio _medicoServicio;
-
 
         public MedicoController(IMedicoServicio medicoServicio)
         {
@@ -29,19 +29,23 @@ namespace CACES.Controllers
         {
             if (!ModelState.IsValid)
                 return View(medico);
+
             var resultado = await _medicoServicio.CreateMedicoAsync(medico);
+
             if (!resultado)
             {
                 TempData["Error"] = "No se pudo crear el médico.";
                 return View(medico);
             }
+
             TempData["Mensaje"] = "Médico creado correctamente.";
             return RedirectToAction("Medicos");
         }
+
         [HttpGet]
         public async Task<IActionResult> EditarMedico(int id)
         {
-            var medico = await _medicoServicio.GetMedicoByIdAsync(id);
+            var medico = await _medicoServicio.GetMedicoParaEditarAsync(id);
 
             if (medico == null)
             {
@@ -52,21 +56,24 @@ namespace CACES.Controllers
             return View(medico);
         }
 
-        [HttpPut]
-        public async Task<IActionResult> EditarMedico(Medico medico)
+        [HttpPost]
+        public async Task<IActionResult> EditarMedico(EditarMedicoDTO dto)
         {
             if (!ModelState.IsValid)
-                return View(medico);
+            {
+                TempData["Error"] = "Debe completar todos los campos obligatorios.";
+                return View(dto);
+            }
 
-            var resultado = await _medicoServicio.UpdateMedicoAsync(medico);
+            var resultado = await _medicoServicio.UpdateMedicoConUsuarioAsync(dto);
 
             if (!resultado)
             {
-                TempData["Error"] = "No se pudo actualizar el médico.";
-                return View(medico);
+                TempData["Error"] = "No se pudo actualizar la información del médico.";
+                return View(dto);
             }
 
-            TempData["Mensaje"] = "Médico actualizado correctamente.";
+            TempData["Mensaje"] = "La información del médico se actualizó correctamente.";
             return RedirectToAction("Medicos");
         }
     }

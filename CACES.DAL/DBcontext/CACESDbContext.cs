@@ -33,6 +33,22 @@ namespace CACES.DAL.DBContext
                 entity.HasIndex(e => e.CorreoElectronico).IsUnique();
                 entity.Property(e => e.DUI).HasColumnName("DUI").HasMaxLength(10).IsRequired();
                 entity.HasIndex(e => e.DUI).IsUnique().HasDatabaseName("UQ_Usuarios_DUI");
+
+                entity.Property(e => e.Telefono).HasMaxLength(30).IsRequired();
+                entity.Property(e => e.Direccion).HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Nacimiento).IsRequired();
+                entity.Property(e => e.FechaDeRegistro).IsRequired();
+                entity.Property(e => e.FechaDeModificacion);
+                entity.Property(e => e.Estado).IsRequired().HasDefaultValue(true);
+                entity.Property(e => e.PasswordHash).IsRequired();
+                entity.Property(e => e.SecurityStamp).IsRequired();
+                entity.Property(e => e.twoFactorEnabled).HasDefaultValue(false).IsRequired();
+                entity.Property(e => e.lockoutEnd);
+                entity.Property(e => e.LockoutEnabled).IsRequired();
+                entity.Property(e => e.accessFailedCount).IsRequired();
+                entity.Property(e => e.emailConfirmed).HasDefaultValue(false).IsRequired();
+                entity.Property(e => e.Foto).HasMaxLength(200);
+
                 entity.Property(e => e.Telefono).HasColumnName("Telefono").HasMaxLength(30).IsRequired();
                 entity.Property(e => e.Direccion).HasColumnName("Direccion").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Nacimiento).HasColumnName("Nacimiento").IsRequired();
@@ -46,6 +62,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.LockoutEnabled).HasColumnName("LockoutEnabled").IsRequired();
                 entity.Property(e => e.accessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
                 entity.Property(e => e.emailConfirmed).HasColumnName("EmailConfirmed").HasDefaultValue(false).IsRequired();
+
             });
 
             // Configuración de la entidad HistorialMedico
@@ -86,11 +103,40 @@ namespace CACES.DAL.DBContext
             modelBuilder.Entity<Medico>(entity =>
             {
                 entity.HasKey(e => e.IdMedico);
-                entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
-                entity.Property(e => e.Experiencia).IsRequired();
-                entity.Property(e => e.Certificaciones).HasMaxLength(200).IsRequired();
-                entity.Property(e => e.FechaDeRegistro).HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Foto).HasMaxLength(200);
+
+
+                entity.Property(e => e.IdMedico)
+                    .HasColumnName("Id_Medico");
+
+                entity.Property(e => e.IdEspecialidad)
+                    .HasColumnName("Id_Especialidad");
+
+                entity.Property(e => e.IdUsuario)
+                    .HasColumnName("Id_Usuario");
+
+                entity.Property(e => e.Experiencia)
+                    .HasColumnName("Experiencia")
+                    .IsRequired();
+
+                entity.Property(e => e.Telefono)
+                    .HasColumnName("Telefono")
+                    .HasMaxLength(20)
+                    .IsRequired();
+
+                entity.Property(e => e.Certificaciones)
+                    .HasColumnName("Certificaciones")
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.FechaDeRegistro)
+                    .HasColumnName("FechaDeRegistro");
+
+                entity.HasOne(e => e.Usuario)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdUsuario);
+
+
+                
+
             });
 
             modelBuilder.Entity<UsuarioRol>()
