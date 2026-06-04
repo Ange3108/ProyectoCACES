@@ -32,7 +32,6 @@
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Especialidades" asp-action="Especialidades">Especialidades</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Turismo" asp-action="Turismo">Turismo Médico</a></li>
                         <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Medico" asp-action="Medicos">Especialistas</a></li>
-
                         <!--Si el usuario esta autenticado-->
                         @if (User.Identity.IsAuthenticated == true)
                          {
@@ -57,7 +56,7 @@
                 </div>
 				@if (User.Identity.IsAuthenticated == true)
                 {
-                <a class="account-link" asp-area="" asp-controller="Cuenta" asp-action="Perfil" aria-label="Cuenta">
+                <a class="account-link" asp-area="" asp-controller="Usuario" asp-action="VerPerfil" aria-label="Cuenta">
                     <i class="bi bi-person"></i>
                 </a>
                     }
