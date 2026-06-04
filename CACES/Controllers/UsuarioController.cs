@@ -70,7 +70,7 @@ namespace CACES.Controllers
         }
 
         //Metodo Eliminar
-        [Authorize(Roles = "Paciente")]
+        //[Authorize(Roles = "Paciente")]
         [HttpPost]
         public async Task<IActionResult> EliminarUsuario(int id)
         {

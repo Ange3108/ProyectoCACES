@@ -23,7 +23,7 @@ namespace CACES.BLL.DTOs.Medico
         [Required(ErrorMessage = "El teléfono es obligatorio")]
         public string Telefono { get; set; } = null!;
 
-        public string? Foto { get; set; }
+        public string? Foto { get; set; } = string.Empty!;
 
         public bool Estado { get; set; }
 
