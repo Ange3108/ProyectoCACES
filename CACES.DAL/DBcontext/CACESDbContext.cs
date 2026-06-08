@@ -129,8 +129,6 @@ namespace CACES.DAL.DBContext
             });
 
 
-            
-            modelBuilder.Entity<UsuarioRol>()
 
             modelBuilder.Entity<UsuarioRoles>()
 

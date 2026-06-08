@@ -1,6 +1,5 @@
 ﻿using CACES.DAL.DTOs.Roles;
 using CACES.DAL.Entidades.Roles;
-using CACES.DAL.DTOs.Roles;
 using System;
 using System.Collections.Generic;
 using System.Text;
