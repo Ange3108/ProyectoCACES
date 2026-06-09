@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace CACES.BLL.DTOs.Perfil
+﻿namespace CACES.BLL.DTOs.Perfil
 {
     public class PerfilUsuarioDTO
     {
