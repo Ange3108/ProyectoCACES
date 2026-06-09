@@ -16,6 +16,9 @@ namespace CACES.DAL.DBContext
         public DbSet<Paciente> Pacientes { get; set; }
         public DbSet<HistorialMedico> HistorialesMedicos { get; set; }
         public DbSet<Medico> Medicos { get; set; }
+        public DbSet<ApplicationUser> AspNetUsers { get; set; }
+        public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+        public DbSet<AspNetRole> AspNetRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -125,7 +128,10 @@ namespace CACES.DAL.DBContext
 
             });
 
+
+
             modelBuilder.Entity<UsuarioRoles>()
+
           .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
 
             modelBuilder.Entity<UsuarioRoles>()
@@ -139,6 +145,24 @@ namespace CACES.DAL.DBContext
                 .WithMany(r => r.UsuarioRoles)
                 .HasForeignKey(ur => ur.RoleId)
                 .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("AspNetUsers");
+            });
+
+            modelBuilder.Entity<AspNetRole>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("AspNetRoles");
+            });
+
+            modelBuilder.Entity<AspNetUserRole>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+                entity.ToTable("AspNetUserRoles");
+            });
         }
     }
 }

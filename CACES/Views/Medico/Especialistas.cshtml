@@ -1,0 +1,66 @@
+﻿@model List<CACES.DAL.Entidades.Medico>
+
+@{
+    ViewData["Title"] = "Especialistas";
+}
+
+<section class="container py-5">
+
+    <div class="text-center mb-5">
+        <h1 class="fw-bold text-primary">Nuestros Especialistas</h1>
+        <p class="text-muted">
+            Conozca el equipo médico disponible para brindarle atención profesional y personalizada.
+        </p>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-4">
+            @foreach (var medico in Model)
+            {
+                <div class="col-md-4">
+                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+
+                        <div class="text-center pt-4">
+                            <img src="@medico.Usuario.Foto"
+                                 alt="Foto del especialista"
+                                 class="rounded-circle border shadow-sm"
+                                 style="width:130px;height:130px;object-fit:cover;" />
+                        </div>
+
+                        <div class="card-body text-center p-4">
+                            <h5 class="fw-bold mb-1">
+                                @medico.Usuario.Nombres @medico.Usuario.PrimerApellido @medico.Usuario.SegundoApellido
+                            </h5>
+
+                            <p class="text-primary fw-semibold mb-2">
+                                Especialidad #@medico.IdEspecialidad
+                            </p>
+
+                            <p class="text-muted mb-2">
+                                <i class="bi bi-award me-1"></i>
+                                @medico.Experiencia años de experiencia
+                            </p>
+
+                            <p class="small text-muted">
+                                @medico.Certificaciones
+                            </p>
+
+                            <span class="badge bg-success rounded-pill px-3 py-2">
+                                Disponible
+                            </span>
+                        </div>
+
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="alert alert-info text-center rounded-3">
+            No hay especialistas registrados actualmente.
+        </div>
+    }
+
+</section>

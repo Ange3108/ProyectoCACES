@@ -3,15 +3,19 @@ using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
-using CACES.BLL.Servicios.Perfil;
+
+using CACES.BLL.Servicios.Roles;
+
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
+using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -31,26 +35,27 @@ builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
 builder.Services.AddScoped<IMedicoRepositorio, MedicoRepositorio>();
 builder.Services.AddScoped<IHistorialMedicoRepositorio, HistorialMedicoRepositorio>();
+builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 
-// Registrar servicios y repositorios (añadir esta línea)
+// Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
-builder.Services.AddScoped<IPerfilServicio, PerfilServicio>();
 
 // Servicios
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 
 
-builder.Services.AddScoped<IMedicoRepositorio, MedicoRepositorio>();
 builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();
 builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();
 builder.Services.AddScoped<IAuthServicio, AuthServicio>();
-builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 
+builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
+builder.Services.AddScoped<IRolServicio, RolServicio>();
+
+
+builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
-
-
 //Configura el esquema de autenticación y autorización basado en Cookies
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
@@ -62,7 +67,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     });
 builder.Services.AddAuthorizationBuilder()
      .AddPolicy("SoloAdministrador", policy => policy.RequireRole("Administrador"))
-    .AddPolicy("SoloMedico", policy => policy.RequireRole("Médico"))
+    .AddPolicy("SoloMedico", policy => policy.RequireRole("Medico"))
     .AddPolicy("SoloPaciente", policy => policy.RequireRole("Paciente"));
 
 

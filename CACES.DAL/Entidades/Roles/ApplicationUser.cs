@@ -2,20 +2,20 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CACES.DAL.Entidades.Roles
 {
-    public class AspNetRole
+    [Table("AspNetUsers")]
+    public class ApplicationUser
     {
         [Key]
         [Column("Id")]
         public string Id { get; set; } = null!;
 
-        [Column("Name")]
-        public string Name { get; set; } = null!;
+        [Column("Email")]
+        public string? Email { get; set; }
 
-        // Navegación a usuarios con este rol
-        public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
+        [Column("UserName")]
+        public string? UserName { get; set; }
     }
 }

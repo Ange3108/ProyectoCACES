@@ -11,7 +11,6 @@ namespace CACES.BLL.DTOs.Usuario
         public int idUsuario { get; set; }
         public string Nombres { get; set; } = null!;
         public string PrimerApellido { get; set; } = null!;
-        public string SegundoApellido { get; set; } = null!;
         public string CorreoElectronico { get; set; } = null!;
         public string DUI { get; set; } = null!;
         public string Telefono { get; set; } = null!;
@@ -20,8 +19,10 @@ namespace CACES.BLL.DTOs.Usuario
 
         public DateTime Nacimiento { get; set; }
 
+        public string? Foto { get; set; }
         public DateTime FechaDeRegistro { get; set; }
         public bool Estado { get; set; }
+        public string SegundoApellido { get; set; } = null!;
         public DateTime? FechaDeModificacion { get; set; }
         public string SecurityStamp { get; set; } = null!;
         public bool twoFactorEnabled { get; set; } = false;

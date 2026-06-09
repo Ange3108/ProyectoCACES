@@ -15,6 +15,6 @@ namespace CACES.DAL.Entidades.Roles
 
         // Navegación
         public virtual Usuario Usuario { get; set; } = null!;
-        public virtual AspNetRoles Rol { get; set; } = null!;
+        public virtual AspNetRole Rol { get; set; } = null!;
     }
 }

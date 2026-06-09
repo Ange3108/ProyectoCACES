@@ -5,7 +5,6 @@ using CACES.DAL.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CACES.BLL.DTOs.Perfil;
 using CACES.BLL.DTOs.Medico;
 
 namespace CACES.BLL
@@ -15,10 +14,10 @@ namespace CACES.BLL
         public MapeoClases()
         {
             //Mapeo de los 3 DTO de usuario
-          CreateMap<Usuario, RegistrarUsuarioDTO>()
-            .ForMember(dest => dest.passwordHash, opt => opt.Ignore()) // No mapear password
-            .ReverseMap()
-            .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
+            CreateMap<Usuario, RegistrarUsuarioDTO>()
+              .ForMember(dest => dest.passwordHash, opt => opt.Ignore()) // No mapear password
+              .ReverseMap()
+              .ForMember(dest => dest.PasswordHash, opt => opt.Ignore());
 
             CreateMap<Usuario, ActualizarUsuarioDTO>()
                 .ReverseMap();
@@ -39,11 +38,12 @@ namespace CACES.BLL
                 .ForMember(dest => dest.IdEspecialidad, opt => opt.Ignore());
 
             //Mapeo de los DTOs de perfil
+            /*
             CreateMap<Usuario, PerfilUsuarioDTO>()
                 .ReverseMap();
             CreateMap<Usuario, ActualizarPerfilDTO>()
                .ReverseMap();
-
+            */
         }
 
     }

@@ -86,12 +86,40 @@ namespace CACES.DAL.Repositorios.Medicos
 
         public async Task<bool> DeleteMedicoAsync(int id)
         {
-            var medico = await _context.Medicos.FindAsync(id);
+            var medico = await _context.Medicos
+                .FirstOrDefaultAsync(x => x.IdMedico == id);
 
             if (medico == null)
                 return false;
 
+            var idUsuario = medico.IdUsuario;
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "DELETE FROM Recetas WHERE Id_Cita IN (SELECT Id_Cita FROM Citas WHERE Id_Medico = {0})", id);
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "DELETE FROM Citas WHERE Id_Medico = {0}", id);
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "DELETE FROM Cirugias WHERE Id_Medico = {0}", id);
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "DELETE FROM Precios WHERE Id_Medico = {0}", id);
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "DELETE FROM HorariosDisponibles WHERE Id_Medico = {0}", id);
+
+            await _context.Database.ExecuteSqlRawAsync(
+                "DELETE FROM AspNetUserRoles WHERE UserId = {0}", idUsuario.ToString());
+
             _context.Medicos.Remove(medico);
+
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(x => x.IdUsuario == idUsuario);
+
+            if (usuario != null)
+                _context.Usuarios.Remove(usuario);
+
             return await _context.SaveChangesAsync() > 0;
         }
     }
