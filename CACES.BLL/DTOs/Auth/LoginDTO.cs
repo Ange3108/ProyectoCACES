@@ -14,5 +14,6 @@ namespace CACES.BLL.DTOs.Auth
         [Required(ErrorMessage = "Debe ingresar la contraseña")]
         public string Password { get; set; } = null!;
 
+
     }
 }
