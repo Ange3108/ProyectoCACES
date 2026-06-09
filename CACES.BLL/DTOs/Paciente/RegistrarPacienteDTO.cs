@@ -1,6 +1,5 @@
 using CACES.BLL.DTOs.Historial;
 using CACES.BLL.DTOs.Usuario;
-using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Text;
@@ -9,12 +8,10 @@ namespace CACES.BLL.DTOs.Paciente
 {
     public class RegistrarPacienteDTO
     {
-        // Usuario
         [Required]
-        public RegistrarUsuarioDTO Usuario { get; set; }
+        public RegistrarUsuarioDTO Usuario { get; set; } = new RegistrarUsuarioDTO();
 
-        // Historial Médico
         [Required]
-        public HistorialDTO Historial { get; set; }
+        public HistorialDTO Historial { get; set; } = new HistorialDTO();
     }
 }

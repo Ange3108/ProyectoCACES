@@ -4,6 +4,7 @@ using CACES.BLL.DTOs.Medico;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Medicos;
 
+
 namespace CACES.BLL.Servicios.Medicos
 {
     public class MedicoServicio : IMedicoServicio
@@ -12,7 +13,6 @@ namespace CACES.BLL.Servicios.Medicos
         private readonly IMapper _mapper;
 
         public MedicoServicio(IMedicoRepositorio medicoRepositorio, IMapper mapper)
-
         {
             _medicoRepositorio = medicoRepositorio;
             _mapper = mapper;
@@ -39,7 +39,7 @@ namespace CACES.BLL.Servicios.Medicos
                 PrimerApellido = medico.Usuario.PrimerApellido,
                 SegundoApellido = medico.Usuario.SegundoApellido,
                 Telefono = medico.Usuario.Telefono,
-                Foto = medico.Foto,
+                Foto = medico.Usuario.Foto,
                 Estado = medico.Usuario.Estado,
 
                 IdEspecialidad = medico.IdEspecialidad,
@@ -58,7 +58,6 @@ namespace CACES.BLL.Servicios.Medicos
                 Experiencia = dto.Experiencia,
                 Telefono = dto.Telefono,
                 Certificaciones = dto.Certificaciones,
-                Foto = dto.Foto, 
 
                 Usuario = new CACES.DAL.Entidades.Usuario
                 {
@@ -67,6 +66,7 @@ namespace CACES.BLL.Servicios.Medicos
                     PrimerApellido = dto.PrimerApellido,
                     SegundoApellido = dto.SegundoApellido,
                     Telefono = dto.Telefono,
+                    Foto = dto.Foto,
                     Estado = dto.Estado
                 }
             };
@@ -80,13 +80,10 @@ namespace CACES.BLL.Servicios.Medicos
 
             try
             {
-                // 1. Convertimos el DTO a la Entidad de Base de Datos usando IMapper
                 var medico = _mapper.Map<Medico>(registrarMedicoDto);
 
-                // Asignamos la fecha de registro actual generada por el servidor
                 medico.FechaDeRegistro = DateTime.Now;
 
-                // 2. Enviamos la entidad al repositorio
                 bool resultado = await _medicoRepositorio.CreateMedicoAsync(medico);
 
                 if (resultado)

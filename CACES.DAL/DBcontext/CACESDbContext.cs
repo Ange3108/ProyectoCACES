@@ -116,9 +116,7 @@ namespace CACES.DAL.DBContext
                     .HasColumnName("Certificaciones")
                     .HasMaxLength(500);
 
-                entity.Property(e => e.FechaDeRegistro)
-                    .HasColumnName("FechaDeRegistro");
-                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200);
+              
 
                 entity.HasOne(e => e.Usuario)
                     .WithMany()

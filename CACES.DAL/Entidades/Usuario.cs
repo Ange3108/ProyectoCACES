@@ -1,5 +1,4 @@
 ﻿using CACES.DAL.Entidades.Roles;
-using CACES.DAL.Entidades.Roles;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -31,6 +30,8 @@ namespace CACES.DAL.Entidades
 
         public bool Estado { get; set; } = true;
 
+        [Required(ErrorMessage = "La dirección es requerida")]
+        [StringLength(250)]
         public string Direccion { get; set; } = null!;
 
         public int Edad { get; set; }

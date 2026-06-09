@@ -5,7 +5,7 @@ namespace CACES.BLL.DTOs.Usuario
 {
     public class RegistrarUsuarioDTO
     {
-        public int idUsuario { get; set; }
+        public int IdUsuario { get; set; }
 
         [Required(ErrorMessage = "El nombre es requerido")]
         [StringLength(100)]

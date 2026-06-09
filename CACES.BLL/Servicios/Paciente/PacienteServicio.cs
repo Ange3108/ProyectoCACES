@@ -95,5 +95,12 @@ namespace CACES.BLL.Servicios.Paciente
             }
 
         }
+
+        public async Task<bool> RegistrarPacienteAsync(RegistrarPacienteDTO pacienteDto)
+        {
+            var usuarioCreado = await CreatePacienteAsync(pacienteDto);
+
+            return usuarioCreado != null;
+        }
     }
 }
