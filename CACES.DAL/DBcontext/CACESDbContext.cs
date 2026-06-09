@@ -1,5 +1,4 @@
 using CACES.DAL.Entidades;
-using CACES.DAL.Entidades.Especialidad;
 using CACES.DAL.Entidades.Roles;
 using Microsoft.EntityFrameworkCore;
 
@@ -20,6 +19,8 @@ namespace CACES.DAL.DBContext
         public DbSet<ApplicationUser> AspNetUsers { get; set; }
         public DbSet<AspNetRole> AspNetRoles { get; set; }
         public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
+
+        public DbSet<Especialidad> Especialidades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -122,7 +123,7 @@ namespace CACES.DAL.DBContext
 
                 entity.HasOne(e => e.Usuario)
                     .WithMany()
-                    .HasForeignKey(e => e.IdUsuario)
+                    .HasForeignKey(e => e.IdUsuario);
 
             });
 
@@ -163,7 +164,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Id_Especialidad).HasColumnName("Id_Especialidad");
                 entity.Property(e => e.Nombre).HasColumnName("Nombre").IsRequired().HasMaxLength(100);
                 entity.HasIndex(e => e.Nombre).IsUnique();
-                entity.Property(e => e.Descripción).HasColumnName("Descripción").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion").IsRequired().HasMaxLength(200);
                 entity.Property(e => e.Icono).HasColumnName("Icono").IsRequired().HasMaxLength(200);
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();

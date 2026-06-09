@@ -6,7 +6,7 @@ namespace CACES.DAL.Repositorios.Especialidades
 {
     public interface IEspecialidadRepositorio
     {
-        Task<List<Entidades.>> GetEspecialidadesAsync();
+        Task<List<Entidades.Especialidad>> GetEspecialidadesAsync();
         Task<Entidades.Especialidad> GetEspecialidadByIdAsync(int id);
         Task<Entidades.Especialidad> GetEspecialidadByNameAsync(string name);
         Task<bool> CreateEspecialidadAsync(Entidades.Especialidad especialidad);

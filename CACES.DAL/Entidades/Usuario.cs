@@ -1,5 +1,4 @@
 ﻿using CACES.DAL.Entidades.Roles;
-using CACES.DAL.Entidades.Roles;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 

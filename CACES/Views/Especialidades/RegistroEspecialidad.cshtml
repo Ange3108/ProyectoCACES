@@ -1,0 +1,51 @@
+﻿@using CACES.BLL.DTOs.Especialidad
+@model especialidadDTO
+
+@{
+	ViewData["Title"] = "Registrar Especialidad";
+}
+
+	<main class="container py-5">
+		<section class="form-shell">
+			<div class="top-action mb-3">
+				<a class="btn btn-add" href="../Especialidades.html">Volver al listado</a>
+			</div>
+			<div class="card form-card shadow-sm">
+				<div class="card-body p-4 p-md-5">
+					<h1 class="section-title mb-3">Registrar Especialidad Médica</h1>
+					<p class="text-muted mb-4">Agrega una nueva especialidad al catálogo del sistema.</p>
+				<form id="formEspecialidad"
+					  asp-controller="Especialidad"
+					  asp-action="RegistroEspecialidad"
+					  method="post">
+						<div class="row g-3">
+							<div class="col-12 col-md-6">
+								<label for="nombreEspecialidad" class="form-label">Nombre</label>
+								<input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Ej. Endoscopia" required>
+							</div>
+							<div class="col-12 col-md-6">
+								<label for="iconoEspecialidad" class="form-label">Ícono</label>
+								<input type="text" class="form-control" id="Icono" name="Icono" placeholder="bi bi-heart-fill" required>
+							</div>
+							<div class="col-12">
+								<label for="descripcionEspecialidad" class="form-label">Descripcion</label>
+								<textarea class="form-control" id="Descripcion" name="Descripcion" rows="4" placeholder="Describe la especialidad" required></textarea>
+							</div>
+							<div class="col-12 col-md-6">
+								<label for="estadoEspecialidad" class="form-label">Estado</label>
+								<select class="form-select" id="Estado" name="Estado" required>
+									<option value="">Selecciona una opción</option>
+									<option value="activa">Activa</option>
+									<option value="inactiva">Inactiva</option>
+								</select>
+							</div>
+                            
+						</div>
+						<div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+							<button type="submit" class="btn btn-add">Guardar especialidad</button>
+						</div>
+					</form>
+				</div>
+			</div>
+		</section>
+	</main>
