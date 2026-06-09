@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using CACES.BLL.DTOs.Medico;
+using CACES.BLL.DTOs.Perfil;
 
 namespace CACES.BLL
 {
@@ -38,12 +39,12 @@ namespace CACES.BLL
                 .ForMember(dest => dest.IdEspecialidad, opt => opt.Ignore());
 
             //Mapeo de los DTOs de perfil
-            /*
+            
             CreateMap<Usuario, PerfilUsuarioDTO>()
                 .ReverseMap();
             CreateMap<Usuario, ActualizarPerfilDTO>()
                .ReverseMap();
-            */
+            
         }
 
     }

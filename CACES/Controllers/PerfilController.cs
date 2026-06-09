@@ -1,4 +1,5 @@
-﻿using CACES.BLL.DTOs.Perfil;
+﻿using AutoMapper;
+using CACES.BLL.DTOs.Perfil;
 using CACES.BLL.Servicios.Perfil;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -8,7 +9,6 @@ namespace CACES.Controllers
     public class PerfilController : Controller
     {
         private readonly IPerfilServicio _perfilServicio;
-
         public PerfilController(IPerfilServicio perfilServicio)
         {
             _perfilServicio = perfilServicio;
@@ -39,7 +39,7 @@ namespace CACES.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> ActualizarPerfil()
+        public async Task<IActionResult> ActualizarPerfilObt()
         {
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier);
             if (userIdClaim == null)
@@ -50,7 +50,7 @@ namespace CACES.Controllers
             int idUsuario = int.Parse(userIdClaim.Value);
 
             // Busca los datos actuales del usuario
-            var resultado = await _perfilServicio.GetPerfilUsuarioPorIdAsync(idUsuario);
+            var resultado = await _perfilServicio.GetPerfilParaActualizarPorIdAsync(idUsuario);
 
             if (!resultado.EsCorrecto || resultado.Dato == null)
             {
