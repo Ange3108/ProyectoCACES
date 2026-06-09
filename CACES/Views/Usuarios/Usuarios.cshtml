@@ -28,6 +28,7 @@
                             <th>Dirección</th>
                             <th>Fecha de Nacimiento</th>
                             <th>Estado</th>
+   
                             <th style="width: 180px;">Acciones</th>
                         </tr>
                     </thead>
@@ -50,10 +51,15 @@
                 <input type="hidden" id="IdUsuario" name="id" />
 
                 <div class="modal-body">
+
+                     <div class="mb-3">
+                        <label for="foto" class="form-label">Foto de perfil</label>
+                    <input type="url" id="Foto" name="Foto" class="form-control" />
+                    </div>
                     <div class="mb-3">
                         <label for="nombre" class="form-label">Nombres</label>
                     <input type="text" id="Nombres" name="Nombres" class="form-control" />
-                    </div/>
+                    </div>
 
                     <div class=" mb-3">
                         <label for="primerApellido" class="form-label">Primer Apellido</label>
