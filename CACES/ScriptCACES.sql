@@ -25,6 +25,7 @@ CREATE TABLE Usuarios(
     Telefono VARCHAR(30) NOT NULL,
     Direccion VARCHAR(200) NOT NULL,
     Nacimiento Date NOT NULL,
+    Foto VARCHAR(200) NOT NULL,
 	-- Campos de ASP.NET Identity
 	PasswordHash NVARCHAR(MAX) NULL,
 	SecurityStamp NVARCHAR(MAX) NULL,
@@ -269,16 +270,16 @@ GO
 
 --usuarios
 -- Usuario 1
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Carlos', 'Rivera', 'Gomez', 'carlos.rivera@example.com', '12345678-1', '7777-1111', 'San Salvador', '1990-05-15', GETDATE(), 1, 'HASH_DE_PRUEBA_1', NEWID());
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, Foto, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Juan', 'Rivera', 'Gomez', 'juan.admin@caces.com', '12345678-1', '7777-1111', 'San Salvador', '1990-05-15','juan.jpg', GETDATE(), 1, 'Prueba123', NEWID());
 
 -- Usuario 2
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Ana', 'Martinez', 'Lopez', 'ana.martinez@example.com', '87654321-2', '7777-2222', 'Santa Tecla', '1985-11-20', GETDATE(), 1, 'HASH_DE_PRUEBA_2', NEWID());
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento,Foto, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Oscar', 'Lopez', 'Varillas', 'oscar.medico@caces.com', '87654321-2', '7777-2222', 'Colonia Escalón', '1985-11-20','oscar.jpg', GETDATE(), 1, 'HASH_DE_PRUEBA_2', NEWID());
 
 -- Usuario 3
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Luis', 'Fernandez', 'Solis', 'luis.fernandez@example.com', '11223344-3', '7777-3333', 'Antiguo Cuscatlán', '2001-03-03', GETDATE(), 1, 'HASH_DE_PRUEBA_3', NEWID());
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, Foto,FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Maria', 'Venavidez', 'Solis', 'maria.paciente@caces.com', '11223344-3', '7777-3333', 'Antiguo Cuscatlán', '2001-03-03','maria.jpg', GETDATE(), 1, 'HASH_DE_PRUEBA_3', NEWID());
 GO
 
 -- MEDICOS

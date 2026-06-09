@@ -36,17 +36,16 @@ namespace CACES.DAL.DBContext
                 entity.HasIndex(e => e.CorreoElectronico).IsUnique();
                 entity.Property(e => e.DUI).HasColumnName("DUI").HasMaxLength(10).IsRequired();
                 entity.HasIndex(e => e.DUI).IsUnique().HasDatabaseName("UQ_Usuarios_DUI");
-
                 entity.Property(e => e.Telefono).HasColumnName("Telefono").HasMaxLength(30).IsRequired();
                 entity.Property(e => e.Direccion).HasColumnName("Direccion").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Nacimiento).HasColumnName("Nacimiento").IsRequired();
+                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
                 entity.Property(e => e.PasswordHash).HasColumnName("PasswordHash").IsRequired();
                 entity.Property(e => e.SecurityStamp).HasColumnName("SecurityStamp").IsRequired();
                 entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Edad).HasColumnName("Edad").IsRequired();
                 entity.Property(e => e.TwoFactorEnabled).HasColumnName("TwoFactorEnabled").HasDefaultValue(false).IsRequired();
                 entity.Property(e => e.LockoutEnd).HasColumnName("LockoutEndDateUtc");
                 entity.Property(e => e.AccessFailedCount).HasColumnName("AccessFailedCount").IsRequired();

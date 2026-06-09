@@ -79,6 +79,8 @@ namespace CACES.BLL.Servicios.Usuario
                 nuevoUsuario.FechaDeRegistro = DateTime.Now;
                 nuevoUsuario.SecurityStamp = Guid.NewGuid().ToString();
                 nuevoUsuario.Estado = true;
+                nuevoUsuario.Foto = "default.jpg"; // Asignar una foto por defecto
+                
 
                 // Guardar
                 bool resultado = await _usuarioRepository.CreateUsuarioAsync(nuevoUsuario);

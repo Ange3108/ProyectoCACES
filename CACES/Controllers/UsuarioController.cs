@@ -12,12 +12,10 @@ namespace CACES.Controllers
     public class UsuarioController : Controller
     {
         private readonly IUsuarioService _usuarioServicio;
-        private readonly IPerfilServicio _perfilServicio;
 
-        public UsuarioController(IUsuarioService usuarioServicio, IPerfilServicio perfilServicio)
+        public UsuarioController(IUsuarioService usuarioServicio)
         {
             _usuarioServicio = usuarioServicio;
-            _perfilServicio = perfilServicio;
         }
 
         [HttpGet]
@@ -90,4 +88,5 @@ namespace CACES.Controllers
             return Json(usuarios);
         }
 
+    }
 }
