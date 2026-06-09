@@ -2,9 +2,6 @@ using CACES.BLL.DTOs.Usuario;
 using CACES.BLL.Servicios.Usuario;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Diagnostics.Contracts;
-using System.Runtime.CompilerServices;
-using System.Security.Claims;
 
 namespace CACES.Controllers
 {

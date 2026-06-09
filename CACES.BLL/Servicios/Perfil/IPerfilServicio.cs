@@ -10,5 +10,6 @@ namespace CACES.BLL.Servicios.Perfil
     {
         Task<respuestaErrores<PerfilUsuarioDTO>> GetPerfilUsuarioPorIdAsync(int id);
         Task<respuestaErrores<ActualizarPerfilDTO>> ActualizarPerfilUsuarioAsync(int id, ActualizarPerfilDTO perfilDto);
+        Task<respuestaErrores<ActualizarPerfilDTO>> GetPerfilParaActualizarPorIdAsync(int id);
     }
 }
