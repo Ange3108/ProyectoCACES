@@ -10,7 +10,7 @@ namespace CACES.BLL.DTOs.Perfil
 
             [Required]
             public int IdUsuario { get; set; }
-            public bool Estado { get; set; }
+            public bool Estado { get; set; } = true;
 
             // --- INFORMACIÓN PERSONAL OBLIGATORIA ---
             [Required(ErrorMessage = "El nombre es obligatorio.")]
