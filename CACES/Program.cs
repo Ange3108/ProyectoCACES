@@ -3,7 +3,7 @@ using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
-
+using CACES.BLL.Servicios.Perfil;
 using CACES.BLL.Servicios.Roles;
 
 using CACES.BLL.Servicios.Usuario;
@@ -48,7 +48,7 @@ builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente
 builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();
 builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();
 builder.Services.AddScoped<IAuthServicio, AuthServicio>();
-
+builder.Services.AddScoped<IPerfilServicio, PerfilServicio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<IRolServicio, RolServicio>();
 
