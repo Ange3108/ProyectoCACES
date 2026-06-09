@@ -14,6 +14,7 @@ namespace CACES.Controllers
             _perfilServicio = perfilServicio;
         }
 
+
         //Perfil de usuario
         [HttpGet]
         public async Task<IActionResult> VerPerfil()
@@ -34,7 +35,7 @@ namespace CACES.Controllers
                 return RedirectToAction("Index", "Home");
             }
 
-            return View(resultado.Dato);
+            return View("~/Views/Perfil/perfil.cshtml", resultado.Dato);
         }
 
         [HttpGet]
@@ -58,7 +59,7 @@ namespace CACES.Controllers
             }
 
             // Envia el PerfilUsuarioDTO a la vista para rellenar los inputs del HTML
-            return View(resultado.Dato);
+            return View("~/Views/Perfil/actualizarPerfil.cshtml", resultado.Dato);
         }
 
         [HttpPost]
@@ -98,5 +99,6 @@ namespace CACES.Controllers
 
             return View(perfilDto);
         }
+
     }
 }

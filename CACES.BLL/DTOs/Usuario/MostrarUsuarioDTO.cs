@@ -19,17 +19,9 @@ namespace CACES.BLL.DTOs.Usuario
 
         public DateTime Nacimiento { get; set; }
 
-        public string? Foto { get; set; }
-        public DateTime FechaDeRegistro { get; set; }
         public bool Estado { get; set; }
         public string SegundoApellido { get; set; } = null!;
-        public DateTime? FechaDeModificacion { get; set; }
-        public string SecurityStamp { get; set; } = null!;
-        public bool twoFactorEnabled { get; set; } = false;
-        public DateTime? lockoutEnd { get; set; }
-        public bool Lockoutfailed { get; set; }
-        public int accessFailedCount { get; set; }
-        public bool emailConfirmed { get; set; } = false;
+      
 
 
     }
