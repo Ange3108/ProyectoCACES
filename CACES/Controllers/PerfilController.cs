@@ -63,7 +63,7 @@ namespace CACES.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> ActualizarPerfil(PerfilUsuarioDTO perfilDto)
+        public async Task<IActionResult> ActualizarPerfil(ActualizarPerfilDTO perfilDto)
         {
             if (!ModelState.IsValid)
             {

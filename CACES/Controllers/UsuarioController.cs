@@ -14,10 +14,12 @@ namespace CACES.Controllers
     public class UsuarioController : Controller
     {
         private readonly IUsuarioService _usuarioServicio;
+        private readonly IPerfilServicio _perfilServicio;
 
-        public UsuarioController(IUsuarioService usuarioServicio)
+        public UsuarioController(IUsuarioService usuarioServicio, IPerfilServicio perfilServicio)
         {
             _usuarioServicio = usuarioServicio;
+            _perfilServicio = perfilServicio;
         }
 
         [HttpGet]
@@ -165,7 +167,7 @@ namespace CACES.Controllers
                 return RedirectToAction("VerPerfil");
             }
 
-            var resultado = await _perfilServicio.ActualizarPerfilUsuarioAsync(idUsuario, ActualizarperfilDto);
+            var resultado = await _perfilServicio.ActualizarPerfilUsuarioAsync(idUsuario, perfilDto);
 
             if (resultado.EsCorrecto)
             {
