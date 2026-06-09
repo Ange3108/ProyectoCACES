@@ -3,6 +3,7 @@ using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
+using CACES.BLL.Servicios.Perfil;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.HistorialMedicos;
@@ -34,6 +35,8 @@ builder.Services.AddScoped<IHistorialMedicoRepositorio, HistorialMedicoRepositor
 // Registrar servicios y repositorios (añadir esta línea)
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
+builder.Services.AddScoped<IPerfilServicio, PerfilServicio>();
+
 // Servicios
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 
