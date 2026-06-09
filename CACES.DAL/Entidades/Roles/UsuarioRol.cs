@@ -5,6 +5,7 @@ using System.Text;
 
 namespace CACES.DAL.Entidades.Roles
 {
+    [Table("UsuarioRoles")]
     public class UsuarioRoles
     {
         [Column("Id_Usuario")]
