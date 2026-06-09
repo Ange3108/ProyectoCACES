@@ -9,13 +9,28 @@ namespace CACES.DAL.Entidades.Roles
     public class ApplicationUser
     {
         [Key]
-        [Column("Id")]
         public string Id { get; set; } = null!;
 
-        [Column("Email")]
-        public string? Email { get; set; }
+        public string Email { get; set; } = null!;
 
-        [Column("UserName")]
-        public string? UserName { get; set; }
+        public bool EmailConfirmed { get; set; }
+
+        public string PasswordHash { get; set; } = null!;
+
+        public string SecurityStamp { get; set; } = null!;
+
+        public string PhoneNumber { get; set; } = null!;
+
+        public bool PhoneNumberConfirmed { get; set; }
+
+        public bool TwoFactorEnabled { get; set; }
+
+        public DateTime? LockoutEndDateUtc { get; set; }
+
+        public bool LockoutEnabled { get; set; }
+
+        public int AccessFailedCount { get; set; }
+
+        public string UserName { get; set; } = null!;
     }
 }

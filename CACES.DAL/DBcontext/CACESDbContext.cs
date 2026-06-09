@@ -45,11 +45,12 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
                 entity.Property(e => e.PasswordHash).HasColumnName("PasswordHash").IsRequired();
                 entity.Property(e => e.SecurityStamp).HasColumnName("SecurityStamp").IsRequired();
-                entity.Property(e => e.twoFactorEnabled).HasColumnName("TwoFactorEnabled").HasDefaultValue(false).IsRequired();
-                entity.Property(e => e.lockoutEnd).HasColumnName("LockoutEndDateUtc");
-                entity.Property(e => e.LockoutEnabled).HasColumnName("LockoutEnabled").IsRequired();
-                entity.Property(e => e.accessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
-                entity.Property(e => e.emailConfirmed).HasColumnName("EmailConfirmed").HasDefaultValue(false).IsRequired();
+                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Edad).HasColumnName("Edad").IsRequired();
+                entity.Property(e => e.TwoFactorEnabled).HasColumnName("TwoFactorEnabled").HasDefaultValue(false).IsRequired();
+                entity.Property(e => e.LockoutEnd).HasColumnName("LockoutEndDateUtc");
+                entity.Property(e => e.AccessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
+                entity.Property(e => e.EmailConfirmed).HasColumnName("EmailConfirmed").HasDefaultValue(false).IsRequired();
 
             });
 
@@ -62,7 +63,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.EnfermedadesCronicas).HasColumnName("Enfermedades_Crónicas").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Detalles).HasMaxLength(100).IsRequired();
                 entity.Property(e => e.TipoSangre).HasColumnName("Tipo_Sangre").HasMaxLength(10).IsRequired();
-                entity.Property(e => e.Antecedentes).HasColumnName("Anteriores").HasMaxLength(50).IsRequired();
+                entity.Property(e => e.Antecedentes).HasColumnName("Antecedentes");
                 entity.Property(e => e.FechaDeCreacion).IsRequired();
                 entity.Property(e => e.FechaDeModificacion);
             });
