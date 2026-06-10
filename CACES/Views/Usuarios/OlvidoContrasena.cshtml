@@ -1,0 +1,65 @@
+﻿@using CACES.BLL.DTOs.Auth
+@model OlvidoContrasenaDTO
+
+@{
+    ViewData["Title"] = "Recuperar Contraseña Directa";
+}
+
+<main class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-12 col-md-6 col-lg-5">
+
+            <div class="card shadow-sm border-0" id="seccionCorreo">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="fw-bold mb-3">Recuperar Contraseña</h2>
+                    <p class="text-muted mb-4">Ingresa tu correo para validar tu cuenta en el sistema.</p>
+
+                    <div class="mb-4">
+                        <label class="form-label">Correo Electrónico</label>
+                        <input type="email" id="txtCorreo" class="form-control" placeholder="ejemplo@correo.com" />
+                        <span class="text-danger" id="errorCorreo"></span>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="button" id="btnVerificar" class="btn btn-primary py-2" 
+                                data-url="@Url.Action("VerificarCorreoDirecto", "Login_Logout")">
+                            Verificar Cuenta
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="card shadow-sm border-0" id="seccionClave" style="display: none;">
+                <div class="card-body p-4 p-md-5">
+                    <h2 class="fw-bold text-success mb-3">Cuenta Verificada</h2>
+                    <p class="text-muted mb-4">Escribe tu nueva contraseña de acceso a continuación.</p>
+
+                    <input type="hidden" id="hdnToken" />
+                    <input type="hidden" id="hdnCorreo" />
+
+                    <div class="mb-4">
+                        <label class="form-label">Nueva Contraseña</label>
+                        <input type="password" id="txtNuevaClave" class="form-control" placeholder="Mínimo 6 caracteres" />
+                        <span class="text-danger" id="errorClave"></span>
+                    </div>
+
+                    <div class="d-grid">
+                        <button type="button" id="btnRestablecer" class="btn btn-success py-2" 
+                                data-url="@Url.Action("RestablecerDirecto", "Login_Logout")" 
+                                data-redirect="@Url.Action("Login", "Login_Logout")">
+                            Actualizar Contraseña
+                        </button>                        
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="~/js/ReestablecerContrasena.js"></script>
+}
