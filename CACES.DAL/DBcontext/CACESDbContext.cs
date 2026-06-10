@@ -110,10 +110,6 @@ namespace CACES.DAL.DBContext
                     .HasColumnName("Experiencia")
                     .IsRequired();
 
-                entity.Property(e => e.Telefono)
-                    .HasColumnName("Telefono")
-                    .HasMaxLength(20)
-                    .IsRequired();
 
                 entity.Property(e => e.Certificaciones)
                     .HasColumnName("Certificaciones")

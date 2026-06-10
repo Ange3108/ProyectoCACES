@@ -53,7 +53,6 @@ namespace CACES.DAL.Repositorios.Medicos
             existing.IdEspecialidad = medico.IdEspecialidad;
             existing.IdUsuario = medico.IdUsuario;
             existing.Experiencia = medico.Experiencia;
-            existing.Telefono = medico.Telefono;
             existing.Certificaciones = medico.Certificaciones;
 
             return await _context.SaveChangesAsync() > 0;
@@ -70,7 +69,6 @@ namespace CACES.DAL.Repositorios.Medicos
 
             existing.IdEspecialidad = medico.IdEspecialidad;
             existing.Experiencia = medico.Experiencia;
-            existing.Telefono = medico.Telefono;
             existing.Certificaciones = medico.Certificaciones;
             existing.Foto = medico.Foto;
 
