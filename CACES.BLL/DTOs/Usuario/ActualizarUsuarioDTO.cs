@@ -32,10 +32,13 @@ namespace CACES.BLL.DTOs.Usuario
         [Required(ErrorMessage = "El estado es requerido")]
         public bool Estado { get; set; } = true;
 
+        [Required(ErrorMessage = "La dirección es requerida")]
         [StringLength(250)]
-        public string? Direccion { get; set; }
+        public string? Direccion { get; set; } = null!;
 
+        [Required(ErrorMessage = "La fecha de nacimiento es requerida")]
         public DateTime Nacimiento { get; set; }
+
 
 
 

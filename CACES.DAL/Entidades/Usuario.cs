@@ -22,7 +22,7 @@ namespace CACES.DAL.Entidades
 
         public string DUI { get; set; } = null!;
 
-        public string Foto { get; set; } = null!;
+        public string Foto { get; set; }
 
         public DateTime FechaDeRegistro { get; set; } = DateTime.Now;
 
@@ -33,8 +33,6 @@ namespace CACES.DAL.Entidades
         [Required(ErrorMessage = "La dirección es requerida")]
         [StringLength(250)]
         public string Direccion { get; set; } = null!;
-
-        public int Edad { get; set; }
 
         public string Telefono { get; set; } = null!;
 

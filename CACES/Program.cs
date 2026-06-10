@@ -8,11 +8,13 @@ using CACES.BLL.Servicios.Roles;
 
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
+using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
+using CACES.DAL.Repositorios.Especialidades;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,6 +32,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 //Inyección de dependencias para repositorios, servicios, etc.
 
+
 // Agregar esto:
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
@@ -37,12 +40,12 @@ builder.Services.AddScoped<IMedicoRepositorio, MedicoRepositorio>();
 builder.Services.AddScoped<IHistorialMedicoRepositorio, HistorialMedicoRepositorio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 
+
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
 
 // Servicios
-builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 
 
 builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();

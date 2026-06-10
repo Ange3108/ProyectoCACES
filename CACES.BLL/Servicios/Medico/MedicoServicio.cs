@@ -56,7 +56,6 @@ namespace CACES.BLL.Servicios.Medicos
                 IdUsuario = dto.IdUsuario,
                 IdEspecialidad = dto.IdEspecialidad,
                 Experiencia = dto.Experiencia,
-                Telefono = dto.Telefono,
                 Certificaciones = dto.Certificaciones,
 
                 Usuario = new CACES.DAL.Entidades.Usuario

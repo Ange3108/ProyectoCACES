@@ -1,0 +1,94 @@
+@using CACES.BLL.DTOs.Perfil
+@model PerfilUsuarioDTO
+
+@{
+    ViewData["Title"] = "Perfil del Usuario";
+}
+
+<main class="container py-5">
+    <h1>Perfil del Usuario</h1>
+
+    <div class="card border-0 shadow-sm p-4">
+
+        <section class="text-center mb-4">
+            <h2 class="mt-2">@Model.Nombres @Model.PrimerApellido</h2>
+            <p class="text-muted">
+                <span class="badge @(Model.Estado ? "bg-success" : "bg-danger")">
+                    @(Model.Estado ? "Cuenta Activa" : "Cuenta Inactiva")
+                </span>
+            </p>
+        </section>
+
+        <!-- INFORMACIÓN PERSONAL -->
+        <section class="mb-3">
+            <h3 class="mb-3"><i class="bi bi-person-fill" style="color: #72CEF2;"></i> Información Personal</h3>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label"><strong>Nombre</strong></label>
+                    <p class="text-muted">@Model.Nombres</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label"><strong>Apellidos</strong></label>
+                    <p class="text-muted">@Model.PrimerApellido @Model.SegundoApellido</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label"><strong>Correo Electrónico</strong></label>
+                    <p class="text-muted">@Model.CorreoElectronico</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label"><strong>Teléfono</strong></label>
+                    <p class="text-muted">@Model.Telefono</p>
+                </div>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label"><strong>Documento Único de Identidad (DUI)</strong></label>
+                    <p class="text-muted">@Model.DUI</p>
+                </div>
+            </div>
+
+            <div class="row mt-3">
+                <div class="col-md-6">
+                    <a class="btn btn-warning w-100 fw-semibold" asp-action="ActualizarPerfilObt" asp-controller="Perfil" asp-route-id="@Model.IdUsuario">
+                        <i class="bi bi-pencil-square"></i> Editar Perfil
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- INFORMACIÓN MÉDICA -->
+        <section class="mb-3">
+            <hr class="my-4" style="border-color: #72CEF2; opacity: 0.3;">
+            <h3 class="mb-3"><i class="bi bi-heart-pulse-fill" style="color: #72CEF2;"></i> Información Médica</h3>
+
+            <div class="row">
+                <div class="col-md-6 mb-3">
+                    <label class="form-label"><strong>Tipo de sangre</strong></label>
+                    <p class="text-muted">O+</p>
+                </div>
+                <div class="col-md-6 mb-3">
+                    <label class="form-label"><strong>Alergias</strong></label>
+                    <p class="text-muted">Ninguna</p>
+                </div>
+            </div>
+
+            <div class="mb-4">
+                <label class="form-label"><strong>Enfermedades previas</strong></label>
+                <p class="text-muted">No reportadas</p>
+            </div>
+
+            <div class="row">
+                <div class="col-md-6">
+                    <a class="btn w-100 text-white fw-semibold" style="background-color: #27418C;" asp-action="HistorialMedico" asp-controller="Usuario">
+                        <i class="bi bi-file-earmark-medical"></i> Ver Historial Médico
+                    </a>
+                </div>
+            </div>
+        </section>
+    </div>
+</main>

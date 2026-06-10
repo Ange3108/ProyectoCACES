@@ -17,8 +17,12 @@ namespace CACES.DAL.DBContext
         public DbSet<HistorialMedico> HistorialesMedicos { get; set; }
         public DbSet<Medico> Medicos { get; set; }
         public DbSet<ApplicationUser> AspNetUsers { get; set; }
-        public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public DbSet<AspNetRole> AspNetRoles { get; set; }
+        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
+
+        public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+
+        public DbSet<Especialidad> Especialidades { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -36,17 +40,16 @@ namespace CACES.DAL.DBContext
                 entity.HasIndex(e => e.CorreoElectronico).IsUnique();
                 entity.Property(e => e.DUI).HasColumnName("DUI").HasMaxLength(10).IsRequired();
                 entity.HasIndex(e => e.DUI).IsUnique().HasDatabaseName("UQ_Usuarios_DUI");
-
                 entity.Property(e => e.Telefono).HasColumnName("Telefono").HasMaxLength(30).IsRequired();
                 entity.Property(e => e.Direccion).HasColumnName("Direccion").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Nacimiento).HasColumnName("Nacimiento").IsRequired();
+                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
                 entity.Property(e => e.PasswordHash).HasColumnName("PasswordHash").IsRequired();
                 entity.Property(e => e.SecurityStamp).HasColumnName("SecurityStamp").IsRequired();
                 entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200).IsRequired();
-                entity.Property(e => e.Edad).HasColumnName("Edad").IsRequired();
                 entity.Property(e => e.TwoFactorEnabled).HasColumnName("TwoFactorEnabled").HasDefaultValue(false).IsRequired();
                 entity.Property(e => e.LockoutEnd).HasColumnName("LockoutEndDateUtc");
                 entity.Property(e => e.AccessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
@@ -107,10 +110,6 @@ namespace CACES.DAL.DBContext
                     .HasColumnName("Experiencia")
                     .IsRequired();
 
-                entity.Property(e => e.Telefono)
-                    .HasColumnName("Telefono")
-                    .HasMaxLength(20)
-                    .IsRequired();
 
                 entity.Property(e => e.Certificaciones)
                     .HasColumnName("Certificaciones")
@@ -122,11 +121,7 @@ namespace CACES.DAL.DBContext
                     .WithMany()
                     .HasForeignKey(e => e.IdUsuario);
 
-
-                
-
             });
-
 
 
             modelBuilder.Entity<UsuarioRoles>()
@@ -156,11 +151,23 @@ namespace CACES.DAL.DBContext
                 entity.HasKey(e => e.Id);
                 entity.ToTable("AspNetRoles");
             });
-
             modelBuilder.Entity<AspNetUserRole>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.RoleId });
                 entity.ToTable("AspNetUserRoles");
+            });
+
+            //configuración de la entidad Especialidad
+            modelBuilder.Entity<Especialidad>(entity =>
+            {
+                entity.HasKey(e => e.IdEspecialidad);
+                entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
+                entity.Property(e => e.Nombre).HasColumnName("Nombre").IsRequired().HasMaxLength(100);
+                entity.HasIndex(e => e.Nombre).IsUnique();
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Icono).HasColumnName("Icono").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
             });
         }
     }

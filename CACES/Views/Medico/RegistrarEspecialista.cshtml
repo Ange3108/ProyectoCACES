@@ -1,0 +1,87 @@
+@using CACES.BLL.DTOs.Medico
+@model RegistrarMedicoDTO
+
+@{
+    ViewData["Title"] = "Registrar Especialista";
+}
+
+<main class="container py-5">
+    <section class="form-shell">
+        <div class="top-action mb-3">
+            <a class="btn btn-add" asp-controller="Especialistas" asp-action="Index">Volver al listado</a>
+        </div>
+        <div class="card form-card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <h1 class="section-title mb-3">Registrar Especialista</h1>
+                <p class="text-muted mb-4">Agrega un nuevo profesional al equipo médico.</p>
+
+                @* Formulario POST con soporte para subida de archivos *@
+                <form asp-controller="Especialistas" asp-action="Registrar" method="post" enctype="multipart/form-data">
+                    @Html.AntiForgeryToken()
+
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label asp-for="Nombres" class="form-label">Nombre completo</label>
+                            <input asp-for="Nombres" type="text" class="form-control" placeholder="Ej. Dra. Ana Morales">
+                            <span asp-validation-for="Nombres" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="PrimerApellido" class="form-label">Primer apellido</label>
+                            <input asp-for="PrimerApellido" type="text" class="form-control" placeholder="Ej. Morales">
+                            <span asp-validation-for="PrimerApellido" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="SegundoApellido" class="form-label">Segundo apellido</label>
+                            <input asp-for="SegundoApellido" type="text" class="form-control" placeholder="Ej. García">
+                            <span asp-validation-for="SegundoApellido" class="text-danger"></span>
+                        </div>
+                   
+                        <div class="col-12 col-md-6">
+                            <label asp-for="Telefono" class="form-label">Teléfono</label>
+                            <input asp-for="Telefono" type="tel" class="form-control" placeholder="Ej. 0999999999">
+                            <span asp-validation-for="Telefono" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="IdEspecialidad" class="form-label">Especialidad</label>
+                            <select asp-for="IdEspecialidad" class="form-select">
+                                <option value="">Selecciona una especialidad</option>
+                                <option value="1">Cardiología</option>
+                                <option value="2">Laparoscopia</option>
+                                <option value="3">Cirugía Estética</option>
+                            </select>
+                            <span asp-validation-for="IdEspecialidad" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="Experiencia" class="form-label">Años de experiencia</label>
+                            <input asp-for="Experiencia" type="number" class="form-control" min="0" placeholder="Ej. 12">
+                            <span asp-validation-for="Experiencia" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="Certificaciones" class="form-label">Certificaciones</label>
+                            <textarea asp-for="Certificaciones" class="form-control" rows="3" placeholder="Ej. Doctorado en cirugía estética"></textarea>
+                            <span asp-validation-for="Certificaciones" class="text-danger"></span>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label asp-for="Foto" class="form-label">Fotografía</label>
+                            <input asp-for="Foto" type="file" class="form-control" accept="image/*">
+                            <span asp-validation-for="Foto" class="text-danger"></span>
+                        </div>
+                    </div>
+
+                    <div asp-validation-summary="ModelOnly" class="text-danger mt-3"></div>
+
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+                        <button type="reset" class="btn btn-outline-secondary">Limpiar</button>
+                        <button type="submit" class="btn btn-add">Guardar especialista</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+@* Inyectamos las validaciones en la sección de scripts definida en tu Layout *@
+@section Scripts {
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+}

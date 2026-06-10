@@ -81,5 +81,24 @@ namespace CACES.BLL.Servicios.Perfil
 
             return respuesta;
         }
+        public async Task<respuestaErrores<ActualizarPerfilDTO>> GetPerfilParaActualizarPorIdAsync(int id)
+        {
+            var respuesta = new respuestaErrores<ActualizarPerfilDTO>();
+            var usuario = await _usuarioRepository.GetUsuarioByIdAsync(id);
+
+            if (usuario == null)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "Usuario no encontrado";
+                respuesta.codigo = 404;
+                return respuesta;
+            }
+
+            // Mapeamos directamente la entidad Usuario a ActualizarPerfilDTO
+            respuesta.Dato = _mapper.Map<ActualizarPerfilDTO>(usuario);
+            respuesta.EsCorrecto = true;
+
+            return respuesta;
+        }
     }
 }
