@@ -30,6 +30,7 @@ options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnectio
 
 //Inyección de dependencias para repositorios, servicios, etc.
 
+
 // Agregar esto:
 builder.Services.AddScoped<IUsuarioRepositorio, UsuarioRepositorio>();
 builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
