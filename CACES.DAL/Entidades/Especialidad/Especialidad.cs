@@ -14,7 +14,7 @@ namespace CACES.DAL.Entidades
 
         public string Icono { get; set; } = null!;
 
-        public DateTime  FechaDeRegistro { get; set; } = null!;
+        public DateTime  FechaDeRegistro { get; set; } 
 
         public bool Estado { get; set; } = true;
     }
