@@ -42,6 +42,6 @@ namespace CACES.DAL.Entidades
         public DateTime? FechaDeModificacion { get; set; }
 
         [Column("Estado")]
-        public bool Estado { get; set; }
+        public byte Estado { get; set; }
     }
 }

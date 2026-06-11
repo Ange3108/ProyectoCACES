@@ -17,7 +17,7 @@ using CACES.DAL.Repositorios.Usuario;
 using CACES.DAL.Repositorios.Especialidades;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-
+using CACES.BLL.Servicios.Citas;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,13 +41,14 @@ builder.Services.AddScoped<IHistorialMedicoRepositorio, HistorialMedicoRepositor
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<ICitaRepositorio, CitaRepositorio>();
 
+
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
 
 // Servicios
 
-
+builder.Services.AddScoped<ICitaServicio, CitaServicio>();
 builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();
 builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();
 builder.Services.AddScoped<IAuthServicio, AuthServicio>();

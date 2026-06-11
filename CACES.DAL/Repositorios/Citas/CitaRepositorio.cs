@@ -50,7 +50,7 @@ namespace CACES.DAL.Repositorios.Citas
             var citas = await _context.Citas
                 .Where(c => c.IdMedico == idMedico &&
                             c.FechaCita.Date == fechaCita.Date &&
-                            c.Estado == true)
+                            c.Estado == 1)
                 .ToListAsync();
 
             if (!citas.Any())
@@ -58,7 +58,7 @@ namespace CACES.DAL.Repositorios.Citas
 
             foreach (var cita in citas)
             {
-                cita.Estado = false;
+                cita.Estado = 0;
                 cita.FechaDeModificacion = DateTime.Now;
             }
 
