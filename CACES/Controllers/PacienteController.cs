@@ -64,5 +64,32 @@ namespace CACES.Controllers
 
             return RedirectToAction("Pacientes");
         }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminarCuentaDirecta()
+        {
+          
+            var claimId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
+            {
+                return Json(new { exito = false, mensaje = "No se pudo identificar tu sesión activa." });
+            }
+
+            var resultadoService = await _usuarioService.EliminarUsuarioAsync(idUsuario);
+
+            if (resultadoService.EsCorrecto)
+            {
+
+                if (HttpContext.RequestServices.GetService(typeof(Microsoft.AspNetCore.Authentication.IAuthenticationService)) != null)
+                {
+                    await Microsoft.AspNetCore.Authentication.HttpContextAuthenticationExtensions.SignOutAsync(HttpContext);
+                }
+
+                return Json(new { exito = true, mensaje = resultadoService.mensaje ?? "Tu cuenta ha sido eliminada correctamente del sistema CACES." });
+            }
+
+            return Json(new { exito = false, mensaje = resultadoService.mensaje });
+        }
     }
 }
