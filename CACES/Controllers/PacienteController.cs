@@ -1,5 +1,6 @@
 ﻿using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.Servicios.Paciente;
+using CACES.BLL.Servicios.Usuario;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using CACES.BLL.Servicios.Usuario;
@@ -7,18 +8,25 @@ using Microsoft.AspNetCore.Authentication;
 
 namespace CACES.Controllers
 {
+ 
     public class PacienteController : Controller
     {
         private readonly IPacienteServicio _pacienteServicio;
         private readonly IUsuarioService _usuarioService;
 
+
         public PacienteController(IPacienteServicio pacienteServicio,IUsuarioService usuarioService)
         {
             _pacienteServicio = pacienteServicio;
             _usuarioService = usuarioService;
+
+        public PacienteController(IPacienteServicio pacienteServicio, IUsuarioService usuarioServicio)
+        {
+            _pacienteServicio = pacienteServicio;
+            _usuarioService = usuarioServicio;
+
         }
 
-        [Authorize(Roles = "Paciente")]
         public async Task<IActionResult> Pacientes()
         {
             var pacientes = await _pacienteServicio.GetPacientesAsync();
@@ -88,6 +96,8 @@ namespace CACES.Controllers
         public async Task<IActionResult> EliminarCuentaDirecta()
         {
             var claimId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            int.TryParse(claimId, out int idUsuario);
+
 
             if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
             {
@@ -112,6 +122,10 @@ namespace CACES.Controllers
                 exito = false,
                 mensaje = resultadoService.mensaje
             });
+
+            var resultado = await _usuarioService.EliminarUsuarioAsync(idUsuario);
+            return Json(resultado);
+
         }
     }
 }

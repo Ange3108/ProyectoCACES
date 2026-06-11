@@ -8,15 +8,14 @@
 <main class="container py-5">
     <section class="form-shell">
         <div class="top-action mb-3">
-            <a class="btn btn-add" asp-controller="Especialistas" asp-action="Index">Volver al listado</a>
+            <a class="btn btn-add" asp-controller="Medico" asp-action="Medicos">Volver al listado</a>
         </div>
         <div class="card form-card shadow-sm">
             <div class="card-body p-4 p-md-5">
                 <h1 class="section-title mb-3">Registrar Especialista</h1>
                 <p class="text-muted mb-4">Agrega un nuevo profesional al equipo médico.</p>
 
-                @* Formulario POST con soporte para subida de archivos *@
-                <form asp-controller="Especialistas" asp-action="Registrar" method="post" enctype="multipart/form-data">
+                <form asp-controller="Medico" asp-action="CrearMedico" method="post" enctype="multipart/form-data">
                     @Html.AntiForgeryToken()
 
                     <div class="row g-3">
@@ -80,7 +79,6 @@
     </section>
 </main>
 
-@* Inyectamos las validaciones en la sección de scripts definida en tu Layout *@
 @section Scripts {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validation-unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>

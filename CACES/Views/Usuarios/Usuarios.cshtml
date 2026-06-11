@@ -6,16 +6,26 @@
 }
 
 <div class="container py-5">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h1 class="mb-0">Listado de Usuarios</h1>
-        <a class="btn btn-primary" asp-action="RegistroUsuario" asp-controller="Usuario">
-            + Registrar Usuario
-        </a>
-    </div>
-
-    <div class="card shadow-sm border-0">
-        <div class="card-body">
-            <p class="text-muted mb-3">Gestión de usuarios del sistema</p>
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header banner-header p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 fw-bold">
+                        <i class="bi bi-people-fill me-2"></i>Gestión de Usuarios
+                    </h3>
+                    <p class="mb-0 opacity-75">
+                        Consulte, registre y administre los usuarios del sistema.
+                    </p>
+                </div>
+                <a class="btn btn-light fw-semibold" asp-action="RegistroUsuario" asp-controller="Usuario">
+                    + Registrar Usuario
+                </a>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <p class="text-muted mb-3">
+                Gestión de usuarios del sistema
+            </p>
 
             <div class="table-responsive">
                 <table id="tbUsuarios" class="table table-hover align-middle mb-0">
@@ -47,6 +57,7 @@
             <form id="formEditarUsuario" asp-controller="Usuario"
                   asp-action="ActualizarUsuario"
                   method="post">
+                @Html.AntiForgeryToken()
 
                 <input type="hidden" id="IdUsuario" name="id" />
 

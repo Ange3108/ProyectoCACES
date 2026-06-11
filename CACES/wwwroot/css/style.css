@@ -438,3 +438,8 @@ body {
 .social-link {
     font-size: 1.25rem;
 }
+
+.banner-header {
+    background: linear-gradient(135deg, #1f3c88, #4fc3f7);
+    color: white;
+}

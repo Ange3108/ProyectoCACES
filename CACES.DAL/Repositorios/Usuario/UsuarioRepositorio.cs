@@ -23,6 +23,7 @@ namespace CACES.DAL.Repositorios.Usuario
             return await _context.SaveChangesAsync() > 0;
         }
 
+
         public async Task<bool> DeleteUsuarioAsync(int id)
         {
             var entity = await _context.Usuarios.FindAsync(id);
