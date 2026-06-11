@@ -1,17 +1,21 @@
 ﻿using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.Servicios.Paciente;
+using CACES.BLL.Servicios.Usuario;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace CACES.Controllers
 {
+ 
     public class PacienteController : Controller
     {
         private readonly IPacienteServicio _pacienteServicio;
+        private readonly IUsuarioService _usuarioService;
 
-        public PacienteController(IPacienteServicio pacienteServicio)
+        public PacienteController(IPacienteServicio pacienteServicio, IUsuarioService usuarioServicio)
         {
             _pacienteServicio = pacienteServicio;
+            _usuarioService = usuarioServicio;
         }
 
         [Authorize(Roles = "Paciente")]
@@ -68,28 +72,11 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> EliminarCuentaDirecta()
         {
-          
             var claimId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+            int.TryParse(claimId, out int idUsuario);
 
-            if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
-            {
-                return Json(new { exito = false, mensaje = "No se pudo identificar tu sesión activa." });
-            }
-
-            var resultadoService = await _usuarioService.EliminarUsuarioAsync(idUsuario);
-
-            if (resultadoService.EsCorrecto)
-            {
-
-                if (HttpContext.RequestServices.GetService(typeof(Microsoft.AspNetCore.Authentication.IAuthenticationService)) != null)
-                {
-                    await Microsoft.AspNetCore.Authentication.HttpContextAuthenticationExtensions.SignOutAsync(HttpContext);
-                }
-
-                return Json(new { exito = true, mensaje = resultadoService.mensaje ?? "Tu cuenta ha sido eliminada correctamente del sistema CACES." });
-            }
-
-            return Json(new { exito = false, mensaje = resultadoService.mensaje });
+            var resultado = await _usuarioService.EliminarUsuarioAsync(idUsuario);
+            return Json(resultado);
         }
     }
 }

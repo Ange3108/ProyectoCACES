@@ -20,7 +20,7 @@ $("#btnEliminarCuenta").click(function () {
                 url: urlEliminar,
                 type: 'POST',
                 success: function (res) {
-                    if (res.exito) {
+                    if (res.esCorrecto) {
                         Swal.fire({
                             title: 'Cuenta Eliminada',
                             text: res.mensaje,
