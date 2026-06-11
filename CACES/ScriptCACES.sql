@@ -55,7 +55,7 @@ CREATE TABLE Historial_Medico(
     Enfermedades_Crónicas varchar(200) NOT NULL,
     Detalles VARCHAR(100) NOT NULL,
     Tipo_Sangre VARCHAR(10) NOT NULL,
-    Anteriores VARCHAR(50) NOT NULL,
+    Antecedentes VARCHAR(50) NOT NULL,
     FechaDeCreacion DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL
 );

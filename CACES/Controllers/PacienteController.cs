@@ -18,7 +18,6 @@ namespace CACES.Controllers
             _usuarioService = usuarioServicio;
         }
 
-        [Authorize(Roles = "Paciente")]
         public async Task<IActionResult> Pacientes()
         {
             var pacientes = await _pacienteServicio.GetPacientesAsync();
