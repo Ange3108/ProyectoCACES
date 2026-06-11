@@ -5,7 +5,7 @@ using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Perfil;
 using CACES.BLL.Servicios.Roles;
-
+using CACES.DAL.Repositorios.Citas;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.Especialidades;
@@ -39,7 +39,7 @@ builder.Services.AddScoped<IPacienteRepositorio, PacienteRepositorio>();
 builder.Services.AddScoped<IMedicoRepositorio, MedicoRepositorio>();
 builder.Services.AddScoped<IHistorialMedicoRepositorio, HistorialMedicoRepositorio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
-
+builder.Services.AddScoped<ICitaRepositorio, CitaRepositorio>();
 
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();

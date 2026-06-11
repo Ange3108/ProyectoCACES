@@ -46,5 +46,23 @@ namespace CACES.Controllers
             TempData["Mensaje"] = "Paciente registrado correctamente.";
             return RedirectToAction("Login", "Auth");
         }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public async Task<IActionResult> DesactivarPaciente(int id)
+        {
+            var resultado = await _pacienteServicio.DesactivarPacienteAsync(id);
+
+            if (!resultado)
+            {
+                TempData["Error"] = "No se pudo desactivar la cuenta del paciente.";
+            }
+            else
+            {
+                TempData["Mensaje"] = "La cuenta del paciente fue desactivada correctamente.";
+            }
+
+            return RedirectToAction("Pacientes");
+        }
     }
 }
