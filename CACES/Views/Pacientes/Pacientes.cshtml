@@ -96,7 +96,7 @@
                                     </p>
 
                                     <div class="mb-3">
-                                        @if (paciente.Usuario.Estado)
+                                        @if (paciente.Usuario.Estado == 1)
                                         {
                                             <span class="badge bg-success rounded-pill px-3 py-2">
                                                 Activo
@@ -120,7 +120,7 @@
                                             Ver detalle
                                         </a>
 
-                                        @if (paciente.Usuario.Estado)
+                                        @if (paciente.Usuario.Estado == 1)
                                         {
                                             <form asp-controller="Paciente"
                                                   asp-action="DesactivarPaciente"

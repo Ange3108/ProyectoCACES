@@ -40,7 +40,7 @@ namespace CACES.BLL.Servicios.Medicos
                 SegundoApellido = medico.Usuario.SegundoApellido,
                 Telefono = medico.Usuario.Telefono,
                 Foto = medico.Usuario.Foto,
-                Estado = medico.Usuario.Estado,
+                Estado = medico.Usuario.Estado == 1,
 
                 IdEspecialidad = medico.IdEspecialidad,
                 Experiencia = medico.Experiencia,
@@ -66,7 +66,7 @@ namespace CACES.BLL.Servicios.Medicos
                     SegundoApellido = dto.SegundoApellido,
                     Telefono = dto.Telefono,
                     Foto = dto.Foto,
-                    Estado = dto.Estado
+                    Estado = dto.Estado ? (byte)1 : (byte)0
                 }
             };
 

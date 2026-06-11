@@ -76,13 +76,16 @@ namespace CACES.BLL.Servicios.Usuario
 
                 // Agregar lógica específica de negocio
                 nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
+                nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
                 nuevoUsuario.FechaDeRegistro = DateTime.Now;
                 nuevoUsuario.SecurityStamp = Guid.NewGuid().ToString();
-                nuevoUsuario.Estado = true;
-                nuevoUsuario.Foto = "default.jpg"; // Asignar una foto por defecto
-                
+                nuevoUsuario.Estado = 1;
+                nuevoUsuario.EmailConfirmed = false;
+                nuevoUsuario.TwoFactorEnabled = false;
+                nuevoUsuario.LockoutEnabled = false;
+                nuevoUsuario.AccessFailedCount = 0;
+                nuevoUsuario.Foto = "default.jpg";
 
-                // Guardar
                 bool resultado = await _usuarioRepository.CreateUsuarioAsync(nuevoUsuario);
 
                 if (resultado)
@@ -109,11 +112,23 @@ namespace CACES.BLL.Servicios.Usuario
                     };
                 }
 
+
                 return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Error al registrar" };
             }
             catch (Exception ex)
             {
-                return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = ex.Message };
+                var error = ex;
+
+                while (error.InnerException != null)
+                {
+                    error = error.InnerException;
+                }
+
+                return new respuestaErrores<MostrarUsuarioDTO>
+                {
+                    EsCorrecto = false,
+                    mensaje = error.Message
+                };
             }
         }
         private string HashContraseña(string password)

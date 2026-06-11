@@ -18,12 +18,9 @@ namespace CACES.DAL.DBContext
         public DbSet<Medico> Medicos { get; set; }
         public DbSet<ApplicationUser> AspNetUsers { get; set; }
         public DbSet<AspNetRole> AspNetRoles { get; set; }
-        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
-        public DbSet<Cita> Citas { get; set; }
         public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
-
+        public DbSet<Cita> Citas { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
-
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -53,7 +50,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.LockoutEnd).HasColumnName("LockoutEndDateUtc");
                 entity.Property(e => e.AccessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
                 entity.Property(e => e.EmailConfirmed).HasColumnName("EmailConfirmed").HasDefaultValue(false).IsRequired();
-
+                entity.Property(e => e.Edad).HasColumnName("Edad").IsRequired();
             });
 
             modelBuilder.Entity<Cita>(entity =>
@@ -138,22 +135,26 @@ namespace CACES.DAL.DBContext
 
             });
 
+            // Configuración de ApplicationUser
+            modelBuilder.Entity<ApplicationUser>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("AspNetUsers");
+            });
 
-            modelBuilder.Entity<UsuarioRoles>()
+            // Configuración de AspNetRole
+            modelBuilder.Entity<AspNetRole>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.ToTable("AspNetRoles");
+            });
 
-          .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
-
-            modelBuilder.Entity<UsuarioRoles>()
-                .HasOne(ur => ur.Usuario)
-                .WithMany(u => u.UsuarioRoles)
-                .HasForeignKey(ur => ur.IdUsuario)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<UsuarioRoles>()
-                .HasOne(ur => ur.Rol)
-                .WithMany(r => r.UsuarioRoles)
-                .HasForeignKey(ur => ur.RoleId)
-                .OnDelete(DeleteBehavior.Cascade);
+            // Configuración de AspNetUserRole
+            modelBuilder.Entity<AspNetUserRole>(entity =>
+            {
+                entity.HasKey(e => new { e.UserId, e.RoleId });
+                entity.ToTable("AspNetUserRoles");
+            });
 
             modelBuilder.Entity<ApplicationUser>(entity =>
             {

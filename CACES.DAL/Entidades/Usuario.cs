@@ -22,19 +22,20 @@ namespace CACES.DAL.Entidades
 
         public string DUI { get; set; } = null!;
 
-        public string Foto { get; set; }
+        public string? Foto { get; set; }
 
         public DateTime FechaDeRegistro { get; set; } = DateTime.Now;
 
         public DateTime? FechaDeModificacion { get; set; }
 
-        public bool Estado { get; set; } = true;
+        public byte Estado { get; set; } = 1;
 
         [Required(ErrorMessage = "La dirección es requerida")]
         [StringLength(250)]
         public string Direccion { get; set; } = null!;
 
         public string Telefono { get; set; } = null!;
+        public int Edad { get; set; }
 
         public DateTime Nacimiento { get; set; }
 
@@ -52,6 +53,6 @@ namespace CACES.DAL.Entidades
 
         public bool EmailConfirmed { get; set; } = false;
 
-        public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
+       
     }
 }

@@ -2,16 +2,20 @@
 using CACES.BLL.Servicios.Paciente;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using CACES.BLL.Servicios.Usuario;
+using Microsoft.AspNetCore.Authentication;
 
 namespace CACES.Controllers
 {
     public class PacienteController : Controller
     {
         private readonly IPacienteServicio _pacienteServicio;
+        private readonly IUsuarioService _usuarioService;
 
-        public PacienteController(IPacienteServicio pacienteServicio)
+        public PacienteController(IPacienteServicio pacienteServicio,IUsuarioService usuarioService)
         {
             _pacienteServicio = pacienteServicio;
+            _usuarioService = usuarioService;
         }
 
         [Authorize(Roles = "Paciente")]
@@ -20,31 +24,46 @@ namespace CACES.Controllers
             var pacientes = await _pacienteServicio.GetPacientesAsync();
             return View("~/Views/Pacientes/Pacientes.cshtml", pacientes);
         }
-
         [HttpGet]
-        public IActionResult RegistroPaciente()
+        public IActionResult RegistrarPaciente()
         {
-            return View("~/Views/Pacientes/RegistroPaciente.cshtml");
+            return View("~/Views/Pacientes/RegistrarPaciente.cshtml");
         }
 
         [HttpPost]
-        public async Task<IActionResult> RegistroPaciente(RegistrarPacienteDTO dto)
+        public async Task<IActionResult> RegistrarPaciente(RegistrarPacienteDTO dto)
         {
             if (!ModelState.IsValid)
             {
-                return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
+                return View("~/Views/Pacientes/RegistrarPaciente.cshtml", dto);
             }
 
-            var resultado = await _pacienteServicio.RegistrarPacienteAsync(dto);
-
-            if (!resultado)
+            try
             {
-                TempData["Error"] = "No se pudo registrar el paciente.";
-                return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
-            }
+                var resultado = await _pacienteServicio.RegistrarPacienteAsync(dto);
 
-            TempData["Mensaje"] = "Paciente registrado correctamente.";
-            return RedirectToAction("Login", "Auth");
+                if (!resultado)
+                {
+                    TempData["Error"] = "El servicio devolvió FALSE.";
+                    return View("~/Views/Pacientes/RegistrarPaciente.cshtml", dto);
+                }
+
+                TempData["Mensaje"] = "Paciente registrado correctamente.";
+                return RedirectToAction("Login", "Auth");
+            }
+            catch (Exception ex)
+            {
+                var error = ex;
+
+                while (error.InnerException != null)
+                {
+                    error = error.InnerException;
+                }
+
+                TempData["Error"] = error.Message;
+
+                return View("~/Views/Pacientes/RegistrarPaciente.cshtml", dto);
+            }
         }
 
         [Authorize(Roles = "Administrador")]
@@ -68,7 +87,6 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> EliminarCuentaDirecta()
         {
-          
             var claimId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
 
             if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
@@ -80,16 +98,20 @@ namespace CACES.Controllers
 
             if (resultadoService.EsCorrecto)
             {
+                await HttpContext.SignOutAsync();
 
-                if (HttpContext.RequestServices.GetService(typeof(Microsoft.AspNetCore.Authentication.IAuthenticationService)) != null)
+                return Json(new
                 {
-                    await Microsoft.AspNetCore.Authentication.HttpContextAuthenticationExtensions.SignOutAsync(HttpContext);
-                }
-
-                return Json(new { exito = true, mensaje = resultadoService.mensaje ?? "Tu cuenta ha sido eliminada correctamente del sistema CACES." });
+                    exito = true,
+                    mensaje = resultadoService.mensaje ?? "Tu cuenta ha sido eliminada correctamente del sistema CACES."
+                });
             }
 
-            return Json(new { exito = false, mensaje = resultadoService.mensaje });
+            return Json(new
+            {
+                exito = false,
+                mensaje = resultadoService.mensaje
+            });
         }
     }
 }
