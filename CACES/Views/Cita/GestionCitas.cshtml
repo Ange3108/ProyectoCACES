@@ -1,5 +1,144 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@model List<CACES.DAL.Entidades.Cita>
+
 @{
+    ViewData["Title"] = "Gestión de Citas";
 }
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <div class="card-header text-white p-4"
+             style="background: linear-gradient(135deg, #1f3c88, #4fc3f7);">
+            <h3 class="mb-1 fw-bold">
+                <i class="bi bi-calendar-check-fill me-2"></i>Gestión de Citas
+            </h3>
+            <p class="mb-0 opacity-75">
+                Modifique fechas de citas y cancele citas por médico y fecha.
+            </p>
+        </div>
+
+        <div class="card-body p-4">
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success rounded-3">
+                    <i class="bi bi-check-circle-fill me-2"></i>@TempData["Mensaje"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger rounded-3">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["Error"]
+                </div>
+            }
+
+            <h5 class="fw-bold text-primary mb-3">Cancelar citas por médico y fecha</h5>
+
+            <form asp-action="CancelarCitasPorMedicoYFecha"
+                  asp-controller="Cita"
+                  method="post"
+                  class="row g-3 align-items-end mb-4">
+
+                <div class="col-md-5">
+                    <label class="form-label fw-semibold">ID del médico</label>
+                    <input type="number" name="idMedico" class="form-control rounded-3" required />
+                </div>
+
+                <div class="col-md-5">
+                    <label class="form-label fw-semibold">Fecha de cita</label>
+                    <input type="date" name="fechaCita" class="form-control rounded-3" required />
+                </div>
+
+                <div class="col-md-2">
+                    <button type="submit"
+                            class="btn btn-danger w-100 rounded-3"
+                            onclick="return confirm('¿Desea cancelar las citas de este médico en esta fecha?');">
+                        Cancelar
+                    </button>
+                </div>
+            </form>
+
+            <hr class="my-4" />
+
+            <h5 class="fw-bold text-primary mb-3">Listado de citas</h5>
+
+            <div class="table-responsive">
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>ID Paciente</th>
+                            <th>ID Médico</th>
+                            <th>Especialidad</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
+                            <th style="width:260px;">Modificar Fecha</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var cita in Model)
+                            {
+                                <tr>
+                                    <td>@cita.IdCita</td>
+                                    <td>@cita.IdPaciente</td>
+                                    <td>@cita.IdMedico</td>
+                                    <td>@cita.IdEspecialidad</td>
+                                    <td>@cita.FechaCita.ToString("dd/MM/yyyy")</td>
+                                    <td>@cita.Hora</td>
+                                    <td>@cita.Motivo</td>
+                                    <td>
+                                        @if (cita.Estado == 1)
+                                        {
+                                            <span class="badge bg-success">Activa</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Cancelada</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <form asp-action="ActualizarFechaCita"
+                                              asp-controller="Cita"
+                                              method="post"
+                                              class="d-flex gap-2">
+
+                                            <input type="hidden" name="idCita" value="@cita.IdCita" />
+
+                                            <input type="date"
+                                                   name="nuevaFecha"
+                                                   class="form-control form-control-sm rounded-3"
+                                                   required />
+
+                                            <button type="submit"
+                                                    class="btn btn-primary btn-sm rounded-3">
+                                                Guardar
+                                            </button>
+                                        </form>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="9" class="text-center text-muted">
+                                    No hay citas registradas.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
