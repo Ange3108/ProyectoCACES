@@ -30,6 +30,8 @@ namespace CACES.DAL.Entidades
 
         public bool Estado { get; set; } = true;
 
+        [Required(ErrorMessage = "La dirección es requerida")]
+        [StringLength(250)]
         public string Direccion { get; set; } = null!;
 
         public string Telefono { get; set; } = null!;

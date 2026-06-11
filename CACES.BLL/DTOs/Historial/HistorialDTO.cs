@@ -1,24 +1,22 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Text;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace CACES.BLL.DTOs.Historial
 {
     public class HistorialDTO
     {
         [Required]
-        public int IdPaciente { get; set; }
-        // Historial Médico
+        public string TipoSangre { get; set; } = null!;
+
         [Required]
-        public string TipoSangre { get; set; }
+        public string Alergias { get; set; } = null!;
+
         [Required]
-        public string Alergias { get; set; }
+        public string EnfermedadesCronicas { get; set; } = null!;
+
         [Required]
-        public string EnfermedadesCronicas { get; set; }
+        public string Antecedentes { get; set; } = null!;
+
         [Required]
-        public string Antecedentes { get; set; }
-        [Required]
-        public string Detalles { get; set; }
+        public string Detalles { get; set; } = null!;
     }
 }

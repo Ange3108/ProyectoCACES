@@ -23,6 +23,7 @@ namespace CACES.DAL.Repositorios.Medicos
         public async Task<Medico?> GetMedicoByIdAsync(int id)
         {
             return await _context.Medicos
+                .Include(x => x.Usuario)
                 .FirstOrDefaultAsync(x => x.IdMedico == id);
         }
 
@@ -53,7 +54,6 @@ namespace CACES.DAL.Repositorios.Medicos
             existing.IdEspecialidad = medico.IdEspecialidad;
             existing.IdUsuario = medico.IdUsuario;
             existing.Experiencia = medico.Experiencia;
-            existing.Telefono = medico.Telefono;
             existing.Certificaciones = medico.Certificaciones;
 
             return await _context.SaveChangesAsync() > 0;
@@ -70,14 +70,13 @@ namespace CACES.DAL.Repositorios.Medicos
 
             existing.IdEspecialidad = medico.IdEspecialidad;
             existing.Experiencia = medico.Experiencia;
-            existing.Telefono = medico.Telefono;
             existing.Certificaciones = medico.Certificaciones;
-            existing.Foto = medico.Foto;
 
             existing.Usuario.Nombres = medico.Usuario.Nombres;
             existing.Usuario.PrimerApellido = medico.Usuario.PrimerApellido;
             existing.Usuario.SegundoApellido = medico.Usuario.SegundoApellido;
             existing.Usuario.Telefono = medico.Usuario.Telefono;
+            existing.Usuario.Foto = medico.Usuario.Foto;
             existing.Usuario.Estado = medico.Usuario.Estado;
             existing.Usuario.FechaDeModificacion = DateTime.Now;
 

@@ -71,6 +71,7 @@ namespace CACES.DAL.Repositorios.Usuario
                 return false;
 
             usuario.Estado = false;
+            usuario.EmailConfirmed = false;
             usuario.FechaDeModificacion = DateTime.Now;
 
             _context.Usuarios.Update(usuario);

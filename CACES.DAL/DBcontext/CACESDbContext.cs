@@ -19,7 +19,7 @@ namespace CACES.DAL.DBContext
         public DbSet<ApplicationUser> AspNetUsers { get; set; }
         public DbSet<AspNetRole> AspNetRoles { get; set; }
         public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
-
+        public DbSet<Cita> Citas { get; set; }
         public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
 
         public DbSet<Especialidad> Especialidades { get; set; }
@@ -43,7 +43,6 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Telefono).HasColumnName("Telefono").HasMaxLength(30).IsRequired();
                 entity.Property(e => e.Direccion).HasColumnName("Direccion").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Nacimiento).HasColumnName("Nacimiento").IsRequired();
-                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
@@ -55,6 +54,22 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.AccessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
                 entity.Property(e => e.EmailConfirmed).HasColumnName("EmailConfirmed").HasDefaultValue(false).IsRequired();
 
+            });
+
+            modelBuilder.Entity<Cita>(entity =>
+            {
+                entity.HasKey(e => e.IdCita);
+                entity.Property(e => e.IdCita).HasColumnName("Id_Cita");
+                entity.Property(e => e.IdPaciente).HasColumnName("Id_Paciente");
+                entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
+                entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
+                entity.Property(e => e.IdHorario).HasColumnName("Fecha");
+                entity.Property(e => e.Hora).HasColumnName("Hora");
+                entity.Property(e => e.Motivo).HasColumnName("Motivo").HasMaxLength(100);
+                entity.Property(e => e.FechaCita).HasColumnName("FechaCita");
+                entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
+                entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
+                entity.Property(e => e.Estado).HasColumnName("Estado");
             });
 
             // Configuración de la entidad HistorialMedico
@@ -110,18 +125,12 @@ namespace CACES.DAL.DBContext
                     .HasColumnName("Experiencia")
                     .IsRequired();
 
-                entity.Property(e => e.Telefono)
-                    .HasColumnName("Telefono")
-                    .HasMaxLength(20)
-                    .IsRequired();
 
                 entity.Property(e => e.Certificaciones)
                     .HasColumnName("Certificaciones")
                     .HasMaxLength(500);
 
-                entity.Property(e => e.FechaDeRegistro)
-                    .HasColumnName("FechaDeRegistro");
-                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200);
+              
 
                 entity.HasOne(e => e.Usuario)
                     .WithMany()
