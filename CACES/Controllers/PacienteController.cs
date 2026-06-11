@@ -29,7 +29,7 @@ namespace CACES.Controllers
         [HttpGet]
         public IActionResult RegistrarPaciente()
         {
-            return View("~/Views/Pacientes/RegistrarPaciente.cshtml");
+            return View("~/Views/Pacientes/RegistroPaciente.cshtml");
         }
 
         [HttpPost]
@@ -37,7 +37,7 @@ namespace CACES.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("~/Views/Pacientes/RegistrarPaciente.cshtml", dto);
+                return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
             }
 
             try
@@ -47,7 +47,7 @@ namespace CACES.Controllers
                 if (!resultado)
                 {
                     TempData["Error"] = "No se pudo registrar el paciente.";
-                    return View("~/Views/Pacientes/RegistrarPaciente.cshtml", dto);
+                    return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
                 }
 
                 TempData["Mensaje"] = "Paciente registrado correctamente.";
@@ -63,7 +63,7 @@ namespace CACES.Controllers
                 }
 
                 TempData["Error"] = error.Message;
-                return View("~/Views/Pacientes/RegistrarPaciente.cshtml", dto);
+                return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
             }
         }
 
