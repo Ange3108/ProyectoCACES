@@ -1,30 +1,23 @@
 ﻿using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Usuario;
+using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using CACES.BLL.Servicios.Usuario;
-using Microsoft.AspNetCore.Authentication;
 
 namespace CACES.Controllers
 {
- 
     public class PacienteController : Controller
     {
         private readonly IPacienteServicio _pacienteServicio;
         private readonly IUsuarioService _usuarioService;
 
-
-        public PacienteController(IPacienteServicio pacienteServicio,IUsuarioService usuarioService)
+        public PacienteController(
+            IPacienteServicio pacienteServicio,
+            IUsuarioService usuarioService)
         {
             _pacienteServicio = pacienteServicio;
             _usuarioService = usuarioService;
-
-        public PacienteController(IPacienteServicio pacienteServicio, IUsuarioService usuarioServicio)
-        {
-            _pacienteServicio = pacienteServicio;
-            _usuarioService = usuarioServicio;
-
         }
 
         public async Task<IActionResult> Pacientes()
@@ -32,6 +25,7 @@ namespace CACES.Controllers
             var pacientes = await _pacienteServicio.GetPacientesAsync();
             return View("~/Views/Pacientes/Pacientes.cshtml", pacientes);
         }
+
         [HttpGet]
         public IActionResult RegistrarPaciente()
         {
@@ -52,7 +46,7 @@ namespace CACES.Controllers
 
                 if (!resultado)
                 {
-                    TempData["Error"] = "El servicio devolvió FALSE.";
+                    TempData["Error"] = "No se pudo registrar el paciente.";
                     return View("~/Views/Pacientes/RegistrarPaciente.cshtml", dto);
                 }
 
@@ -69,7 +63,6 @@ namespace CACES.Controllers
                 }
 
                 TempData["Error"] = error.Message;
-
                 return View("~/Views/Pacientes/RegistrarPaciente.cshtml", dto);
             }
         }
@@ -80,14 +73,10 @@ namespace CACES.Controllers
         {
             var resultado = await _pacienteServicio.DesactivarPacienteAsync(id);
 
-            if (!resultado)
-            {
-                TempData["Error"] = "No se pudo desactivar la cuenta del paciente.";
-            }
-            else
-            {
-                TempData["Mensaje"] = "La cuenta del paciente fue desactivada correctamente.";
-            }
+            TempData[resultado ? "Mensaje" : "Error"] =
+                resultado
+                    ? "La cuenta del paciente fue desactivada correctamente."
+                    : "No se pudo desactivar la cuenta del paciente.";
 
             return RedirectToAction("Pacientes");
         }
@@ -96,12 +85,14 @@ namespace CACES.Controllers
         public async Task<IActionResult> EliminarCuentaDirecta()
         {
             var claimId = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-            int.TryParse(claimId, out int idUsuario);
-
 
             if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
             {
-                return Json(new { exito = false, mensaje = "No se pudo identificar tu sesión activa." });
+                return Json(new
+                {
+                    exito = false,
+                    mensaje = "No se pudo identificar tu sesión activa."
+                });
             }
 
             var resultadoService = await _usuarioService.EliminarUsuarioAsync(idUsuario);
@@ -122,10 +113,6 @@ namespace CACES.Controllers
                 exito = false,
                 mensaje = resultadoService.mensaje
             });
-
-            var resultado = await _usuarioService.EliminarUsuarioAsync(idUsuario);
-            return Json(resultado);
-
         }
     }
 }
