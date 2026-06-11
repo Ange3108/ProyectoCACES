@@ -1,0 +1,75 @@
+
+
+@{
+    ViewData["Title"] = "Configuración";
+}
+
+@section Styles {
+    <!-- Estilos específicos para el diseño de la configuración -->
+    <link rel="stylesheet" href="~/CSS/style.css" asp-append-version="true">
+}
+
+<main class="container py-5">
+    <h1>Configuración</h1>
+
+    <div class="card border-0 shadow-sm p-4">
+        <!-- PREFERENCIAS -->
+        <section class="mb-5">
+            <h3 class="mb-3"><i class="bi bi-gear-fill" style="color: #72CEF2;"></i> Preferencias</h3>
+
+            <div class="mb-3">
+                <label for="idioma" class="form-label">Idioma</label>
+                <select id="idioma" class="form-select">
+                    <option>Español</option>
+                    <option>Inglés</option>
+                </select>
+            </div>
+
+            <div class="form-check mb-3">
+                <input class="form-check-input" type="checkbox" id="email-notif">
+                <label class="form-check-label" for="email-notif">Recibir notificaciones por correo</label>
+            </div>
+
+            <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="dark-mode">
+                <label class="form-check-label" for="dark-mode">Modo oscuro</label>
+            </div>
+        </section>
+
+        <!-- PREGUNTAS FRECUENTES -->
+        <section class="mb-4">
+            <a class="btn btn-main" asp-controller="Soporte" asp-action="PreguntasFrecuentes">Preguntas Frecuentes</a>
+        </section>
+
+        <!-- SEGURIDAD -->
+        <section class="mb-5">
+    <h3 class="mb-3"><i class="bi bi-lock-fill" style="color: #72CEF2;"></i> Seguridad y Cuenta</h3>
+
+    <div class="mb-3">
+        <div class="form-check">
+            <input class="form-check-input" type="checkbox" id="two-factor">
+            <label class="form-check-label" for="two-factor">Activar autenticación en dos pasos</label>
+        </div>
+    </div>
+
+    <div class="d-flex flex-wrap gap-2 pt-2">
+        <a class="btn btn-main" asp-controller="Perfil" asp-action="ActualizarPerfil">
+            <i class="bi bi-shield-lock-fill me-1"></i> Cambiar contraseña
+        </a>
+
+        <button type="button" class="btn btn-danger" id="btnEliminarCuenta" 
+                data-url="@Url.Action("EliminarCuentaDirecta", "Paciente")"
+                data-redirect="@Url.Action("Login", "Login_Logout")">
+            <i class="bi bi-trash3-fill me-1"></i> Eliminar mi cuenta
+        </button>
+    </div>
+</section>
+    </div>
+</main>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script src="~/js/EliminarPaciente.js"></script>
+}
