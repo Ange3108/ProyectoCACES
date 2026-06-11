@@ -65,6 +65,7 @@ namespace CACES.Controllers
 
         }
 
+
         //Mostrar vista administrador
         [Authorize(Roles = "Administrador")]
 
