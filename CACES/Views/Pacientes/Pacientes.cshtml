@@ -4,157 +4,156 @@
     ViewData["Title"] = "Pacientes";
 }
 
-<section class="container py-5">
-
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <div>
-            <h1 class="fw-bold text-primary mb-1">Gestión de Pacientes</h1>
-            <p class="text-muted mb-0">Consulta, registro y desactivación de pacientes del sistema.</p>
-        </div>
-
-        <a class="btn btn-primary px-4 rounded-3"
-           asp-controller="Paciente"
-           asp-action="RegistroPaciente">
-            <i class="bi bi-person-plus-fill me-1"></i>
-            Registrar Paciente
-        </a>
-    </div>
-
-    @if (TempData["Mensaje"] != null)
-    {
-        <div class="alert alert-success rounded-3">
-            <i class="bi bi-check-circle-fill me-2"></i>@TempData["Mensaje"]
-        </div>
-    }
-
-    @if (TempData["Error"] != null)
-    {
-        <div class="alert alert-danger rounded-3">
-            <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["Error"]
-        </div>
-    }
-
+<div class="container py-5">
     <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header banner-header p-4">
+            <div class="d-flex justify-content-between align-items-center">
 
-        <div class="card-header text-white p-4"
-             style="background: linear-gradient(135deg, #1f3c88, #4fc3f7);">
-            <h4 class="mb-1 fw-bold">
-                <i class="bi bi-people-fill me-2"></i>
-                Listado de Pacientes
-            </h4>
-            <p class="mb-0 opacity-75">
-                Información de contacto y estado de los pacientes registrados.
-            </p>
+                <div>
+                    <h3 class="mb-1 fw-bold">
+                        <i class="bi bi-person-badge-fill me-2"></i>Gestión de Pacientes
+                    </h3>
+                    <p class="mb-0 opacity-75">
+                        Consulta, registro y desactivación de pacientes del sistema.
+                    </p>
+                </div>
+
+                <a asp-action="RegistroPaciente" asp-controller="Paciente" class="btn btn-light fw-semibold">
+                    + Registrar Paciente
+                </a>
+
+            </div>
         </div>
+
 
         <div class="card-body p-4">
+            
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success rounded-3">
+                    <i class="bi bi-check-circle-fill me-2"></i>@TempData["Mensaje"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger rounded-3">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["Error"]
+                </div>
+            }
 
             @if (Model != null && Model.Any())
             {
-                <div class="row g-4">
-                    @foreach (var paciente in Model)
-                    {
-                        <div class="col-md-6 col-lg-4">
-                            <div class="card h-100 border-0 shadow-sm rounded-4">
+                <div class="table-responsive">
 
-                                <div class="card-body p-4">
+                    <table class="table table-hover align-middle">
 
-                                    <div class="d-flex align-items-center mb-3">
-                                        <div class="rounded-circle bg-primary text-white d-flex align-items-center justify-content-center me-3"
-                                             style="width:50px;height:50px;">
-                                            <i class="bi bi-person-fill fs-4"></i>
-                                        </div>
+                        <thead>
+                            <tr>
+                                <th>Nombre</th>
+                                <th>DUI</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Estado</th>
+                                <th style="width:220px;">Acciones</th>
+                            </tr>
+                        </thead>
 
-                                        <div>
-                                            <h5 class="fw-bold mb-0">
-                                                @paciente.Usuario.Nombres
-                                                @paciente.Usuario.PrimerApellido
-                                            </h5>
+                        <tbody>
 
-                                            <small class="text-muted">
-                                                DUI: @paciente.Usuario.DUI
-                                            </small>
-                                        </div>
-                                    </div>
+                            @foreach (var paciente in Model)
+                            {
+                                <tr>
 
-                                    <p class="mb-2">
-                                        <i class="bi bi-envelope-fill text-primary me-2"></i>
-                                        <strong>Correo:</strong>
-                                        @paciente.Usuario.CorreoElectronico
-                                    </p>
+                                    <td>
+                                        @paciente.Usuario.Nombres
+                                        @paciente.Usuario.PrimerApellido
+                                        @paciente.Usuario.SegundoApellido
+                                    </td>
 
-                                    <p class="mb-2">
-                                        <i class="bi bi-telephone-fill text-primary me-2"></i>
-                                        <strong>Teléfono:</strong>
-                                        @paciente.Usuario.Telefono
-                                    </p>
+                                    <td>@paciente.Usuario.DUI</td>
 
-                                    <p class="mb-3">
-                                        <i class="bi bi-geo-alt-fill text-primary me-2"></i>
-                                        <strong>Dirección:</strong>
-                                        @paciente.Usuario.Direccion
-                                    </p>
+                                    <td>@paciente.Usuario.CorreoElectronico</td>
 
-                                    <div class="mb-3">
+                                    <td>@paciente.Usuario.Telefono</td>
+
+                                    <td>@paciente.Usuario.Direccion</td>
+
+                                    <td>
                                         @if (paciente.Usuario.Estado)
                                         {
-                                            <span class="badge bg-success rounded-pill px-3 py-2">
+                                            <span class="badge bg-success">
                                                 Activo
                                             </span>
                                         }
                                         else
                                         {
-                                            <span class="badge bg-secondary rounded-pill px-3 py-2">
+                                            <span class="badge bg-secondary">
                                                 Desactivado
                                             </span>
                                         }
-                                    </div>
+                                    </td>
 
-                                    <div class="d-flex gap-2">
+                                    <td>
+                                        <div class="d-flex gap-4">
 
-                                        <a asp-controller="Paciente"
-                                           asp-action="DetallePaciente"
-                                           asp-route-id="@paciente.IdPaciente"
-                                           class="btn btn-info btn-sm text-white rounded-3">
-                                            <i class="bi bi-eye-fill me-1"></i>
-                                            Ver detalle
-                                        </a>
+                                            <a asp-controller="Paciente"
+                                               asp-action="DetallePaciente"
+                                               asp-route-id="@paciente.IdPaciente"
+                                               class="btn btn-info btn-sm text-white">
+                                                <i class="bi bi-eye-fill"></i>
+                                            </a>
 
-                                        @if (paciente.Usuario.Estado)
-                                        {
-                                            <form asp-controller="Paciente"
-                                                  asp-action="DesactivarPaciente"
-                                                  method="post"
-                                                  class="d-inline">
+                                            <a asp-controller="Perfil"
+                                               asp-action="ActualizarPerfil"
+                                               asp-route-id="@paciente.IdPaciente"
+                                               class="btn btn-warning btn-sm text-white">
+                                                <i class="bi bi-pencil"></i>
+                                            </a>
 
-                                                <input type="hidden"
-                                                       name="id"
-                                                       value="@paciente.IdPaciente" />
+                                            @if (paciente.Usuario.Estado)
+                                            {
+                                                <form asp-controller="Paciente"
+                                                      asp-action="DesactivarPaciente"
+                                                      method="post"
+                                                      class="d-inline">
 
-                                                <button type="submit"
-                                                        class="btn btn-danger btn-sm rounded-3"
-                                                        onclick="return confirm('¿Desea desactivar este paciente?');">
-                                                    <i class="bi bi-person-x-fill me-1"></i>
-                                                    Desactivar
-                                                </button>
+                                                    <input type="hidden"
+                                                           name="id"
+                                                           value="@paciente.IdPaciente" />
 
-                                            </form>
-                                        }
+                                                    <button type="submit"
+                                                            class="btn btn-danger btn-sm"
+                                                            onclick="return confirm('¿Desea desactivar este paciente?');">
+                                                        <i class="bi bi-person-x-fill"></i>
+                                                    </button>
 
-                                    </div>
+                                                </form>
+                                            }
 
-                                </div>
-                            </div>
-                        </div>
-                    }
+                                        </div>
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
                 </div>
             }
             else
             {
-                <div class="alert alert-info text-center rounded-3 mb-0">
+                <div class="alert alert-info">
                     No hay pacientes registrados.
                 </div>
             }
+
+        </div>
+
+        
 
         </div>
     </div>
