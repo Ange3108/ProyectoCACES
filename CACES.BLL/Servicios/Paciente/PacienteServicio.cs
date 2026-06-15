@@ -86,22 +86,41 @@ namespace CACES.BLL.Servicios.Paciente
             var usuario = await _usuarioServicio.CrearUsuarioAsync(dto.Usuario);
 
             if (usuario?.Dato == null)
-                return null;
+            {
+                throw new Exception(usuario?.mensaje ?? "No se pudo crear el usuario.");
+            }
 
             var usuarioCreado = usuario.Dato;
 
-            var paciente = _mapper.Map<DAL.Entidades.Paciente>(dto.Usuario);
-            var nuevoHistorial = _mapper.Map<HistorialMedico>(dto.Historial);
+            var usuarioEntidad = await _usuarioRepositorio.GetUsuarioByEmailAsync(dto.Usuario.CorreoElectronico);
 
-            paciente.IdUsuario = usuarioCreado.idUsuario;
-            paciente.HistorialMedico = nuevoHistorial;
+            if (usuarioEntidad == null)
+            {
+                throw new Exception("El usuario se creó, pero no se pudo recuperar desde la base de datos.");
+            }
+
+            var nuevoHistorial = new HistorialMedico
+            {
+                TipoSangre = dto.Historial.TipoSangre,
+                Alergias = dto.Historial.Alergias,
+                EnfermedadesCronicas = dto.Historial.EnfermedadesCronicas,
+                Antecedentes = dto.Historial.Antecedentes,
+                Detalles = dto.Historial.Detalles,
+                FechaDeCreacion = DateTime.Now
+            };
+
+            var paciente = new DAL.Entidades.Paciente
+            {
+                IdUsuario = usuarioEntidad.IdUsuario,
+                HistorialMedico = nuevoHistorial
+            };
 
             bool pacienteCreado = await _pacienteRepositorio.CreatePacienteAsync(paciente);
 
             if (pacienteCreado)
                 return usuarioCreado;
 
-            return null;
+            throw new Exception("No se pudo crear el paciente con su historial médico.");
         }
 
         public async Task<bool> RegistrarPacienteAsync(RegistrarPacienteDTO pacienteDto)

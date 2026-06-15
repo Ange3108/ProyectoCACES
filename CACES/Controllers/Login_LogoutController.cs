@@ -1,6 +1,5 @@
 ﻿using CACES.BLL.DTOs.Auth;
 using CACES.BLL.Servicios.Auth;
-using CACES.BLL.Servicios.Usuario;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
@@ -17,46 +16,47 @@ namespace CACES.Controllers
             _authServicio = authServicio;
         }
 
-     
+        [HttpGet]
+        public IActionResult Login()
+        {
+            return View("~/Views/Usuarios/Login.cshtml");
+        }
+
+        [HttpPost]
         public async Task<IActionResult> Login(LoginDTO dto)
         {
             if (!ModelState.IsValid)
             {
-                return View("~/Views/Usuarios/Login.cshtml");
+                return View("~/Views/Usuarios/Login.cshtml", dto);
             }
 
             var usuario = await _authServicio.AutenticarAsync(dto);
 
             if (usuario != null)
             {
-                var claims = new List<Claim> {
-            new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
-            new Claim(ClaimTypes.Email, usuario.CorreoElectronico),
-            new Claim(ClaimTypes.Name, $"{usuario.Nombres} {usuario.PrimerApellido}")
-        };
-
-                foreach (var UsuarioRoles in usuario.UsuarioRoles)
+                var claims = new List<Claim>
                 {
-                    claims.Add(
-                        new Claim(
-                            ClaimTypes.Role,
-                            UsuarioRoles.Rol.Name
-                        )
-                    );
-                }
-                    var claimsIdentity = new ClaimsIdentity(claims, Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
+                    new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
+                    new Claim(ClaimTypes.Email, usuario.CorreoElectronico),
+                    new Claim(ClaimTypes.Name, $"{usuario.Nombres} {usuario.PrimerApellido}"),
+                    new Claim(ClaimTypes.Role, "Paciente")
+                };
+
+                var claimsIdentity = new ClaimsIdentity(
+                    claims,
+                    CookieAuthenticationDefaults.AuthenticationScheme
+                );
 
                 await HttpContext.SignInAsync(
-                    Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme,
+                    CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity)
                 );
+
                 return RedirectToAction("Index", "Home");
             }
 
             ModelState.AddModelError(string.Empty, "Usuario o contraseña incorrectos.");
-            return View("~/Views/Usuarios/Login.cshtml");
-
-
+            return View("~/Views/Usuarios/Login.cshtml", dto);
         }
 
         [HttpGet]
@@ -65,7 +65,6 @@ namespace CACES.Controllers
             return View("~/Views/Usuarios/OlvidoContrasena.cshtml");
         }
 
-        // 1. Paso uno: Verifica el correo y genera el token internamente
         [HttpPost]
         public async Task<IActionResult> VerificarCorreoDirecto(string correo)
         {
@@ -75,7 +74,6 @@ namespace CACES.Controllers
             var dto = new OlvidoContrasenaDTO { CorreoElectronico = correo };
             var resultado = await _authServicio.GenerarTokenRecuperacionAsync(dto);
 
-            // Tu servicio devuelve Exito = true si el usuario existe y guarda el token en SecurityStamp
             if (resultado.Exito && !string.IsNullOrEmpty(resultado.Token))
             {
                 return Json(new { exito = true, token = resultado.Token, correo = correo });
@@ -84,7 +82,6 @@ namespace CACES.Controllers
             return Json(new { exito = false, mensaje = "El correo ingresado no pertenece a una cuenta activa." });
         }
 
-        // 2. Paso dos: Cambia la contraseña usando el token obtenido en el paso 1
         [HttpPost]
         public async Task<IActionResult> RestablecerDirecto(RestablecerContrasenaDTO modelo)
         {
@@ -104,7 +101,6 @@ namespace CACES.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
-
             return RedirectToAction("Index", "Home");
         }
     }

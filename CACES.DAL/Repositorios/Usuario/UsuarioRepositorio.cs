@@ -6,9 +6,8 @@ namespace CACES.DAL.Repositorios.Usuario
 {
     public class UsuarioRepositorio : IUsuarioRepositorio
     {
-        //Inyerccion de dependencia de la BD
+        // Inyección de dependencia de la BD
         private readonly CACESDbContext _context;
-
 
         public UsuarioRepositorio(CACESDbContext context)
         {
@@ -17,38 +16,48 @@ namespace CACES.DAL.Repositorios.Usuario
 
         public async Task<bool> CreateUsuarioAsync(Entidades.Usuario usuario)
         {
-            if (usuario == null) return false;
+            if (usuario == null)
+                return false;
+
             await _context.Usuarios.AddAsync(usuario);
             return await _context.SaveChangesAsync() > 0;
-
         }
 
 
         public async Task<bool> DeleteUsuarioAsync(int id)
         {
             var entity = await _context.Usuarios.FindAsync(id);
-            if (entity == null) return false;
+
+            if (entity == null)
+                return false;
+
             _context.Usuarios.Remove(entity);
+
             return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<Entidades.Usuario> GetUsuarioByDUIAsync(string dui)
         {
-            if (string.IsNullOrEmpty(dui)) return null;
-            return await _context.Usuarios.FirstOrDefaultAsync(u => u.DUI == dui);
+            if (string.IsNullOrEmpty(dui))
+                return null;
+
+            return await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.DUI == dui);
         }
 
         public async Task<Entidades.Usuario> GetUsuarioByIdAsync(int id)
         {
-            return await _context.Usuarios.FirstOrDefaultAsync(u => u.IdUsuario == id);
+            return await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.IdUsuario == id);
         }
 
         public async Task<Entidades.Usuario> GetUsuarioByEmailAsync(string email)
         {
-            if (string.IsNullOrEmpty(email)) return null;
-            return await _context.Usuarios.Include(u => u.UsuarioRoles)
-                .ThenInclude(ur => ur.Rol)
-                 .FirstOrDefaultAsync(u => u.CorreoElectronico == email);
+            if (string.IsNullOrEmpty(email))
+                return null;
+
+            return await _context.Usuarios
+                .FirstOrDefaultAsync(u => u.CorreoElectronico == email);
         }
 
         public async Task<List<Entidades.Usuario>> GetUsuariosAsync()
@@ -58,10 +67,14 @@ namespace CACES.DAL.Repositorios.Usuario
 
         public async Task<bool> UpdateUsuarioAsync(Entidades.Usuario usuario)
         {
-            if (usuario == null) return false;
+            if (usuario == null)
+                return false;
+
             _context.Usuarios.Update(usuario);
+
             return await _context.SaveChangesAsync() > 0;
         }
+
         public async Task<bool> DesactivarUsuarioAsync(int id)
         {
             var usuario = await _context.Usuarios
@@ -70,7 +83,7 @@ namespace CACES.DAL.Repositorios.Usuario
             if (usuario == null)
                 return false;
 
-            usuario.Estado = false;
+            usuario.Estado = 0;
             usuario.EmailConfirmed = false;
             usuario.FechaDeModificacion = DateTime.Now;
 

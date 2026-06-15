@@ -6,6 +6,7 @@
 
 <div class="container py-5">
     <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
         <div class="card-header banner-header p-4">
             <div class="d-flex justify-content-between align-items-center">
 
@@ -18,16 +19,17 @@
                     </p>
                 </div>
 
-                <a asp-action="RegistroPaciente" asp-controller="Paciente" class="btn btn-light fw-semibold">
+                <a asp-action="RegistrarPaciente"
+                   asp-controller="Paciente"
+                   class="btn btn-light fw-semibold">
                     + Registrar Paciente
                 </a>
 
             </div>
         </div>
 
-
         <div class="card-body p-4">
-            
+
             @if (TempData["Mensaje"] != null)
             {
                 <div class="alert alert-success rounded-3">
@@ -45,7 +47,6 @@
             @if (Model != null && Model.Any())
             {
                 <div class="table-responsive">
-
                     <table class="table table-hover align-middle">
 
                         <thead>
@@ -61,11 +62,9 @@
                         </thead>
 
                         <tbody>
-
                             @foreach (var paciente in Model)
                             {
                                 <tr>
-
                                     <td>
                                         @paciente.Usuario.Nombres
                                         @paciente.Usuario.PrimerApellido
@@ -81,38 +80,36 @@
                                     <td>@paciente.Usuario.Direccion</td>
 
                                     <td>
-                                        @if (paciente.Usuario.Estado)
+                                        @if (paciente.Usuario.Estado == 1)
                                         {
-                                            <span class="badge bg-success">
-                                                Activo
-                                            </span>
+                                            <span class="badge bg-success">Activo</span>
                                         }
                                         else
                                         {
-                                            <span class="badge bg-secondary">
-                                                Desactivado
-                                            </span>
+                                            <span class="badge bg-secondary">Desactivado</span>
                                         }
                                     </td>
 
                                     <td>
-                                        <div class="d-flex gap-4">
+                                        <div class="d-flex gap-2">
 
                                             <a asp-controller="Paciente"
                                                asp-action="DetallePaciente"
                                                asp-route-id="@paciente.IdPaciente"
-                                               class="btn btn-info btn-sm text-white">
+                                               class="btn btn-info btn-sm text-white"
+                                               title="Ver detalle">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
 
                                             <a asp-controller="Perfil"
                                                asp-action="ActualizarPerfil"
                                                asp-route-id="@paciente.IdPaciente"
-                                               class="btn btn-warning btn-sm text-white">
+                                               class="btn btn-warning btn-sm text-white"
+                                               title="Editar paciente">
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            @if (paciente.Usuario.Estado)
+                                            @if (paciente.Usuario.Estado == 1)
                                             {
                                                 <form asp-controller="Paciente"
                                                       asp-action="DesactivarPaciente"
@@ -125,6 +122,7 @@
 
                                                     <button type="submit"
                                                             class="btn btn-danger btn-sm"
+                                                            title="Desactivar paciente"
                                                             onclick="return confirm('¿Desea desactivar este paciente?');">
                                                         <i class="bi bi-person-x-fill"></i>
                                                     </button>
@@ -134,28 +132,20 @@
 
                                         </div>
                                     </td>
-
                                 </tr>
                             }
-
                         </tbody>
 
                     </table>
-
                 </div>
             }
             else
             {
-                <div class="alert alert-info">
+                <div class="alert alert-info rounded-3">
                     No hay pacientes registrados.
                 </div>
             }
 
         </div>
-
-        
-
-        </div>
     </div>
-
-</section>
+</div>

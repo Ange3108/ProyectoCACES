@@ -32,7 +32,7 @@
                         </div>
                     }
 
-                    <form asp-action="RegistroPaciente"
+                    <form asp-action="RegistrarPaciente"
                           asp-controller="Paciente"
                           method="post">
 
@@ -100,12 +100,16 @@
                                     Contraseña
                                 </label>
 
-                                <input asp-for="Usuario.passwordHash"
+                                <label class="form-label fw-semibold">Contraseña</label>
+
+                                <input name="Usuario.passwordHash"
                                        type="password"
                                        class="form-control rounded-3" />
 
                                 <span asp-validation-for="Usuario.passwordHash"
                                       class="text-danger small"></span>
+
+                                
                             </div>
                         </div>
 
