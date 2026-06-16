@@ -13,7 +13,7 @@ namespace CACES.BLL.Servicios.Especialidad
         Task<respuestaErrores<mostrarEspecialidadDTO>> GetEspecialidadPorNombreAsync(string nombre);
         Task<respuestaErrores<mostrarEspecialidadDTO>> CrearEspecialidadAsync(especialidadDTO especialidad);
         Task<respuestaErrores<mostrarEspecialidadDTO>> ActualizarEspecialidadAsync(int id, especialidadDTO especialidad);
-        Task<respuestaErrores<mostrarEspecialidadDTO>> EliminarEspecialidadAsync(int id);
+        Task<respuestaErrores<mostrarEspecialidadDTO>> DesactivarEspecialidadAsync(int id);
         
     }
 }

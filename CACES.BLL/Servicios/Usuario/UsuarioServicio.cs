@@ -78,7 +78,7 @@ namespace CACES.BLL.Servicios.Usuario
                 nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
                 nuevoUsuario.FechaDeRegistro = DateTime.Now;
                 nuevoUsuario.SecurityStamp = Guid.NewGuid().ToString();
-                nuevoUsuario.Estado = 1;
+                nuevoUsuario.Estado = true;
                 nuevoUsuario.EmailConfirmed = false;
                 nuevoUsuario.TwoFactorEnabled = false;
                 nuevoUsuario.LockoutEnabled = false;
@@ -163,14 +163,14 @@ namespace CACES.BLL.Servicios.Usuario
 
         }
 
-        public async Task<respuestaErrores<MostrarUsuarioDTO>> EliminarUsuarioAsync(int id)
+        public async Task<respuestaErrores<MostrarUsuarioDTO>> DesactivarUsuarioAsync(int id)
         {
             var respuesta = new respuestaErrores<MostrarUsuarioDTO>();
 
-            if (!await _usuarioRepository.DeleteUsuarioAsync(id))
+            if (!await _usuarioRepository.DesactivarUsuarioAsync(id))
             {
                 respuesta.EsCorrecto = false;
-                respuesta.mensaje = "No se pudo eliminar el usuario";
+                respuesta.mensaje = "No se pudo desactivar el usuario";
                 respuesta.codigo = 404;
             }
 

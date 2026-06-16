@@ -24,18 +24,6 @@ namespace CACES.DAL.Repositorios.Usuario
         }
 
 
-        public async Task<bool> DeleteUsuarioAsync(int id)
-        {
-            var entity = await _context.Usuarios.FindAsync(id);
-
-            if (entity == null)
-                return false;
-
-            _context.Usuarios.Remove(entity);
-
-            return await _context.SaveChangesAsync() > 0;
-        }
-
         public async Task<Entidades.Usuario> GetUsuarioByDUIAsync(string dui)
         {
             if (string.IsNullOrEmpty(dui))
@@ -108,7 +96,7 @@ namespace CACES.DAL.Repositorios.Usuario
             if (usuario == null)
                 return false;
 
-            usuario.Estado = 0;
+            usuario.Estado = false;
             usuario.EmailConfirmed = false;
             usuario.FechaDeModificacion = DateTime.Now;
 
