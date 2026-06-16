@@ -58,6 +58,7 @@ CREATE TABLE Historial_Medico(
     Enfermedades_Crónicas varchar(200) NOT NULL,
     Detalles VARCHAR(100) NOT NULL,
     Tipo_Sangre VARCHAR(10) NOT NULL,
+    Medicmanetos VARCHAR(200) NOT NULL,
     Antecedentes VARCHAR(50) NOT NULL,
     FechaDeCreacion DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL
@@ -227,54 +228,7 @@ CREATE TABLE [dbo].[AspNetUserRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-/****** Object:  Table [dbo].[AspNetUsers]    Script Date: 12/11/2024 13:29:30 ******/
-SET ANSI_NULLS ON
-GO
-SET QUOTED_IDENTIFIER ON
-GO
-CREATE TABLE [dbo].[AspNetUsers](
-	[Id] [nvarchar](128) NOT NULL,
-	[Email] [nvarchar](256) NULL,
-	[EmailConfirmed] [bit] NOT NULL,
-	[PasswordHash] [nvarchar](max) NULL,
-	[SecurityStamp] [nvarchar](max) NULL,
-	[PhoneNumber] [nvarchar](max) NULL,
-	[PhoneNumberConfirmed] [bit] NOT NULL,
-	[TwoFactorEnabled] [bit] NOT NULL,
-	[LockoutEndDateUtc] [datetime] NULL,
-	[LockoutEnabled] [bit] NOT NULL,
-	[AccessFailedCount] [int] NOT NULL,
-	[UserName] [nvarchar](256) NOT NULL,
- CONSTRAINT [PK_dbo.AspNetUsers] PRIMARY KEY CLUSTERED 
-(
-	[Id] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.AspNetUsers_UserId]
-GO
-ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.AspNetUsers_UserId]
-GO
-ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
-GO
-ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[AspNetUsers] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetUsers_UserId]
-GO
+
 
 
 -- ============================================
@@ -324,10 +278,10 @@ INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certifi
 GO
 
 -- HISTORIAL MEDICO
-INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
-('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Apendicitis 2015', GETDATE(), NULL),
-('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguna', GETDATE(), NULL),
-('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Fractura de brazo 2018', GETDATE(), NULL);
+INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Medicamentos,Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
+('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Omeprazol 20mg, Tramadol 100mg', GETDATE(), NULL),
+('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguno', GETDATE(), NULL),
+('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Cefazolina 1g, Paracetamol 500mg', GETDATE(), NULL);
 GO
 
 -- PACIENTES
@@ -393,25 +347,6 @@ INSERT INTO Noticias (Titulo, Contenido, FechaDePublicacion, FechaDeModificacion
 ('Preparación para cirugía: lo que debes saber', 'Prepararse correctamente antes de una cirugía es fundamental...', GETDATE(), NULL, 'surgery-news.jpg', 1);
 GO
 
--- USUARIOS DE ASPNET IDENTITY
--- Contraseña para los 3 usuarios: Admin124578*
-INSERT INTO [dbo].[AspNetUsers]
-([Id], [Email], [EmailConfirmed], [PasswordHash], [SecurityStamp], [PhoneNumber],
- [PhoneNumberConfirmed], [TwoFactorEnabled], [LockoutEndDateUtc], [LockoutEnabled],
- [AccessFailedCount], [UserName])
-VALUES
-('user-admin-001', 'juan.admin@caces.com', 1,
- 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', 'stamp-001', '8888-1111',
- 1, 0, NULL, 1, 0, 'juan.admin@caces.com'),
-
-('user-medico-002', 'oscar.medico@caces.com', 1,
- 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', 'stamp-002', '8888-2222',
- 1, 0, NULL, 1, 0, 'oscar.medico@caces.com'),
-
-('user-paciente-003', 'maria.paciente@caces.com', 1,
- 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', 'stamp-003', '8888-3333',
- 1, 0, NULL, 1, 0, 'maria.paciente@caces.com');
-GO
 
 -- ASIGNAR ROLES A USUARIOS
 INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES
