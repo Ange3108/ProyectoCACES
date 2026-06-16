@@ -23,6 +23,7 @@ CREATE TABLE Usuarios(
 	FechaDeModificacion DATETIME NULL,
 	Estado BIT NOT NULL,
     Telefono VARCHAR(30) NOT NULL,
+    Edad INT NOT NULL,
     Direccion VARCHAR(200) NOT NULL,
     Nacimiento Date NOT NULL,
     Foto VARCHAR(200) NOT NULL,
@@ -291,7 +292,7 @@ INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Certificaciones, 
 GO
 
 -- HISTORIAL MEDICO
-INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Anteriores, FechaDeCreacion, FechaDeModificacion) VALUES
+INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
 ('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Apendicitis 2015', GETDATE(), NULL),
 ('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguna', GETDATE(), NULL),
 ('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Fractura de brazo 2018', GETDATE(), NULL);
