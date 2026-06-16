@@ -76,7 +76,6 @@ namespace CACES.BLL.Servicios.Usuario
 
                 // Agregar lógica específica de negocio
                 nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
-                nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
                 nuevoUsuario.FechaDeRegistro = DateTime.Now;
                 nuevoUsuario.SecurityStamp = Guid.NewGuid().ToString();
                 nuevoUsuario.Estado = 1;
