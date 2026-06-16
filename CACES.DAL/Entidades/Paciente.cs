@@ -25,7 +25,7 @@ namespace CACES.DAL.Entidades
         public virtual Usuario Usuario { get; set; } = null!;
 
         public virtual HistorialMedico HistorialMedico { get; set; } = null!;
-
+        public virtual Cita? Cita { get; set; }
 
 
     }

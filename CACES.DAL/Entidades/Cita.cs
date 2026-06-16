@@ -43,5 +43,7 @@ namespace CACES.DAL.Entidades
 
         [Column("Estado")]
         public byte Estado { get; set; }
+
+        public virtual Receta? Receta { get; set; }
     }
 }

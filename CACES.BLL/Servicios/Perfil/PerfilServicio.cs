@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
 using CACES.BLL.DTOs;
+using CACES.BLL.DTOs.Historial;
 using CACES.BLL.DTOs.Perfil;
 using CACES.DAL.Repositorios.Usuario;
 
@@ -36,6 +37,7 @@ namespace CACES.BLL.Servicios.Perfil
 
             return respuesta;
         }
+        
 
         public async Task<respuestaErrores<ActualizarPerfilDTO>> ActualizarPerfilUsuarioAsync(int id, ActualizarPerfilDTO perfilDto)
         {
