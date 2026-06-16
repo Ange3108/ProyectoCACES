@@ -1,5 +1,5 @@
---CREATE DATABASE CACES;
---GO
+-- CREATE DATABASE CACES;
+-- GO
 
 USE CACES;
 GO
@@ -271,16 +271,16 @@ GO
 
 --usuarios
 -- Usuario 1
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, Foto, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Juan', 'Rivera', 'Gomez', 'juan.admin@caces.com', '12345678-1', '7777-1111', 'San Salvador', '1990-05-15','juan.jpg', GETDATE(), 1, 'Prueba123', NEWID());
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Edad, Direccion, Nacimiento, Foto, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Juan', 'Rivera', 'Gomez', 'juan.admin@caces.com', '12345678-1', '7777-1111', 45 ,'San Salvador', '1990-05-15','juan.jpg', GETDATE(), 1, 'Prueba123', NEWID());
 
 -- Usuario 2
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento,Foto, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Oscar', 'Lopez', 'Varillas', 'oscar.medico@caces.com', '87654321-2', '7777-2222', 'Colonia Escalón', '1985-11-20','oscar.jpg', GETDATE(), 1, 'HASH_DE_PRUEBA_2', NEWID());
-
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Edad, Direccion, Nacimiento,Foto, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Oscar', 'Lopez', 'Varillas', 'oscar.medico@caces.com', '87654321-2', '7777-2222', 50, 'Colonia Escalón', '1985-11-20','oscar.jpg', GETDATE(), 1, 'HASH_DE_PRUEBA_2', NEWID());
+ 
 -- Usuario 3
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, Foto,FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Maria', 'Venavidez', 'Solis', 'maria.paciente@caces.com', '11223344-3', '7777-3333', 'Antiguo Cuscatlán', '2001-03-03','maria.jpg', GETDATE(), 1, 'HASH_DE_PRUEBA_3', NEWID());
+INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Edad, Direccion, Nacimiento, Foto,FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
+VALUES ('Maria', 'Venavidez', 'Solis', 'maria.paciente@caces.com', '11223344-3', '7777-3333', 30 , 'Antiguo Cuscatlán', '2001-03-03','maria.jpg', GETDATE(), 1, 'HASH_DE_PRUEBA_3', NEWID());
 GO
 
 -- MEDICOS
