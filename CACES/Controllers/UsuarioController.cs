@@ -21,7 +21,6 @@ namespace CACES.Controllers
             return View("~/Views/Usuarios/RegistroUsuario.cshtml");
         }
 
-
         //Registro
         [HttpPost]
         public async Task<IActionResult> RegistroUsuario(RegistrarUsuarioDTO registrarUsuarioDTO)
