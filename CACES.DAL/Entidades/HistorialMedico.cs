@@ -31,6 +31,11 @@ namespace CACES.DAL.Entidades
         [Column("Tipo_Sangre")]
         public string TipoSangre { get; set; } = null!;
 
+        [Required(ErrorMessage = "Los medicamentos son requeridos en caso de que no tome ninguno indicar que no")]
+        [StringLength(200)]
+        [Column("Medicamentos")]
+        public string Medicamentos { get; set; } = null!;
+
         [Required(ErrorMessage = "Los antecedentes son requeridos")]
         [StringLength(50)]
         [Column("Antecedentes")]
