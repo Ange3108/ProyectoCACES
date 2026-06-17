@@ -69,5 +69,37 @@ namespace CACES.DAL.Repositorios.Roles
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool> EliminarUsuarioPorRolAsync(string userId, string nombreRol)
+        {
+            var aspUser = await _context.AspNetUsers
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            if (aspUser == null)
+                return false;
+
+            var rolUsuario = await (
+                from ur in _context.AspNetUserRoles
+                join r in _context.AspNetRoles
+                    on ur.RoleId equals r.Id
+                where ur.UserId == userId && r.Name == nombreRol
+                select ur
+            ).FirstOrDefaultAsync();
+
+            if (rolUsuario == null)
+                return false;
+
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(x => x.CorreoElectronico == aspUser.Email);
+
+            if (usuario == null)
+                return false;
+
+            _context.AspNetUserRoles.Remove(rolUsuario);
+            _context.AspNetUsers.Remove(aspUser);
+            _context.Usuarios.Remove(usuario);
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

@@ -1,0 +1,149 @@
+﻿@model List<CACES.DAL.DTOs.Roles.GestionRolDTO>
+
+@{
+    ViewData["Title"] = "Gestión de Roles";
+    var roles = ViewBag.Roles as List<CACES.DAL.Entidades.Roles.AspNetRole>;
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header bg-primary text-white">
+            <h3 class="mb-0">
+                <i class="bi bi-person-gear me-2"></i>
+                Gestión de Roles
+            </h3>
+        </div>
+
+        <div class="card-body">
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Mensaje"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <div class="table-responsive">
+
+                <table class="table table-hover align-middle">
+
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Correo</th>
+                            <th>Rol Actual</th>
+                            <th>Cambiar Rol</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach (var usuario in Model)
+                        {
+                            <tr>
+
+                                <td>@usuario.NombreCompleto</td>
+
+                                <td>@usuario.CorreoElectronico</td>
+
+                                <td>
+                                    <span class="badge bg-info">
+                                        @usuario.NombreRol
+                                    </span>
+                                </td>
+
+                                <td>
+                                    <form asp-action="CambiarRol"
+                                          asp-controller="Rol"
+                                          method="post"
+                                          class="d-flex gap-2">
+
+                                        <input type="hidden"
+                                               name="userId"
+                                               value="@usuario.UserId" />
+
+                                        <select name="roleId"
+                                                class="form-select form-select-sm">
+
+                                            @foreach (var rol in roles)
+                                            {
+                                                <option value="@rol.Id"
+                                                        selected="@(rol.Id == usuario.RoleId)">
+                                                    @rol.Name
+                                                </option>
+                                            }
+
+                                        </select>
+
+                                        <button type="submit"
+                                                class="btn btn-warning btn-sm">
+                                            Guardar
+                                        </button>
+
+                                    </form>
+                                </td>
+
+                                <td>
+
+                                    @if (usuario.NombreRol == "Medico")
+                                    {
+                                        <form asp-action="EliminarMedico"
+                                              asp-controller="Rol"
+                                              method="post">
+
+                                            <input type="hidden"
+                                                   name="userId"
+                                                   value="@usuario.UserId" />
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('¿Desea eliminar este médico?');">
+                                                Eliminar Médico
+                                            </button>
+
+                                        </form>
+                                    }
+
+                                    @if (usuario.NombreRol == "Administrador")
+                                    {
+                                        <form asp-action="EliminarAdministrador"
+                                              asp-controller="Rol"
+                                              method="post">
+
+                                            <input type="hidden"
+                                                   name="userId"
+                                                   value="@usuario.UserId" />
+
+                                            <button type="submit"
+                                                    class="btn btn-danger btn-sm"
+                                                    onclick="return confirm('¿Desea eliminar este administrador?');">
+                                                Eliminar Admin
+                                            </button>
+
+                                        </form>
+                                    }
+
+                                </td>
+
+                            </tr>
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
