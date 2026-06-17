@@ -79,7 +79,7 @@
 
                                 <button
                                     type="button"
-                                    class="btn btn-sm btn-danger eliminar"
+                                    class="btn btn-sm btn-danger desactivar"
                                     data-id="${row.idUsuario}">
                                     <i class="bi bi-trash"></i>
                                 </button>
@@ -171,8 +171,8 @@
                 });
             });
 
-            // Eliminar usuario
-            $(document).on('click', '.eliminar', function () {
+            // Desactivar usuario
+            $(document).on('click', '.desactivar', function () {
 
                 const id = $(this).data('id');
 
@@ -181,14 +181,14 @@
                     text: 'No podrás revertir esta acción',
                     icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonText: 'Sí, eliminar',
+                    confirmButtonText: 'Sí, desactivar',
                     cancelButtonText: 'Cancelar'
                 }).then((result) => {
 
                     if (result.isConfirmed) {
 
                         $.ajax({
-                            url: `/Usuario/EliminarUsuario/${id}`,
+                            url: `/Usuario/DesactivarUsuario/${id}`,
                             type: 'POST',
 
                             success: function (respuestaErrores) {
@@ -206,7 +206,7 @@
 
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'No fue posible eliminar el usuario.',
+                                    text: 'No fue posible desactivar el usuario.',
                                     icon: 'error'
                                 });
                             }

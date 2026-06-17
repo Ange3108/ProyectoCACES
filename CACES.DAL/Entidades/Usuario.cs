@@ -28,7 +28,7 @@ namespace CACES.DAL.Entidades
 
         public DateTime? FechaDeModificacion { get; set; }
 
-        public byte Estado { get; set; } = 1;
+        public bool Estado { get; set; } = true;
 
         [Required(ErrorMessage = "La dirección es requerida")]
         [StringLength(250)]

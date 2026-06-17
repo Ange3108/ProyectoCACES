@@ -13,7 +13,7 @@ namespace CACES.BLL.Servicios.Usuario
         Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorDUIAsync(string dui);
         Task<respuestaErrores<MostrarUsuarioDTO>> CrearUsuarioAsync(RegistrarUsuarioDTO usuario);
         Task<respuestaErrores<MostrarUsuarioDTO>> ActualizarUsuarioAsync(int id, ActualizarUsuarioDTO usuario);
-        Task<respuestaErrores<MostrarUsuarioDTO>> EliminarUsuarioAsync(int id);
+        Task<respuestaErrores<MostrarUsuarioDTO>> DesactivarUsuarioAsync(int id);
         (bool IsValid, string Message) ValidarContraseña(string password);
 
       

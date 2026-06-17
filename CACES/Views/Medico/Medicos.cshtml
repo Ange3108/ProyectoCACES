@@ -75,7 +75,7 @@
                                 <td>@medico.Certificaciones</td>
 
                                 <td>
-                                    @if (medico.Usuario.Estado == 1)
+                                    @if (medico.Usuario.Estado.Equals(true))
                                     {
                                         <span class="badge bg-success">Activo</span>
                                     }

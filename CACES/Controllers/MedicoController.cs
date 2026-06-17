@@ -104,20 +104,6 @@ namespace CACES.Controllers
             return RedirectToAction("Medicos");
         }
 
-        [Authorize(Roles = "Administrador")]
-        [HttpPost]
-        public async Task<IActionResult> EliminarMedico(int id)
-        {
-            var resultado = await _medicoServicio.DeleteMedicoAsync(id);
-
-            if (!resultado)
-            {
-                TempData["Error"] = "No se pudo eliminar el médico.";
-                return RedirectToAction("Medicos");
-            }
-
-            TempData["Mensaje"] = "Médico eliminado correctamente.";
-            return RedirectToAction("Medicos");
-        }
+        
     }
 }
