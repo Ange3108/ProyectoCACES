@@ -285,10 +285,10 @@ INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certifi
 GO
 
 -- HISTORIAL MEDICO
-INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Medicamentos,Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
-('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Omeprazol 20mg, Tramadol 100mg', GETDATE(), NULL),
-('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguno', GETDATE(), NULL),
-('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Cefazolina 1g, Paracetamol 500mg', GETDATE(), NULL);
+INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Medicmanetos,Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
+('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Omeprazol 20mg, Tramadol 100mg', 'Abuelo materno con antecedentes de diabetes tipo 2', GETDATE(), NULL),
+('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguno', 'Madre con hipertensión arterial crónica', GETDATE(), NULL),
+('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Cefazolina 1g, Paracetamol 500mg', 'Sin antecedentes familiares de riesgo', GETDATE(), NULL);
 GO
 
 -- PACIENTES
