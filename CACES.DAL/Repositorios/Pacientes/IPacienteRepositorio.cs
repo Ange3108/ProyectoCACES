@@ -12,5 +12,6 @@ namespace CACES.DAL.Repositorios.Pacientes
         Task<bool> CreatePacienteAsync(Entidades.Paciente paciente);
         Task<bool> UpdatePacienteAsync(Entidades.Paciente paciente);
         Task<bool> DeletePacienteAsync(int id);
+        Task<Entidades.Usuario> GetInfoMedicaByIdAsync(int id);
     }
 }
