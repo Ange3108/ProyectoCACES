@@ -43,6 +43,7 @@ namespace CACES.BLL.Servicios.Auth
             if (usuario.PasswordHash != passwordHash)
                 return null;
 
+
             return usuario;
         }
 
