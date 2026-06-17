@@ -48,6 +48,7 @@ namespace CACES.Controllers
             return RedirectToAction("Medicos");
         }
 
+
         [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> EditarMedico(int id)
