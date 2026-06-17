@@ -59,7 +59,7 @@ namespace CACES.DAL.Repositorios.Roles
             if (rolesActuales.Any())
                 _context.AspNetUserRoles.RemoveRange(rolesActuales);
 
-            var nuevoRol = new AspNetUserRole
+            var nuevoRol = new AspNetUserRoles
             {
                 UserId = userId,
                 RoleId = roleId

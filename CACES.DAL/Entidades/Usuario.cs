@@ -53,7 +53,10 @@ namespace CACES.DAL.Entidades
 
         public bool EmailConfirmed { get; set; } = false;
 
+        //paciente está mal aquí, pero es para la relación uno a uno, el usuario es el principal y el paciente es el dependiente
         public virtual Paciente? Paciente { get; set; }
+
+        public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
 
     }
 }

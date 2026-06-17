@@ -18,9 +18,11 @@ namespace CACES.DAL.DBContext
         public DbSet<Medico> Medicos { get; set; }
         public DbSet<ApplicationUser> AspNetUsers { get; set; }
         public DbSet<AspNetRole> AspNetRoles { get; set; }
-        public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
+        public DbSet<AspNetUserRoles> AspNetUserRoles { get; set; }
         public DbSet<Cita> Citas { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
+
+        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -162,6 +164,22 @@ namespace CACES.DAL.DBContext
                       .HasForeignKey(r => r.IdCita);
             });
 
+            modelBuilder.Entity<UsuarioRoles>()
+
+         .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
+
+            modelBuilder.Entity<UsuarioRoles>()
+                .HasOne(ur => ur.Usuario)
+                .WithMany(u => u.UsuarioRoles)
+                .HasForeignKey(ur => ur.IdUsuario)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UsuarioRoles>()
+                .HasOne(ur => ur.Rol)
+                .WithMany(r => r.UsuarioRoles)
+                .HasForeignKey(ur => ur.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             // Configuración de ApplicationUser
             modelBuilder.Entity<ApplicationUser>(entity =>
@@ -178,7 +196,7 @@ namespace CACES.DAL.DBContext
             });
 
             // Configuración de AspNetUserRole
-            modelBuilder.Entity<AspNetUserRole>(entity =>
+            modelBuilder.Entity<AspNetUserRoles>(entity =>
             {
                 entity.HasKey(e => new { e.UserId, e.RoleId });
                 entity.ToTable("AspNetUserRoles");
@@ -195,11 +213,7 @@ namespace CACES.DAL.DBContext
                 entity.HasKey(e => e.Id);
                 entity.ToTable("AspNetRoles");
             });
-            modelBuilder.Entity<AspNetUserRole>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
-                entity.ToTable("AspNetUserRoles");
-            });
+         
 
             //configuración de la entidad Especialidad
             modelBuilder.Entity<Especialidad>(entity =>
