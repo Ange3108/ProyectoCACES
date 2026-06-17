@@ -146,7 +146,10 @@ namespace CACES.BLL.Servicios.Especialidad
                 return respuesta;
             }
 
-
+            Task<respuestaErrores<mostrarEspecialidadDTO>> IEspecialidadServicio.DesactivarEspecialidadAsync(int id)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
