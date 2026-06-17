@@ -4,7 +4,6 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CACES.Controllers
 {
-
     public class RolController : Controller
     {
         private readonly IRolServicio _rolServicio;
@@ -34,6 +33,32 @@ namespace CACES.Controllers
                 TempData["Mensaje"] = "El rol del usuario se actualizó correctamente.";
             else
                 TempData["Error"] = "No se pudo actualizar el rol del usuario.";
+
+            return RedirectToAction("GestionRoles");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminarMedico(string userId)
+        {
+            var resultado = await _rolServicio.EliminarUsuarioPorRolAsync(userId, "Medico");
+
+            if (resultado)
+                TempData["Mensaje"] = "El usuario médico fue eliminado correctamente.";
+            else
+                TempData["Error"] = "No se pudo eliminar el usuario médico.";
+
+            return RedirectToAction("GestionRoles");
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> EliminarAdministrador(string userId)
+        {
+            var resultado = await _rolServicio.EliminarUsuarioPorRolAsync(userId, "Administrador");
+
+            if (resultado)
+                TempData["Mensaje"] = "El usuario administrador fue eliminado correctamente.";
+            else
+                TempData["Error"] = "No se pudo eliminar el usuario administrador.";
 
             return RedirectToAction("GestionRoles");
         }
