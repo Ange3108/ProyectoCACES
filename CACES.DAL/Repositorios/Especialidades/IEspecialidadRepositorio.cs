@@ -11,7 +11,6 @@ namespace CACES.DAL.Repositorios.Especialidades
         Task<Entidades.Especialidad> GetEspecialidadByNameAsync(string name);
         Task<bool> CreateEspecialidadAsync(Entidades.Especialidad especialidad);
         Task<bool> UpdateEspecialidadAsync(Entidades.Especialidad especialidad);
-        Task<bool> DeleteEspecialidadAsync(int id);
         Task<bool> DesactivarEspecialidadAsync(int id);
     }
 }

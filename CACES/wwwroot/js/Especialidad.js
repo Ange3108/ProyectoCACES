@@ -14,41 +14,41 @@
                 url: '/Especialidad/ObtenerEspecialidades',
                 type: 'GET',
 
-                success: function (especialidades) {
+                success: function (respuesta) {
 
                     let html = '';
 
-                    especialidades.forEach(e => {
+                    respuesta.dato.forEach(e => {
 
                         html += `
-                            <div class="col-12 col-md-6 col-lg-4">
+            <div class="col-12 col-md-6 col-lg-4">
 
-                                <article class="card h-100 border-0 shadow-sm specialty-card">
+                <article class="card h-100 border-0 shadow-sm specialty-card">
 
-                                    <div class="card-body d-flex flex-column">
+                    <div class="card-body d-flex flex-column">
 
-                                        <div class="mb-3">
-                                            <i class="${e.icono} info-icon"></i>
-                                        </div>
+                        <div class="mb-3">
+                            <i class="${e.icono} info-icon"></i>
+                        </div>
 
-                                        <h4 class="card-title mb-2">
-                                            ${e.nombre}
-                                        </h4>
+                        <h4 class="card-title mb-2">
+                            ${e.nombre}
+                        </h4>
 
-                                        <p class="text-muted mb-3 flex-grow-1">
-                                            ${e.descripcion}
-                                        </p>
+                        <p class="text-muted mb-3 flex-grow-1">
+                            ${e.descripcion}
+                        </p>
 
-                                        <span class="badge ${e.estado ? 'bg-success' : 'bg-danger'}">
-                                            ${e.estado ? 'Activa' : 'Inactiva'}
-                                        </span>
+                        <a href="/Cita/GestionCitas" class="btn btn-info w-100 mt-auto">
+                            Reservar cita
+                        </a>
 
-                                    </div>
+                    </div>
 
-                                </article>
+                </article>
 
-                            </div>
-                        `;
+            </div>
+        `;
                     });
 
                     $('#contenedorEspecialidades').html(html);

@@ -81,6 +81,13 @@ namespace CACES.BLL
 
              CreateMap<Usuario, ActualizarPerfilDTO>()
                .ReverseMap();
+
+            //mapeo de los dto de especialidad
+
+            CreateMap<DAL.Entidades.Especialidad, DTOs.Especialidad.especialidadDTO>()
+                .ReverseMap();
+            CreateMap<DAL.Entidades.Especialidad, DTOs.Especialidad.mostrarEspecialidadDTO>()
+               .ReverseMap();
         }
     }
 }

@@ -14,10 +14,12 @@ using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
-using CACES.DAL.Repositorios.Especialidades;
+using CACES.BLL.Servicios.Especialidad;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using CACES.BLL.Servicios.Citas;
+using CACES.BLL.Servicios.Especialidad;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -40,21 +42,23 @@ builder.Services.AddScoped<IMedicoRepositorio, MedicoRepositorio>();
 builder.Services.AddScoped<IHistorialMedicoRepositorio, HistorialMedicoRepositorio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<ICitaRepositorio, CitaRepositorio>();
+builder.Services.AddScoped<IEspecialidadRepositorio, EspecialidadRepositorio>();
 
 
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
 
-// Servicios
-
 builder.Services.AddScoped<ICitaServicio, CitaServicio>();
 builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();
 builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();
+
 builder.Services.AddScoped<IAuthServicio, AuthServicio>();
 builder.Services.AddScoped<IPerfilServicio, PerfilServicio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<IRolServicio, RolServicio>();
+builder.Services.AddScoped<IEspecialidadServicio, EspecialidadServicio>();
+
 
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación

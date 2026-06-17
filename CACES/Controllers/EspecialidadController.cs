@@ -45,14 +45,6 @@ namespace CACES.Controllers
 
         }
 
-        //Metodo Eliminar
-        [HttpPost]
-        public async Task<IActionResult> EliminarEspecialidad(int id)
-        {
-            var resultado = await _especialidadServicio.DesactivarEspecialidadAsync(id);
-            return Json(resultado);
-
-        }
 
         public IActionResult Especialidades()
         {
@@ -60,10 +52,17 @@ namespace CACES.Controllers
         }
 
 
-        public async Task<IActionResult> ObtenerEspecialidads()
+        public async Task<IActionResult> ObtenerEspecialidades()
         {
-            var especialidades = await _especialidadServicio.GetEspecialidadsAsync();
+            var especialidades = await _especialidadServicio.GetEspecialidadesAsync();
             return Json(especialidades);
         }
+
+
+        public async Task <IActionResult> DesactivarEspecialidadAsync(int id)
+        {
+            var especialidad = await _especialidadServicio.DesactivarEspecialidadAsync(id);
+            return Json(especialidad);
     }
+}
 }
