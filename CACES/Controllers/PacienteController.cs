@@ -95,7 +95,7 @@ namespace CACES.Controllers
                 });
             }
 
-            var resultadoService = await _usuarioService.EliminarUsuarioAsync(idUsuario);
+            var resultadoService = await _usuarioService.DesactivarUsuarioAsync(idUsuario);
 
             if (resultadoService.EsCorrecto)
             {

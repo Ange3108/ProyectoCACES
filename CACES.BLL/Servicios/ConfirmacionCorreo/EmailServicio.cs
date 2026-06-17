@@ -40,6 +40,7 @@ namespace CACES.BLL.Servicios.ConfirmacionCorreo
 
                 await smtp.SendMailAsync(mail);
             }
+
         }
     }
 }

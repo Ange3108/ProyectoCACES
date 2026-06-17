@@ -20,6 +20,7 @@ namespace CACES.Controllers
         {
             return View("~/Views/Usuarios/RegistroUsuario.cshtml");
         }
+
         //Registro
         [HttpPost]
         public async Task<IActionResult> RegistroUsuario(RegistrarUsuarioDTO registrarUsuarioDTO)
@@ -55,12 +56,12 @@ namespace CACES.Controllers
 
         }
 
-        //Metodo Eliminar
+        //Metodo Desactivar
         //[Authorize(Roles = "Paciente")]
         [HttpPost]
-        public async Task<IActionResult> EliminarUsuario(int id)
+        public async Task<IActionResult> DesactivarUsuario(int id)
         {
-            var resultado = await _usuarioServicio.EliminarUsuarioAsync(id);
+            var resultado = await _usuarioServicio.DesactivarUsuarioAsync(id);
             return Json(resultado);
 
         }

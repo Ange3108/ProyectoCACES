@@ -51,6 +51,10 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.AccessFailedCount).HasColumnName("AccessFailedCount").IsRequired();
                 entity.Property(e => e.EmailConfirmed).HasColumnName("EmailConfirmed").HasDefaultValue(false).IsRequired();
                 entity.Property(e => e.Edad).HasColumnName("Edad").IsRequired();
+                entity.HasOne(p => p.Paciente)
+                .WithMany()
+                .HasForeignKey(p => p.IdUsuario)// Apunta a la propiedad IdUsuario
+                .IsRequired(false);
             });
 
             modelBuilder.Entity<Cita>(entity =>
@@ -67,6 +71,9 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
                 entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
                 entity.Property(e => e.Estado).HasColumnName("Estado");
+                entity.HasOne(c => c.Receta)
+                .WithMany()
+                .HasForeignKey(c => c.IdCita);
             });
 
             // Configuración de la entidad HistorialMedico
@@ -101,6 +108,10 @@ namespace CACES.DAL.DBContext
                     .WithMany()
                     .HasForeignKey(p => p.IdHistorial)
                     .HasConstraintName("FK_Pacientes_Historial");
+
+                entity.HasOne(p => p.Cita)
+                .WithMany()
+                .HasForeignKey(p => p.IdPaciente);
             });
 
             // Configuración de la entidad Medico
@@ -134,6 +145,23 @@ namespace CACES.DAL.DBContext
                     .HasForeignKey(e => e.IdUsuario);
 
             });
+
+            modelBuilder.Entity<Receta>(entity =>
+            {
+                entity.HasKey(e => e.IdReceta);
+                entity.Property(e => e.IdReceta).HasColumnName("Id_Receta");
+                entity.Property(e => e.IdCita).HasColumnName("Id_Cita");
+                entity.Property(e => e.Medicamentos).HasColumnName("Medicamentos").IsRequired();
+                entity.Property(e => e.Instrucciones).HasColumnName("Instrucciones");
+                entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
+                entity.Property(e => e.FechaDeVencimiento).HasColumnName("FechaDeVencimiento");
+
+                // Relación simple de uno a uno/muchos sin colecciones inversas
+                entity.HasOne(r => r.Cita)
+                      .WithMany()
+                      .HasForeignKey(r => r.IdCita);
+            });
+
 
             // Configuración de ApplicationUser
             modelBuilder.Entity<ApplicationUser>(entity =>

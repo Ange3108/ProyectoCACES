@@ -88,27 +88,38 @@
 
                         <div class="row g-3">
                             <div class="col-12 col-md-4">
-                                <div class="p-3 bg-light rounded-3">
+                                <div class="p-3 bg-light rounded-3 h-100">
                                     <label class="form-label text-muted small fw-bold text-uppercase mb-1">
                                         <i class="bi bi-droplet-fill text-danger me-1"></i> Tipo de sangre
                                     </label>
-                                    <p class="mb-0 text-dark fw-bold h5">O+</p>
+                                    <p class="mb-0 text-dark fw-bold h5">@Model.TipoSangre</p>
                                 </div>
                             </div>
+
                             <div class="col-12 col-md-8">
-                                <div class="p-3 bg-light rounded-3">
+                                <div class="p-3 bg-light rounded-3 h-100">
                                     <label class="form-label text-muted small fw-bold text-uppercase mb-1">
                                         <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> Alergias Conocidas
                                     </label>
-                                    <p class="mb-0 text-muted italic small">Ninguna reportada</p>
+                                    <p class="mb-0 text-muted italic small">@Model.Alergias</p>
                                 </div>
                             </div>
-                            <div class="col-12">
-                                <div class="p-3 bg-light rounded-3">
+
+                            <div class="col-12 col-md-6">
+                                <div class="p-3 bg-light rounded-3 h-100">
                                     <label class="form-label text-muted small fw-bold text-uppercase mb-1">
                                         <i class="bi bi-clipboard2-pulse me-1"></i> Patologías o Enfermedades Previas
                                     </label>
-                                    <p class="mb-0 text-muted small">No se registran antecedentes clínicos de riesgo.</p>
+                                    <p class="mb-0 text-muted small">@Model.EnfermedadesCronicas</p>
+                                </div>
+                            </div>
+
+                            <div class="col-12 col-md-6">
+                                <div class="p-3 bg-light rounded-3 h-100">
+                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">
+                                        <i class="bi bi-capsule text-primary me-1"></i> Últimos Medicamentos Recetados
+                                    </label>
+                                    <p class="mb-0 text-dark fw-semibold small">@Model.MedicamentosActuales</p>
                                 </div>
                             </div>
                         </div>

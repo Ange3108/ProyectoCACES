@@ -1,5 +1,8 @@
---CREATE DATABASE CACES;
---GO
+DROP DATABASE [CACES];
+GO
+
+CREATE DATABASE CACES;
+GO
 
 USE CACES;
 GO
@@ -13,28 +16,28 @@ CREATE TABLE Especialidad(
 );
 GO
 CREATE TABLE Usuarios(
-	Id_Usuario INT PRIMARY KEY IDENTITY(1,1),
-	Nombres VARCHAR(100) NOT NULL,
-	PrimerApellido VARCHAR(100) NOT NULL,
-	SegundoApellido VARCHAR(100) NOT NULL,
-	CorreoElectronico VARCHAR(200) NOT NULL UNIQUE,
-	DUI VARCHAR(10) NOT NULL,
-	FechaDeRegistro DATETIME NOT NULL,
-	FechaDeModificacion DATETIME NULL,
-	Estado BIT NOT NULL,
-    Telefono VARCHAR(30) NOT NULL,
-    Direccion VARCHAR(200) NOT NULL,
-    Nacimiento Date NOT NULL,
+    Id_Usuario INT PRIMARY KEY IDENTITY(1,1),
+    Nombres VARCHAR(100) NOT NULL,
+    PrimerApellido VARCHAR(100) NOT NULL,
+    SegundoApellido VARCHAR(100) NOT NULL,
+    CorreoElectronico VARCHAR(200) NOT NULL UNIQUE,
+    DUI VARCHAR(10) NOT NULL,
     Foto VARCHAR(200) NOT NULL,
-	-- Campos de ASP.NET Identity
-	PasswordHash NVARCHAR(MAX) NULL,
-	SecurityStamp NVARCHAR(MAX) NULL,
-	TwoFactorEnabled BIT NOT NULL DEFAULT 0,
-	LockoutEndDateUtc DATETIME NULL,
-	LockoutEnabled BIT NOT NULL DEFAULT 1,
-	AccessFailedCount INT NOT NULL DEFAULT 0,
-	EmailConfirmed BIT NOT NULL DEFAULT 0,
-	CONSTRAINT UQ_Usuarios_DUI UNIQUE (DUI)
+    FechaDeRegistro DATETIME NOT NULL,
+    FechaDeModificacion DATETIME NULL,
+    Estado BIT NOT NULL,
+    Direccion VARCHAR(250) NOT NULL,
+    Edad INT NOT NULL,
+    Telefono VARCHAR(20) NOT NULL,
+    Nacimiento DATE NOT NULL,
+    PasswordHash NVARCHAR(MAX) NOT NULL,
+    SecurityStamp NVARCHAR(MAX) NOT NULL,
+    TwoFactorEnabled BIT NOT NULL DEFAULT 0,
+    LockoutEndDateUtc DATETIME NULL,
+    LockoutEnabled BIT NOT NULL DEFAULT 0,
+    AccessFailedCount INT NOT NULL DEFAULT 0,
+    EmailConfirmed BIT NOT NULL DEFAULT 0,
+    CONSTRAINT UQ_Usuarios_DUI UNIQUE (DUI)
 );
 GO
 CREATE TABLE Medicos(
@@ -42,9 +45,9 @@ CREATE TABLE Medicos(
     Id_Especialidad INT NOT NULL,
 	Id_Usuario INT NOT NULL,
     Experiencia INT NOT NULL,
+    Telefono VARCHAR(30) NOT NULL,
     Certificaciones VARCHAR(200) NOT NULL,
     FechaDeRegistro DATETIME NOT NULL,
-    Foto VARCHAR(200) NOT NULL,
 	CONSTRAINT FK_Medicos_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
 	CONSTRAINT FK_Medico_Usuario FOREIGN KEY (Id_Usuario) REFERENCES Usuarios(Id_Usuario)
 );
@@ -55,6 +58,7 @@ CREATE TABLE Historial_Medico(
     Enfermedades_Crónicas varchar(200) NOT NULL,
     Detalles VARCHAR(100) NOT NULL,
     Tipo_Sangre VARCHAR(10) NOT NULL,
+    Medicmanetos VARCHAR(200) NOT NULL,
     Antecedentes VARCHAR(50) NOT NULL,
     FechaDeCreacion DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL
@@ -176,30 +180,6 @@ CREATE TABLE [dbo].[AspNetRoles](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-
--- Nueva tabla para relacionar Usuarios con Roles
-CREATE TABLE [dbo].[UsuarioRoles](
-	[Id_Usuario] [int] NOT NULL,
-	[RoleId] [nvarchar](128) NOT NULL,
- CONSTRAINT [PK_dbo.UsuarioRoles] PRIMARY KEY CLUSTERED 
-(
-	[Id_Usuario] ASC,
-	[RoleId] ASC
-)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
-) ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[UsuarioRoles] WITH CHECK ADD CONSTRAINT [FK_UsuarioRoles_Usuarios] FOREIGN KEY([Id_Usuario])
-REFERENCES [dbo].[Usuarios] ([Id_Usuario])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_Usuarios]
-GO
-ALTER TABLE [dbo].[UsuarioRoles] WITH CHECK ADD CONSTRAINT [FK_UsuarioRoles_AspNetRoles] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_AspNetRoles]
-GO
 /****** Object:  Table [dbo].[AspNetUserClaims]    Script Date: 12/11/2024 13:29:30 ******/
 SET ANSI_NULLS ON
 GO
@@ -207,7 +187,7 @@ SET QUOTED_IDENTIFIER ON
 GO
 CREATE TABLE [dbo].[AspNetUserClaims](
 	[Id] [int] IDENTITY(1,1) NOT NULL,
-	[UserId] [int] NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
 	[ClaimType] [nvarchar](max) NULL,
 	[ClaimValue] [nvarchar](max) NULL,
  CONSTRAINT [PK_dbo.AspNetUserClaims] PRIMARY KEY CLUSTERED 
@@ -215,12 +195,6 @@ CREATE TABLE [dbo].[AspNetUserClaims](
 	[Id] ASC
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY] TEXTIMAGE_ON [PRIMARY]
-GO
-ALTER TABLE [dbo].[AspNetUserClaims]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.Usuarios_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[Usuarios] ([Id_Usuario])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[AspNetUserClaims] CHECK CONSTRAINT [FK_dbo.AspNetUserClaims_dbo.Usuarios_UserId]
 GO
 /****** Object:  Table [dbo].[AspNetUserLogins]    Script Date: 12/11/2024 13:29:30 ******/
 SET ANSI_NULLS ON
@@ -230,7 +204,7 @@ GO
 CREATE TABLE [dbo].[AspNetUserLogins](
 	[LoginProvider] [nvarchar](128) NOT NULL,
 	[ProviderKey] [nvarchar](128) NOT NULL,
-	[UserId] [int] NOT NULL,
+	[UserId] [nvarchar](128) NOT NULL,
  CONSTRAINT [PK_dbo.AspNetUserLogins] PRIMARY KEY CLUSTERED 
 (
 	[LoginProvider] ASC,
@@ -239,14 +213,28 @@ CREATE TABLE [dbo].[AspNetUserLogins](
 )WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
 ) ON [PRIMARY]
 GO
-ALTER TABLE [dbo].[AspNetUserLogins]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.Usuarios_UserId] FOREIGN KEY([UserId])
-REFERENCES [dbo].[Usuarios] ([Id_Usuario])
+/****** Object:  Table [dbo].[AspNetUserRoles]    Script Date: 12/11/2024 13:29:30 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+CREATE TABLE [dbo].[AspNetUserRoles](
+	[UserId] [nvarchar](128) NOT NULL,
+	[RoleId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.AspNetUserRoles] PRIMARY KEY CLUSTERED 
+(
+	[UserId] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+
+ALTER TABLE [dbo].[AspNetUserRoles]  WITH CHECK ADD  CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
 ON DELETE CASCADE
 GO
-ALTER TABLE [dbo].[AspNetUserLogins] CHECK CONSTRAINT [FK_dbo.AspNetUserLogins_dbo.Usuarios_UserId]
+ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo.AspNetRoles_RoleId]
 GO
-
-
 
 
 
@@ -261,40 +249,46 @@ INSERT INTO [dbo].[AspNetRoles] ([Id], [Name]) VALUES
 ('3', 'Paciente');
 GO
 
--- ESPECIALIDADES
+-- ESPECIALIDADESZ
 INSERT INTO Especialidad (Nombre, Descripcion, Icono, FechaDeRegistro, Estado) VALUES
 ('Laparoscopia', 'Cirugía mínimamente invasiva con cámara', 'laparoscopia-icon.png', GETDATE(), 1),
 ('Oncología', 'Especialista en diagnóstico y tratamiento del cáncer', 'oncology-icon.png', GETDATE(), 1),
 ('Cirugía', 'Cirugía general y procedimientos quirúrgicos', 'surgery-icon.png', GETDATE(), 1);
 GO
 
---usuarios
--- Usuario 1
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, Foto, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Juan', 'Rivera', 'Gomez', 'juan.admin@caces.com', '12345678-1', '7777-1111', 'San Salvador', '1990-05-15','juan.jpg', GETDATE(), 1, 'Prueba123', NEWID());
+-- USUARIOS (Admin, Médico, Paciente)
+-- Contraseña para los 3 usuarios: Admin124578*
+INSERT INTO Usuarios
+(Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Foto,
+ FechaDeRegistro, FechaDeModificacion, Estado, Direccion, Edad, Telefono,
+ Nacimiento, PasswordHash, SecurityStamp, TwoFactorEnabled, LockoutEndDateUtc,
+ LockoutEnabled, AccessFailedCount, EmailConfirmed)
+VALUES
+('Juan', 'García', 'López', 'juan.admin@caces.com', '12345678', 'juan.jpg',
+ GETDATE(), NULL, 1, 'San José', 30, '8888-1111',
+ '1994-05-10', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
 
--- Usuario 2
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento,Foto, FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Oscar', 'Lopez', 'Varillas', 'oscar.medico@caces.com', '87654321-2', '7777-2222', 'Colonia Escalón', '1985-11-20','oscar.jpg', GETDATE(), 1, 'HASH_DE_PRUEBA_2', NEWID());
+('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg',
+ GETDATE(), NULL, 1, 'Cartago', 35, '8888-2222',
+ '1989-08-20', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
 
--- Usuario 3
-INSERT INTO Usuarios (Nombres, PrimerApellido, SegundoApellido, CorreoElectronico, DUI, Telefono, Direccion, Nacimiento, Foto,FechaDeRegistro, Estado, PasswordHash, SecurityStamp)
-VALUES ('Maria', 'Venavidez', 'Solis', 'maria.paciente@caces.com', '11223344-3', '7777-3333', 'Antiguo Cuscatlán', '2001-03-03','maria.jpg', GETDATE(), 1, 'HASH_DE_PRUEBA_3', NEWID());
+('María', 'Hernández', 'Gómez', 'maria.paciente@caces.com', '11223344', 'maria.jpg',
+ GETDATE(), NULL, 1, 'Heredia', 28, '8888-3333',
+ '1996-03-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
 GO
 
 -- MEDICOS
-
-INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Certificaciones, FechaDeRegistro, Foto) VALUES
-(1, 2, 10, 'Licenciado en Medicina, Especialista en Oncologia', GETDATE(), 'juan.png'),
-(2, 2, 8, 'Licenciado en Medicina, Especialista en Laparoscopia', GETDATE(), 'oscar.png'),
-(3, 2, 12, 'Licenciado en Medicina, Especialista en Cirugía General', GETDATE(), 'maria.png');
+INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certificaciones, FechaDeRegistro) VALUES
+(1, 2, 10, '2-2222-2222', 'Licenciado en Medicina, Especialista en Laparoscopia', GETDATE()),
+(2, 2, 8, '2-3333-3333', 'Licenciado en Medicina, Especialista en Oncología', GETDATE()),
+(3, 2, 12, '2-4444-4444', 'Licenciado en Medicina, Especialista en Cirugía General', GETDATE());
 GO
 
 -- HISTORIAL MEDICO
-INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Anteriores, FechaDeCreacion, FechaDeModificacion) VALUES
-('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Apendicitis 2015', GETDATE(), NULL),
-('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguna', GETDATE(), NULL),
-('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Fractura de brazo 2018', GETDATE(), NULL);
+INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Medicmanetos,Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
+('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Omeprazol 20mg, Tramadol 100mg', 'Abuelo materno con antecedentes de diabetes tipo 2', GETDATE(), NULL),
+('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguno', 'Madre con hipertensión arterial crónica', GETDATE(), NULL),
+('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Cefazolina 1g, Paracetamol 500mg', 'Sin antecedentes familiares de riesgo', GETDATE(), NULL);
 GO
 
 -- PACIENTES
@@ -361,14 +355,24 @@ INSERT INTO Noticias (Titulo, Contenido, FechaDePublicacion, FechaDeModificacion
 GO
 
 
--- ASIGNAR ROLES A USUARIOS (usando la nueva tabla UsuarioRoles)
-INSERT INTO [dbo].[UsuarioRoles] ([Id_Usuario], [RoleId]) 
-SELECT u.Id_Usuario, '1' FROM Usuarios u WHERE u.CorreoElectronico = 'juan.admin@caces.com'  -- Juan es Administrador
-UNION ALL
-SELECT u.Id_Usuario, '2' FROM Usuarios u WHERE u.CorreoElectronico = 'oscar.medico@caces.com' -- Oscar es Médico
-UNION ALL
-SELECT u.Id_Usuario, '3' FROM Usuarios u WHERE u.CorreoElectronico = 'maria.paciente@caces.com'; -- María es Paciente
+-- ASIGNAR ROLES A USUARIOS
+INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES
+('user-admin-001', '1'),    -- Juan es Administrador
+('user-medico-002', '2'),   -- Oscar es Médico
+('user-paciente-003', '3'); -- María es Paciente
 GO
 
+
 ALTER TABLE Usuarios
-ADD CONSTRAINT DF_Usuarios_Estado DEFAULT (1) FOR Estado;
+ALTER COLUMN Estado TINYINT NOT NULL;
+GO
+
+SELECT DATA_TYPE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Usuarios'
+AND COLUMN_NAME = 'Estado';
+
+UPDATE Usuarios
+SET PasswordHash = 'vk9oxOJiD5aPcsdU83YBvVgNVjLrvgij3NO2UQAh88I=',
+    Estado = 1
+WHERE CorreoElectronico = 'juan.admin@caces.com';
