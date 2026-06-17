@@ -22,7 +22,7 @@ namespace CACES.BLL.Servicios.Auth
             if (usuario == null)
                 return false;
 
-            if (usuario.Estado != true)
+            if (usuario.Estado != 1)
                 return false;
 
             var passwordHash = HashContraseña(dto.Password);
@@ -34,7 +34,7 @@ namespace CACES.BLL.Servicios.Auth
         {
             var usuario = await _usuarioRepositorio.GetUsuarioByEmailAsync(dto.CorreoElectronico);
 
-            if (usuario == null || usuario.Estado != true)
+            if (usuario == null || usuario.Estado != 1)
                 return null;
             
 
@@ -57,7 +57,7 @@ namespace CACES.BLL.Servicios.Auth
         {
             var usuario = await _usuarioRepositorio.GetUsuarioByEmailAsync(dto.CorreoElectronico);
 
-            if (usuario == null || usuario.Estado != true)
+            if (usuario == null || usuario.Estado != 1)
                 
             {
                 return (true, string.Empty, "Si el correo coincide con una cuenta activa, se enviarán las instrucciones.");
@@ -80,7 +80,7 @@ namespace CACES.BLL.Servicios.Auth
         {
             var usuario = await _usuarioRepositorio.GetUsuarioByEmailAsync(dto.CorreoElectronico);
 
-            if (usuario == null || usuario.Estado != true)
+            if (usuario == null || usuario.Estado != 1)
                 
             return (false, "El usuario no es válido.");
 

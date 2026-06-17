@@ -96,7 +96,7 @@ namespace CACES.DAL.Repositorios.Usuario
             if (usuario == null)
                 return false;
 
-            usuario.Estado = false;
+            usuario.Estado = 0;
             usuario.EmailConfirmed = false;
             usuario.FechaDeModificacion = DateTime.Now;
 

@@ -43,9 +43,9 @@ namespace CACES.Controllers
             var resultado = await _rolServicio.EliminarUsuarioPorRolAsync(userId, "Medico");
 
             if (resultado)
-                TempData["Mensaje"] = "El usuario médico fue eliminado correctamente.";
+                TempData["Mensaje"] = "El usuario médico fue desactivado correctamente.";
             else
-                TempData["Error"] = "No se pudo eliminar el usuario médico.";
+                TempData["Error"] = "No se pudo desactivar el usuario médico.";
 
             return RedirectToAction("GestionRoles");
         }
@@ -56,9 +56,9 @@ namespace CACES.Controllers
             var resultado = await _rolServicio.EliminarUsuarioPorRolAsync(userId, "Administrador");
 
             if (resultado)
-                TempData["Mensaje"] = "El usuario administrador fue eliminado correctamente.";
+                TempData["Mensaje"] = "El usuario administrador fue desactivado correctamente.";
             else
-                TempData["Error"] = "No se pudo eliminar el usuario administrador.";
+                TempData["Error"] = "No se pudo desactivar el usuario administrador.";
 
             return RedirectToAction("GestionRoles");
         }
