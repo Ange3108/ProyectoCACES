@@ -60,7 +60,6 @@ builder.Services.AddScoped<IRolServicio, RolServicio>();
 builder.Services.AddScoped<IEspecialidadServicio, EspecialidadServicio>();
 
 
-
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
