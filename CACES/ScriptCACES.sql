@@ -58,7 +58,7 @@ CREATE TABLE Historial_Medico(
     Enfermedades_Crónicas varchar(200) NOT NULL,
     Detalles VARCHAR(100) NOT NULL,
     Tipo_Sangre VARCHAR(10) NOT NULL,
-    Medicmanetos VARCHAR(200) NOT NULL,
+    Medicamentos VARCHAR(200) NOT NULL,
     Antecedentes VARCHAR(50) NOT NULL,
     FechaDeCreacion DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL
@@ -285,7 +285,7 @@ INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certifi
 GO
 
 -- HISTORIAL MEDICO
-INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Medicmanetos,Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
+INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Medicamentos,Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
 ('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Omeprazol 20mg, Tramadol 100mg', 'Abuelo materno con antecedentes de diabetes tipo 2', GETDATE(), NULL),
 ('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguno', 'Madre con hipertensión arterial crónica', GETDATE(), NULL),
 ('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Cefazolina 1g, Paracetamol 500mg', 'Sin antecedentes familiares de riesgo', GETDATE(), NULL);
