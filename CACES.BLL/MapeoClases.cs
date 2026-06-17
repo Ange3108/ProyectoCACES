@@ -40,47 +40,44 @@ namespace CACES.BLL
 
             //Mapeo de los DTOs de perfil
 
+            // Mapeo de los DTOs de perfil
             CreateMap<Usuario, PerfilUsuarioDTO>()
-            .ForMember(dest => dest.TipoSangre, opt => opt.MapFrom(src =>
-            (src.Paciente != null && src.Paciente.HistorialMedico != null)
-            ? src.Paciente.HistorialMedico.TipoSangre
-            : "No asignado"))
+                // Nota: Eliminamos el mapeo manual de Estado porque Entity Framework 
+                // ahora convierte automáticamente el BIT de SQL a bool de C#.
 
-            .ForMember(dest => dest.Alergias, opt => opt.MapFrom(src =>
-            (src.Paciente != null && src.Paciente.HistorialMedico != null)
-            ? src.Paciente.HistorialMedico.Alergias
-            : "Ninguna reportada"))
+                .AfterMap((src, dest) =>
+                {
+                    var paciente = src.Paciente;
 
-            .ForMember(dest => dest.EnfermedadesCronicas, opt => opt.MapFrom(src =>
-            (src.Paciente != null && src.Paciente.HistorialMedico != null)
-            ? src.Paciente.HistorialMedico.EnfermedadesCronicas
-            : "Ninguna registrada"))
+                    // Datos del historial médico
+                    if (paciente?.HistorialMedico != null)
+                    {
+                        dest.TipoSangre = paciente.HistorialMedico.TipoSangre;
+                        dest.Alergias = paciente.HistorialMedico.Alergias;
+                        dest.EnfermedadesCronicas = paciente.HistorialMedico.EnfermedadesCronicas;
+                    }
+                    else
+                    {
+                        dest.TipoSangre = "No asignado";
+                        dest.Alergias = "Ninguna reportada";
+                        dest.EnfermedadesCronicas = "Ninguna registrada";
+                    }
 
-            .AfterMap((src, dest) =>
-             {
-                 var paciente = src.Paciente;
+                    // Datos del medicamento (Extracción lineal desde la cita inyectada en tu repositorio)
+                    if (paciente?.Cita?.Receta != null)
+                    {
+                        dest.MedicamentosActuales = paciente.Cita.Receta.Medicamentos;
+                    }
+                    else
+                    {
+                        dest.MedicamentosActuales = "Sin medicamentos prescritos";
+                    }
+                });
 
-                 // Datos del historial
-                 if (paciente?.HistorialMedico != null)
-                 {
-                     dest.TipoSangre = paciente.HistorialMedico.TipoSangre;
-                     dest.Alergias = paciente.HistorialMedico.Alergias;
-                     dest.EnfermedadesCronicas = paciente.HistorialMedico.EnfermedadesCronicas;
-                 }
-                 else
-                 {
-                     dest.TipoSangre = "No asignado";
-                     dest.Alergias = "Ninguna";
-                     dest.EnfermedadesCronicas = "Ninguna";
-                 }
 
-                 // Datos del medicamento (Extracción lineal y directa)
-                 dest.MedicamentosActuales = paciente?.Cita?.Receta?.Medicamentos ?? "Sin medicamentos prescritos";
+            CreateMap<Usuario, ActualizarPerfilDTO>()
+                .ReverseMap();
 
-            });
-
-             CreateMap<Usuario, ActualizarPerfilDTO>()
-               .ReverseMap();
 
             //mapeo de los dto de especialidad
 

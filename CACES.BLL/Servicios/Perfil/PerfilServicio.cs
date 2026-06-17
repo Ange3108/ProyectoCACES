@@ -2,6 +2,7 @@
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Historial;
 using CACES.BLL.DTOs.Perfil;
+using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Usuario;
 
 namespace CACES.BLL.Servicios.Perfil
@@ -11,20 +12,22 @@ namespace CACES.BLL.Servicios.Perfil
     {
         private readonly IUsuarioRepositorio _usuarioRepository;
         private readonly IMapper _mapper;
+        private readonly IPacienteRepositorio _pacienteRepositorio;
 
-        public PerfilServicio(IUsuarioRepositorio usuarioRepository, IMapper mapper)
+        public PerfilServicio(IUsuarioRepositorio usuarioRepository, IMapper mapper, IPacienteRepositorio pacienteRepositorio)
         {
             _usuarioRepository = usuarioRepository;
             _mapper = mapper;
+            _pacienteRepositorio = pacienteRepositorio;
         }
 
         public async Task<respuestaErrores<PerfilUsuarioDTO>> GetPerfilUsuarioPorIdAsync(int id)
         {
             var respuesta = new respuestaErrores<PerfilUsuarioDTO>();
 
-            var usuario = await _usuarioRepository.GetUsuarioByIdAsync(id);
+            var usuarioConInfoMedica = await _pacienteRepositorio.GetInfoMedicaByIdAsync(id);
 
-            if (usuario == null)
+            if (usuarioConInfoMedica == null)
             {
                 respuesta.EsCorrecto = false;
                 respuesta.mensaje = "Usuario no encontrado";
@@ -32,7 +35,7 @@ namespace CACES.BLL.Servicios.Perfil
                 return respuesta;
             }
 
-            respuesta.Dato = _mapper.Map<PerfilUsuarioDTO>(usuario);
+            respuesta.Dato = _mapper.Map<PerfilUsuarioDTO>(usuarioConInfoMedica);
             respuesta.EsCorrecto = true;
 
             return respuesta;
