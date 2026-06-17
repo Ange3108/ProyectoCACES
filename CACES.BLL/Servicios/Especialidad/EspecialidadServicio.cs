@@ -51,7 +51,7 @@ namespace CACES.BLL.Servicios.Especialidad
                     }
 
                     // Mapear el DTO a la entidad de base de datos
-                    var nuevoEspecialidad = _mapper.Map<Especialidad>(especialidadDto);
+                    var nuevoEspecialidad = _mapper.Map<DAL.Entidades.Especialidad>(especialidadDto);
                     nuevoEspecialidad.FechaDeRegistro = DateTime.Now;
                     nuevoEspecialidad.Estado = true;
 

@@ -8,6 +8,9 @@ namespace CACES.BLL.DTOs.Historial
         public string TipoSangre { get; set; } = null!;
 
         [Required]
+        public string Medicamentos { get; set; } = null!;
+
+        [Required]
         public string Alergias { get; set; } = null!;
 
         [Required]

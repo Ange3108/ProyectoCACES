@@ -388,8 +388,6 @@ INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES
 GO
 
 
-ALTER TABLE Usuarios
-ALTER COLUMN Estado TINYINT NOT NULL;
 GO
 
 SELECT DATA_TYPE
