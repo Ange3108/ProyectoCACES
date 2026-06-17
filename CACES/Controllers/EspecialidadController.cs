@@ -49,7 +49,7 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> EliminarEspecialidad(int id)
         {
-            var resultado = await _especialidadServicio.EliminarEspecialidadAsync(id);
+            var resultado = await _especialidadServicio.DesactivarEspecialidadAsync(id);
             return Json(resultado);
 
         }
