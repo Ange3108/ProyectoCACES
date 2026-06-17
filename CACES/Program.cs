@@ -19,6 +19,7 @@ using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.Especialidad;
+using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
 
 
 var builder = WebApplication.CreateBuilder(args);
