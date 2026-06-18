@@ -46,33 +46,52 @@ namespace CACES.DAL.Repositorios.Pacientes
         {
 
             //*Mover esto a la logiva de paciente, no es responsabilidad del repositorio de usuario traer la receta, ademas de que esta consulta es muy pesada y puede afectar el rendimientoreturn await _context.Usuarios
-               var usuario = await _context.Usuarios
-                   .Include(u => u.Paciente)
-                   .ThenInclude(p => p.HistorialMedico)
-                   .Include(u => u.Paciente)
-                   .FirstOrDefaultAsync(u => u.IdUsuario == id);
-            if (usuario?.Paciente != null)
+
             {
-                var ultimaReceta = await (from cita in _context.Citas
-                                          join receta in _context.Set<Receta>() on cita.IdCita equals receta.IdCita
-                                          where cita.IdPaciente == usuario.Paciente.IdPaciente
-                                          orderby cita.IdCita descending // Trae la última cita registrada
-                                          select receta)
-                                         .FirstOrDefaultAsync();
-
-                if (ultimaReceta != null)
-                {
-                    usuario.Paciente.Cita = new Cita
+                // 1. Una sola consulta eficiente usando proyecciones y sin rastreo de memoria
+                var datos = await _context.Usuarios
+                    .AsNoTracking() // ◄ Evita que EF guarde esto en caché de seguimiento (mejora radical de velocidad)
+                    .Where(u => u.IdUsuario == id)
+                    .Select(u => new
                     {
-                        IdCita = ultimaReceta.IdCita,
-                        IdPaciente = usuario.Paciente.IdPaciente,
-                        Receta = ultimaReceta
-                    };
+                        Usuario = u,
+                        Paciente = u.Paciente,
+                        Historial = u.Paciente != null ? u.Paciente.HistorialMedico : null,
+                        // 2. Traemos la última receta directamente en la misma consulta de SQL
+                        UltimaReceta = u.Paciente != null
+                            ? _context.Citas
+                                .AsNoTracking()
+                                .Where(c => c.IdPaciente == u.Paciente.IdPaciente)
+                                .OrderByDescending(c => c.IdCita)
+                                .Select(c => c.Receta) // Asumiendo relación directa Cita -> Receta
+                                .FirstOrDefault()
+                            : null
+                    })
+                    .FirstOrDefaultAsync();
+
+                if (datos == null) return null;
+
+                var usuario = datos.Usuario;
+
+                // 3. Reconstruimos los objetos en memoria sin volver a tocar la base de datos
+                if (usuario.Paciente != null)
+                {
+                    usuario.Paciente.HistorialMedico = datos.Historial;
+
+                    if (datos.UltimaReceta != null)
+                    {
+                        usuario.Paciente.Cita = new Cita
+                        {
+                            IdCita = datos.UltimaReceta.IdCita,
+                            IdPaciente = usuario.Paciente.IdPaciente,
+                            Receta = datos.UltimaReceta
+                        };
+                    }
                 }
+
+                return usuario;
+
             }
-
-            return usuario;
-
         }
         public async Task<Paciente> GetPacienteByIdAsync(int id)
         {
