@@ -21,7 +21,6 @@ namespace CACES.DAL.DBContext
         public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public DbSet<Cita> Citas { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
-
         public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -47,7 +46,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.Property(e => e.PasswordHash).HasColumnName("PasswordHash").IsRequired();
                 entity.Property(e => e.SecurityStamp).HasColumnName("SecurityStamp").IsRequired();
-                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200).IsRequired();
+                entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200);
                 entity.Property(e => e.TwoFactorEnabled).HasColumnName("TwoFactorEnabled").HasDefaultValue(false).IsRequired();
                 entity.Property(e => e.LockoutEnd).HasColumnName("LockoutEndDateUtc");
                 entity.Property(e => e.AccessFailedCount).HasColumnName("AccessFailedCount").IsRequired();

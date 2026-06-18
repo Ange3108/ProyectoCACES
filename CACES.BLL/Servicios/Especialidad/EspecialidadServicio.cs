@@ -88,20 +88,27 @@ namespace CACES.BLL.Servicios.Especialidad
             {
                 try
                 {
-                    var honesty = await _especialidadRepositorio.GetEspecialidadByIdAsync(id);
-                    if (honesty == null)
+                    var respuesta = await _especialidadRepositorio.GetEspecialidadByIdAsync(id);
+
+                    if (respuesta == null)
                     {
                         return new respuestaErrores<mostrarEspecialidadDTO>
                         {
                             EsCorrecto = false,
-                            mensaje = "Especialidad no encontrado",
+                            mensaje = "Especialidad no encontrada",
                             codigo = 404
                         };
                     }
 
-                    _mapper.Map(especialidadDto, honesty);
 
-                    bool resultado = await _especialidadRepositorio.UpdateEspecialidadAsync(honesty);
+                    // Actualizar únicamente los campos editables
+                    respuesta.Nombre = especialidadDto.Nombre;
+                    respuesta.Descripcion = especialidadDto.Descripcion;
+                    respuesta.Icono = especialidadDto.Icono;
+                    respuesta.Estado = especialidadDto.Estado;
+
+                    bool resultado =
+                        await _especialidadRepositorio.UpdateEspecialidadAsync(respuesta);
 
                     if (resultado)
                     {
@@ -109,7 +116,7 @@ namespace CACES.BLL.Servicios.Especialidad
                         {
                             EsCorrecto = true,
                             mensaje = "Especialidad actualizada exitosamente",
-                            Dato = _mapper.Map<mostrarEspecialidadDTO>(honesty)
+                            Dato = _mapper.Map<mostrarEspecialidadDTO>(respuesta)
                         };
                     }
 
@@ -137,7 +144,7 @@ namespace CACES.BLL.Servicios.Especialidad
                 if (especialidad == null)
                 {
                     respuesta.EsCorrecto = false;
-                    respuesta.mensaje = "Especialidad no encontrado";
+                    respuesta.mensaje = "Especialidad no encontrada";
                     respuesta.codigo = 404;
                     return respuesta;
                 }
@@ -150,18 +157,17 @@ namespace CACES.BLL.Servicios.Especialidad
             public async Task<respuestaErrores<mostrarEspecialidadDTO>> GetEspecialidadPorIdAsync(int id)
             {
                 var respuesta = new respuestaErrores<mostrarEspecialidadDTO>();
-                var honesty = await _especialidadRepositorio.GetEspecialidadByIdAsync(id);
-
-                if (honesty == null)
+                var especialidad = await _especialidadRepositorio.GetEspecialidadByIdAsync(id);
+                if (especialidad == null)
                 {
                     respuesta.EsCorrecto = false;
-                    respuesta.mensaje = "Especialidad no encontrado";
+                    respuesta.mensaje = "Especialidad no encontrada";
                     respuesta.codigo = 404;
                     return respuesta;
                 }
 
                 respuesta.EsCorrecto = true;
-                respuesta.Dato = _mapper.Map<mostrarEspecialidadDTO>(honesty);
+                respuesta.Dato = _mapper.Map<mostrarEspecialidadDTO>(especialidad);
                 return respuesta;
             }
 
@@ -190,6 +196,29 @@ namespace CACES.BLL.Servicios.Especialidad
 
                 respuesta.EsCorrecto = false;
                 respuesta.mensaje = "Error al desactivar";
+                return respuesta;
+            }
+
+            public async Task<respuestaErrores<List<especialidadDTO>>> GetListadoEspecialidadesAsync()
+            {
+                var respuesta = new respuestaErrores<List<especialidadDTO>>();
+                var listaEspecialidades = await _especialidadRepositorio.GetEspecialidadesAsync();
+
+                respuesta.EsCorrecto = true;
+                respuesta.Dato = _mapper.Map<List<especialidadDTO>>(listaEspecialidades);
+                return respuesta;
+            }
+
+            public async Task<respuestaErrores<List<mostrarEspecialidadDTO>>> GetEspecialidadesActivasAsync()
+            {
+                var respuesta = new respuestaErrores<List<mostrarEspecialidadDTO>>();
+
+                var especialidades =
+                    await _especialidadRepositorio.GetEspecialidadesActivasAsync();
+
+                respuesta.EsCorrecto = true;
+                respuesta.Dato = _mapper.Map<List<mostrarEspecialidadDTO>>(especialidades);
+
                 return respuesta;
             }
         }

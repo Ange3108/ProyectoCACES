@@ -57,7 +57,6 @@ namespace CACES.Controllers
         }
 
         //Metodo Desactivar
-        //[Authorize(Roles = "Paciente")]
         [HttpPost]
         public async Task<IActionResult> DesactivarUsuario(int id)
         {

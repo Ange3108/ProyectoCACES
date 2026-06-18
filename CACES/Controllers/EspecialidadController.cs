@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CACES.Controllers
 {
+    [Authorize] 
     public class EspecialidadController : Controller
     {
         private readonly IEspecialidadServicio _especialidadServicio;
@@ -14,6 +15,20 @@ namespace CACES.Controllers
             _especialidadServicio = especialidadServicio;
         }
 
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Especialidades()
+        {
+            return View("~/Views/Especialidades/Especialidades.cshtml");
+        }
+
+        public IActionResult ListadoEspecialidad()
+        {
+            return View("~/Views/Especialidades/ListadoEspecialidad.cshtml");
+        }
+
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult RegistroEspecialidad()
         {
@@ -21,48 +36,54 @@ namespace CACES.Controllers
         }
 
 
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerEspecialidades()
+        {
+            var especialidades = await _especialidadServicio.GetEspecialidadesActivasAsync();
+            return Json(especialidades);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ObtenerListadoEspecialidades()
+        {
+            var especialidad = await _especialidadServicio.GetListadoEspecialidadesAsync();
+            return Json(especialidad);
+        }
+
         [Authorize(Roles = "Administrador")]
-        //Registro
         [HttpPost]
         public async Task<IActionResult> RegistroEspecialidad(especialidadDTO registrarEspecialidadDTO)
         {
-            var EspecialidadCreado = await _especialidadServicio.CrearEspecialidadAsync(registrarEspecialidadDTO);
-           
-                ModelState.AddModelError(string.Empty, EspecialidadCreado.mensaje);
-                return Json(EspecialidadCreado);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);        
+
+            var resultado = await _especialidadServicio.CrearEspecialidadAsync(registrarEspecialidadDTO);
+            return Json(resultado);
         }
 
-
         [Authorize(Roles = "Administrador")]
-        //Actualizar
         [HttpPost]
         public async Task<IActionResult> ActualizarEspecialidad(int id, especialidadDTO actualizarEspecialidadDTO)
         {
 
-            var especialidadActualizado = await _especialidadServicio.ActualizarEspecialidadAsync(id, actualizarEspecialidadDTO);
+            
 
-            return Json(especialidadActualizado);
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);        
 
+            var resultado = await _especialidadServicio.ActualizarEspecialidadAsync(id, actualizarEspecialidadDTO);
+            return Json(resultado);
         }
 
-
-        public IActionResult Especialidades()
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]                                     
+        public async Task<IActionResult> DesactivarEspecialidad(int id)
         {
-            return View("~/Views/Especialidades/Especialidades.cshtml");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var resultado = await _especialidadServicio.DesactivarEspecialidadAsync(id);
+            return Json(resultado);
         }
-
-
-        public async Task<IActionResult> ObtenerEspecialidades()
-        {
-            var especialidades = await _especialidadServicio.GetEspecialidadesAsync();
-            return Json(especialidades);
-        }
-
-
-        public async Task <IActionResult> DesactivarEspecialidadAsync(int id)
-        {
-            var especialidad = await _especialidadServicio.DesactivarEspecialidadAsync(id);
-            return Json(especialidad);
     }
-}
 }

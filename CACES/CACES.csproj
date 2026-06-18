@@ -37,4 +37,8 @@
     <ProjectReference Include="..\CACES.DAL\CACES.DAL.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Views\Especialidad\" />
+  </ItemGroup>
+
 </Project>
