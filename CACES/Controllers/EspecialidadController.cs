@@ -54,11 +54,14 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> RegistroEspecialidad(especialidadDTO registrarEspecialidadDTO)
         {
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);        
+            var EspecialidadCreado = await _especialidadServicio.CrearEspecialidadAsync(registrarEspecialidadDTO);
+            if (!EspecialidadCreado.EsCorrecto)
+            {
+                ModelState.AddModelError(string.Empty, EspecialidadCreado.mensaje);
+                return Json(EspecialidadCreado);
+            }
 
-            var resultado = await _especialidadServicio.CrearEspecialidadAsync(registrarEspecialidadDTO);
-            return Json(resultado);
+            return RedirectToAction("ListadoEspecialidad", new { area = "Administrador" });
         }
 
         [Authorize(Roles = "Administrador")]
