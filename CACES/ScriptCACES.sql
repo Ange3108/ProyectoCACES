@@ -87,7 +87,8 @@ CREATE TABLE Citas(
     Id_Paciente INT NOT NULL,
     Id_Medico INT NOT NULL,
     Id_Especialidad INT NOT NULL,
-    Fecha Int NOT NULL,
+    Id_Horario INT NOT NULL;
+    Fecha Date NOT NULL,
     Hora TIME NOT NULL,
     Motivo VARCHAR(100) NOT NULL,
     FechaDeRegistro DATETIME NOT NULL,
@@ -96,7 +97,7 @@ CREATE TABLE Citas(
 	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
 	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
-    CONSTRAINT FK_Citas_Fecha FOREIGN KEY (Fecha) REFERENCES HorariosDisponibles(Id_Horario)
+    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
 );
 
 
@@ -303,7 +304,7 @@ VALUES
 GO
 
 -- MEDICOS
-INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certificaciones, FechaDeRegistro) VALUES
+INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Certificaciones, FechaDeRegistro) VALUES
 (1, 2, 10, '2-2222-2222', 'Licenciado en Medicina, Especialista en Laparoscopia', GETDATE()),
 (2, 2, 8, '2-3333-3333', 'Licenciado en Medicina, Especialista en Oncología', GETDATE()),
 (3, 2, 12, '2-4444-4444', 'Licenciado en Medicina, Especialista en Cirugía General', GETDATE());
@@ -331,7 +332,7 @@ INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Acti
 GO
 
 -- CITAS
-INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado) VALUES
+INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado) VALUES
 (1, 1, 1, 1, '09:00', 'Evaluación para cirugía laparoscópica', GETDATE(), NULL, 1),
 (2, 2, 2, 2, '10:30', 'Consulta oncológica inicial', GETDATE(), NULL, 1),
 (3, 3, 3, 3, '08:00', 'Evaluación preoperatoria', GETDATE(), NULL, 1);
@@ -386,7 +387,11 @@ INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES
 ('user-medico-002', '2'),   -- Oscar es Médico
 ('user-paciente-003', '3'); -- María es Paciente
 GO
-
+INSERT INTO UsuarioRoles (IdUsuario, RoleId)
+VALUES
+(1, 1),
+(2, 2),
+(3, 3);
 
 GO
 
