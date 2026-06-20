@@ -151,6 +151,9 @@ namespace CACES.DAL.DBContext
                     .WithMany()
                     .HasForeignKey(e => e.IdUsuario);
 
+                entity.HasOne(e => e.Especialidad)
+                .WithMany(es => es.Medicos)
+                .HasForeignKey(e => e.IdEspecialidad);
             });
 
             modelBuilder.Entity<Receta>(entity =>

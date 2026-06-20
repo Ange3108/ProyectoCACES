@@ -1,0 +1,39 @@
+﻿@using CACES.BLL.DTOs.Especialidad
+@model IEnumerable<mostrarEspecialidadDTO>
+
+@{
+    ViewData["Title"] = "Especialidades";
+}
+
+<section class="container py-5">
+
+    <div class="col-12 col-lg-10 mx-auto mb-5 text-center">
+        <div class="cotizar-banner">
+            <h4>¿Desea cotizar algún procedimiento médico?</h4>
+            <a href="#" class="btn btn-cotizar mt-3">Cotizar</a>
+        </div>
+    </div>
+
+    <section class="directory-header mt-4">
+        <span class="directory-eyebrow">Directorio clínico</span>
+        <h1 class="directory-title">Especialidades</h1>
+        <p class="directory-intro">
+            Un recorrido por las áreas médicas que atendemos en CACES. Seleccione una especialidad
+            para conocer los procedimientos disponibles y al equipo médico a cargo.
+        </p>
+    </section>
+
+    <hr class="directory-rule" />
+
+    <div class="directory-index" id="contenedorEspecialidades">
+        <!-- Las entradas se cargan aquí desde AJAX -->
+    </div>
+
+</section>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="~/js/Especialidad.js"
+            asp-append-version="true"></script>
+}

@@ -71,7 +71,13 @@ namespace CACES.DAL.Repositorios.Especialidades
             return await _context.SaveChangesAsync() > 0;
         }
 
-    
+        public async Task<Especialidad?> GetEspecialidadDetallesByIdAsync(int id)
+        {
+            return await _context.Especialidades
+                .Include(e => e.Medicos)
+                .ThenInclude(m => m.Usuario)
+                .FirstOrDefaultAsync(e => e.IdEspecialidad == id);
+        }
     }
 }
 

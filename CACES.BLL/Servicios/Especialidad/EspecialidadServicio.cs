@@ -221,7 +221,25 @@ namespace CACES.BLL.Servicios.Especialidad
 
                 return respuesta;
             }
+
+            public async Task<respuestaErrores<mostrarDetalleEspecialidadDTO>> GetDetalleEspecialidadAsync(int id)
+            {
+                var respuesta = new respuestaErrores<mostrarDetalleEspecialidadDTO>();
+                var especialidad = await _especialidadRepositorio.GetEspecialidadDetallesByIdAsync(id);
+
+                if (especialidad == null)
+                {
+                    respuesta.EsCorrecto = false;
+                    respuesta.mensaje = "Especialidad no encontrada"; 
+                     respuesta.codigo = 404;
+                    return respuesta;
+                }
+                respuesta.EsCorrecto = true;
+                respuesta.Dato = _mapper.Map<mostrarDetalleEspecialidadDTO>(especialidad);
+                return respuesta;
+            }
         }
     }
 }
+
 

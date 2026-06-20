@@ -4,7 +4,7 @@
 
         init() {
             this.cargarEspecialidades();
-            this.registrarEventos();
+
         },
 
         cargarEspecialidades() {
@@ -18,36 +18,30 @@
 
                     let html = '';
 
-                    respuesta.dato.forEach(e => {
+                    respuesta.dato.forEach((e, index) => {
+
+                        const numero = String(index + 1).padStart(2, '0');
 
                         html += `
-            <div class="col-12 col-md-6 col-lg-4">
+            <a href="/Especialidad/Detalles?id=${e.idEspecialidad}" class="directory-entry">
 
-                <article class="card h-100 border-0 shadow-sm specialty-card">
+                <span class="directory-number">${numero}</span>
 
-                    <div class="card-body d-flex flex-column">
+                <span class="directory-icon">
+                    <i class="${e.icono}"></i>
+                </span>
 
-                        <div class="mb-3">
-                            <i class="${e.icono} info-icon"></i>
-                        </div>
+                <span class="directory-entry-body">
+                    <h3>${e.nombre}</h3>
+                    <p>${e.descripcion}</p>
+                </span>
 
-                        <h4 class="card-title mb-2">
-                            ${e.nombre}
-                        </h4>
+                <span class="directory-entry-link">
+                    Ver detalle
+                    <i class="bi bi-arrow-right directory-entry-arrow"></i>
+                </span>
 
-                        <p class="text-muted mb-3 flex-grow-1">
-                            ${e.descripcion}
-                        </p>
-
-                        <a href="/Cita/GestionCitas" class="btn btn-info w-100 mt-auto">
-                            Reservar cita
-                        </a>
-
-                    </div>
-
-                </article>
-
-            </div>
+            </a>
         `;
                     });
 
@@ -65,52 +59,7 @@
             });
         },
 
-        registrarEventos() {
-
-            $(document).on('submit', '#formEspecialidad', function (e) {
-
-                e.preventDefault();
-
-                $.ajax({
-
-                    url: $(this).attr('action'),
-                    type: 'POST',
-                    data: $(this).serialize(),
-
-                    success: function (respuesta) {
-
-                        if (respuesta.esCorrecto) {
-
-                            Swal.fire({
-                                title: 'Correcto',
-                                text: respuesta.mensaje,
-                                icon: 'success'
-                            });
-
-                            $('#formEspecialidad')[0].reset();
-                        }
-                        else {
-
-                            Swal.fire({
-                                title: 'Error',
-                                text: respuesta.mensaje,
-                                icon: 'error'
-                            });
-                        }
-                    },
-
-                    error: function () {
-
-                        Swal.fire({
-                            title: 'Error',
-                            text: 'Ocurrió un error inesperado.',
-                            icon: 'error'
-                        });
-                    }
-                });
-
-            });
-        }
+       
     };
 
     $(function () {

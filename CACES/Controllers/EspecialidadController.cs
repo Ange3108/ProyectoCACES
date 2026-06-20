@@ -20,19 +20,32 @@ namespace CACES.Controllers
         [HttpGet]
         public IActionResult Especialidades()
         {
-            return View("~/Views/Especialidades/Especialidades.cshtml");
+            return View("~/Views/Especialidad/Especialidades.cshtml");
         }
 
         public IActionResult ListadoEspecialidad()
         {
-            return View("~/Views/Especialidades/ListadoEspecialidad.cshtml");
+            return View("~/Views/Especialidad/ListadoEspecialidad.cshtml");
+        }
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Detalles(int id)
+        {
+            var respuesta = await _especialidadServicio.GetDetalleEspecialidadAsync(id);
+
+            if (!respuesta.EsCorrecto || respuesta.Dato == null)
+            {
+                return NotFound();
+            }
+
+            return View(respuesta.Dato);
         }
 
         [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult RegistroEspecialidad()
         {
-            return View("~/Views/Especialidades/RegistroEspecialidad.cshtml");
+            return View("~/Views/Especialidad/RegistroEspecialidad.cshtml");
         }
 
 
@@ -43,6 +56,7 @@ namespace CACES.Controllers
             var especialidades = await _especialidadServicio.GetEspecialidadesActivasAsync();
             return Json(especialidades);
         }
+    
         [HttpGet]
         public async Task<IActionResult> ObtenerListadoEspecialidades()
         {

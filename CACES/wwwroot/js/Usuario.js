@@ -81,7 +81,7 @@
                                     type="button"
                                     class="btn btn-sm btn-danger desactivar"
                                     data-id="${row.idUsuario}">
-                                    <i class="bi bi-trash"></i>
+                                    <i class="bi bi-person-x-fill"></i>
                                 </button>
                             `;
                         }
@@ -178,7 +178,7 @@
 
                 Swal.fire({
                     title: '¿Estás seguro?',
-                    text: 'No podrás revertir esta acción',
+                    text: 'Se desactivará el usuario',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Sí, desactivar',
