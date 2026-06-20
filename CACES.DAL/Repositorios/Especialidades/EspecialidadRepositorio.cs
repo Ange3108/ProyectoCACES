@@ -23,13 +23,19 @@ namespace CACES.DAL.Repositorios.Especialidades
             return await _context.SaveChangesAsync() > 0;
 
         }
-
+        public async Task<List<Especialidad>> GetEspecialidadesActivasAsync()
+        {
+            return await _context.Especialidades
+                .Where(e => e.Estado)
+                .ToListAsync();
+        }
 
         public async Task<Entidades.Especialidad> GetEspecialidadByNameAsync(string name)
         {
             if (string.IsNullOrEmpty(name)) return null;
             return await _context.Especialidades.FirstOrDefaultAsync(e => e.Nombre == name);
         }
+
 
         public async Task<Entidades.Especialidad> GetEspecialidadByIdAsync(int id)
         {
@@ -43,8 +49,11 @@ namespace CACES.DAL.Repositorios.Especialidades
 
         public async Task<bool> UpdateEspecialidadAsync(Entidades.Especialidad Especialidad)
         {
-            if (Especialidad == null) return false;
+            if (Especialidad == null)
+                return false;
+
             _context.Especialidades.Update(Especialidad);
+
             return await _context.SaveChangesAsync() > 0;
         }
         public async Task<bool> DesactivarEspecialidadAsync(int id)
@@ -62,7 +71,13 @@ namespace CACES.DAL.Repositorios.Especialidades
             return await _context.SaveChangesAsync() > 0;
         }
 
-    
+        public async Task<Especialidad?> GetEspecialidadDetallesByIdAsync(int id)
+        {
+            return await _context.Especialidades
+                .Include(e => e.Medicos)
+                .ThenInclude(m => m.Usuario)
+                .FirstOrDefaultAsync(e => e.IdEspecialidad == id);
+        }
     }
 }
 

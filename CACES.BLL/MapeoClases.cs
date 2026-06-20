@@ -37,6 +37,12 @@ namespace CACES.BLL
             CreateMap<Medico, RegistrarMedicoDTO>()
                 .ForMember(dest => dest.IdUsuario, opt => opt.Ignore())
                 .ForMember(dest => dest.IdEspecialidad, opt => opt.Ignore());
+            CreateMap<Medico, mostrarMedicoEspecialidadDTO>()
+                .ForMember(dest => dest.Nombres, opt => opt.MapFrom(src => src.Usuario.Nombres))
+                    .ForMember(dest => dest.PrimerApellido, opt => opt.MapFrom(src => src.Usuario.PrimerApellido))
+                    .ForMember(dest => dest.SegundoApellido, opt => opt.MapFrom(src => src.Usuario.SegundoApellido))
+                    .ForMember(dest => dest.Telefono, opt => opt.MapFrom(src => src.Usuario.Telefono))
+                    .ForMember(dest => dest.Foto, opt => opt.MapFrom(src => src.Usuario.Foto));
 
 
             // Mapeo de los DTOs de perfil
@@ -80,9 +86,11 @@ namespace CACES.BLL
 
             //mapeo de los dto de especialidad
 
-            CreateMap<DAL.Entidades.Especialidad, DTOs.Especialidad.especialidadDTO>()
+            CreateMap<Especialidad, DTOs.Especialidad.especialidadDTO>()
                 .ReverseMap();
-            CreateMap<DAL.Entidades.Especialidad, DTOs.Especialidad.mostrarEspecialidadDTO>()
+            CreateMap<Especialidad, DTOs.Especialidad.mostrarEspecialidadDTO>()
+               .ReverseMap();
+            CreateMap<Especialidad, DTOs.Especialidad.mostrarDetalleEspecialidadDTO>()
                .ReverseMap();
 
             //mapeo de los dto de turismo medico(paquetes)

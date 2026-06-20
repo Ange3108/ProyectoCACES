@@ -17,5 +17,11 @@ namespace CACES.DAL.Entidades
         public DateTime  FechaDeRegistro { get; set; } 
 
         public bool Estado { get; set; } = true;
+
+        
+
+        //public ICollection<Procedimiento> Procedimientos { get; set; } = new List<Procedimiento>();
+        public ICollection<Medico> Medicos { get; set; } = new List<Medico>();
+
     }
 }

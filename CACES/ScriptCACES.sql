@@ -87,7 +87,8 @@ CREATE TABLE Citas(
     Id_Paciente INT NOT NULL,
     Id_Medico INT NOT NULL,
     Id_Especialidad INT NOT NULL,
-    Fecha Int NOT NULL,
+    Id_Horario INT NOT NULL,
+    Fecha Date NOT NULL,
     Hora TIME NOT NULL,
     Motivo VARCHAR(100) NOT NULL,
     FechaDeRegistro DATETIME NOT NULL,
@@ -96,7 +97,7 @@ CREATE TABLE Citas(
 	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
 	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
-    CONSTRAINT FK_Citas_Fecha FOREIGN KEY (Fecha) REFERENCES HorariosDisponibles(Id_Horario)
+    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
 );
 
 
@@ -131,26 +132,44 @@ CREATE TABLE Paquetes(
 	Estado BIT NOT NULL,
 );
 GO
-CREATE TABLE Precios(
-    Id_Precio INT PRIMARY KEY IDENTITY(1,1),
-	Id_Medico INT NOT NULL,
-    Costo DECIMAL(10,2) NOT NULL,
-	Detalles VARCHAR(100) NOT NULL,
-	CONSTRAINT FK_Precios_Por_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
+
+CREATE TABLE Procedimiento(
+    Id_Procedimiento INT PRIMARY KEY IDENTITY(1,1),
+    Id_Especialidad INT NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(200),
+    Estado BIT NOT NULL,
+
+    CONSTRAINT FK_Procedimiento_Especialidad
+    FOREIGN KEY(Id_Especialidad)
+    REFERENCES Especialidad(Id_Especialidad)
 );
 GO
+CREATE TABLE Precios(
+    Id_Precio INT PRIMARY KEY IDENTITY(1,1),
+    Id_Medico INT NOT NULL,
+    Id_Procedimiento INT NOT NULL,
+    Costo DECIMAL(10,2) NOT NULL,
+    Detalles VARCHAR(100) NOT NULL,
+
+    CONSTRAINT FK_Precios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
+    CONSTRAINT FK_Precios_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento)
+);
+GO
+
 CREATE TABLE Cirugias(
     Id_Cirugia INT PRIMARY KEY IDENTITY(1,1),
-	Id_Paciente INT NOT NULL,
-	Id_Medico INT NOT NULL,
-	Id_Especialidad INT NOT NULL,
-    Fecha int NOT NULL,
-	CONSTRAINT FK_Cirugias_Paciente FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
-	CONSTRAINT FK_Cirugias_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
-	CONSTRAINT FK_Cirugias_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
-    CONSTRAINT FK_Cirugía_Fecha FOREIGN KEY (Fecha) REFERENCES HorariosDisponibles(Id_Horario)
+    Id_Paciente INT NOT NULL,
+    Id_Medico INT NOT NULL,
+    Id_Procedimiento INT NOT NULL,
+    Id_Horario INT NOT NULL,
 
+    CONSTRAINT FK_Cirugias_Paciente FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
+    CONSTRAINT FK_Cirugias_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
+    CONSTRAINT FK_Cirugias_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento),
+    CONSTRAINT FK_Cirugia_Fecha FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
 );
+
 
 CREATE TABLE Noticias(
     Id_Noticia INT PRIMARY KEY IDENTITY(1,1),
@@ -161,6 +180,8 @@ CREATE TABLE Noticias(
     Imagen VARCHAR(200),
     Estado BIT NOT NULL
 );
+
+
 
 
 
@@ -253,12 +274,8 @@ ON DELETE CASCADE
 GO
 ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_Usuarios]
 GO
-ALTER TABLE [dbo].[UsuarioRoles] WITH CHECK ADD CONSTRAINT [FK_UsuarioRoles_AspNetRoles] FOREIGN KEY([RoleId])
-REFERENCES [dbo].[AspNetRoles] ([Id])
-ON DELETE CASCADE
-GO
-ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_AspNetRoles]
-GO
+
+
 
 
 
@@ -274,11 +291,17 @@ INSERT INTO [dbo].[AspNetRoles] ([Id], [Name]) VALUES
 GO
 
 -- ESPECIALIDADESZ
-INSERT INTO Especialidad (Nombre, Descripcion, Icono, FechaDeRegistro, Estado) VALUES
-('Laparoscopia', 'Cirugía mínimamente invasiva con cámara', 'laparoscopia-icon.png', GETDATE(), 1),
-('Oncología', 'Especialista en diagnóstico y tratamiento del cáncer', 'oncology-icon.png', GETDATE(), 1),
-('Cirugía', 'Cirugía general y procedimientos quirúrgicos', 'surgery-icon.png', GETDATE(), 1);
+INSERT INTO Especialidad
+(Nombre, Descripcion, Icono, FechaDeRegistro, Estado)
+VALUES
+('Cirugía General','Procedimientos quirúrgicos generales laparoscópicos y convencionales.','cirugia_general.jpg', GETDATE(),1),
+('Ginecología','Procedimientos quirúrgicos relacionados con el sistema reproductor femenino.','ginecologia.jpg',GETDATE(),1),
+('Cirugía Oncológica Mamaria','Procedimientos quirúrgicos relacionados con patologías mamarias.','mastologia.jpg',GETDATE(),1),
+('Cirugía Plástica','Procedimientos estéticos y reconstructivos.','cirugia_plastica.jpg',GETDATE(),1),
+('Ortopedia y Traumatología','Tratamiento quirúrgico de fracturas y lesiones articulares.','ortopedia.jpg',GETDATE(),1),
+('Otorrinolaringología','Procedimientos quirúrgicos de oído, nariz y garganta.','otorrinolaringologia.jpg',GETDATE(),1);
 GO
+
 
 -- USUARIOS (Admin, Médico, Paciente)
 -- Contraseña para los 3 usuarios: Admin124578*
@@ -298,14 +321,22 @@ VALUES
 
 ('María', 'Hernández', 'Gómez', 'maria.paciente@caces.com', '11223344', 'maria.jpg',
  GETDATE(), NULL, 1, 'Heredia', 28, '8888-3333',
- '1996-03-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
+ '1996-03-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+ 
+ ('Liam', 'Ramírez', 'Mora', 'carlos.paciente@caces.com', '22334455', 'carlos.jpg',
+ GETDATE(), NULL, 1, 'Alajuela', 42, '8888-4444',
+ '1984-07-12', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Ana', 'Fernández', 'Rojas', 'ana.paciente@caces.com', '33445566', 'ana.jpg',
+ GETDATE(), NULL, 1, 'Cartago', 31, '8888-5555',
+ '1995-11-08', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
 GO
 
 -- MEDICOS
 INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certificaciones, FechaDeRegistro) VALUES
-(1, 2, 10, '2-2222-2222', 'Licenciado en Medicina, Especialista en Laparoscopia', GETDATE()),
-(2, 2, 8, '2-3333-3333', 'Licenciado en Medicina, Especialista en Oncología', GETDATE()),
-(3, 2, 12, '2-4444-4444', 'Licenciado en Medicina, Especialista en Cirugía General', GETDATE());
+(1, 2, 10, '2222-2222', 'Especialista en Cirugía General y Laparoscópica', GETDATE()),
+(2, 2, 8, '3333-3333', 'Especialista en Ginecología y Obstetricia', GETDATE()),
+(4, 2, 12, '4444-4444', 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE());
 GO
 
 -- HISTORIAL MEDICO
@@ -318,22 +349,22 @@ GO
 -- PACIENTES
 INSERT INTO Pacientes (Id_Usuario, Id_Historial) VALUES
 (3, 1),
-(3, 2),
-(3, 3);
+(4, 2),
+(5, 3);
 GO
 
 -- HORARIOS DISPONIBLES
 INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Activo) VALUES
-(1, 0, '08:00', '12:00', 1), -- Lunes - Laparoscopia
-(2, 1, '09:00', '13:00', 1), -- Martes - Oncología
-(3, 2, '07:00', '11:00', 1); -- Miércoles - Cirugía
+(1, 0, '08:00', '12:00', 1),
+(2, 1, '09:00', '13:00', 1),
+(3, 2, '07:00', '11:00', 1);
 GO
 
 -- CITAS
-INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado) VALUES
-(1, 1, 1, 1, '09:00', 'Evaluación para cirugía laparoscópica', GETDATE(), NULL, 1),
-(2, 2, 2, 2, '10:30', 'Consulta oncológica inicial', GETDATE(), NULL, 1),
-(3, 3, 3, 3, '08:00', 'Evaluación preoperatoria', GETDATE(), NULL, 1);
+INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario,Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)VALUES
+(1, 1, 1, 1, '2026-07-01', '09:00','Valoración para colecistectomía laparoscópica',GETDATE(), NULL, 1),
+(2, 2, 2, 2, '2026-07-02', '10:30','Valoración para histerectomía',GETDATE(), NULL, 1),
+(3, 3, 4, 3, '2026-07-03', '08:00','Consulta para lipoescultura',GETDATE(), NULL, 1);
 GO
 
 -- ARCHIVOS HISTORIAL
@@ -357,18 +388,46 @@ INSERT INTO Paquetes (Nombre, Descripcion, Duracion, Precio, FechaDeRegistro, Es
 ('Paquete Cirugía', 'Paquete Cirugía - Procedimiento quirúrgico', '4 meses', '3500.00', GETDATE(), 1);
 GO
 
+INSERT INTO Procedimiento
+(Id_Especialidad, Nombre, Descripcion, Estado)
+VALUES
+(1, 'Colecistectomía', 'Extirpación quirúrgica de la vesícula biliar.', 1),
+(1, 'Apendicectomía', 'Extirpación quirúrgica del apéndice.', 1),
+(1, 'Cura de Hernia', 'Reparación quirúrgica de hernias abdominales.', 1),
+(1, 'Hernia de Hiato', 'Corrección quirúrgica de hernia hiatal.', 1),
+(1, 'Acalasia', 'Tratamiento quirúrgico de la acalasia esofágica.', 1),
+(1, 'Esplenectomía', 'Extirpación quirúrgica del bazo.', 1),
+(1, 'Colectomía', 'Resección parcial o total del colon.', 1),
+(1, 'Gastrectomía', 'Extirpación parcial o total del estómago.', 1),
+(2, 'Histerectomía', 'Extirpación quirúrgica del útero.', 1),
+(2, 'Esterilización', 'Procedimiento quirúrgico de esterilización femenina.', 1),
+(2, 'Quiste de Ovario', 'Resección de quistes ováricos.', 1),
+(2, 'Resección de Teratoma', 'Extracción quirúrgica de teratomas.', 1),
+(3, 'Mastectomía', 'Extirpación parcial o total de la mama.', 1),
+(4, 'Lipoescultura', 'Procedimiento estético para moldear el contorno corporal.', 1),
+(4, 'Dermolipectomía', 'Extirpación de exceso de piel y tejido adiposo.', 1),
+(4, 'Lifting Facial', 'Procedimiento de rejuvenecimiento facial.', 1),
+(4, 'Liposucción', 'Extracción de grasa localizada mediante succión.', 1),
+(5, 'Reducción de Fracturas', 'Alineación y estabilización de fracturas óseas.', 1),
+(5, 'Osteosíntesis', 'Fijación interna de fracturas mediante implantes.', 1),
+(5, 'Artroscopia', 'Procedimiento mínimamente invasivo para articulaciones.', 1),
+(6, 'Cirugía de Senos Paranasales', 'Intervención quirúrgica de los senos paranasales.', 1);
+
 -- PRECIOS
-INSERT INTO Precios (Id_Medico, Costo, Detalles) VALUES
-(1, 1500.00, 'Cirugía laparoscópica'),
-(2, 2000.00, 'Consulta oncológica especializada'),
-(3, 1800.00, 'Cirugía general');
+INSERT INTO Precios
+(Id_Medico, Id_Procedimiento, Costo, Detalles) VALUES
+(1, 1, 1500.00, 'Colecistectomía laparoscópica'),
+(2, 13, 2000.00, 'Mastectomía especializada'),
+(3, 2, 1800.00, 'Apendicectomía convencional');
 GO
 
 -- CIRUGIAS
-INSERT INTO Cirugias (Id_Paciente, Id_Medico, Id_Especialidad, Fecha) VALUES
-(1, 1, 1, 1),
-(2, 2, 2, 2),
-(3, 3, 3, 3);
+INSERT INTO Cirugias
+(Id_Paciente, Id_Medico, Id_Procedimiento, Id_Horario)
+VALUES
+(1, 1, 1, 1),   -- Colecistectomía
+(2, 2, 13, 2),  -- Mastectomía
+(3, 3, 2, 3);   -- Apendicectomía
 GO
 
 -- NOTICIAS
@@ -386,8 +445,16 @@ INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES
 ('user-paciente-003', '3'); -- María es Paciente
 GO
 
-
+INSERT INTO UsuarioRoles (Id_Usuario, RoleId)
+VALUES
+(1, '1'),
+(2, '2'),
+(3, '3'),
+(4, '3'), -- Paciente
+(5, '4'); -- Paciente
 GO
+
+
 
 SELECT DATA_TYPE
 FROM INFORMATION_SCHEMA.COLUMNS
