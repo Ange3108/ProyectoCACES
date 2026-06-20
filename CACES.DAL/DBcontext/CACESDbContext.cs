@@ -21,6 +21,7 @@ namespace CACES.DAL.DBContext
         public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public DbSet<Cita> Citas { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
+        public DbSet<Paquete> Paquetes { get; set; }
 
         public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -227,6 +228,21 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Icono).HasColumnName("Icono").IsRequired().HasMaxLength(200);
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+            });
+
+            //configuración de la entidad Paquete
+
+            modelBuilder.Entity<Paquete>(entity =>
+            {
+                entity.HasKey(e => e.IdPaquete);
+                entity.Property(e => e.IdPaquete).HasColumnName("Id_Paquete");
+                entity.Property(e => e.Nombre).HasColumnName("Nombre").IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Duracion).HasColumnName("Duracion").IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Precio).HasColumnName("Precio").IsRequired();
+                entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
+               
             });
         }
     }

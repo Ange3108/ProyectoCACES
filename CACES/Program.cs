@@ -1,25 +1,26 @@
 using CACES.BLL;
 using CACES.BLL.Servicios.Auth;
+using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
+using CACES.BLL.Servicios.Especialidad;
+using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
+using CACES.BLL.Servicios.Paquete;
 using CACES.BLL.Servicios.Perfil;
 using CACES.BLL.Servicios.Roles;
-using CACES.DAL.Repositorios.Citas;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
+using CACES.DAL.Repositorios.Citas;
 using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
+using CACES.DAL.Repositorios.Paquetes;
 using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
-using CACES.BLL.Servicios.Especialidad;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using CACES.BLL.Servicios.Citas;
-using CACES.BLL.Servicios.Especialidad;
-using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -43,6 +44,7 @@ builder.Services.AddScoped<IHistorialMedicoRepositorio, HistorialMedicoRepositor
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<ICitaRepositorio, CitaRepositorio>();
 builder.Services.AddScoped<IEspecialidadRepositorio, EspecialidadRepositorio>();
+builder.Services.AddScoped<IPaqueteRepositorio, PaqueteRepositorio>();
 
 
 // Servicios
@@ -58,6 +60,7 @@ builder.Services.AddScoped<IPerfilServicio, PerfilServicio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<IRolServicio, RolServicio>();
 builder.Services.AddScoped<IEspecialidadServicio, EspecialidadServicio>();
+builder.Services.AddScoped<IPaqueteServicio, PaqueteServicio>();
 
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
