@@ -44,7 +44,6 @@ namespace CACES.BLL
                     .ForMember(dest => dest.Telefono, opt => opt.MapFrom(src => src.Usuario.Telefono))
                     .ForMember(dest => dest.Foto, opt => opt.MapFrom(src => src.Usuario.Foto));
 
-            //Mapeo de los DTOs de perfil
 
             // Mapeo de los DTOs de perfil
             CreateMap<Usuario, PerfilUsuarioDTO>()
@@ -93,6 +92,14 @@ namespace CACES.BLL
                .ReverseMap();
             CreateMap<Especialidad, DTOs.Especialidad.mostrarDetalleEspecialidadDTO>()
                .ReverseMap();
+
+            //mapeo de los dto de turismo medico(paquetes)
+            CreateMap<Paquete, DTOs.Paquete.PaqueteDTO>()
+                .ReverseMap()
+                .ForMember(dest => dest.IdPaquete, opt => opt.Ignore())
+                .ForMember(dest => dest.FechaDeRegistro, opt => opt.Ignore());
+
+
         }
     }
 }

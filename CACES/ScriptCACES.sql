@@ -124,13 +124,12 @@ CREATE TABLE Recetas(
 GO
 CREATE TABLE Paquetes(
     Id_Paquete INT PRIMARY KEY IDENTITY(1,1),
-	Id_Paciente INT NOT NULL,
+    Nombre VARCHAR(50) NOT NULL,
 	Descripcion VARCHAR(100) NOT NULL,
     Duracion VARCHAR(100) NOT NULL,
-    Precio VARCHAR(100) NOT NULL,
+    Precio DECIMAL(18,2) NOT NULL,
 	FechaDeRegistro DATETIME NOT NULL,
 	Estado BIT NOT NULL,
-	CONSTRAINT FK_Paquetes_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente)
 );
 GO
 
@@ -383,10 +382,10 @@ INSERT INTO Recetas (Id_Cita, Medicamentos, Instrucciones, FechaDeRegistro, Fech
 GO
 
 -- PAQUETES
-INSERT INTO Paquetes (Id_Paciente, Descripcion, Duracion, Precio, FechaDeRegistro, Estado) VALUES
-(1, 'Paquete Laparoscopia - Cirugía mínimamente invasiva', '3 meses', '$2500.00', GETDATE(), 1),
-(2, 'Paquete Oncología - Tratamiento integral', '6 meses', '$5000.00', GETDATE(), 1),
-(3, 'Paquete Cirugía - Procedimiento quirúrgico', '4 meses', '$3500.00', GETDATE(), 1);
+INSERT INTO Paquetes (Nombre, Descripcion, Duracion, Precio, FechaDeRegistro, Estado) VALUES
+('Paquete Laparoscopia', 'Paquete Laparoscopia - Cirugía mínimamente invasiva', '3 meses', '2500.00', GETDATE(), 1),
+('Paquete Oncología', 'Paquete Oncología - Tratamiento integral', '6 meses', '5000.00', GETDATE(), 1),
+('Paquete Cirugía', 'Paquete Cirugía - Procedimiento quirúrgico', '4 meses', '3500.00', GETDATE(), 1);
 GO
 
 INSERT INTO Procedimiento

@@ -1,0 +1,73 @@
+@using CACES.BLL.DTOs.Paquete
+@model PaqueteDTO
+@{
+    ViewData["Title"] = "Actualizar Paquete - CACES";
+}
+
+<main class="container py-5">
+    <section class="form-shell">
+        <div class="top-action mb-3">
+            <a class="btn btn-add" asp-action="ObtenerPaquetes" asp-controller="Paquete">
+                Volver al listado
+            </a>
+        </div>
+
+        <div class="card form-card shadow-sm">
+            <div class="card-body p-4 p-md-5">
+                <h1 class="section-title mb-3" style="color: #27418C;">Actualizar Paquete de Turismo Médico</h1>
+                <p class="text-muted mb-4">Modifica los detalles del paquete seleccionado.</p>
+
+                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3 fw-bold"></div>
+
+                <form asp-action="ActualizarPaquete" asp-controller="Paquete" method="post" asp-route-id="@Model.IdPaquete">
+
+                    <input type="hidden" asp-for="IdPaquete" />
+
+                    <div class="row g-3">
+
+                        <div class="col-12 col-md-6">
+                            <label asp-for="Nombre" class="form-label">Nombre del paquete</label>
+                            <input asp-for="Nombre" type="text" class="form-control" placeholder="Ej. Evaluación Integral" />
+                            <span asp-validation-for="Nombre" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <label asp-for="Precio" class="form-label">Precio</label>
+                            <input asp-for="Precio" type="text" class="form-control" placeholder="USD 480" />
+                            <span asp-validation-for="Precio" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12 col-md-3">
+                            <label asp-for="Duracion" class="form-label">Duración</label>
+                            <input asp-for="Duracion" type="text" class="form-control" placeholder="3 días" />
+                            <span asp-validation-for="Duracion" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12 col-md-9">
+                            <label asp-for="Descripcion" class="form-label">Descripción</label>
+                            <textarea asp-for="Descripcion" class="form-control" rows="4" placeholder="Incluye consulta, exámenes, traslado, etc."></textarea>
+                            <span asp-validation-for="Descripcion" class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12 col-md-3 d-flex align-items-center mt-md-5">
+                            <div class="form-check form-switch p-3 bg-light rounded border w-100">
+                                <input asp-for="Estado" type="checkbox" class="form-check-input ms-0 me-2" id="switchEstado" />
+                                <label asp-for="Estado" class="form-check-label fw-semibold" for="switchEstado">Paquete Activo</label>
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+                        <a asp-action="ObtenerPaquetes" class="btn btn-outline-secondary">Cancelar</a>
+                        <button type="submit" class="btn btn-add text-white" style="background-color: #27418C;">Actualizar cambios</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </section>
+</main>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
