@@ -137,6 +137,7 @@ CREATE TABLE Procedimiento(
     Id_Especialidad INT NOT NULL,
     Nombre VARCHAR(100) NOT NULL,
     Descripcion VARCHAR(200),
+    PrecioBase DECIMAL(10,2),
     Estado BIT NOT NULL,
 
     CONSTRAINT FK_Procedimiento_Especialidad
@@ -162,7 +163,7 @@ CREATE TABLE Cirugias(
     Id_Medico INT NOT NULL,
     Id_Procedimiento INT NOT NULL,
     Id_Horario INT NOT NULL,
-
+    Estado BIT NOT NULL,
     CONSTRAINT FK_Cirugias_Paciente FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Cirugias_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
     CONSTRAINT FK_Cirugias_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento),
@@ -388,29 +389,29 @@ INSERT INTO Paquetes (Nombre, Descripcion, Duracion, Precio, FechaDeRegistro, Es
 GO
 
 INSERT INTO Procedimiento
-(Id_Especialidad, Nombre, Descripcion, Estado)
+(Id_Especialidad, Nombre, Descripcion, PrecioBase, Estado)
 VALUES
-(1, 'Colecistectomía', 'Extirpación quirúrgica de la vesícula biliar.', 1),
-(1, 'Apendicectomía', 'Extirpación quirúrgica del apéndice.', 1),
-(1, 'Cura de Hernia', 'Reparación quirúrgica de hernias abdominales.', 1),
-(1, 'Hernia de Hiato', 'Corrección quirúrgica de hernia hiatal.', 1),
-(1, 'Acalasia', 'Tratamiento quirúrgico de la acalasia esofágica.', 1),
-(1, 'Esplenectomía', 'Extirpación quirúrgica del bazo.', 1),
-(1, 'Colectomía', 'Resección parcial o total del colon.', 1),
-(1, 'Gastrectomía', 'Extirpación parcial o total del estómago.', 1),
-(2, 'Histerectomía', 'Extirpación quirúrgica del útero.', 1),
-(2, 'Esterilización', 'Procedimiento quirúrgico de esterilización femenina.', 1),
-(2, 'Quiste de Ovario', 'Resección de quistes ováricos.', 1),
-(2, 'Resección de Teratoma', 'Extracción quirúrgica de teratomas.', 1),
-(3, 'Mastectomía', 'Extirpación parcial o total de la mama.', 1),
-(4, 'Lipoescultura', 'Procedimiento estético para moldear el contorno corporal.', 1),
-(4, 'Dermolipectomía', 'Extirpación de exceso de piel y tejido adiposo.', 1),
-(4, 'Lifting Facial', 'Procedimiento de rejuvenecimiento facial.', 1),
-(4, 'Liposucción', 'Extracción de grasa localizada mediante succión.', 1),
-(5, 'Reducción de Fracturas', 'Alineación y estabilización de fracturas óseas.', 1),
-(5, 'Osteosíntesis', 'Fijación interna de fracturas mediante implantes.', 1),
-(5, 'Artroscopia', 'Procedimiento mínimamente invasivo para articulaciones.', 1),
-(6, 'Cirugía de Senos Paranasales', 'Intervención quirúrgica de los senos paranasales.', 1);
+(1, 'Colecistectomía', 'Extirpación quirúrgica de la vesícula biliar.', 1500.00, 1),
+(1, 'Apendicectomía', 'Extirpación quirúrgica del apéndice.', 1200.00, 1),
+(1, 'Cura de Hernia', 'Reparación quirúrgica de hernias abdominales.', 1100.00, 1),
+(1, 'Hernia de Hiato', 'Corrección quirúrgica de hernia hiatal.', 1800.00, 1),
+(1, 'Acalasia', 'Tratamiento quirúrgico de la acalasia esofágica.', 2200.00, 1),
+(1, 'Esplenectomía', 'Extirpación quirúrgica del bazo.', 2500.00, 1),
+(1, 'Colectomía', 'Resección parcial o total del colon.', 3000.00, 1),
+(1, 'Gastrectomía', 'Extirpación parcial o total del estómago.', 3500.00, 1),
+(2, 'Histerectomía', 'Extirpación quirúrgica del útero.', 2000.00, 1),
+(2, 'Esterilización', 'Procedimiento quirúrgico de esterilización femenina.', 800.00, 1),
+(2, 'Quiste de Ovario', 'Resección de quistes ováricos.', 1300.00, 1),
+(2, 'Resección de Teratoma', 'Extracción quirúrgica de teratomas.', 1600.00, 1),
+(3, 'Mastectomía', 'Extirpación parcial o total de la mama.', 2400.00, 1),
+(4, 'Lipoescultura', 'Procedimiento estético para moldear el contorno corporal.', 2800.00, 1),
+(4, 'Dermolipectomía', 'Extirpación de exceso de piel y tejido adiposo.', 3200.00, 1),
+(4, 'Lifting Facial', 'Procedimiento de rejuvenecimiento facial.', 4000.00, 1),
+(4, 'Liposucción', 'Extracción de grasa localizada mediante succión.', 2100.00, 1),
+(5, 'Reducción de Fracturas', 'Alineación y estabilización de fracturas óseas.', 1700.00, 1),
+(5, 'Osteosíntesis', 'Fijación interna de fracturas mediante implantes.', 2300.00, 1),
+(5, 'Artroscopia', 'Procedimiento mínimamente invasivo para articulaciones.', 1900.00, 1),
+(6, 'Cirugía de Senos Paranasales', 'Intervención quirúrgica de los senos paranasales.', 1400.00, 1);
 
 -- PRECIOS
 INSERT INTO Precios
@@ -422,11 +423,11 @@ GO
 
 -- CIRUGIAS
 INSERT INTO Cirugias
-(Id_Paciente, Id_Medico, Id_Procedimiento, Id_Horario)
+(Id_Paciente, Id_Medico, Id_Procedimiento, Id_Horario, Estado)
 VALUES
-(1, 1, 1, 1),   -- Colecistectomía
-(2, 2, 13, 2),  -- Mastectomía
-(3, 3, 2, 3);   -- Apendicectomía
+(1, 1, 1, 1, 1),   -- Colecistectomía
+(2, 2, 13, 2, 1),  -- Mastectomía
+(3, 3, 2, 3, 1);   -- Apendicectomía
 GO
 
 -- NOTICIAS

@@ -7,6 +7,7 @@ using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;
 using CACES.BLL.Servicios.Perfil;
+using CACES.BLL.Servicios.Procedimientos;
 using CACES.BLL.Servicios.Roles;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
@@ -16,6 +17,7 @@ using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Paquetes;
+using CACES.DAL.Repositorios.Procedimientos;
 using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -43,7 +45,7 @@ builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<ICitaRepositorio, CitaRepositorio>();
 builder.Services.AddScoped<IEspecialidadRepositorio, EspecialidadRepositorio>();
 builder.Services.AddScoped<IPaqueteRepositorio, PaqueteRepositorio>();
-
+builder.Services.AddScoped<IProcedimientosRepositorio, ProcedimientosRepositorio>();
 
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
@@ -59,7 +61,7 @@ builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<IRolServicio, RolServicio>();
 builder.Services.AddScoped<IEspecialidadServicio, EspecialidadServicio>();
 builder.Services.AddScoped<IPaqueteServicio, PaqueteServicio>();
-
+builder.Services.AddScoped<IProcedimientosServicio, ProcedimientosServicio>();
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();
