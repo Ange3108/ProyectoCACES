@@ -95,9 +95,10 @@ namespace CACES.DAL.Repositorios.Roles
             if (usuario == null)
                 return false;
 
+            usuario.Estado = 0;
+            usuario.FechaDeModificacion = DateTime.Now;
+
             _context.AspNetUserRoles.Remove(rolUsuario);
-            _context.AspNetUsers.Remove(aspUser);
-            _context.Usuarios.Remove(usuario);
 
             return await _context.SaveChangesAsync() > 0;
         }

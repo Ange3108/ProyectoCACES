@@ -7,7 +7,9 @@ using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Usuario;
-
+using CACES.DAL.Entidades.Roles;
+using CACES.DAL.DBContext;
+using Microsoft.EntityFrameworkCore;
 namespace CACES.BLL.Servicios.Paciente
 {
     public class PacienteServicio : IPacienteServicio
@@ -18,6 +20,7 @@ namespace CACES.BLL.Servicios.Paciente
         private readonly IHistorialMedicoRepositorio _historialRepositorio;
         private readonly IEmailServicio _emailServicio;
         private readonly IMapper _mapper;
+        private readonly CACESDbContext _context;
 
         public PacienteServicio(
             IPacienteRepositorio pacienteRepositorio,
@@ -25,7 +28,8 @@ namespace CACES.BLL.Servicios.Paciente
             IUsuarioRepositorio usuarioRepositorio,
             IHistorialMedicoRepositorio historialRepositorio,
             IEmailServicio emailServicio,
-            IMapper mapper)
+            IMapper mapper,
+            CACESDbContext context)
         {
             _pacienteRepositorio = pacienteRepositorio;
             _usuarioServicio = usuarioServicio;
@@ -33,6 +37,7 @@ namespace CACES.BLL.Servicios.Paciente
             _historialRepositorio = historialRepositorio;
             _emailServicio = emailServicio;
             _mapper = mapper;
+            _context = context;
         }
 
         public async Task<List<DAL.Entidades.Paciente>> GetPacientesAsync()
@@ -98,6 +103,55 @@ namespace CACES.BLL.Servicios.Paciente
             {
                 throw new Exception("El usuario se creó, pero no se pudo recuperar desde la base de datos.");
             }
+            var aspNetUser = await _context.AspNetUsers
+            .FirstOrDefaultAsync(x => x.Email == usuarioEntidad.CorreoElectronico);
+
+            if (aspNetUser == null)
+            {
+                aspNetUser = new ApplicationUser
+                {
+                    Id = Guid.NewGuid().ToString(),
+                    Email = usuarioEntidad.CorreoElectronico,
+                    UserName = usuarioEntidad.CorreoElectronico,
+                    EmailConfirmed = usuarioEntidad.EmailConfirmed,
+                    PasswordHash = usuarioEntidad.PasswordHash,
+                    SecurityStamp = usuarioEntidad.SecurityStamp,
+                    PhoneNumber = usuarioEntidad.Telefono,
+                    PhoneNumberConfirmed = false,
+                    TwoFactorEnabled = false,
+                    LockoutEnabled = false,
+                    AccessFailedCount = 0
+                };
+
+                await _context.AspNetUsers.AddAsync(aspNetUser);
+
+                // GUARDA EL USUARIO ANTES DE ASIGNAR EL ROL
+                await _context.SaveChangesAsync();
+            }
+
+            var rolPaciente = await _context.AspNetRoles
+                .FirstOrDefaultAsync(r => r.Name == "Paciente");
+
+            if (rolPaciente == null)
+            {
+                throw new Exception("No existe el rol Paciente.");
+            }
+
+            var yaTieneRol = await _context.AspNetUserRoles
+                 .AnyAsync(x => x.UserId == aspNetUser.Id && x.RoleId == rolPaciente.Id);
+
+            if (!yaTieneRol)
+            {
+                var usuarioRol = new AspNetUserRole
+                {
+                    UserId = aspNetUser.Id,
+                    RoleId = rolPaciente.Id
+                };
+
+                await _context.AspNetUserRoles.AddAsync(usuarioRol);
+            }
+
+            await _context.SaveChangesAsync();
 
             var nuevoHistorial = new HistorialMedico
             {

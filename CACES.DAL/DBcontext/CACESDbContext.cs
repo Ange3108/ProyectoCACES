@@ -128,39 +128,14 @@ namespace CACES.DAL.DBContext
             modelBuilder.Entity<Medico>(entity =>
             {
                 entity.HasKey(e => e.IdMedico);
-
-
-                entity.Property(e => e.IdMedico)
-                    .HasColumnName("Id_Medico");
-
-                entity.Property(e => e.IdEspecialidad)
-                    .HasColumnName("Id_Especialidad");
-
-                entity.Property(e => e.IdUsuario)
-                    .HasColumnName("Id_Usuario");
-
-
-                entity.Property(e => e.FechaDeRegistro)
-                      .HasColumnName("FechaDeRegistro")
-                      .IsRequired();
-                entity.Property(e => e.Experiencia)
-                    .HasColumnName("Experiencia")
-                    .IsRequired();
-
-
-                entity.Property(e => e.Certificaciones)
-                    .HasColumnName("Certificaciones")
-                    .HasMaxLength(500);
-
-
-
-                entity.HasOne(e => e.Usuario)
-                    .WithMany()
-                    .HasForeignKey(e => e.IdUsuario);
-
-                entity.HasOne(e => e.Especialidad)
-                .WithMany(es => es.Medicos)
-                .HasForeignKey(e => e.IdEspecialidad);
+                entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
+                entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad").IsRequired();
+                entity.Property(e => e.IdUsuario).HasColumnName("Id_Usuario");
+                entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
+                entity.Property(e => e.Experiencia).HasColumnName("Experiencia").IsRequired();
+                entity.Property(e => e.Certificaciones).HasColumnName("Certificaciones").HasMaxLength(500);
+                entity.HasOne(e => e.Usuario).WithMany().HasForeignKey(e => e.IdUsuario);
+                entity.HasOne(e => e.Especialidad).WithMany(es => es.Medicos).HasForeignKey(e => e.IdEspecialidad);
             });
 
             modelBuilder.Entity<Receta>(entity =>

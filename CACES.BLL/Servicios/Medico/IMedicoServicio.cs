@@ -6,14 +6,18 @@ namespace CACES.BLL.Servicios.Medicos
 {
     public interface IMedicoServicio
     {
-        Task<List<Medico>> GetMedicosAsync();
+        Task<respuestaErrores<List<MedicoDTO>>> GetMedicosAsync();
 
-        Task<EditarMedicoDTO?> GetMedicoParaEditarAsync(int id);
+        Task<respuestaErrores<MedicoDTO>> GetMedicoPorIdAsync(int id);
 
-        Task<bool> UpdateMedicoConUsuarioAsync(EditarMedicoDTO dto);
+        Task<respuestaErrores<List<MedicoDTO>>> GetEspecialistasActivosAsync();
 
-        Task<respuestaErrores<RegistrarMedicoDTO>> CreateMedicoAsync(RegistrarMedicoDTO registrarMedicoDto);
+        Task<respuestaErrores<EditarMedicoDTO>> GetMedicoParaEditarAsync(int id);
 
-        Task<bool> DeleteMedicoAsync(int id);
+        Task<respuestaErrores<MedicoDTO>> UpdateMedicoConUsuarioAsync(EditarMedicoDTO dto);
+
+        Task<respuestaErrores<MedicoDTO>> CreateMedicoAsync(RegistrarMedicoDTO registrarMedicoDto);
+
+        Task<respuestaErrores<MedicoDTO>> DesactivarMedicoAsync(int id);
     }
 }

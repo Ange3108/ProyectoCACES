@@ -217,6 +217,8 @@ namespace CACES.BLL.Servicios.Especialidad
                     await _especialidadRepositorio.GetEspecialidadesActivasAsync();
 
                 respuesta.EsCorrecto = true;
+                respuesta.mensaje = "Especialidades activas obtenidas exitosamente";
+                respuesta.codigo = 200;
                 respuesta.Dato = _mapper.Map<List<mostrarEspecialidadDTO>>(especialidades);
 
                 return respuesta;

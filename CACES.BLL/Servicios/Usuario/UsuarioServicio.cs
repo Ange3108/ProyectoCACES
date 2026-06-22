@@ -76,9 +76,9 @@ namespace CACES.BLL.Servicios.Usuario
 
                 // Agregar lógica específica de negocio
                 nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
-                nuevoUsuario.FechaDeRegistro = DateTime.Now;
+                nuevoUsuario.FechaDeRegistro = DateTime.UtcNow;
                 nuevoUsuario.SecurityStamp = Guid.NewGuid().ToString();
-                nuevoUsuario.Estado = true;
+                nuevoUsuario.Estado = 1;
                 nuevoUsuario.EmailConfirmed = false;
                 nuevoUsuario.TwoFactorEnabled = false;
                 nuevoUsuario.LockoutEnabled = false;
@@ -181,7 +181,7 @@ namespace CACES.BLL.Servicios.Usuario
 
         public async Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorDUIAsync(string dui)
         {
-            var respuesta = new respuestaErrores<MostrarUsuarioDTO?>();
+            var respuesta = new respuestaErrores<MostrarUsuarioDTO>();
             var usuario = await _usuarioRepository.GetUsuarioByDUIAsync(dui);
             if (usuario == null)
             {
@@ -196,7 +196,7 @@ namespace CACES.BLL.Servicios.Usuario
 
         public async Task<respuestaErrores<MostrarUsuarioDTO>> GetUsuarioPorIdAsync(int id)
         {
-            var respuesta = new respuestaErrores<MostrarUsuarioDTO?>();
+            var respuesta = new respuestaErrores<MostrarUsuarioDTO>();
             var usuario = await _usuarioRepository.GetUsuarioByIdAsync(id);
             if (usuario == null)
             {

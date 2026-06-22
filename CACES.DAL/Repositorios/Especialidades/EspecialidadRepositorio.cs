@@ -16,12 +16,9 @@ namespace CACES.DAL.Repositorios.Especialidades
             _context = context;
         }
 
-        public async Task<bool> CreateEspecialidadAsync(Entidades.Especialidad Especialidad)
+        public async Task<List<Especialidad>> GetEspecialidadesAsync()
         {
-            if (Especialidad == null) return false;
-            await _context.Especialidades.AddAsync(Especialidad);
-            return await _context.SaveChangesAsync() > 0;
-
+            return await _context.Especialidades.ToListAsync();
         }
         public async Task<List<Especialidad>> GetEspecialidadesActivasAsync()
         {
@@ -30,24 +27,27 @@ namespace CACES.DAL.Repositorios.Especialidades
                 .ToListAsync();
         }
 
-        public async Task<Entidades.Especialidad> GetEspecialidadByNameAsync(string name)
+        public async Task<Especialidad> GetEspecialidadByNameAsync(string name)
         {
             if (string.IsNullOrEmpty(name)) return null;
             return await _context.Especialidades.FirstOrDefaultAsync(e => e.Nombre == name);
         }
 
 
-        public async Task<Entidades.Especialidad> GetEspecialidadByIdAsync(int id)
+        public async Task<Especialidad> GetEspecialidadByIdAsync(int id)
         {
             return await _context.Especialidades.FirstOrDefaultAsync(e => e.IdEspecialidad == id);
         }
 
-        public async Task<List<Entidades.Especialidad>> GetEspecialidadesAsync()
+       
+        public async Task<bool> CreateEspecialidadAsync(Especialidad Especialidad)
         {
-            return await _context.Especialidades.ToListAsync();
-        }
+            if (Especialidad == null) return false;
+            await _context.Especialidades.AddAsync(Especialidad);
+            return await _context.SaveChangesAsync() > 0;
 
-        public async Task<bool> UpdateEspecialidadAsync(Entidades.Especialidad Especialidad)
+        }
+        public async Task<bool> UpdateEspecialidadAsync(Especialidad Especialidad)
         {
             if (Especialidad == null)
                 return false;

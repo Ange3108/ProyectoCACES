@@ -35,15 +35,16 @@ namespace CACES.BLL
 
             //Mapeo de los DTOs de médicos
             CreateMap<Medico, RegistrarMedicoDTO>()
-                .ForMember(dest => dest.IdUsuario, opt => opt.Ignore())
-                .ForMember(dest => dest.IdEspecialidad, opt => opt.Ignore());
+                .ForMember(dest => dest.IdEspecialidad, opt => opt.Ignore()).ReverseMap();
             CreateMap<Medico, mostrarMedicoEspecialidadDTO>()
                 .ForMember(dest => dest.Nombres, opt => opt.MapFrom(src => src.Usuario.Nombres))
                     .ForMember(dest => dest.PrimerApellido, opt => opt.MapFrom(src => src.Usuario.PrimerApellido))
                     .ForMember(dest => dest.SegundoApellido, opt => opt.MapFrom(src => src.Usuario.SegundoApellido))
                     .ForMember(dest => dest.Telefono, opt => opt.MapFrom(src => src.Usuario.Telefono))
                     .ForMember(dest => dest.Foto, opt => opt.MapFrom(src => src.Usuario.Foto));
-
+            CreateMap<Medico, MedicoDTO>()
+                .ForMember(dest => dest.NombreEspecialidad, opt => opt.MapFrom(src => src.Especialidad.Nombre)).ReverseMap();
+            CreateMap<Medico, EditarMedicoDTO>().ReverseMap();
 
             // Mapeo de los DTOs de perfil
             CreateMap<Usuario, PerfilUsuarioDTO>()
