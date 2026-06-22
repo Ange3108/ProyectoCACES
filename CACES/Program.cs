@@ -3,7 +3,6 @@ using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Especialidad;
-using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;
@@ -21,7 +20,6 @@ using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-
 
 var builder = WebApplication.CreateBuilder(args);
 
