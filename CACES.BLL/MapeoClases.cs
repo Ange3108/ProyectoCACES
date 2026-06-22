@@ -100,7 +100,8 @@ namespace CACES.BLL
                 .ForMember(dest => dest.IdPaquete, opt => opt.Ignore())
                 .ForMember(dest => dest.FechaDeRegistro, opt => opt.Ignore());
 
-
+            CreateMap<Procedimiento, DTOs.Procedimientos.MostrarProcedimientosDTO>()
+                .ReverseMap();
         }
     }
 }

@@ -48,7 +48,7 @@
                         <!--Si el usuario esta autenticado-->
                         @if (User.Identity.IsAuthenticated == true)
                         {
-                           <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Cirugias" asp-action="Procedimientos">Procedimientos Quirúrgicos</a></li>
+                           <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Procedimientos" asp-action="ObtenerProcedimientos">Procedimientos Quirúrgicos</a></li>
                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Citas" asp-action="GestionCitas">Citas</a></li>
                             <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Configuracion" asp-action="Configuracion">Configuración</a></li>
                    

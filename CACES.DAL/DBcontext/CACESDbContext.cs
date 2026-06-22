@@ -20,8 +20,13 @@ namespace CACES.DAL.DBContext
         public DbSet<AspNetRole> AspNetRoles { get; set; }
         public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public DbSet<Cita> Citas { get; set; }
+        public DbSet<Receta> Recetas { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
         public DbSet<Paquete> Paquetes { get; set; }
+        public DbSet<Precios> Precios { get; set; }
+        public DbSet<HorariosDisponibles> HorariosDisponibles { get; set; }
+        public DbSet<Procedimiento> Procedimientos { get; set; }
+        public DbSet<Cirugias> Cirugias { get; set; }
 
         public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -68,7 +73,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
                 entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
                 entity.Property(e => e.IdHorario).HasColumnName("Id_Horario");
-                entity.Property(e => e.FechaCita) .HasColumnName("Fecha");
+                entity.Property(e => e.FechaCita).HasColumnName("Fecha");
                 entity.Property(e => e.Hora).HasColumnName("Hora");
                 entity.Property(e => e.Motivo).HasColumnName("Motivo").HasMaxLength(100);
                 entity.Property(e => e.FechaCita).HasColumnName("FechaCita");
@@ -198,7 +203,7 @@ namespace CACES.DAL.DBContext
                 entity.HasKey(e => e.Id);
                 entity.ToTable("AspNetRoles");
             });
-         
+
 
             //configuración de la entidad Especialidad
             modelBuilder.Entity<Especialidad>(entity =>
@@ -225,7 +230,92 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Precio).HasColumnName("Precio").IsRequired();
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
-               
+
+            });
+            //configuración de la entidad Procedimiento
+            modelBuilder.Entity<Procedimiento>(entity =>
+            {
+                entity.HasKey(e => e.Id_Procedimiento);
+                entity.Property(e => e.Id_Procedimiento).HasColumnName("Id_Procedimiento");
+                entity.Property(e => e.Id_Especialidad).HasColumnName("Id_Especialidad").IsRequired();
+                entity.Property(e => e.Nombre).HasColumnName("Nombre").IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion").HasMaxLength(200);
+                entity.Property(e => e.PrecioBase).HasColumnName("PrecioBase");
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
+                entity.HasOne(d => d.Especialidad)
+                  .WithMany()
+                  .HasForeignKey(d => d.Id_Especialidad)
+                  .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            //configuración de la entidad Cirugias
+            modelBuilder.Entity<Cirugias>(entity =>
+            {
+                entity.HasKey(e => e.Id_Cirugia);
+                entity.Property(e => e.Id_Cirugia).HasColumnName("Id_Cirugia");
+                entity.Property(e => e.Id_Paciente).HasColumnName("Id_Paciente").IsRequired();
+                entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
+                entity.Property(e => e.Id_Procedimiento).HasColumnName("Id_Procedimiento").IsRequired();
+                entity.Property(e => e.Id_Horario).HasColumnName("Id_Horario").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
+                entity.HasOne(d => d.Paciente)
+                      .WithMany()
+                      .HasForeignKey(d => d.Id_Paciente)
+                      .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Medico)
+                      .WithMany()
+                      .HasForeignKey(d => d.Id_Medico)
+                      .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Procedimiento)
+                      .WithMany(p => p.Cirugias)
+                      .HasForeignKey(d => d.Id_Procedimiento)
+                      .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Horario)
+                      .WithMany(h => h.Cirugias)
+                      .HasForeignKey(d => d.Id_Horario)
+                      .OnDelete(DeleteBehavior.ClientSetNull);
+
+            });
+
+            //configuración de la entidad Precios
+
+            modelBuilder.Entity<Precios>(entity =>
+            {
+                entity.HasKey(e => e.Id_Precio);
+                entity.Property(e => e.Id_Precio).HasColumnName("Id_Precio");
+                entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
+                entity.Property(e => e.Id_Procedimiento).HasColumnName("Id_Procedimiento").IsRequired();
+                entity.Property(e => e.Costo).HasColumnName("Costo").IsRequired();
+                entity.Property(e => e.Detalles).HasColumnName("Detalles").IsRequired().HasMaxLength(100);
+                entity.HasOne(d => d.Procedimiento)
+                  .WithMany(p => p.Precios)
+                  .HasForeignKey(d => d.Id_Procedimiento)
+                  .OnDelete(DeleteBehavior.ClientSetNull);
+
+                entity.HasOne(d => d.Medico)
+                      .WithMany()
+                      .HasForeignKey(d => d.Id_Medico)
+                      .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            //configuración de la entidad HorariosDisponibles
+
+            modelBuilder.Entity<HorariosDisponibles>(entity =>
+            {
+                entity.HasKey(e => e.Id_Horario);
+                entity.Property(e => e.Id_Horario).HasColumnName("Id_Horario");
+                entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
+                entity.Property(e => e.DiaSemana).HasColumnName("DiaSemana").IsRequired();
+                entity.Property(e => e.HoraInicio).HasColumnName("HoraInicio").IsRequired();
+                entity.Property(e => e.HoraFin).HasColumnName("HoraFin").IsRequired();
+                entity.Property(e => e.Activo).HasColumnName("Activo").IsRequired().HasDefaultValue(true);
+                entity.HasOne(d => d.Medico)
+                  .WithMany()
+                  .HasForeignKey(d => d.Id_Medico)
+                  .OnDelete(DeleteBehavior.ClientSetNull);
             });
         }
     }
