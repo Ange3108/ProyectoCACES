@@ -30,6 +30,7 @@ namespace CACES.Controllers
             var modeloVista = await _procedimientosServicio.ObtenerDetalleCirugiaAsync(idPacienteLogueado);
 
             return View("~/Views/Procedimiento/Quirurgicos.cshtml",modeloVista);
+
         }
     }
 }
