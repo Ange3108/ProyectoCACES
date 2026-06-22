@@ -1,10 +1,11 @@
 ﻿using CACES.DAL.DBContext;
+using CACES.DAL.Entidades;
 using Microsoft.EntityFrameworkCore;
 
 
 namespace CACES.DAL.Repositorios.Especialidades
 {
-    public class EspecialidadRepositorio
+    public class EspecialidadRepositorio : IEspecialidadRepositorio
     {
         //Inyerccion de dependencia de la BD
         private readonly CACESDbContext _context;
@@ -23,13 +24,6 @@ namespace CACES.DAL.Repositorios.Especialidades
 
         }
 
-        public async Task<bool> DeleteEspecialidadAsync(int id)
-        {
-            var entity = await _context.Especialidades.FindAsync(id);
-            if (entity == null) return false;
-            _context.Especialidades.Remove(entity);
-            return await _context.SaveChangesAsync() > 0;
-        }
 
         public async Task<Entidades.Especialidad> GetEspecialidadByNameAsync(string name)
         {
@@ -42,7 +36,7 @@ namespace CACES.DAL.Repositorios.Especialidades
             return await _context.Especialidades.FirstOrDefaultAsync(e => e.IdEspecialidad == id);
         }
 
-        public async Task<List<Entidades.Especialidad>> GetEspecialidadsAsync()
+        public async Task<List<Entidades.Especialidad>> GetEspecialidadesAsync()
         {
             return await _context.Especialidades.ToListAsync();
         }
@@ -67,6 +61,8 @@ namespace CACES.DAL.Repositorios.Especialidades
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+    
     }
 }
 

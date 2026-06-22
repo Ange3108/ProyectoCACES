@@ -21,6 +21,8 @@ namespace CACES.DAL.DBContext
         public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public DbSet<Cita> Citas { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
+
+        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -42,7 +44,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Nacimiento).HasColumnName("Nacimiento").IsRequired();
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
-                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.Property(e => e.PasswordHash).HasColumnName("PasswordHash").IsRequired();
                 entity.Property(e => e.SecurityStamp).HasColumnName("SecurityStamp").IsRequired();
                 entity.Property(e => e.Foto).HasColumnName("Foto").HasMaxLength(200).IsRequired();
@@ -85,6 +87,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.EnfermedadesCronicas).HasColumnName("Enfermedades_Crónicas").HasMaxLength(200).IsRequired();
                 entity.Property(e => e.Detalles).HasMaxLength(100).IsRequired();
                 entity.Property(e => e.TipoSangre).HasColumnName("Tipo_Sangre").HasMaxLength(10).IsRequired();
+                entity.Property(e => e.Medicamentos).HasColumnName("Medicamentos").IsRequired();
                 entity.Property(e => e.Antecedentes).HasColumnName("Antecedentes");
                 entity.Property(e => e.FechaDeCreacion).IsRequired();
                 entity.Property(e => e.FechaDeModificacion);
@@ -162,6 +165,22 @@ namespace CACES.DAL.DBContext
                       .HasForeignKey(r => r.IdCita);
             });
 
+            modelBuilder.Entity<UsuarioRoles>()
+
+         .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
+
+            modelBuilder.Entity<UsuarioRoles>()
+                .HasOne(ur => ur.Usuario)
+                .WithMany(u => u.UsuarioRoles)
+                .HasForeignKey(ur => ur.IdUsuario)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UsuarioRoles>()
+                .HasOne(ur => ur.Rol)
+                .WithMany(r => r.UsuarioRoles)
+                .HasForeignKey(ur => ur.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             // Configuración de ApplicationUser
             modelBuilder.Entity<ApplicationUser>(entity =>
@@ -195,11 +214,7 @@ namespace CACES.DAL.DBContext
                 entity.HasKey(e => e.Id);
                 entity.ToTable("AspNetRoles");
             });
-            modelBuilder.Entity<AspNetUserRole>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
-                entity.ToTable("AspNetUserRoles");
-            });
+         
 
             //configuración de la entidad Especialidad
             modelBuilder.Entity<Especialidad>(entity =>

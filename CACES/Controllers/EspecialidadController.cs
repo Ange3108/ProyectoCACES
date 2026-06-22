@@ -20,50 +20,59 @@ namespace CACES.Controllers
             return View("~/Views/Especialidades/RegistroEspecialidad.cshtml");
         }
 
-
         [Authorize(Roles = "Administrador")]
-        //Registro
         [HttpPost]
         public async Task<IActionResult> RegistroEspecialidad(especialidadDTO registrarEspecialidadDTO)
         {
-            var EspecialidadCreado = await _especialidadServicio.CrearEspecialidadAsync(registrarEspecialidadDTO);
-           
-                ModelState.AddModelError(string.Empty, EspecialidadCreado.mensaje);
-                return Json(EspecialidadCreado);
+            var especialidadCreada = await _especialidadServicio.CrearEspecialidadAsync(registrarEspecialidadDTO);
+
+            if (!especialidadCreada.EsCorrecto)
+            {
+                ModelState.AddModelError(string.Empty, especialidadCreada.mensaje);
+            }
+
+            return Json(especialidadCreada);
         }
 
-
         [Authorize(Roles = "Administrador")]
-        //Actualizar
         [HttpPost]
         public async Task<IActionResult> ActualizarEspecialidad(int id, especialidadDTO actualizarEspecialidadDTO)
         {
+            var especialidadActualizada =
+                await _especialidadServicio.ActualizarEspecialidadAsync(id, actualizarEspecialidadDTO);
 
-            var especialidadActualizado = await _especialidadServicio.ActualizarEspecialidadAsync(id, actualizarEspecialidadDTO);
-
-            return Json(especialidadActualizado);
-
+            return Json(especialidadActualizada);
         }
 
-        //Metodo Eliminar
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> EliminarEspecialidad(int id)
         {
             var resultado = await _especialidadServicio.DesactivarEspecialidadAsync(id);
-            return Json(resultado);
 
+            return Json(resultado);
         }
 
+        [HttpGet]
         public IActionResult Especialidades()
         {
             return View("~/Views/Especialidades/Especialidades.cshtml");
         }
 
-
-        public async Task<IActionResult> ObtenerEspecialidads()
+        [HttpGet]
+        public async Task<IActionResult> ObtenerEspecialidades()
         {
             var especialidades = await _especialidadServicio.GetEspecialidadsAsync();
+
             return Json(especialidades);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> DesactivarEspecialidad(int id)
+        {
+            var especialidad = await _especialidadServicio.DesactivarEspecialidadAsync(id);
+
+            return Json(especialidad);
         }
     }
 }

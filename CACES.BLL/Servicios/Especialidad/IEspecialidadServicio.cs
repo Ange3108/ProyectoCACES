@@ -8,7 +8,7 @@ namespace CACES.BLL.Servicios.Especialidad
 {
     public interface IEspecialidadServicio
     {
-        Task<respuestaErrores<List<mostrarEspecialidadDTO>>> GetEspecialidadsAsync();
+        Task<respuestaErrores<List<mostrarEspecialidadDTO>>> GetEspecialidadesAsync();
         Task<respuestaErrores<mostrarEspecialidadDTO>> GetEspecialidadPorIdAsync(int id);
         Task<respuestaErrores<mostrarEspecialidadDTO>> GetEspecialidadPorNombreAsync(string nombre);
         Task<respuestaErrores<mostrarEspecialidadDTO>> CrearEspecialidadAsync(especialidadDTO especialidad);

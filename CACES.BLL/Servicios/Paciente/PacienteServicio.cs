@@ -156,6 +156,7 @@ namespace CACES.BLL.Servicios.Paciente
             var nuevoHistorial = new HistorialMedico
             {
                 TipoSangre = dto.Historial.TipoSangre,
+                Medicamentos = dto.Historial.Medicamentos,
                 Alergias = dto.Historial.Alergias,
                 EnfermedadesCronicas = dto.Historial.EnfermedadesCronicas,
                 Antecedentes = dto.Historial.Antecedentes,

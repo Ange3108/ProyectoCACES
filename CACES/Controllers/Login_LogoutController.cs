@@ -39,16 +39,22 @@ namespace CACES.Controllers
                     new Claim(ClaimTypes.NameIdentifier, usuario.IdUsuario.ToString()),
                     new Claim(ClaimTypes.Email, usuario.CorreoElectronico),
                     new Claim(ClaimTypes.Name, $"{usuario.Nombres} {usuario.PrimerApellido}"),
-                    new Claim(ClaimTypes.Role, "Paciente")
+                    
                 };
+                foreach (var UsuarioRoles in usuario.UsuarioRoles)
+                {
+                    claims.Add(
+                        new Claim(
+                            ClaimTypes.Role,
+                            UsuarioRoles.Rol.Name
+                        )
+                    );
+                }
 
-                var claimsIdentity = new ClaimsIdentity(
-                    claims,
-                    CookieAuthenticationDefaults.AuthenticationScheme
-                );
+                var claimsIdentity = new ClaimsIdentity(claims, Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme);
 
                 await HttpContext.SignInAsync(
-                    CookieAuthenticationDefaults.AuthenticationScheme,
+                    Microsoft.AspNetCore.Authentication.Cookies.CookieAuthenticationDefaults.AuthenticationScheme,
                     new ClaimsPrincipal(claimsIdentity)
                 );
 

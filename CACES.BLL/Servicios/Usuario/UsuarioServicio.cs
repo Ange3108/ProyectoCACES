@@ -85,6 +85,7 @@ namespace CACES.BLL.Servicios.Usuario
                 nuevoUsuario.AccessFailedCount = 0;
                 nuevoUsuario.Foto = "default.jpg";
 
+
                 bool resultado = await _usuarioRepository.CreateUsuarioAsync(nuevoUsuario);
 
                 if (resultado)

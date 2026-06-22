@@ -58,7 +58,7 @@ CREATE TABLE Historial_Medico(
     Enfermedades_Crónicas varchar(200) NOT NULL,
     Detalles VARCHAR(100) NOT NULL,
     Tipo_Sangre VARCHAR(10) NOT NULL,
-    Medicmanetos VARCHAR(200) NOT NULL,
+    Medicamentos VARCHAR(200) NOT NULL,
     Antecedentes VARCHAR(50) NOT NULL,
     FechaDeCreacion DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL
@@ -237,6 +237,31 @@ ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo
 GO
 
 
+use CACES
+CREATE TABLE [dbo].[UsuarioRoles](
+	[Id_Usuario] [int] NOT NULL,
+	[RoleId] [nvarchar](128) NOT NULL,
+ CONSTRAINT [PK_dbo.UsuarioRoles] PRIMARY KEY CLUSTERED 
+(
+	[Id_Usuario] ASC,
+	[RoleId] ASC
+)WITH (PAD_INDEX = OFF, STATISTICS_NORECOMPUTE = OFF, IGNORE_DUP_KEY = OFF, ALLOW_ROW_LOCKS = ON, ALLOW_PAGE_LOCKS = ON, OPTIMIZE_FOR_SEQUENTIAL_KEY = OFF) ON [PRIMARY]
+) ON [PRIMARY]
+GO
+ALTER TABLE [dbo].[UsuarioRoles] WITH CHECK ADD CONSTRAINT [FK_UsuarioRoles_Usuarios] FOREIGN KEY([Id_Usuario])
+REFERENCES [dbo].[Usuarios] ([Id_Usuario])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_Usuarios]
+GO
+ALTER TABLE [dbo].[UsuarioRoles] WITH CHECK ADD CONSTRAINT [FK_UsuarioRoles_AspNetRoles] FOREIGN KEY([RoleId])
+REFERENCES [dbo].[AspNetRoles] ([Id])
+ON DELETE CASCADE
+GO
+ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_AspNetRoles]
+GO
+
+
 
 -- ============================================
 -- INSERTS DE DATOS INICIALES PARA CACES
@@ -285,7 +310,7 @@ INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certifi
 GO
 
 -- HISTORIAL MEDICO
-INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Medicmanetos,Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
+INSERT INTO Historial_Medico (Alergias, Enfermedades_Crónicas, Detalles, Tipo_Sangre, Medicamentos,Antecedentes, FechaDeCreacion, FechaDeModificacion) VALUES
 ('Penicilina', 'Diabetes tipo 2', 'Paciente controlado', 'O+', 'Omeprazol 20mg, Tramadol 100mg', 'Abuelo materno con antecedentes de diabetes tipo 2', GETDATE(), NULL),
 ('Ninguna', 'Hipertensión', 'Paciente bajo control médico', 'A+', 'Ninguno', 'Madre con hipertensión arterial crónica', GETDATE(), NULL),
 ('Aspirina', 'Ninguna', 'Paciente sano', 'B+', 'Cefazolina 1g, Paracetamol 500mg', 'Sin antecedentes familiares de riesgo', GETDATE(), NULL);
@@ -363,8 +388,6 @@ INSERT INTO [dbo].[AspNetUserRoles] ([UserId], [RoleId]) VALUES
 GO
 
 
-ALTER TABLE Usuarios
-ALTER COLUMN Estado TINYINT NOT NULL;
 GO
 
 SELECT DATA_TYPE
