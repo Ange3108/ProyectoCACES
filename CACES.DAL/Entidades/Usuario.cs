@@ -30,8 +30,7 @@ namespace CACES.DAL.Entidades
 
         public byte Estado { get; set; } = 1;
 
-        [Required(ErrorMessage = "La dirección es requerida")]
-        [StringLength(250)]
+      
         public string Direccion { get; set; } = null!;
 
         public string Telefono { get; set; } = null!;
@@ -53,10 +52,12 @@ namespace CACES.DAL.Entidades
 
         public bool EmailConfirmed { get; set; } = false;
 
-        //paciente está mal aquí, pero es para la relación uno a uno, el usuario es el principal y el paciente es el dependiente
+        
         public virtual Paciente? Paciente { get; set; }
 
         public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
+
+        
 
     }
 }

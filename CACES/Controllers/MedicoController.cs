@@ -14,59 +14,83 @@ namespace CACES.Controllers
             _medicoServicio = medicoServicio;
         }
 
-        [Authorize(Roles = "Administrador")]
-        [HttpGet]
-        public async Task<IActionResult> Medicos()
+
+        [AllowAnonymous]
+        public IActionResult Especialistas()
         {
-            var medicos = await _medicoServicio.GetMedicosAsync();
-            return View(medicos);
+            return View("~/Views/Medico/Especialistas.cshtml");
         }
 
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
-        public async Task<IActionResult> Especialistas()
+        public IActionResult Medicos()
         {
-            var medicos = await _medicoServicio.GetMedicosAsync();
-            return View(medicos);
+            return View("~/Views/Medico/Medicos.cshtml");
         }
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public IActionResult RegistrarEspecialista()
+        {
+            return View("~/Views/Medico/RegistrarEspecialista.cshtml");
+        }
+
+        // Acción para mostrar la vista de especialistas activos
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerEspecialistas()
+        {
+            var medicos = await _medicoServicio.GetEspecialistasActivosAsync();
+            return Json(medicos);
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public async Task<IActionResult> GetMedicos()
+        {
+            var resultado = await _medicoServicio.GetMedicosAsync();
+            return Json(resultado);
+
+        }
+
 
         [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> CrearMedico(RegistrarMedicoDTO medicoDto)
         {
-            if (!ModelState.IsValid)
-                return View(medicoDto);
-
-            var resultado = await _medicoServicio.CreateMedicoAsync(medicoDto);
+            if(!ModelState.IsValid)
+            {
+                return BadRequest(ModelState);
+            }
+        
+        var resultado = await _medicoServicio.CreateMedicoAsync(medicoDto);
 
             if (!resultado.EsCorrecto)
             {
                 ModelState.AddModelError(string.Empty, resultado.mensaje ?? "No se pudo crear el médico.");
-                return View(medicoDto);
+                return BadRequest(resultado);
             }
 
-            TempData["Mensaje"] = resultado.mensaje ?? "Médico creado correctamente.";
-            return RedirectToAction("Medicos");
+            return Json(resultado);
         }
-
 
         [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> EditarMedico(int id)
         {
-            var medico = await _medicoServicio.GetMedicoParaEditarAsync(id);
+            var resultado = await _medicoServicio.GetMedicoParaEditarAsync(id);
 
-            if (medico == null)
+            if (!resultado.EsCorrecto)
             {
-                TempData["Error"] = "Médico no encontrado.";
+                TempData["Error"] = resultado.mensaje ?? "Médico no encontrado.";
                 return RedirectToAction("Medicos");
             }
 
-            return View(medico);
+            return View("~/Views/Medico/EditarMedico.cshtml", resultado.Dato);
         }
 
         [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public async Task<IActionResult> EditarMedico(EditarMedicoDTO dto, IFormFile? FotoArchivo)
+        public async Task<IActionResult> EditarMedico(int id,EditarMedicoDTO dto, IFormFile? FotoArchivo)
         {
             if (!ModelState.IsValid)
             {
@@ -84,26 +108,36 @@ namespace CACES.Controllers
                 var nombreArchivo = Guid.NewGuid() + Path.GetExtension(FotoArchivo.FileName);
                 var rutaCompleta = Path.Combine(carpeta, nombreArchivo);
 
-                using (var stream = new FileStream(rutaCompleta, FileMode.Create))
-                {
-                    await FotoArchivo.CopyToAsync(stream);
-                }
-
+                using var stream = new FileStream(rutaCompleta, FileMode.Create);
+                await FotoArchivo.CopyToAsync(stream);
                 dto.Foto = "/imagenes/medicos/" + nombreArchivo;
             }
 
             var resultado = await _medicoServicio.UpdateMedicoConUsuarioAsync(dto);
 
-            if (!resultado)
+            if (!resultado.EsCorrecto)
             {
-                TempData["Error"] = "No se pudo actualizar la información del médico.";
-                return View(dto);
+                return BadRequest(resultado);   
             }
 
-            TempData["Mensaje"] = "La información del médico se actualizó correctamente.";
-            return RedirectToAction("Medicos");
+            return Json(resultado);
         }
 
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public async Task<IActionResult> DesactivarMedico(int id)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
         
+        var resultado = await _medicoServicio.DesactivarMedicoAsync(id);
+            if(!resultado.EsCorrecto) 
+            {
+                return NotFound(resultado);
+             }
+            return Json(resultado);
+
+
+        }
     }
 }

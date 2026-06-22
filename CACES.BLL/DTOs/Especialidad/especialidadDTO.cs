@@ -7,7 +7,7 @@ namespace CACES.BLL.DTOs.Especialidad
 {
     public class especialidadDTO
     {
-        public int Id { get; set; }
+        public int IdEspecialidad { get; set; }
         [Required(ErrorMessage = "El nombre es requerido")]
         [StringLength(100)]
         public string Nombre { get; set; } = null!;
@@ -17,7 +17,7 @@ namespace CACES.BLL.DTOs.Especialidad
 
         [Required(ErrorMessage = "Porfavor elige un icono para identificar la especialidad")]
         public String Icono { get; set; } = null!;
-        public bool Estado { get; set; } = true;
+        public bool Estado { get; set; }
         public DateTime FechaDeRegistro { get; set; }
 
 

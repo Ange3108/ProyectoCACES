@@ -443,3 +443,366 @@ body {
     background: linear-gradient(135deg, #1f3c88, #4fc3f7);
     color: white;
 }
+
+/* ==========================================================
+   Directorio de Especialidades — sistema "Atlas Clínico"
+   Listado y Detalle de especialidades
+   ========================================================== */
+
+.directory-eyebrow,
+.section-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.6rem;
+    font-family: "Manrope", sans-serif;
+    font-size: 0.75rem;
+    font-weight: 700;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: #049DD9;
+    margin-bottom: 0.5rem;
+}
+
+    .directory-eyebrow::before,
+    .section-eyebrow::before {
+        content: "";
+        width: 22px;
+        height: 2px;
+        background: #049DD9;
+        display: inline-block;
+    }
+
+.directory-header {
+    margin-bottom: 0.5rem;
+}
+
+.directory-title {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    color: #12364f;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    line-height: 1.1;
+    margin: 0.4rem 0 1rem;
+}
+
+.directory-intro {
+    max-width: 46rem;
+    color: #5b6b79;
+    font-size: 1.05rem;
+    line-height: 1.6;
+}
+
+.directory-rule {
+    border: none;
+    border-top: 1px solid rgba(18, 54, 79, 0.12);
+    margin: 2.5rem 0;
+}
+
+/* listado tipo atlas */
+.directory-index {
+    display: flex;
+    flex-direction: column;
+}
+
+.directory-entry {
+    display: grid;
+    grid-template-columns: 4.5rem 3.25rem 1fr auto;
+    align-items: center;
+    gap: 1.5rem;
+    padding: 1.6rem 0;
+    border-bottom: 1px solid rgba(18, 54, 79, 0.1);
+    text-decoration: none;
+    color: inherit;
+    transition: padding-left 0.25s ease;
+}
+
+    .directory-entry:first-child {
+        border-top: 1px solid rgba(18, 54, 79, 0.1);
+    }
+
+    .directory-entry:hover {
+        padding-left: 0.4rem;
+    }
+
+        .directory-entry:hover .directory-entry-link {
+            color: #049DD9;
+        }
+
+        .directory-entry:hover .directory-entry-arrow {
+            transform: translateX(4px);
+            opacity: 1;
+        }
+
+    .directory-entry:focus-visible {
+        outline: 2px solid #049DD9;
+        outline-offset: 4px;
+        border-radius: 6px;
+    }
+
+.directory-number {
+    font-family: "Playfair Display", serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: #27418C;
+}
+
+.directory-icon,
+.chapter-icon {
+    border-radius: 50%;
+    background: #72CEF2;
+    color: #fff;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.directory-icon {
+    width: 3.25rem;
+    height: 3.25rem;
+    font-size: 1.25rem;
+}
+
+.directory-entry-body h3 {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    font-size: 1.35rem;
+    color: #12364f;
+    margin: 0 0 0.3rem;
+}
+
+.directory-entry-body p {
+    color: #5b6b79;
+    margin: 0;
+    font-size: 0.96rem;
+    max-width: 38rem;
+}
+
+.directory-entry-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    font-weight: 700;
+    font-size: 0.85rem;
+    letter-spacing: 0.04em;
+    color: #27418C;
+    white-space: nowrap;
+}
+
+.directory-entry-arrow {
+    transition: transform 0.25s ease, opacity 0.25s ease;
+    opacity: 0.6;
+}
+
+@media (max-width: 767.98px) {
+    .directory-entry {
+        grid-template-columns: 2.75rem 1fr;
+        grid-template-areas:
+            "num icon"
+            "body body"
+            "link link";
+        row-gap: 0.6rem;
+    }
+
+    .directory-number {
+        grid-area: num;
+        font-size: 1.2rem;
+    }
+
+    .directory-icon {
+        grid-area: icon;
+        justify-self: end;
+        width: 2.6rem;
+        height: 2.6rem;
+        font-size: 1rem;
+    }
+
+    .directory-entry-body {
+        grid-area: body;
+    }
+
+    .directory-entry-link {
+        grid-area: link;
+    }
+}
+
+/* cabecera de "capítulo" — detalle de especialidad */
+.back-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #27418C;
+    text-decoration: none;
+}
+
+    .back-link:hover {
+        color: #049DD9;
+    }
+
+    .back-link:focus-visible {
+        outline: 2px solid #049DD9;
+        outline-offset: 3px;
+    }
+
+.chapter-header {
+    display: flex;
+    align-items: flex-start;
+    gap: 1.5rem;
+}
+
+.chapter-icon {
+    width: 4.5rem;
+    height: 4.5rem;
+    font-size: 1.9rem;
+}
+
+.chapter-title {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    color: #12364f;
+    font-size: clamp(2rem, 4vw, 2.8rem);
+    line-height: 1.15;
+    margin: 0.2rem 0 0.6rem;
+}
+
+.chapter-lead {
+    color: #5b6b79;
+    font-size: 1.05rem;
+    line-height: 1.65;
+    max-width: 46rem;
+}
+
+.section-heading {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    color: #12364f;
+    font-size: 1.7rem;
+    margin: 0 0 1.6rem;
+}
+
+/* procedimientos — listado tipo expediente */
+.ledger {
+    border-top: 1px solid rgba(18, 54, 79, 0.12);
+}
+
+.ledger-row {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1.1rem 0;
+    border-bottom: 1px solid rgba(18, 54, 79, 0.12);
+}
+
+.ledger-mark {
+    width: 1.6rem;
+    height: 1.6rem;
+    border-radius: 50%;
+    border: 1.5px solid #72CEF2;
+    color: #049DD9;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.85rem;
+    flex-shrink: 0;
+    margin-top: 0.15rem;
+}
+
+.ledger-name {
+    font-weight: 700;
+    color: #12364f;
+    margin: 0;
+}
+
+.ledger-desc {
+    color: #5b6b79;
+    margin: 0.2rem 0 0;
+    font-size: 0.93rem;
+}
+
+.empty-note {
+    border: 1px dashed rgba(18, 54, 79, 0.25);
+    border-radius: 12px;
+    padding: 1.4rem;
+    color: #5b6b79;
+    font-size: 0.95rem;
+}
+
+/* directorio de especialistas */
+.staff-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(15.5rem, 1fr));
+    gap: 1.75rem;
+}
+
+.staff-card {
+    text-align: left;
+}
+
+.staff-photo {
+    width: 88px;
+    height: 88px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 2px solid #72CEF2;
+    margin-bottom: 0.9rem;
+}
+.staff-photo-placeholder {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    background: #E9F4FC;
+    color: #72CEF2;
+    font-size: 2rem;
+}
+
+.staff-name {
+    font-family: "Playfair Display", serif;
+    font-weight: 700;
+    font-size: 1.1rem;
+    color: #12364f;
+    margin: 0 0 0.15rem;
+}
+
+.staff-role {
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: #049DD9;
+    margin: 0 0 0.6rem;
+}
+
+.staff-phone {
+    color: #5b6b79;
+    font-size: 0.92rem;
+    margin: 0 0 0.9rem;
+}
+
+.staff-link {
+    display: inline-block;
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: #27418C;
+    text-decoration: none;
+    border-bottom: 1.5px solid #72CEF2;
+    padding-bottom: 2px;
+}
+
+    .staff-link:hover {
+        color: #049DD9;
+        border-color: #049DD9;
+    }
+
+    .staff-link:focus-visible {
+        outline: 2px solid #049DD9;
+        outline-offset: 3px;
+    }
+
+@media (prefers-reduced-motion: reduce) {
+    .directory-entry,
+    .directory-entry-arrow {
+        transition: none !important;
+    }
+}

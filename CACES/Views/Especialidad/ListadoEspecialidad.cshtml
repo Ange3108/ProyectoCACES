@@ -1,0 +1,106 @@
+﻿@using CACES.BLL.DTOs.Especialidad
+@model IEnumerable<especialidadDTO>
+
+@{
+    ViewData["Title"] = "Registros de Especialidades";
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header banner-header p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 fw-bold">
+                        <i class="bi bi-people-fill me-2"></i>Gestión de Especialidades
+                    </h3>
+                    <p class="mb-0 opacity-75">
+                        Consulte, registre y administre los especialidades del sistema.
+                    </p>
+                </div>
+                <a class="btn btn-light fw-semibold" asp-action="RegistroEspecialidad" asp-controller="Especialidad">
+                    + Registrar Especialidad
+                </a>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <p class="text-muted mb-3">
+                Gestión de especialidades del sistema
+            </p>
+
+            <div class="table-responsive">
+                <table id="tbEspecialidades" class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Descripción</th>
+                            <th>Icono</th>
+                            <th>Fecha de Registro</th>
+                            <th>Estado</th>
+                    
+
+                            <th style="width: 180px;">Acciones</th>
+                        </tr>
+                    </thead>
+
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="modal fade" id="editarEspecialidadModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+            <form id="formEditarEspecialidad" asp-controller="Especialidad"
+                  asp-action="ActualizarEspecialidad"
+                  method="post">
+                @Html.AntiForgeryToken()
+
+                <input type="hidden" id="IdEspecialidad" name="id" />
+
+                <div class="modal-body">
+
+                    <div class="row g-3">
+                        <div class="col-12 col-md-6">
+                            <label for="nombreEspecialidad" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Ej. Endoscopia" required>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="iconoEspecialidad" class="form-label">Ícono</label>
+                            <input type="text" class="form-control" id="Icono" name="Icono" placeholder="bi bi-heart-fill" required>
+                        </div>
+                        <div class="col-12">
+                            <label for="descripcionEspecialidad" class="form-label">Descripcion</label>
+                            <textarea class="form-control" id="Descripcion" name="Descripcion" rows="4" placeholder="Describe la especialidad" required></textarea>
+                        </div>
+                        <div class="col-12 col-md-6">
+                            <label for="estadoEspecialidad" class="form-label">Estado</label>
+                            <select class="form-select" id="Estado" name="Estado" required>
+                                <option value="">Selecciona una opción</option>
+                                <option value="true">Activa</option>
+                                <option value="false">Inactiva</option>
+                            </select>
+                        </div>
+
+                    </div>
+                   
+                </div>
+
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">
+                        Guardar cambios
+                    </button>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+    <script src="~/js/ListadoEspecialidad.js" asp-append-version="true"></script>
+}

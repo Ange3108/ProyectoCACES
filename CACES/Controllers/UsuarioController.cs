@@ -15,6 +15,23 @@ namespace CACES.Controllers
             _usuarioServicio = usuarioServicio;
         }
 
+
+        //Mostrar vista administrador
+        [Authorize(Roles = "Administrador")]
+        public IActionResult Usuarios()
+        {
+            return View("~/Views/Usuarios/Usuarios.cshtml");
+        }
+
+        //Mostrar vista administrador
+        [Authorize(Roles = "Administrador")]
+
+        public async Task<IActionResult> ObtenerUsuarios()
+        {
+            var usuarios = await _usuarioServicio.GetUsuariosAsync();
+            return Json(usuarios);
+        }
+
         [HttpGet]
         public IActionResult RegistroUsuario()
         {
@@ -25,11 +42,13 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> RegistroUsuario(RegistrarUsuarioDTO registrarUsuarioDTO)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var UsuarioCreado = await _usuarioServicio.CrearUsuarioAsync(registrarUsuarioDTO);
             if (!UsuarioCreado.EsCorrecto)
             {
                 ModelState.AddModelError(string.Empty, UsuarioCreado.mensaje);
-                return Ok(UsuarioCreado);
+                return BadRequest(UsuarioCreado);
             }
 
             // Verificar si el usuario que está operando en la sesión es Administrador
@@ -49,7 +68,8 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> ActualizarUsuario(int id, ActualizarUsuarioDTO actualizarUsuarioDTO)
         {
-
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var usuarioActualizado = await _usuarioServicio.ActualizarUsuarioAsync(id, actualizarUsuarioDTO);
 
             return Json(usuarioActualizado);
@@ -57,35 +77,16 @@ namespace CACES.Controllers
         }
 
         //Metodo Desactivar
-        //[Authorize(Roles = "Paciente")]
         [HttpPost]
         public async Task<IActionResult> DesactivarUsuario(int id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var resultado = await _usuarioServicio.DesactivarUsuarioAsync(id);
             return Json(resultado);
 
         }
 
-
-        //Mostrar vista administrador
-        [Authorize(Roles = "Administrador")]
-
-
-        public IActionResult Usuarios()
-        {
-            return View("~/Views/Usuarios/Usuarios.cshtml");
-        }
-
-
-
-        //Mostrar vista administrador
-        [Authorize(Roles = "Administrador")]
-
-        public async Task<IActionResult> ObtenerUsuarios()
-        {
-            var usuarios = await _usuarioServicio.GetUsuariosAsync();
-            return Json(usuarios);
-        }
 
     }
 }

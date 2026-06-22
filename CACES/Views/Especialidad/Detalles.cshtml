@@ -1,0 +1,93 @@
+﻿@using CACES.BLL.DTOs.Especialidad
+@model mostrarDetalleEspecialidadDTO
+
+@{
+    ViewData["Title"] = Model.Nombre;
+}
+
+<section class="container py-5">
+
+    <a asp-area="" asp-controller="Especialidad" asp-action="Especialidades" class="back-link mb-4">
+        <i class="bi bi-arrow-left"></i> Volver al directorio
+    </a>
+
+    <header class="chapter-header mt-4 mb-5">
+        <span class="chapter-icon">
+            <i class="@Model.Icono"></i>
+        </span>
+        <div>
+            <span class="directory-eyebrow">Especialidad</span>
+            <h1 class="chapter-title">@Model.Nombre</h1>
+            <p class="chapter-lead">@Model.Descripcion</p>
+        </div>
+    </header>
+
+    <hr class="directory-rule" />
+
+    <section class="mb-5">
+        <span class="section-eyebrow">Atención disponible</span>
+        <h2 class="section-heading">Procedimientos</h2>
+
+        @*
+        @if (Model.Procedimientos != null && Model.Procedimientos.Any())
+        {
+            <div class="ledger">
+                @foreach (var procedimiento in Model.Procedimientos)
+                {
+                    <div class="ledger-row">
+                        <span class="ledger-mark"><i class="bi bi-plus-lg"></i></span>
+                        <div>
+                            <p class="ledger-name">@procedimiento.Nombre</p>
+                            @if (!string.IsNullOrWhiteSpace(procedimiento.Descripcion))
+                            {
+                                <p class="ledger-desc">@procedimiento.Descripcion</p>
+                            }
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="empty-note">Todavía no hay procedimientos registrados para esta especialidad.</p>
+        }
+        *@
+    </section>
+
+    <section>
+        <span class="section-eyebrow">Equipo médico</span>
+        <h2 class="section-heading">Especialistas</h2>
+
+        @if (Model.Medicos != null && Model.Medicos.Any())
+        {
+            <div class="staff-grid">
+                @foreach (var medico in Model.Medicos)
+                {
+                    <div class="staff-card">
+                        @if (!string.IsNullOrWhiteSpace(medico.Foto))
+                        {
+                            <img src="@medico.Foto" alt="@medico.Nombres @medico.PrimerApellido" class="staff-photo" />
+                        }
+                        else
+                        {
+                            <span class="staff-photo staff-photo-placeholder"><i class="bi bi-person-fill"></i></span>
+                        }
+                        <p class="staff-role">Especialista</p>
+                        <h3 class="staff-name">Dr(a). @medico.Nombres @medico.PrimerApellido @medico.SegundoApellido</h3>
+                        <p class="staff-phone"><i class="bi bi-telephone"></i> @medico.Telefono</p>
+
+                        @* Ajusta controller/action si tu ruta de perfil de médico es distinta *@
+                        <a asp-area="" asp-controller="Medico" asp-action="Perfil" asp-route-id="@medico.IdMedico" class="staff-link">
+                            Ver perfil
+                        </a>
+                    </div>
+                }
+            </div>
+        }
+        else
+        {
+            <p class="empty-note">Todavía no hay médicos asignados a esta especialidad.</p>
+        }
+    </section>
+
+</section>

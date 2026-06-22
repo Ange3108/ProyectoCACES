@@ -36,36 +36,6 @@ namespace CACES.DAL.Repositorios.Usuario
         public async Task<Entidades.Usuario> GetUsuarioByIdAsync(int id)
         {
 
-
-            /*
-             * Mover esto a la logiva de paciente, no es responsabilidad del repositorio de usuario traer la receta, ademas de que esta consulta es muy pesada y puede afectar el rendimientoreturn await _context.Usuarios
-                var usuario= await _context.Usuarios
-                    .Include(u => u.Paciente)
-                    .ThenInclude(p => p.HistorialMedico)
-                    .Include(u => u.Paciente)
-                    .FirstOrDefaultAsync(u => u.IdUsuario == id);
-                if (usuario?.Paciente != null)
-                {
-                    var ultimaReceta = await (from cita in _context.Citas
-                                              join receta in _context.Set<Receta>() on cita.IdCita equals receta.IdCita
-                                              where cita.IdPaciente == usuario.Paciente.IdPaciente
-                                              orderby cita.IdCita descending // Trae la última cita registrada
-                                              select receta)
-                                             .FirstOrDefaultAsync();
-
-                    if (ultimaReceta != null)
-                    {
-                        usuario.Paciente.Cita = new Cita
-                        {
-                            IdCita = ultimaReceta.IdCita,
-                            IdPaciente = usuario.Paciente.IdPaciente,
-                            Receta = ultimaReceta
-                        };
-                    }
-                }
-
-                return usuario;
-            */
             return await _context.Usuarios.FirstOrDefaultAsync(u => u.IdUsuario == id);
         }
       

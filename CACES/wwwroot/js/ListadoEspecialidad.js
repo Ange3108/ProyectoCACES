@@ -1,6 +1,6 @@
 ﻿(() => {
 
-    const Usuario = {
+    const Especialidad = {
 
         tabla: null,
 
@@ -11,39 +11,23 @@
 
         inicializarTabla() {
 
-            this.tabla = $('#tbUsuarios').DataTable({
+            this.tabla = $('#tbEspecialidades').DataTable({
 
                 ajax: {
-                    url: '/Usuario/ObtenerUsuarios',
+                    url: '/Especialidad/ObtenerListadoEspecialidades',
                     type: 'GET',
                     dataSrc: 'dato'
                 },
 
                 columns: [
 
-                    {
-                        data: null,
-                        render: function (data) {
-                            return `${data.nombres} ${data.primerApellido} ${data.segundoApellido}`;
-                        }
-                    },
+                    
+                    { data: 'nombre' },
+                    { data: 'descripcion' },
+                    { data: 'icono' },
+                    { data: 'fechaDeRegistro' },
 
-                    { data: 'correoElectronico' },
-                    { data: 'dui' },
-                    { data: 'telefono' },
-                    { data: 'direccion' },
-
-                    {
-                        data: 'nacimiento',
-                        render: function (data) {
-
-                            if (!data)
-                                return '';
-
-                            return data.substring(0, 10);
-                        }
-                    },
-
+                    
                     {
                         data: 'estado',
                         render: function (data) {
@@ -57,7 +41,7 @@
 
                     {
                         data: null,
-                       
+
                         orderable: false,
                         render: function (data, type, row) {
 
@@ -65,14 +49,10 @@
                                 <button
                                     type="button"
                                     class="btn btn-sm btn-warning btnEditar"
-                                    data-id="${row.idUsuario}"
-                                    data-nombre="${row.nombres}"
-                                    data-primerapellido="${row.primerApellido}"
-                                    data-segundoapellido="${row.segundoApellido}"
-                                    data-correo="${row.correoElectronico}"
-                                    data-telefono="${row.telefono}"
-                                    data-direccion="${row.direccion}"
-                                    data-nacimiento="${row.nacimiento}"
+                                    data-id="${row.idEspecialidad}"
+                                    data-nombre="${row.nombre}"
+                                    data-icono="${row.icono}"
+                                    data-descripcion="${row.descripcion}"
                                     data-estado="${row.estado}">
                                     <i class="bi bi-pencil"></i>
                                 </button>
@@ -80,8 +60,8 @@
                                 <button
                                     type="button"
                                     class="btn btn-sm btn-danger desactivar"
-                                    data-id="${row.idUsuario}">
-                                    <i class="bi bi-person-x-fill"></i>
+                                    data-id="${row.idEspecialidad}">
+                                    <i class="bi bi-trash"></i>
                                 </button>
                             `;
                         }
@@ -99,33 +79,26 @@
             // Abrir modal editar
             $(document).on('click', '.btnEditar', function () {
 
-                $('#IdUsuario').val($(this).data('id'));
-                $('#Nombres').val($(this).data('nombre'));
-                $('#PrimerApellido').val($(this).data('primerapellido'));
-                $('#SegundoApellido').val($(this).data('segundoapellido'));
-                $('#CorreoElectronico').val($(this).data('correo'));
-                $('#Telefono').val($(this).data('telefono'));
-                $('#Direccion').val($(this).data('direccion'));
+                $('#IdEspecialidad').val($(this).data('id'));
+                $('#Nombre').val($(this).data('nombre'));
+                $('#Icono').val($(this).data('icono'));
+                $('#Descripcion').val($(this).data('descripcion'));
 
-                const nacimiento = $(this).data('nacimiento');
 
-                if (nacimiento) {
-                    $('#Nacimiento').val(nacimiento.substring(0, 10));
-                }
 
                 $('#Estado').val($(this).data('estado'));
 
                 const modal = new bootstrap.Modal(
-                    document.getElementById('editarUsuarioModal')
+                    document.getElementById('editarEspecialidadModal')
                 );
 
                 modal.show();
-     
 
-               
+
+
             });
 
-            $('#formEditarUsuario').on('submit', function (e) {
+            $('#formEditarEspecialidad').on('submit', function (e) {
 
                 e.preventDefault();
 
@@ -145,10 +118,10 @@
                             });
 
                             bootstrap.Modal.getInstance(
-                                document.getElementById('editarUsuarioModal')
+                                document.getElementById('editarEspecialidadModal')
                             ).hide();
 
-                            $('#tbUsuarios').DataTable().ajax.reload();
+                            $('#tbEspecialidades').DataTable().ajax.reload();
                         }
                         else {
 
@@ -171,14 +144,14 @@
                 });
             });
 
-            // Desactivar usuario
+            // Desactivar especialidad
             $(document).on('click', '.desactivar', function () {
 
                 const id = $(this).data('id');
 
                 Swal.fire({
                     title: '¿Estás seguro?',
-                    text: 'Se desactivará el usuario',
+                    text: 'No podrás revertir esta acción',
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonText: 'Sí, desactivar',
@@ -188,25 +161,25 @@
                     if (result.isConfirmed) {
 
                         $.ajax({
-                            url: `/Usuario/DesactivarUsuario/${id}`,
+                            url: `/Especialidad/DesactivarEspecialidad/${id}`,
                             type: 'POST',
 
                             success: function (respuestaErrores) {
 
                                 Swal.fire({
-                                    title: 'Usuario eliminado correctamente',
+                                    title: 'Especialidad eliminado correctamente',
                                     text: respuestaErrores.mensaje,
                                     icon: 'success'
                                 });
 
-                                $('#tbUsuarios').DataTable().ajax.reload();
+                                $('#tbEspecialidades').DataTable().ajax.reload();
                             },
 
                             error: function () {
 
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'No fue posible desactivar el usuario.',
+                                    text: 'No fue posible desactivar el especialidad.',
                                     icon: 'error'
                                 });
                             }
@@ -218,7 +191,7 @@
     };
 
     $(function () {
-        Usuario.init();
+        Especialidad.init();
     });
 
 })();
