@@ -7,8 +7,8 @@ namespace CACES.BLL.Servicios.Paquete
 {
     public class PaqueteServicio : IPaqueteServicio
     {
-        public readonly IPaqueteRepositorio _paqueteRepositorio;
-        public readonly IMapper _mapper;
+        private readonly IPaqueteRepositorio _paqueteRepositorio;
+        private readonly IMapper _mapper;
 
         public PaqueteServicio(IPaqueteRepositorio paqueteRepositorio, IMapper mapper)
         {
@@ -23,7 +23,8 @@ namespace CACES.BLL.Servicios.Paquete
             try
             {
                 var paquete = _mapper.Map<DAL.Entidades.Paquete>(registrarPaqueteDto);
-
+                paquete.FechaDeRegistro = DateTime.Now;
+                paquete.Estado = true;
 
                 bool resultado = await _paqueteRepositorio.CreatePaqueteAsync(paquete);
 
@@ -31,7 +32,7 @@ namespace CACES.BLL.Servicios.Paquete
                 {
                     respuesta.EsCorrecto = true;
                     respuesta.mensaje = "Paquete registrado exitosamente.";
-                    respuesta.Dato = registrarPaqueteDto;
+                    respuesta.Dato = _mapper.Map<PaqueteDTO>(paquete);
                 }
                 else
                 {
@@ -44,9 +45,9 @@ namespace CACES.BLL.Servicios.Paquete
             {
                 respuesta.EsCorrecto = false;
                 respuesta.mensaje = $"Error al crear el paquete: {ex.Message}";
-                respuesta.codigo = 500; // Código de error genérico
-
+                respuesta.codigo = 500;
             }
+
             return respuesta;
         }
 
@@ -66,8 +67,9 @@ namespace CACES.BLL.Servicios.Paquete
         {
             try
             {
-                var honesty = await _paqueteRepositorio.GetPaqueteByIdAsync(id);
-                if (honesty == null)
+                var paquete = await _paqueteRepositorio.GetPaqueteByIdAsync(id);
+
+                if (paquete == null)
                 {
                     return new respuestaErrores<PaqueteDTO>
                     {
@@ -77,9 +79,9 @@ namespace CACES.BLL.Servicios.Paquete
                     };
                 }
 
-                _mapper.Map(registrarPaqueteDTO, honesty);
+                _mapper.Map(registrarPaqueteDTO, paquete);
 
-                bool resultado = await _paqueteRepositorio.UpdatePaqueteAsync(honesty);
+                bool resultado = await _paqueteRepositorio.UpdatePaqueteAsync(paquete);
 
                 if (resultado)
                 {
@@ -87,7 +89,7 @@ namespace CACES.BLL.Servicios.Paquete
                     {
                         EsCorrecto = true,
                         mensaje = "Paquete actualizado exitosamente",
-                        Dato = _mapper.Map<PaqueteDTO>(honesty)
+                        Dato = _mapper.Map<PaqueteDTO>(paquete)
                     };
                 }
 
@@ -110,9 +112,9 @@ namespace CACES.BLL.Servicios.Paquete
         public async Task<respuestaErrores<PaqueteDTO>> GetPaquetePorIdAsync(int id)
         {
             var respuesta = new respuestaErrores<PaqueteDTO>();
-            var honesty = await _paqueteRepositorio.GetPaqueteByIdAsync(id);
+            var paquete = await _paqueteRepositorio.GetPaqueteByIdAsync(id);
 
-            if (honesty == null)
+            if (paquete == null)
             {
                 respuesta.EsCorrecto = false;
                 respuesta.mensaje = "Paquete no encontrado";
@@ -121,9 +123,8 @@ namespace CACES.BLL.Servicios.Paquete
             }
 
             respuesta.EsCorrecto = true;
-            respuesta.Dato = _mapper.Map<PaqueteDTO>(honesty);
+            respuesta.Dato = _mapper.Map<PaqueteDTO>(paquete);
             return respuesta;
         }
-
     }
 }
