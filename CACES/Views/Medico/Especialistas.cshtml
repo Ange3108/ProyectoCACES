@@ -1,113 +1,29 @@
-﻿@model List<CACES.DAL.Entidades.Medico>
-
-@{
+﻿@{
     ViewData["Title"] = "Especialistas";
 }
 
 <section class="container py-5">
 
     <div class="text-center mb-5">
-        <h1 class="fw-bold text-primary">Nuestros Especialistas</h1>
-        <p class="text-muted">
+        <span class="directory-eyebrow">Equipo médico</span>
+        <h1 class="directory-title">Nuestros Especialistas</h1>
+        <p class="directory-intro">
             Conozca el equipo médico disponible para brindarle atención profesional y personalizada.
         </p>
     </div>
 
-    @if (Model != null && Model.Any())
-    {
-        <div class="row g-4">
-            @foreach (var medico in Model)
-            {
-                <div class="col-md-4">
-                    <div class="card h-100 shadow-sm border-0 rounded-4 overflow-hidden">
+    <hr class="directory-rule" />
 
-                        <div class="text-center pt-4">
-                            <img src="@medico.Usuario.Foto"
-                                 alt="Foto del especialista"
-                                 class="rounded-circle border shadow-sm"
-                                 style="width:130px;height:130px;object-fit:cover;" />
-                        </div>
-
-                        <div class="card-body text-center p-4">
-                            <h5 class="fw-bold mb-1">
-                                @medico.Usuario.Nombres @medico.Usuario.PrimerApellido @medico.Usuario.SegundoApellido
-                            </h5>
-
-                            <p class="text-primary fw-semibold mb-2">
-                                Especialidad #@medico.IdEspecialidad
-                            </p>
-
-                            <p class="text-muted mb-2">
-                                <i class="bi bi-award me-1"></i>
-                                @medico.Experiencia años de experiencia
-                            </p>
-
-                            <p class="small text-muted">
-                                @medico.Certificaciones
-                            </p>
-
-                            <span class="badge bg-success rounded-pill px-3 py-2">
-                                Disponible
-                            </span>
-                        </div>
-
-                    </div>
-                </div>
-            }
-        </div>
-    }
-    else
-    {
-        <div class="alert alert-info text-center rounded-3">
-            No hay especialistas registrados actualmente.
-        </div>
-    }
-
-</section>
-<section class="mt-5 mb-5">
-    <h3 class="text-center fw-bold text-primary mb-4">
-        ¿Quieres formar parte de nuestro equipo?
-    </h3>
-
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-6">
-            <form class="p-4 bg-white rounded-4 shadow-sm">
-                <h5 class="mb-4 fw-bold">Formulario de Inscripción para Especialistas</h5>
-
-                <div class="mb-3">
-                    <label for="nombre" class="form-label">Nombre Completo</label>
-                    <input type="text" class="form-control rounded-3" id="nombre" name="nombre" placeholder="Tu nombre" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="email" class="form-label">Correo Electrónico</label>
-                    <input type="email" class="form-control rounded-3" id="email" name="email" placeholder="tu@correo.com" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="telefono" class="form-label">Teléfono</label>
-                    <input type="tel" class="form-control rounded-3" id="telefono" name="telefono" placeholder="(+503) 123-4567" required>
-                </div>
-
-                <div class="mb-3">
-                    <label for="especialidad" class="form-label">Especialidad de Interés</label>
-                    <select class="form-select rounded-3" id="especialidad" name="especialidad" required>
-                        <option value="">Selecciona una especialidad</option>
-                        <option value="endoscopia">Endoscopia</option>
-                        <option value="laparoscopia">Laparoscopia</option>
-                        <option value="fisioterapia">Fisioterapia</option>
-                    </select>
-                </div>
-
-                <div class="mb-3">
-                    <label for="cv" class="form-label">Curriculum Vitae</label>
-                    <input type="file" class="form-control rounded-3" id="cv" name="cv" accept=".pdf,.doc,.docx" required>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100 rounded-3">
-                    Enviar
-                </button>
-            </form>
+    <div id="contenedorEspecialistas">
+        <div class="text-center py-5">
+            <div class="spinner-border text-primary" role="status">
+                <span class="visually-hidden">Cargando...</span>
+            </div>
         </div>
     </div>
+
 </section>
+
+@section Scripts {
+    <script src="~/js/Especialistas.js" asp-append-version="true"></script>
+}

@@ -1,5 +1,6 @@
 ﻿using CACES.DAL.DBContext;
 using CACES.DAL.Entidades;
+using CACES.DAL.Entidades.Roles;
 using Microsoft.EntityFrameworkCore;
 
 namespace CACES.DAL.Repositorios.Medicos
@@ -17,6 +18,7 @@ namespace CACES.DAL.Repositorios.Medicos
         {
             return await _context.Medicos
                 .Include(x => x.Usuario)
+                .Include (x=> x.Especialidad)
                 .ToListAsync();
         }
 
@@ -26,6 +28,19 @@ namespace CACES.DAL.Repositorios.Medicos
                 .Include(x => x.Usuario)
                 .FirstOrDefaultAsync(x => x.IdMedico == id);
         }
+        
+           public async Task<List<Medico>> GetEspecialistasActivosAsync()
+        {
+            //filtra el estado verdadero del medico
+            return await _context.Medicos
+                .Include(x => x.Usuario)
+                .Include(x => x.Especialidad)
+                .Where(m => m.Usuario.Estado == true &&
+                            m.Especialidad != null &&
+                            m.Especialidad.Estado == true)
+                .ToListAsync();
+        }
+        
 
         public async Task<Medico?> GetMedicoConUsuarioByIdAsync(int id)
         {
@@ -52,7 +67,6 @@ namespace CACES.DAL.Repositorios.Medicos
                 return false;
 
             existing.IdEspecialidad = medico.IdEspecialidad;
-            existing.IdUsuario = medico.IdUsuario;
             existing.Experiencia = medico.Experiencia;
             existing.Certificaciones = medico.Certificaciones;
 
@@ -83,43 +97,78 @@ namespace CACES.DAL.Repositorios.Medicos
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> DeleteMedicoAsync(int id)
+        public async Task<bool> DesactivarMedicoAsync(int id)
         {
             var medico = await _context.Medicos
+                .Include(x => x.Usuario)
                 .FirstOrDefaultAsync(x => x.IdMedico == id);
 
             if (medico == null)
                 return false;
 
-            var idUsuario = medico.IdUsuario;
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                // Se desvincula la receta de la cita
+                await _context.Database.ExecuteSqlRawAsync(
+                    "UPDATE Recetas SET Id_Cita = NULL WHERE Id_Cita IN (SELECT Id_Cita FROM Citas WHERE Id_Medico = {0})", id);
 
-            await _context.Database.ExecuteSqlRawAsync(
-                "DELETE FROM Recetas WHERE Id_Cita IN (SELECT Id_Cita FROM Citas WHERE Id_Medico = {0})", id);
+                // Citas sí se elimina físicamente
+                await _context.Database.ExecuteSqlRawAsync(
+                    "DELETE FROM Citas WHERE Id_Medico = {0}", id);
 
-            await _context.Database.ExecuteSqlRawAsync(
-                "DELETE FROM Citas WHERE Id_Medico = {0}", id);
+                // El resto solo se desactiva
+                await _context.Database.ExecuteSqlRawAsync(
+                    "UPDATE Cirugias SET Estado = 0 WHERE Id_Medico = {0}", id);
 
-            await _context.Database.ExecuteSqlRawAsync(
-                "DELETE FROM Cirugias WHERE Id_Medico = {0}", id);
+                await _context.Database.ExecuteSqlRawAsync(
+                    "UPDATE Precios SET Estado = 0 WHERE Id_Medico = {0}", id);
 
-            await _context.Database.ExecuteSqlRawAsync(
-                "DELETE FROM Precios WHERE Id_Medico = {0}", id);
+                await _context.Database.ExecuteSqlRawAsync(
+                    "UPDATE HorariosDisponibles SET Estado = 0 WHERE Id_Medico = {0}", id);
 
-            await _context.Database.ExecuteSqlRawAsync(
-                "DELETE FROM HorariosDisponibles WHERE Id_Medico = {0}", id);
+                medico.Usuario.Estado = false;
 
-            await _context.Database.ExecuteSqlRawAsync(
-                "DELETE FROM AspNetUserRoles WHERE UserId = {0}", idUsuario.ToString());
-
-            _context.Medicos.Remove(medico);
-
-            var usuario = await _context.Usuarios
-                .FirstOrDefaultAsync(x => x.IdUsuario == idUsuario);
-
-            if (usuario != null)
-                _context.Usuarios.Remove(usuario);
-
-            return await _context.SaveChangesAsync() > 0;
+                var ok = await _context.SaveChangesAsync() > 0;
+                await transaction.CommitAsync();
+                return ok;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
         }
+
+        public async Task<bool> CreateMedicoConUsuarioAsync(Entidades.Usuario usuario, Medico medico)
+        {
+            await using var transaction = await _context.Database.BeginTransactionAsync();
+            try
+            {
+                await _context.Usuarios.AddAsync(usuario);
+                await _context.SaveChangesAsync(); // genera el IdUsuario
+
+                medico.IdUsuario = usuario.IdUsuario; // ahora sí lo tienes
+                await _context.Medicos.AddAsync(medico);
+
+                await _context.UsuarioRoles.AddAsync(new UsuarioRoles
+                {
+                    IdUsuario = usuario.IdUsuario,
+                    RoleId = "2"
+                });
+
+                await _context.SaveChangesAsync();
+                await transaction.CommitAsync();
+                return true;
+            }
+            catch
+            {
+                await transaction.RollbackAsync();
+                throw;
+            }
+        }
+        
+
+       
     }
-}
+    }

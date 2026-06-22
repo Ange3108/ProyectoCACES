@@ -23,6 +23,7 @@ namespace CACES.Controllers
             return View("~/Views/Especialidad/Especialidades.cshtml");
         }
 
+        [Authorize(Roles = "Administrador")]
         public IActionResult ListadoEspecialidad()
         {
             return View("~/Views/Especialidad/ListadoEspecialidad.cshtml");
@@ -68,6 +69,8 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> RegistroEspecialidad(especialidadDTO registrarEspecialidadDTO)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var EspecialidadCreado = await _especialidadServicio.CrearEspecialidadAsync(registrarEspecialidadDTO);
             if (!EspecialidadCreado.EsCorrecto)
             {
@@ -82,8 +85,6 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> ActualizarEspecialidad(int id, especialidadDTO actualizarEspecialidadDTO)
         {
-
-            
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);        

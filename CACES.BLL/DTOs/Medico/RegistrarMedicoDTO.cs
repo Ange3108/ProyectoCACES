@@ -7,9 +7,6 @@ namespace CACES.BLL.DTOs.Medico
 {
     public class RegistrarMedicoDTO
     {
-    
-        public int IdMedico { get; set; }
-        public int IdUsuario { get; set; }
 
         [Required(ErrorMessage = "El nombre es obligatorio")]
         public string Nombres { get; set; } = null!;
@@ -20,12 +17,24 @@ namespace CACES.BLL.DTOs.Medico
         [Required(ErrorMessage = "El segundo apellido es obligatorio")]
         public string SegundoApellido { get; set; } = null!;
 
+        [Required(ErrorMessage = "El correo electrónico es obligatorio")]
+        [EmailAddress(ErrorMessage = "El correo electrónico no es válido")]
+        public string CorreoElectronico { get; set; } = null!;
+        [Required(ErrorMessage = "El DUI es obligatorio")]
+        public string DUI { get; set; } = null!;
+        [Required(ErrorMessage = "La contraseña es obligatoria")]
+        [StringLength(100, MinimumLength = 8)]
+        public string Password { get; set; } = null!;
+        [Required(ErrorMessage = "La dirección es obligatoria")]
+        public string Direccion { get; set; } = null!;
+        [Required(ErrorMessage = "La fecha de nacimiento es obligatoria")]
+        public DateTime Nacimiento { get; set; }
         [Required(ErrorMessage = "El teléfono es obligatorio")]
+      
         public string Telefono { get; set; } = null!;
 
         public string? Foto { get; set; } = string.Empty!;
 
-        public bool Estado { get; set; }
 
         [Required(ErrorMessage = "La especialidad es obligatoria")]
         public int IdEspecialidad { get; set; }
