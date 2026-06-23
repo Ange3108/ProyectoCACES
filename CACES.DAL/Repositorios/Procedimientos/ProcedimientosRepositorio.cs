@@ -17,11 +17,18 @@ namespace CACES.DAL.Repositorios.Procedimientos
         {
             return await _context.Cirugias
                 .Include(c => c.Procedimiento)
+                .Include(c => c.Paciente).ThenInclude(p => p.Usuario)
                 .Include(c => c.Medico) 
                     .ThenInclude(m => m.Usuario)
                 .Where(c=> c.Id_Paciente == idPaciente)
                 .Include(c => c.Horario)      
                 .ToListAsync();
+        }
+
+        public async Task<bool> ActualizarProcedimientoAsync(Cirugias cirugias)
+        {
+            _context.Cirugias.Update(cirugias);
+            return await _context.SaveChangesAsync() > 0;
         }
     }
 }
