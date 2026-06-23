@@ -1,5 +1,6 @@
-﻿using CACES.DAL.Entidades;
-using CACES.DAL.DBContext;
+﻿using CACES.DAL.DBContext;
+using CACES.DAL.Entidades;
+using CACES.DAL.Entidades.Roles;
 using Microsoft.EntityFrameworkCore;
 
 namespace CACES.DAL.Repositorios.Usuario
@@ -20,6 +21,11 @@ namespace CACES.DAL.Repositorios.Usuario
                 return false;
 
             await _context.Usuarios.AddAsync(usuario);
+            await _context.UsuarioRoles.AddAsync(new UsuarioRoles
+            {
+                IdUsuario = usuario.IdUsuario,
+                RoleId = "2"
+            });
             return await _context.SaveChangesAsync() > 0;
         }
 
