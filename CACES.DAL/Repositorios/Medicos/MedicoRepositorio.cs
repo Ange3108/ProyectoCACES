@@ -35,7 +35,7 @@ namespace CACES.DAL.Repositorios.Medicos
             return await _context.Medicos
                 .Include(x => x.Usuario)
                 .Include(x => x.Especialidad)
-                .Where(m => m.Usuario.Estado == false &&
+                .Where(m => m.Usuario.Estado == true &&
                             m.Especialidad != null &&
                             m.Especialidad.Estado == true)
                 .ToListAsync();

@@ -33,51 +33,77 @@
 
                         <input asp-for="IdMedico" type="hidden" />
                         <input asp-for="IdUsuario" type="hidden" />
-                        <input asp-for="Foto" type="hidden" />
 
                         <h5 class="fw-bold text-primary mb-3">Datos personales</h5>
 
-                        <div class="row">
-                            <div class="col-md-4 mb-3">
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
                                 <label asp-for="Nombres" class="form-label fw-semibold">Nombre</label>
                                 <input asp-for="Nombres" class="form-control rounded-3" />
                                 <span asp-validation-for="Nombres" class="text-danger small"></span>
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-4">
                                 <label asp-for="PrimerApellido" class="form-label fw-semibold">Primer apellido</label>
                                 <input asp-for="PrimerApellido" class="form-control rounded-3" />
                                 <span asp-validation-for="PrimerApellido" class="text-danger small"></span>
                             </div>
 
-                            <div class="col-md-4 mb-3">
+                            <div class="col-md-4">
                                 <label asp-for="SegundoApellido" class="form-label fw-semibold">Segundo apellido</label>
                                 <input asp-for="SegundoApellido" class="form-control rounded-3" />
                                 <span asp-validation-for="SegundoApellido" class="text-danger small"></span>
                             </div>
-                        </div>
 
-                        <div class="row">
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="CorreoElectronico" class="form-label">Correo electrónico</label>
+                                <input asp-for="CorreoElectronico" type="email" class="form-control" />
+                                <span asp-validation-for="CorreoElectronico" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label asp-for="DUI" class="form-label">DUI</label>
+                                <input asp-for="DUI" type="text" class="form-control" maxlength="10" />
+                                <span asp-validation-for="DUI" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
                                 <label asp-for="Telefono" class="form-label fw-semibold">Teléfono</label>
                                 <input asp-for="Telefono" class="form-control rounded-3" />
                                 <span asp-validation-for="Telefono" class="text-danger small"></span>
                             </div>
 
-                            <div class="col-md-6 mb-3">
+                            <div class="col-md-6">
+                                <label asp-for="Nacimiento" class="form-label">Fecha de nacimiento</label>
+                                <input asp-for="Nacimiento" type="date" class="form-control" />
+                                <span asp-validation-for="Nacimiento" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-12">
+                                <label asp-for="Direccion" class="form-label">Dirección</label>
+                                <input asp-for="Direccion" class="form-control" />
+                                <span asp-validation-for="Direccion" class="text-danger small"></span>
+                            </div>
+
+                            <div class="col-md-6">
                                 <label asp-for="Estado" class="form-label fw-semibold">Estado</label>
                                 <select asp-for="Estado" class="form-select rounded-3">
                                     <option value="true">Activo</option>
                                     <option value="false">Inactivo</option>
                                 </select>
                             </div>
+
                         </div>
+
+                        <hr class="my-4" />
 
                         <hr class="my-4" />
 
                         <h5 class="fw-bold text-primary mb-3">Información médica</h5>
 
                         <div class="row">
+
                             <div class="col-md-6 mb-3">
                                 <label asp-for="IdEspecialidad" class="form-label fw-semibold">Especialidad</label>
                                 <input asp-for="IdEspecialidad" type="number" class="form-control rounded-3" />
@@ -89,6 +115,7 @@
                                 <input asp-for="Experiencia" type="number" class="form-control rounded-3" />
                                 <span asp-validation-for="Experiencia" class="text-danger small"></span>
                             </div>
+
                         </div>
 
                         <div class="mb-3">
@@ -98,27 +125,30 @@
                         </div>
 
                         <div class="mb-4">
-                            <label class="form-label fw-semibold">Foto del médico</label>
+                            <div class="mb-4">
 
-                            @if (!string.IsNullOrEmpty(Model.Foto))
-                            {
-                                <div class="mb-3">
-                                    <img src="@Model.Foto"
-                                         alt="Foto actual del médico"
-                                         class="rounded-circle border shadow-sm"
-                                         style="width:120px;height:120px;object-fit:cover;" />
+                                <label class="form-label fw-semibold">Foto del médico</label>
+
+                                @if (!string.IsNullOrEmpty(Model.Foto))
+                                {
+                                    <div class="mb-3">
+                                        <img src="@Model.Foto"
+                                             class="rounded-circle border shadow-sm"
+                                             style="width:120px;height:120px;object-fit:cover;" />
+                                    </div>
+                                }
+
+                                <input type="file"
+                                       name="FotoArchivo"
+                                       class="form-control rounded-3"
+                                       accept="image/*" />
+
+                                <div class="form-text">
+                                    Seleccione una nueva imagen para reemplazar la foto actual.
                                 </div>
-                            }
 
-                            <input type="file"
-                                   name="FotoArchivo"
-                                   class="form-control rounded-3"
-                                   accept="image/*" />
-
-                            <div class="form-text">
-                                Seleccione una nueva imagen para reemplazar la foto actual.
                             </div>
-                        </div>
+                            </div>
 
                         <div class="d-flex justify-content-between mt-4">
                             <a asp-action="Medicos"
