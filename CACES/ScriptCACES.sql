@@ -333,10 +333,10 @@ VALUES
 GO
 
 -- MEDICOS
-INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certificaciones, FechaDeRegistro) VALUES
-(1, 2, 10, '2222-2222', 'Especialista en Cirugía General y Laparoscópica', GETDATE()),
-(2, 2, 8, '3333-3333', 'Especialista en Ginecología y Obstetricia', GETDATE()),
-(4, 2, 12, '4444-4444', 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE());
+INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Certificaciones, FechaDeRegistro) VALUES
+(1, 2, 10, 'Especialista en Cirugía General y Laparoscópica', GETDATE()),
+(2, 2, 8, 'Especialista en Ginecología y Obstetricia', GETDATE()),
+(4, 2, 12, 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE());
 GO
 
 -- HISTORIAL MEDICO

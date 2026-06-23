@@ -31,9 +31,15 @@
                                         }
                                     </div>
 
+                                    @if (User.IsInRole("Medico"))
+                                    {
+                                        <p class="text-primary fw-bold mb-2">
+                                            <i class="bi bi-person-fill"></i> Paciente: @cirugia.NombrePaciente
+                                        </p>
+                                    }
+
                                     <p class="fw-bold mb-2">@cirugia.NombreMedico</p>
 
-                                    @* Formateamos la fecha para que se vea exactamente como la necesitas (dd/MM/yyyy) *@
                                     <p class="fw-semibold mb-2">
                                         Fecha: @cirugia.Fecha.ToString("dd/MM/yyyy") — @cirugia.Fecha.ToString("hh:mm tt")
                                     </p>
@@ -42,6 +48,16 @@
                                 </div>
 
                                 <div class="d-flex justify-content-center mt-3">
+                                    @if (User.IsInRole("Medico"))
+                                    {
+                                        <a class="btn btn-outline-primary w-100"
+                                           asp-controller="Procedimientos"
+                                           asp-action="Editar"
+                                           asp-route-idPaciente="@cirugia.Id_Paciente"
+                                           asp-route-id="@cirugia.Id_Cirugia">
+                                            <i class="bi bi-pencil-square"></i> Editar Procedimiento
+                                        </a>
+                                    }
                                     <a class="btn btn-cotizar px-4" href="#">Descargar Historial Médico</a>
                                 </div>
                             </div>

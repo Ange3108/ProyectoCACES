@@ -48,9 +48,7 @@ namespace CACES.BLL
 
             // Mapeo de los DTOs de perfil
             CreateMap<Usuario, PerfilUsuarioDTO>()
-                // Nota: Eliminamos el mapeo manual de Estado porque Entity Framework 
-                // ahora convierte automáticamente el BIT de SQL a bool de C#.
-
+    
                 .AfterMap((src, dest) =>
                 {
                     var paciente = src.Paciente;
@@ -69,7 +67,6 @@ namespace CACES.BLL
                         dest.EnfermedadesCronicas = "Ninguna registrada";
                     }
 
-                    // Datos del medicamento (Extracción lineal desde la cita inyectada en tu repositorio)
                     if (paciente?.Cita?.Receta != null)
                     {
                         dest.MedicamentosActuales = paciente.Cita.Receta.Medicamentos;
@@ -100,7 +97,10 @@ namespace CACES.BLL
                 .ForMember(dest => dest.IdPaquete, opt => opt.Ignore())
                 .ForMember(dest => dest.FechaDeRegistro, opt => opt.Ignore());
 
+            //mapeo de los dto de procedimientos quirurgicos
             CreateMap<Procedimiento, DTOs.Procedimientos.MostrarProcedimientosDTO>()
+                .ReverseMap();
+            CreateMap<Procedimiento, DTOs.Procedimientos.EditarProcedimientosDTO>()
                 .ReverseMap();
         }
     }

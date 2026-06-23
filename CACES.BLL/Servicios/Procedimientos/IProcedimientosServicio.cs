@@ -8,5 +8,8 @@ namespace CACES.BLL.Servicios.Procedimientos
     public interface IProcedimientosServicio
     {
         Task<List<MostrarProcedimientosDTO?>> ObtenerDetalleCirugiaAsync(int idPaciente);
+        Task<bool> ActualizarProcedimientoAsync(EditarProcedimientosDTO editarProcedimientosDTO, int idPaciente);
+
+        Task<EditarProcedimientosDTO?> ObtenerPorIdParaEditarAsync(int idPaciente, int idCirugia);
     }
 }

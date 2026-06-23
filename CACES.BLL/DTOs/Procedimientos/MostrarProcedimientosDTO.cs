@@ -6,14 +6,21 @@ namespace CACES.BLL.DTOs.Procedimientos
 {
     public class MostrarProcedimientosDTO
     {
-        public string Nombre { get; set; } // Ej: "Cirugía de vesícula biliar"
-        public string NombreMedico { get; set; }         // Ej: "Dr. Juan Pérez"
-        public DateTime Fecha { get; set; }             // Ej: 15/06/2026
+        public int Id_Cirugia { get; set; }
+        public int Id_Paciente { get; set; }
+
+        public string Nombre { get; set; } 
+        public string NombreMedico { get; set; }      
+        public string NombrePaciente { get; set; }   
+        
+        public string PrimerApellidoPaciente { get; set; }
+        public string SegundoApellidoPaciente { get; set; }
+
+        public DateTime Fecha { get; set; }             
 
         // true = Pendiente | false = Realizada o Cancelada
         public bool Estado{ get; set; }
 
-        // Ahora es dinámico y vendrá de la base de datos
         public string Descripcion { get; set; }
     }
 }

@@ -1,0 +1,84 @@
+﻿@model CACES.BLL.DTOs.Procedimientos.EditarProcedimientosDTO
+
+@{
+    ViewData["Title"] = "Editar Procedimiento Quirúrgico";
+}
+
+<div class="container py-4">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0"><i class="bi bi-pencil-square me-2"></i>Editar Procedimiento Quirúrgico del Paciente</h5>
+                </div>
+                <div class="card-body">
+                    <form asp-controller="Procedimientos" asp-action="Editar" method="post">
+                        @Html.AntiForgeryToken()
+
+                        <input type="hidden" asp-for="Id_Procedimiento" />
+                        <input type="hidden" name="idPaciente" value="@ViewData["IdPaciente"]" />
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="bg-light p-3 rounded mb-4">
+                            <h6 class="text-secondary border-bottom pb-2 mb-3">Información General</h6>
+                            <div class="row g-3">
+                                <div class="col-sm-6">
+                                    <label class="form-label fw-bold text-muted small">Paciente</label>
+                                    <p class="form-control-plaintext mb-0 fw-semibold">@Model.NombrePaciente @Model.PrimerApellidoPaciente @Model.SegundoApellidoPaciente</p>
+                                </div>
+                                <div class="col-sm-6">
+                                    <label class="form-label fw-bold text-muted small">Médico Asignado</label>
+                                    <p class="form-control-plaintext mb-0 fw-semibold">@Model.NombreMedico</p>
+                                </div>
+                                <div class="col-12">
+                                    <label class="form-label fw-bold text-muted small">Procedimiento</label>
+                                    <p class="form-control-plaintext mb-0 fw-semibold text-primary">@Model.Nombre</p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <h6 class="text-secondary border-bottom pb-2 mb-3">Actualización de Datos</h6>
+
+                        <div class="mb-3">
+                            <label asp-for="Fecha" class="form-label fw-bold">Fecha y Hora Programada</label>
+                            <input asp-for="Fecha" type="datetime-local" class="form-control" />
+                            <span asp-validation-for="Fecha" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Descripcion" class="form-label fw-bold">Indicaciones / Descripción Médica</label>
+                            <textarea asp-for="Descripcion" class="form-control" rows="4" placeholder="Escriba aquí las notas o indicaciones particulares del procedimiento..."></textarea>
+                            <span asp-validation-for="Descripcion" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4 p-2 border rounded bg-white">
+                            <div class="form-check form-switch mb-0">
+                                <input asp-for="Estado" type="checkbox" class="form-check-input" id="switchEstado" />
+                                <label class="form-check-label fw-semibold" for="switchEstado">
+                                    ¿El procedimiento se encuentra Activo / Pendiente?
+                                </label>
+                            </div>
+                            <small class="text-muted d-block ms-5">Desactiva esta opción si el procedimiento ya fue realizado o fue cancelado.</small>
+                        </div>
+
+                        <div class="d-flex justify-content-end gap-2 border-top pt-3">
+                            <a asp-action="Index" asp-route-idPaciente="@ViewData["IdPaciente"]" class="btn btn-secondary">
+                                <i class="bi bi-arrow-left-short"></i> Cancelar
+                            </a>
+                            <button type="submit" class="btn btn-primary">
+                                <i class="bi bi-save me-1"></i> Guardar Cambios
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}
