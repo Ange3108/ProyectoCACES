@@ -79,7 +79,7 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
     {
         options.LoginPath = "/Usuario/Login"; // Ruta a la página de inicio de sesión
         options.LogoutPath = "/Auth/Logout"; // Ruta a la página de cierre de sesión
-        options.AccessDeniedPath = "/Auth/AccessDenied"; // Ruta a la página de acceso denegado
+        options.AccessDeniedPath = "/Login_Logout/Login"; // Ruta a la página de acceso denegado
         options.ExpireTimeSpan = TimeSpan.FromHours(2); // Tiempo de expiración de la cookie
     });
 builder.Services.AddAuthorizationBuilder()

@@ -1,0 +1,73 @@
+﻿@model CACES.DAL.Entidades.Cita
+
+@{
+    ViewData["Title"] = "Ticket de Cita";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header text-center text-white p-4"
+             style="background-color:#27418C;">
+            <h2 class="mb-0">Ticket de Cita Médica</h2>
+        </div>
+
+        <div class="card-body p-5">
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Número de Cita:</strong>
+                    <p>@Model.IdCita</p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Fecha:</strong>
+                    <p>@Model.FechaCita.ToString("dd/MM/yyyy")</p>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Hora:</strong>
+                    <p>@Model.Hora</p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Estado:</strong>
+
+                    @if (Model.Estado == 1)
+                    {
+                        <span class="badge bg-warning text-dark">
+                            Pendiente
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-secondary">
+                            Cancelada
+                        </span>
+                    }
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <strong>Motivo:</strong>
+                <p>@Model.Motivo</p>
+            </div>
+
+            <div class="alert alert-info">
+                Presente este ticket el día de la cita en las instalaciones de CACES.
+            </div>
+
+            <a asp-controller="Cita"
+               asp-action="MisCitas"
+               class="btn btn-primary">
+                Volver
+            </a>
+
+        </div>
+
+    </div>
+
+</div>

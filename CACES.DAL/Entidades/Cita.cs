@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CACES.DAL.Entidades
@@ -22,7 +19,6 @@ namespace CACES.DAL.Entidades
         [Column("Id_Especialidad")]
         public int IdEspecialidad { get; set; }
 
-        // Id del horario disponible
         [Column("Fecha")]
         public int IdHorario { get; set; }
 
@@ -44,6 +40,7 @@ namespace CACES.DAL.Entidades
         [Column("Estado")]
         public byte Estado { get; set; }
 
+        [NotMapped]
         public virtual Receta? Receta { get; set; }
     }
 }

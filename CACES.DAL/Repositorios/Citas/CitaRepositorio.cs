@@ -64,5 +64,53 @@ namespace CACES.DAL.Repositorios.Citas
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<bool> RegistrarCitaAsync(Cita cita)
+        {
+            var filas = await _context.Database.ExecuteSqlInterpolatedAsync($@"
+        INSERT INTO Citas
+        (Id_Paciente, Id_Medico, Id_Especialidad, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado, FechaCita)
+        VALUES
+        ({cita.IdPaciente}, {cita.IdMedico}, {cita.IdEspecialidad}, {cita.IdHorario}, {cita.Hora}, {cita.Motivo}, {cita.FechaDeRegistro}, NULL, {cita.Estado}, {cita.FechaCita})
+    ");
+
+            return filas > 0;
+        }
+
+        public async Task<List<Cita>> ObtenerCitasPorPacienteAsync(int idPaciente)
+        {
+            return await _context.Citas
+                .Where(c => c.IdPaciente == idPaciente)
+                .OrderByDescending(c => c.FechaCita)
+                .ToListAsync();
+        }
+
+        public async Task<Cita?> ObtenerTicketAsync(int idCita)
+        {
+            return await _context.Citas
+                .FirstOrDefaultAsync(c => c.IdCita == idCita);
+        }
+
+        public async Task<List<Cita>> ObtenerCitasPorMedicoAsync(int idMedico)
+        {
+            return await _context.Citas
+                .Where(c => c.IdMedico == idMedico)
+                .OrderBy(c => c.FechaCita)
+                .ToListAsync();
+        }
+
+        public async Task<bool> CancelarCitaAsync(int idCita)
+        {
+            var cita = await _context.Citas
+                .FirstOrDefaultAsync(c => c.IdCita == idCita);
+
+            if (cita == null)
+                return false;
+
+            cita.Estado = 0;
+            cita.FechaDeModificacion = DateTime.Now;
+
+            return await _context.SaveChangesAsync() > 0;
+        }
     }
 }

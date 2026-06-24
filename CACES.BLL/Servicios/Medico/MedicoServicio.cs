@@ -184,7 +184,7 @@ namespace CACES.BLL.Servicios.Medicos
                 PasswordHash = HashContraseña(dto.Password),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 Foto = string.IsNullOrWhiteSpace(dto.Foto) ? "default.jpg" : dto.Foto,
-                Estado = true,
+                Estado = 1,
                 FechaDeRegistro = DateTime.UtcNow,
                 EmailConfirmed = false,
                 TwoFactorEnabled = false,

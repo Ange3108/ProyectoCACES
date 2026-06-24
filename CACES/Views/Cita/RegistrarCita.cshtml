@@ -1,0 +1,109 @@
+﻿@model CACES.BLL.DTOs.Cita.RegistrarCitaDTO
+
+@{
+    ViewData["Title"] = "Registrar Cita";
+
+    var medicos = ViewBag.Medicos as List<CACES.DAL.Entidades.Medico>;
+    var especialidades = ViewBag.Especialidades as List<CACES.DAL.Entidades.Especialidad>;
+}
+
+<div class="container py-5">
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-header text-white p-4" style="background-color:#27418C;">
+            <h3 class="mb-1">Registrar Cita Médica</h3>
+            <p class="mb-0">
+                Las citas en CACES se orientan a procedimientos médicos, cirugías, anestesia e internamiento.
+            </p>
+        </div>
+
+        <div class="card-body p-4">
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            <form asp-controller="Cita" asp-action="RegistrarCita" method="post">
+
+                <div class="mb-3">
+                    <label asp-for="IdEspecialidad" class="form-label fw-semibold">Especialidad</label>
+                    <select asp-for="IdEspecialidad" class="form-select">
+                        <option value="">Seleccione una especialidad</option>
+
+                        @if (especialidades != null)
+                        {
+                            foreach (var especialidad in especialidades)
+                            {
+                                <option value="@especialidad.IdEspecialidad">
+                                    @especialidad.Nombre
+                                </option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="IdEspecialidad" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="IdMedico" class="form-label fw-semibold">Médico</label>
+                    <select asp-for="IdMedico" class="form-select">
+                        <option value="">Seleccione un médico</option>
+
+                        @if (medicos != null)
+                        {
+                            foreach (var medico in medicos)
+                            {
+                                <option value="@medico.IdMedico">
+                                    Dr. @medico.Usuario.Nombres @medico.Usuario.PrimerApellido
+                                </option>
+                            }
+                        }
+                    </select>
+                    <span asp-validation-for="IdMedico" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="FechaCita" class="form-label fw-semibold">Fecha</label>
+                    <input asp-for="FechaCita" type="date" class="form-control" />
+                    <span asp-validation-for="FechaCita" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Hora" class="form-label fw-semibold">Hora</label>
+                    <input asp-for="Hora" type="time" class="form-control" />
+                    <span asp-validation-for="Hora" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Motivo" class="form-label fw-semibold">Motivo</label>
+                    <textarea asp-for="Motivo"
+                              class="form-control"
+                              rows="3"
+                              placeholder="Ejemplo: valoración para cirugía, anestesia o internamiento"></textarea>
+                    <span asp-validation-for="Motivo" class="text-danger"></span>
+                </div>
+
+                <div class="alert alert-info">
+                    CACES no agenda citas internas para laboratorio o radiología. Estos servicios se gestionan mediante convenios externos.
+                </div>
+
+                <div class="d-flex gap-2">
+                    <button type="submit" class="btn text-white" style="background-color:#27418C;">
+                        Registrar Cita
+                    </button>
+
+                    <a asp-controller="Cita"
+                       asp-action="MisCitas"
+                       class="btn btn-secondary">
+                        Cancelar
+                    </a>
+                </div>
+
+            </form>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

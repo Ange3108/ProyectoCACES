@@ -27,7 +27,7 @@ namespace CACES.DAL.Entidades
 
         public DateTime? FechaDeModificacion { get; set; }
 
-        public bool Estado { get; set; } = true;
+        public byte Estado { get; set; } = 1;
 
       
         public string Direccion { get; set; } = null!;

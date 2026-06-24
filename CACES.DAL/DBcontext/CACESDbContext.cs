@@ -73,7 +73,6 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.IdPaciente).HasColumnName("Id_Paciente");
                 entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
                 entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
-                entity.Property(e => e.IdHorario).HasColumnName("Id_Horario");
                 entity.Property(e => e.FechaCita).HasColumnName("Fecha");
                 entity.Property(e => e.Hora).HasColumnName("Hora");
                 entity.Property(e => e.Motivo).HasColumnName("Motivo").HasMaxLength(100);
