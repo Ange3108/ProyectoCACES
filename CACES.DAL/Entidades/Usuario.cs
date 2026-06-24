@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CACES.DAL.Entidades.Roles;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CACES.DAL.Entidades
@@ -27,7 +28,7 @@ namespace CACES.DAL.Entidades
 
         public DateTime? FechaDeModificacion { get; set; }
 
-        public byte Estado { get; set; } = 1;
+        public bool Estado { get; set; } = true;
 
       
         public string Direccion { get; set; } = null!;
@@ -56,7 +57,11 @@ namespace CACES.DAL.Entidades
 
 
 
-        
+        public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
+
+
+
+
 
     }
 }

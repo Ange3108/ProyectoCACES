@@ -27,8 +27,8 @@ namespace CACES.DAL.DBContext
         public DbSet<HorariosDisponibles> HorariosDisponibles { get; set; }
         public DbSet<Procedimiento> Procedimientos { get; set; }
         public DbSet<Cirugias> Cirugias { get; set; }
-
         public DbSet<ArchivoHistorial> ArchivosHistorial { get; set; }
+        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -154,8 +154,24 @@ namespace CACES.DAL.DBContext
                       .HasForeignKey(r => r.IdCita);
             });
 
-  
-            
+
+
+            modelBuilder.Entity<UsuarioRoles>()
+
+         .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
+
+            modelBuilder.Entity<UsuarioRoles>()
+                .HasOne(ur => ur.Usuario)
+                .WithMany(u => u.UsuarioRoles)
+                .HasForeignKey(ur => ur.IdUsuario)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UsuarioRoles>()
+                .HasOne(ur => ur.Rol)
+                .WithMany(r => r.UsuarioRoles)
+                .HasForeignKey(ur => ur.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
+
 
             // Configuración de ApplicationUser
             modelBuilder.Entity<ApplicationUser>(entity =>
