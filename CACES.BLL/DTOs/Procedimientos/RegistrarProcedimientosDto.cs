@@ -16,5 +16,6 @@ namespace CACES.BLL.DTOs.Procedimientos
         [Required(ErrorMessage = "La fecha y hora de la cirugía es obligatoria.")]
         [DataType(DataType.DateTime)]
         public DateTime FechaProgramada { get; set; }
+
     }
 }
