@@ -21,11 +21,14 @@ namespace CACES.DAL.Repositorios.Usuario
                 return false;
 
             await _context.Usuarios.AddAsync(usuario);
+            await _context.SaveChangesAsync(); 
+
             await _context.UsuarioRoles.AddAsync(new UsuarioRoles
             {
                 IdUsuario = usuario.IdUsuario,
-                RoleId = "2"
+                RoleId = "3"
             });
+
             return await _context.SaveChangesAsync() > 0;
         }
 

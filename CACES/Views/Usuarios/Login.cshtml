@@ -2,63 +2,442 @@
 @model LoginDTO
 
 @{
-	ViewData["Title"] = "Iniciar sesión";
+    ViewData["Title"] = "Iniciar sesión";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<section class="container py-5">
-    <div class="row justify-content-center">
-        <div class="col-12 col-md-8 col-lg-5">
-            <div class="card info-card border-0 shadow-sm">
-                <div class="card-body p-4 p-lg-5">
-                    <div class="text-center mb-4">
-                        <img src="img/logoCACES.jpg" alt="Logo CACES"
-                             style="width: 90px; height: 90px; object-fit: cover; border-radius: 12px;">
-                    </div>
-                    <form asp-controller="Login_Logout"
-						  asp-action="Login"
-						  method="post">
-                    <h3 class="text-center">Iniciar sesión</h3>
-                        <div asp-validation-summary="ModelOnly" class="text-danger text-center mb-3"></div>
-                    <p class="text-center text-muted mb-4">Acceda al sistema del Centro Ambulatorio de Cirugía Escalón</p>
 
-          
-                        <div class="form-group">
-                            <label for="CorreoElectronico">Correo electrónico</label>
-                            <input type="email" class="form-control" id="CorreoElectronico" name="CorreoElectronico" asp-for="CorreoElectronico" placeholder="Ingrese su correo" required>
+<style>
+    .login-page-wrapper {
+        min-height: calc(100vh - 140px);
+        display: flex;
+        align-items: center;
+        background: linear-gradient(135deg, #e8f4fd 0%, #f0f8ff 50%, #e3f0fb 100%);
+        padding: 2rem 0;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .login-page-wrapper::before {
+            content: '';
+            position: absolute;
+            top: -80px;
+            right: -80px;
+            width: 320px;
+            height: 320px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(114,206,242,0.18) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+        .login-page-wrapper::after {
+            content: '';
+            position: absolute;
+            bottom: -60px;
+            left: -60px;
+            width: 260px;
+            height: 260px;
+            border-radius: 50%;
+            background: radial-gradient(circle, rgba(39,65,140,0.10) 0%, transparent 70%);
+            pointer-events: none;
+        }
+
+    .login-card {
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 8px 40px rgba(39,65,140,0.13), 0 1.5px 8px rgba(4,157,217,0.07);
+        border: none;
+        overflow: hidden;
+    }
+
+    .login-card-accent {
+        height: 5px;
+        background: linear-gradient(90deg, #27418C 0%, #049DD9 50%, #72CEF2 100%);
+        border-radius: 20px 20px 0 0;
+    }
+
+    .login-logo-wrap {
+        width: 80px;
+        height: 80px;
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 16px rgba(39,65,140,0.15);
+        margin: 0 auto 1.25rem;
+        display: block;
+    }
+
+        .login-logo-wrap img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
+    .login-title {
+        font-family: 'Playfair Display', serif;
+        font-size: 1.6rem;
+        color: #27418C;
+        font-weight: 700;
+        margin-bottom: 0.25rem;
+    }
+
+    .login-subtitle {
+        font-size: 0.875rem;
+        color: #6b7280;
+        margin-bottom: 1.75rem;
+    }
+
+    .login-label {
+        font-size: 0.825rem;
+        font-weight: 600;
+        color: #374151;
+        margin-bottom: 0.35rem;
+        display: block;
+    }
+
+    .login-input {
+        border: 1.5px solid #d1d5db;
+        border-radius: 10px;
+        padding: 0.625rem 0.9rem 0.625rem 2.6rem;
+        font-size: 0.9rem;
+        transition: border-color 0.2s, box-shadow 0.2s;
+        width: 100%;
+        background: #f9fafb;
+        color: #1f2937;
+    }
+
+        .login-input:focus {
+            outline: none;
+            border-color: #049DD9;
+            box-shadow: 0 0 0 3px rgba(4,157,217,0.12);
+            background: #fff;
+        }
+
+        .login-input.input-error {
+            border-color: #ef4444;
+        }
+
+    .input-icon-wrap {
+        position: relative;
+    }
+
+        .input-icon-wrap .input-icon {
+            position: absolute;
+            left: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #9ca3af;
+            font-size: 1rem;
+            pointer-events: none;
+            transition: color 0.2s;
+        }
+
+        .input-icon-wrap:focus-within .input-icon {
+            color: #049DD9;
+        }
+
+    .toggle-password {
+        position: absolute;
+        right: 0.8rem;
+        top: 50%;
+        transform: translateY(-50%);
+        background: none;
+        border: none;
+        cursor: pointer;
+        color: #9ca3af;
+        padding: 0;
+        font-size: 1rem;
+        line-height: 1;
+    }
+
+        .toggle-password:hover {
+            color: #049DD9;
+        }
+
+    .btn-login {
+        background: linear-gradient(135deg, #27418C 0%, #1a5fa8 100%);
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        font-weight: 700;
+        font-size: 0.95rem;
+        padding: 0.7rem;
+        letter-spacing: 0.01em;
+        transition: transform 0.15s, box-shadow 0.15s, background 0.2s;
+        position: relative;
+        overflow: hidden;
+    }
+
+        .btn-login:hover:not(:disabled) {
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(39,65,140,0.28);
+            background: linear-gradient(135deg, #1a2e6b 0%, #049DD9 100%);
+        }
+
+        .btn-login:active:not(:disabled) {
+            transform: translateY(0);
+        }
+
+        .btn-login:disabled {
+            opacity: 0.7;
+            cursor: not-allowed;
+        }
+
+        .btn-login .spinner-border-sm {
+            display: none;
+        }
+
+        .btn-login.loading .btn-text {
+            display: none;
+        }
+
+        .btn-login.loading .spinner-border-sm {
+            display: inline-block;
+        }
+
+    .form-check-input:checked {
+        background-color: #049DD9;
+        border-color: #049DD9;
+    }
+
+    .forgot-link {
+        color: #049DD9;
+        font-weight: 600;
+        font-size: 0.85rem;
+        text-decoration: none;
+    }
+
+        .forgot-link:hover {
+            color: #27418C;
+            text-decoration: underline;
+        }
+
+    .divider-text {
+        position: relative;
+        text-align: center;
+        color: #9ca3af;
+        font-size: 0.8rem;
+        margin: 1.25rem 0;
+    }
+
+        .divider-text::before, .divider-text::after {
+            content: '';
+            position: absolute;
+            top: 50%;
+            width: 42%;
+            height: 1px;
+            background: #e5e7eb;
+        }
+
+        .divider-text::before {
+            left: 0;
+        }
+
+        .divider-text::after {
+            right: 0;
+        }
+
+    .register-link {
+        color: #049DD9;
+        font-weight: 700;
+        text-decoration: none;
+    }
+
+        .register-link:hover {
+            color: #27418C;
+            text-decoration: underline;
+        }
+
+    .error-alert {
+        background: #fef2f2;
+        border: 1px solid #fecaca;
+        border-radius: 10px;
+        color: #dc2626;
+        font-size: 0.85rem;
+        padding: 0.6rem 0.9rem;
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+        margin-bottom: 1rem;
+    }
+
+    .info-pills {
+        display: flex;
+        gap: 0.5rem;
+        justify-content: center;
+        flex-wrap: wrap;
+        margin-bottom: 1.5rem;
+    }
+
+    .info-pill {
+        background: #f0f9ff;
+        border: 1px solid #bae6fd;
+        border-radius: 20px;
+        padding: 0.3rem 0.8rem;
+        font-size: 0.75rem;
+        color: #0369a1;
+        display: flex;
+        align-items: center;
+        gap: 0.3rem;
+    }
+</style>
+
+<div class="login-page-wrapper">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-12 col-sm-9 col-md-7 col-lg-5 col-xl-4">
+
+                <div class="login-card">
+                    <div class="login-card-accent"></div>
+
+                    <div class="p-4 p-lg-5 pt-4">
+                        <!-- Logo -->
+                        <div class="text-center">
+                            <div class="login-logo-wrap">
+                                <img src="~/img/logoCACES.jpg" alt="Logo CACES">
+                            </div>
+                            <h2 class="login-title">Bienvenido</h2>
+                            <p class="login-subtitle">Sistema CACES · Centro Ambulatorio de Cirugía Escalón</p>
                         </div>
 
-                        <div class="form-group">
-                            <label for="Password">Contraseña</label>
-                            <input type="password" class="form-control" id="Password" name="Password" asp-for="Password" placeholder="Ingrese su contraseña" required>
+                        <!-- Pills informativas -->
+                        <div class="info-pills">
+                            <span class="info-pill"><i class="bi bi-shield-check"></i> Acceso seguro</span>
+                            <span class="info-pill"><i class="bi bi-lock"></i> Sesión cifrada</span>
                         </div>
 
-                        <div class="d-flex justify-content-between align-items-center mb-4">
-                            <div class="form-check">
-                                <input class="form-check-input" type="checkbox" id="recordar">
-                                <label class="form-check-label" for="recordar">Recordarme</label>
+                        <!-- Mensajes de error del servidor -->
+                        @if (!ViewData.ModelState.IsValid)
+                        {
+                            <div class="error-alert">
+                                <i class="bi bi-exclamation-circle-fill"></i>
+                                <span>
+                                    @Html.ValidationSummary(true, null, new { @class = "mb-0" })
+                                </span>
+                            </div>
+                        }
+
+                        <!-- Formulario -->
+                        <form asp-controller="Login_Logout" asp-action="Login" method="post" id="loginForm" novalidate>
+                            @Html.AntiForgeryToken()
+
+                            <!-- Correo -->
+                            <div class="mb-3">
+                                <label class="login-label" for="CorreoElectronico">
+                                    Correo electrónico
+                                </label>
+                                <div class="input-icon-wrap">
+                                    <i class="bi bi-envelope input-icon"></i>
+                                    <input type="email"
+                                           class="login-input"
+                                           id="CorreoElectronico"
+                                           name="CorreoElectronico"
+                                           asp-for="CorreoElectronico"
+                                           placeholder="usuario@ejemplo.com"
+                                           autocomplete="email"
+                                           required />
+                                </div>
+                                <span asp-validation-for="CorreoElectronico" class="text-danger small"></span>
                             </div>
 
-                            <a asp-controller="Login_Logout" asp-action="OlvidoContrasena" class="text-decoration-none fw-semibold" style="color:#049DD9;">
-                                ¿Olvidó su contraseña?
-                            </a>
-                        </div>
+                            <!-- Contraseña -->
+                            <div class="mb-3">
+                                <label class="login-label" for="Password">
+                                    Contraseña
+                                </label>
+                                <div class="input-icon-wrap">
+                                    <i class="bi bi-lock input-icon"></i>
+                                    <input type="password"
+                                           class="login-input"
+                                           id="Password"
+                                           name="Password"
+                                           asp-for="Password"
+                                           placeholder="••••••••"
+                                           autocomplete="current-password"
+                                           required
+                                           style="padding-right:2.6rem;" />
+                                    <button type="button" class="toggle-password" id="togglePwd" aria-label="Mostrar/ocultar contraseña">
+                                        <i class="bi bi-eye" id="eyeIcon"></i>
+                                    </button>
+                                </div>
+                                <span asp-validation-for="Password" class="text-danger small"></span>
+                            </div>
 
-                        <div class="d-grid">
-                            <button type="submit" class="btn btn-add">Ingresar</button>
-                        </div>
-                        <div class=" mt-4 mb-1 text-center">
-                            <p>¿No tiene cuenta?
-                                <a asp-controller="Paciente" asp-action="RegistrarPaciente" class="text-decoration-none fw-bold" style="color:#049DD9;">Registrarse</a>
-                        </p>
-                        </div>
-                        <p class="text-center mt-4 mb-0 text-muted">
-                            ¿Necesita ayuda?
-                            <a href="SoporteContacto.html" class="text-decoration-none fw-bold" style="color:#049DD9;">
-                                Contáctenos
-                            </a>
-                        </p>
-                    </form>
+                            <!-- Recordar + Olvidé -->
+                            <div class="d-flex justify-content-between align-items-center mb-4">
+                                <div class="form-check mb-0">
+                                    <input class="form-check-input" type="checkbox" id="recordar" name="recordar">
+                                    <label class="form-check-label small" for="recordar">Recordarme</label>
+                                </div>
+                                <a asp-controller="Login_Logout" asp-action="OlvidoContrasena" class="forgot-link">
+                                    ¿Olvidó su contraseña?
+                                </a>
+                            </div>
+
+                            <!-- Botón ingresar -->
+                            <div class="d-grid mb-3">
+                                <button type="submit" class="btn btn-login" id="btnLogin">
+                                    <span class="spinner-border spinner-border-sm me-2" role="status" aria-hidden="true"></span>
+                                    <span class="btn-text"><i class="bi bi-box-arrow-in-right me-1"></i>Ingresar</span>
+                                </button>
+                            </div>
+
+                            <!-- Registro -->
+                            <div class="divider-text">o</div>
+
+                            <p class="text-center mb-0 small text-muted">
+                                ¿No tiene cuenta?
+                                <a asp-controller="Paciente" asp-action="RegistrarPaciente" class="register-link">
+                                    Regístrese aquí
+                                </a>
+                            </p>
+                        </form>
+                    </div>
                 </div>
+
+                <!-- Enlace soporte -->
+                <p class="text-center mt-3 small text-muted">
+                    ¿Necesita ayuda?
+                    <a asp-controller="Soporte" asp-action="Contacto" class="forgot-link">Contáctenos</a>
+                </p>
+
             </div>
         </div>
     </div>
-</section>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script>
+        // Toggle contraseña
+        document.getElementById('togglePwd').addEventListener('click', function () {
+            const pwd = document.getElementById('Password');
+            const icon = document.getElementById('eyeIcon');
+            if (pwd.type === 'password') {
+                pwd.type = 'text';
+                icon.className = 'bi bi-eye-slash';
+            } else {
+                pwd.type = 'password';
+                icon.className = 'bi bi-eye';
+            }
+        });
+
+        // Loading state al enviar
+        document.getElementById('loginForm').addEventListener('submit', function (e) {
+            const btn = document.getElementById('btnLogin');
+            // Validación básica client-side antes de mostrar loading
+            const correo = document.getElementById('CorreoElectronico').value.trim();
+            const pass = document.getElementById('Password').value;
+            if (!correo || !pass) return;
+            btn.classList.add('loading');
+            btn.disabled = true;
+        });
+
+        // Marcar inputs con error si hay mensajes de validación del servidor
+        document.querySelectorAll('.text-danger small, span[data-valmsg-for]').forEach(el => {
+            if (el.textContent.trim()) {
+                const input = document.getElementById(el.getAttribute('data-valmsg-for')) ||
+                              el.closest('.mb-3')?.querySelector('.login-input');
+                if (input) input.classList.add('input-error');
+            }
+        });
+    </script>
+}

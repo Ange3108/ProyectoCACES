@@ -1,26 +1,511 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div id="carouselNoticia" class="carousel slide " data-bs-ride="carousel" data-bs-interval="3000">
-    <div class="carousel-inner ">
-        <div class="carousel-item active">
-            <img src="img/noticia1.png" class="d-block w-100" alt="Noticia 1">
-        </div>
-        <div class="carousel-item">
-            <img src="img/noticia1.png" class="d-block w-100" alt="Noticia 2">
-        </div>
-        <div class="carousel-item">
-            <img src="img/noticia1.png" class="d-block w-100" alt="Noticia 3">
+<style>
+    /* ======= CARRUSEL DE NOTICIAS ======= */
+    .noticias-section {
+        margin-bottom: 2rem;
+    }
+
+    .carousel-caces {
+        border-radius: 16px;
+        overflow: hidden;
+        box-shadow: 0 4px 24px rgba(39,65,140,0.13);
+        position: relative;
+        background: #e8f4fd;
+    }
+
+        .carousel-caces .carousel-item img {
+            height: clamp(200px, 38vw, 400px);
+            object-fit: cover;
+            width: 100%;
+            display: block;
+        }
+
+        .carousel-caces .carousel-item.no-image {
+            height: clamp(200px, 38vw, 400px);
+            background: linear-gradient(135deg, #27418C 0%, #049DD9 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+    .carousel-caption-custom {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        right: 0;
+        background: linear-gradient(0deg, rgba(15,25,60,0.82) 0%, transparent 100%);
+        padding: 1.5rem 1.75rem 1rem;
+        color: #fff;
+    }
+
+        .carousel-caption-custom h5 {
+            font-family: 'Playfair Display', serif;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-weight: 700;
+            margin-bottom: 0.25rem;
+        }
+
+        .carousel-caption-custom p {
+            font-size: 0.85rem;
+            opacity: 0.85;
+            margin-bottom: 0.5rem;
+            display: -webkit-box;
+            -webkit-line-clamp: 2;
+            -webkit-box-orient: vertical;
+            overflow: hidden;
+        }
+
+        .carousel-caption-custom .noticia-badge {
+            background: #049DD9;
+            border-radius: 20px;
+            font-size: 0.72rem;
+            font-weight: 700;
+            padding: 0.2rem 0.65rem;
+            color: #fff;
+            display: inline-block;
+            margin-bottom: 0.4rem;
+        }
+
+    .carousel-caces .carousel-control-prev,
+    .carousel-caces .carousel-control-next {
+        width: 38px;
+        height: 38px;
+        background: rgba(39,65,140,0.7);
+        border-radius: 50%;
+        top: 50%;
+        transform: translateY(-50%);
+        opacity: 0;
+        transition: opacity 0.2s;
+        margin: 0 0.5rem;
+    }
+
+    .carousel-caces:hover .carousel-control-prev,
+    .carousel-caces:hover .carousel-control-next {
+        opacity: 1;
+    }
+
+    .carousel-caces .carousel-indicators [data-bs-target] {
+        width: 8px;
+        height: 8px;
+        border-radius: 50%;
+        background: rgba(255,255,255,0.6);
+        border: none;
+    }
+
+    .carousel-caces .carousel-indicators .active {
+        background: #72CEF2;
+        width: 22px;
+        border-radius: 4px;
+    }
+
+    .no-noticias-msg {
+        background: linear-gradient(135deg, #f0f9ff, #e8f4fd);
+        border: 2px dashed #bae6fd;
+        border-radius: 16px;
+        padding: 2.5rem 1.5rem;
+        text-align: center;
+        color: #0369a1;
+    }
+
+    /* ======= ACCESOS RÁPIDOS ======= */
+    .accesos-section {
+        margin-bottom: 2rem;
+    }
+
+    .section-title {
+        font-family: 'Playfair Display', serif;
+        color: #27418C;
+        font-size: 1.3rem;
+        font-weight: 700;
+        border-left: 4px solid #049DD9;
+        padding-left: 0.75rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .acceso-card {
+        background: #fff;
+        border-radius: 14px;
+        border: 1.5px solid #e8f0fb;
+        box-shadow: 0 2px 10px rgba(39,65,140,0.07);
+        padding: 1.25rem 1rem;
+        text-align: center;
+        cursor: pointer;
+        text-decoration: none;
+        display: block;
+        transition: transform 0.18s, box-shadow 0.18s, border-color 0.18s;
+        color: inherit;
+        height: 100%;
+    }
+
+        .acceso-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 28px rgba(4,157,217,0.18);
+            border-color: #72CEF2;
+            color: inherit;
+            text-decoration: none;
+        }
+
+    .acceso-icon {
+        width: 52px;
+        height: 52px;
+        border-radius: 14px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 0 auto 0.75rem;
+        font-size: 1.5rem;
+    }
+
+    .acceso-card h6 {
+        font-weight: 700;
+        color: #27418C;
+        font-size: 0.875rem;
+        margin-bottom: 0.2rem;
+    }
+
+    .acceso-card small {
+        color: #6b7280;
+        font-size: 0.75rem;
+    }
+
+    /* Mobile: accesos en grid horizontal */
+    @@media (max-width: 575px) {
+        .accesos-grid {
+            gap: 0.6rem !important;
+        }
+
+        .acceso-card {
+            padding: 1rem 0.5rem;
+        }
+
+        .acceso-icon {
+            width: 44px;
+            height: 44px;
+            font-size: 1.25rem;
+        }
+
+        .acceso-card h6 {
+            font-size: 0.78rem;
+        }
+    }
+
+    /* ======= RESUMEN DEL CENTRO ======= */
+    .resumen-section {
+        position: sticky;
+        bottom: 0;
+        z-index: 20;
+        margin-top: 2rem;
+    }
+
+    .resumen-bar {
+        background: linear-gradient(90deg, #27418C 0%, #1a5fa8 60%, #049DD9 100%);
+        border-radius: 16px 16px 0 0;
+        padding: 0.75rem 1.25rem;
+        box-shadow: 0 -4px 20px rgba(39,65,140,0.18);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+        cursor: pointer;
+        user-select: none;
+    }
+
+    .resumen-bar-title {
+        color: #fff;
+        font-weight: 700;
+        font-size: 0.875rem;
+        display: flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-right: 0.5rem;
+        flex-shrink: 0;
+    }
+
+    .resumen-pill {
+        background: rgba(255,255,255,0.15);
+        border-radius: 20px;
+        padding: 0.3rem 0.8rem;
+        color: #fff;
+        font-size: 0.78rem;
+        font-weight: 600;
+        display: flex;
+        align-items: center;
+        gap: 0.35rem;
+        border: 1px solid rgba(255,255,255,0.25);
+        white-space: nowrap;
+    }
+
+        .resumen-pill .pill-num {
+            font-size: 1rem;
+            font-weight: 800;
+            color: #72CEF2;
+        }
+
+    .resumen-expanded {
+        background: #fff;
+        border: 1.5px solid #e8f0fb;
+        border-top: none;
+        border-radius: 0 0 16px 16px;
+        box-shadow: 0 8px 24px rgba(39,65,140,0.10);
+        padding: 1.25rem;
+        display: none;
+    }
+
+        .resumen-expanded.show {
+            display: block;
+        }
+
+    .resumen-stat-card {
+        background: linear-gradient(135deg, #f0f9ff 0%, #e8f4fd 100%);
+        border-radius: 12px;
+        padding: 1rem;
+        text-align: center;
+        border: 1px solid #bae6fd;
+    }
+
+        .resumen-stat-card .stat-num {
+            font-size: 1.75rem;
+            font-weight: 800;
+            color: #27418C;
+            line-height: 1;
+        }
+
+        .resumen-stat-card .stat-label {
+            font-size: 0.78rem;
+            color: #6b7280;
+            margin-top: 0.2rem;
+        }
+
+        .resumen-stat-card .stat-icon {
+            font-size: 1.25rem;
+            margin-bottom: 0.4rem;
+            color: #049DD9;
+        }
+
+    .resumen-update {
+        font-size: 0.72rem;
+        color: #9ca3af;
+        text-align: right;
+        margin-top: 0.75rem;
+    }
+
+    /* ======= ADMIN UPLOAD MODAL ======= */
+    .upload-drop-area {
+        border: 2px dashed #72CEF2;
+        border-radius: 12px;
+        padding: 1.5rem;
+        text-align: center;
+        cursor: pointer;
+        transition: background 0.2s;
+        background: #f0f9ff;
+    }
+
+        .upload-drop-area:hover, .upload-drop-area.dragover {
+            background: #e0f2fe;
+            border-color: #049DD9;
+        }
+
+    .upload-preview {
+        max-height: 150px;
+        border-radius: 8px;
+        object-fit: cover;
+        display: none;
+        margin: 0.75rem auto 0;
+    }
+</style>
+
+<!-- ===================== CARRUSEL DE NOTICIAS ===================== -->
+<section class="noticias-section">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+        <h3 class="section-title mb-0">Noticias recientes</h3>
+        @if (User.IsInRole("Administrador"))
+        {
+            <button class="btn btn-sm" style="background:#049DD9;color:#fff;border-radius:8px;font-weight:600;font-size:0.8rem;"
+                    data-bs-toggle="modal" data-bs-target="#modalSubirNoticia">
+                <i class="bi bi-plus-circle me-1"></i>Subir noticia
+            </button>
+        }
+    </div>
+
+    <div id="contenedorCarrusel">
+        <!-- Se carga dinámicamente; fallback estático mientras tanto -->
+        <div id="carouselNoticia" class="carousel slide carousel-caces" data-bs-ride="carousel" data-bs-interval="4500">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselNoticia" data-bs-slide-to="0" class="active"></button>
+                <button type="button" data-bs-target="#carouselNoticia" data-bs-slide-to="1"></button>
+                <button type="button" data-bs-target="#carouselNoticia" data-bs-slide-to="2"></button>
+            </div>
+            <div class="carousel-inner" id="carouselInner">
+                <div class="carousel-item active">
+                    <img src="~/img/noticia1.png" class="d-block w-100" alt="Noticia"
+                         onerror="this.parentElement.classList.add('no-image'); this.style.display='none';">
+                    <div class="carousel-caption-custom">
+                        <span class="noticia-badge">Destacado</span>
+                        <h5>Bienvenido al Sistema CACES</h5>
+                        <p>Centro Ambulatorio de Cirugía Escalón — Atención médica de calidad.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="~/img/pasilloCaces.jpg" class="d-block w-100" alt="Instalaciones"
+                         onerror="this.parentElement.classList.add('no-image'); this.style.display='none';">
+                    <div class="carousel-caption-custom">
+                        <span class="noticia-badge">Instalaciones</span>
+                        <h5>Modernas instalaciones a su servicio</h5>
+                        <p>Contamos con tecnología de punta para su atención y recuperación.</p>
+                    </div>
+                </div>
+                <div class="carousel-item">
+                    <img src="~/img/imagen2.jpg" class="d-block w-100" alt="Especialistas"
+                         onerror="this.parentElement.classList.add('no-image'); this.style.display='none';">
+                    <div class="carousel-caption-custom">
+                        <span class="noticia-badge">Equipo médico</span>
+                        <h5>Especialistas comprometidos con su salud</h5>
+                        <p>Nuestro equipo multidisciplinario está listo para atenderle.</p>
+                    </div>
+                </div>
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselNoticia" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon"></span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselNoticia" data-bs-slide="next">
+                <span class="carousel-control-next-icon"></span>
+            </button>
         </div>
     </div>
-</div>
+</section>
 
-<section class="mt-5">
+<!-- ===================== ACCESOS RÁPIDOS (según rol) ===================== -->
+@if (User.Identity!.IsAuthenticated)
+{
+    <section class="accesos-section">
+        <h3 class="section-title">Accesos rápidos</h3>
+        <div class="row row-cols-2 row-cols-sm-3 row-cols-md-4 row-cols-lg-5 g-3 accesos-grid" id="accesosRapidos">
+
+            @* Accesos comunes a todos los autenticados *@
+            <div class="col">
+                <a href="@Url.Action("GestionCitas", "Citas")" class="acceso-card">
+                    <div class="acceso-icon" style="background:#e0f2fe;">
+                        <i class="bi bi-calendar-check" style="color:#0284c7;"></i>
+                    </div>
+                    <h6>Mis Citas</h6>
+                    <small>Gestionar citas</small>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="@Url.Action("VerPerfil", "Perfil")" class="acceso-card">
+                    <div class="acceso-icon" style="background:#fdf4ff;">
+                        <i class="bi bi-person-circle" style="color:#9333ea;"></i>
+                    </div>
+                    <h6>Mi Perfil</h6>
+                    <small>Ver y editar</small>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="@Url.Action("Especialidades", "Especialidad")" class="acceso-card">
+                    <div class="acceso-icon" style="background:#fff7ed;">
+                        <i class="bi bi-hospital" style="color:#ea580c;"></i>
+                    </div>
+                    <h6>Especialidades</h6>
+                    <small>Ver todas</small>
+                </a>
+            </div>
+
+            <div class="col">
+                <a href="@Url.Action("ObtenerProcedimientos", "Procedimientos")" class="acceso-card">
+                    <div class="acceso-icon" style="background:#f0fdf4;">
+                        <i class="bi bi-bandaid-fill" style="color:#16a34a;"></i>
+                    </div>
+                    <h6>Procedimientos</h6>
+                    <small>Quirúrgicos</small>
+                </a>
+            </div>
+
+            @* Accesos del médico *@
+            @if (User.IsInRole("Medico"))
+            {
+                <div class="col">
+                    <a href="@Url.Action("AgendaMedica", "AgendaMedica")" class="acceso-card">
+                        <div class="acceso-icon" style="background:#fffbeb;">
+                            <i class="bi bi-journal-medical" style="color:#d97706;"></i>
+                        </div>
+                        <h6>Agenda</h6>
+                        <small>Médica</small>
+                    </a>
+                </div>
+            }
+
+            @* Accesos del administrador *@
+            @if (User.IsInRole("Administrador"))
+            {
+                <div class="col">
+                    <a href="@Url.Action("Reportes", "Home")" class="acceso-card">
+                        <div class="acceso-icon" style="background:#fef2f2;">
+                            <i class="bi bi-bar-chart-fill" style="color:#dc2626;"></i>
+                        </div>
+                        <h6>Reportes</h6>
+                        <small>Ver estadísticas</small>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="@Url.Action("Medicos", "Medico")" class="acceso-card">
+                        <div class="acceso-icon" style="background:#f0fdf4;">
+                            <i class="bi bi-people-fill" style="color:#15803d;"></i>
+                        </div>
+                        <h6>Médicos</h6>
+                        <small>Gestionar</small>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="@Url.Action("Pacientes", "Paciente")" class="acceso-card">
+                        <div class="acceso-icon" style="background:#fdf4ff;">
+                            <i class="bi bi-person-lines-fill" style="color:#7c3aed;"></i>
+                        </div>
+                        <h6>Pacientes</h6>
+                        <small>Gestionar</small>
+                    </a>
+                </div>
+
+                <div class="col">
+                    <a href="@Url.Action("Configuracion", "Configuracion")" class="acceso-card">
+                        <div class="acceso-icon" style="background:#f8fafc;">
+                            <i class="bi bi-gear-fill" style="color:#475569;"></i>
+                        </div>
+                        <h6>Configuración</h6>
+                        <small>Sistema</small>
+                    </a>
+                </div>
+            }
+
+            @* Accesos del paciente *@
+            @if (User.IsInRole("Paciente"))
+            {
+                <div class="col">
+                    <a href="@Url.Action("ObtenerPaquetesSoloActivos", "Paquete")" class="acceso-card">
+                        <div class="acceso-icon" style="background:#fffbeb;">
+                            <i class="bi bi-airplane-fill" style="color:#b45309;"></i>
+                        </div>
+                        <h6>Turismo Médico</h6>
+                        <small>Paquetes</small>
+                    </a>
+                </div>
+            }
+        </div>
+    </section>
+}
+
+<!-- ===================== SECCIONES PÚBLICAS ===================== -->
+<section class="mt-4">
     <h3 class="section-title mb-3">Principales especialidades</h3>
     <div class="row g-3">
         <div class="col-12 col-md-6 col-xl-3">
-            <a class="card-link-wrap" href="#traumatologia">
+            <a class="card-link-wrap" href="@Url.Action("Especialidades", "Especialidad")">
                 <article class="card info-card h-100 border-0 shadow-sm">
                     <div class="card-body">
                         <i class="bi bi-bandaid-fill info-icon"></i>
@@ -31,7 +516,7 @@
             </a>
         </div>
         <div class="col-12 col-md-6 col-xl-3">
-            <a class="card-link-wrap" href="#colonoscopia">
+            <a class="card-link-wrap" href="@Url.Action("Especialidades", "Especialidad")">
                 <article class="card info-card h-100 border-0 shadow-sm">
                     <div class="card-body">
                         <i class="bi bi-capsule info-icon"></i>
@@ -42,7 +527,7 @@
             </a>
         </div>
         <div class="col-12 col-md-6 col-xl-3">
-            <a class="card-link-wrap" href="#fisioterapia">
+            <a class="card-link-wrap" href="@Url.Action("Especialidades", "Especialidad")">
                 <article class="card info-card h-100 border-0 shadow-sm">
                     <div class="card-body">
                         <i class="bi bi-person-raised-hand info-icon"></i>
@@ -52,41 +537,13 @@
                 </article>
             </a>
         </div>
-    </div>
-</section>
-
-<section class="mt-5">
-    <h3 class="section-title mb-3">Especialistas destacados</h3>
-    <div class="row g-3">
-        <div class="col-12 col-md-6 col-xl-4">
-            <a class="card-link-wrap" href="#dra-ana-morales">
+        <div class="col-12 col-md-6 col-xl-3">
+            <a class="card-link-wrap" href="@Url.Action("Especialidades", "Especialidad")">
                 <article class="card info-card h-100 border-0 shadow-sm">
                     <div class="card-body">
-                        <h5 class="mb-1">Dra. Ana Morales</h5>
-                        <p class="mb-1">Cardióloga</p>
-                        <small class="text-muted">12 años de experiencia</small>
-                    </div>
-                </article>
-            </a>
-        </div>
-        <div class="col-12 col-md-6 col-xl-4">
-            <a class="card-link-wrap" href="#dr-luis-andrade">
-                <article class="card info-card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="mb-1">Dr. Luis Andrade</h5>
-                        <p class="mb-1"></p>
-                        <small class="text-muted">Especialista en cirugía artroscópica</small>
-                    </div>
-                </article>
-            </a>
-        </div>
-        <div class="col-12 col-md-6 col-xl-4">
-            <a class="card-link-wrap" href="#dra-sofia-beltran">
-                <article class="card info-card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <h5 class="mb-1">Dra. Sofía Beltrán</h5>
-                        <p class="mb-1">Neumóloga</p>
-                        <small class="text-muted">Atención respiratoria integral</small>
+                        <i class="bi bi-lungs info-icon"></i>
+                        <h5 class="mt-2 mb-1">Terapia Respiratoria</h5>
+                        <p class="text-muted mb-0">Atención integral del sistema respiratorio.</p>
                     </div>
                 </article>
             </a>
@@ -104,7 +561,7 @@
                     <p class="text-muted mb-2">Consulta + exámenes + traslado interno</p>
                     <span class="badge text-bg-info">3 días</span>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="#" class="btn btn-cotizar px-4">Cotizar</a>
+                        <a href="@Url.Action("ObtenerPaquetesSoloActivos", "Paquete")" class="btn btn-cotizar px-4">Cotizar</a>
                     </div>
                 </div>
             </article>
@@ -116,7 +573,7 @@
                     <p class="text-muted mb-2">Valoración prequirúrgica + cirugía + control</p>
                     <span class="badge text-bg-info">5 días</span>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="#" class="btn btn-cotizar px-4">Cotizar</a>
+                        <a href="@Url.Action("ObtenerPaquetesSoloActivos", "Paquete")" class="btn btn-cotizar px-4">Cotizar</a>
                     </div>
                 </div>
             </article>
@@ -128,92 +585,332 @@
                     <p class="text-muted mb-2">Cirugía + rehabilitación + hospedaje asistido</p>
                     <span class="badge text-bg-info">7 días</span>
                     <div class="d-flex justify-content-center mt-3">
-                        <a href="#" class="btn btn-cotizar px-4">Cotizar</a>
+                        <a href="@Url.Action("ObtenerPaquetesSoloActivos", "Paquete")" class="btn btn-cotizar px-4">Cotizar</a>
                     </div>
                 </div>
             </article>
-
         </div>
     </div>
 </section>
 
-<section class="mt-4">
-    <div class="card shadow-sm border-0 mb-4">
-        <div class="card-body">
-            <h4 class="card-title mb-1">Citas de especialidades</h4>
-            <p class="text-muted mb-3">Citas de hoy</p>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>Especialista</th>
-                            <th>Paciente</th>
-                            <th>Hora</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Dra. Ana Morales</td>
-                            <td>Mariela Perez</td>
-                            <td>09:00</td>
-                            <td><span class="badge text-bg-warning">Pendiente</span></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. Luis Andrade</td>
-                            <td>Carlos Paredes</td>
-                            <td>10:30</td>
-                            <td><span class="badge text-bg-primary">En proceso</span></td>
-                        </tr>
-                        <tr>
-                            <td>Dra. Sofía Beltrán</td>
-                            <td>Elena Quishpe</td>
-                            <td>12:15</td>
-                            <td><span class="badge text-bg-danger">Cancelada</span></td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
+<!-- ===================== RESUMEN DEL CENTRO (sticky bottom) ===================== -->
+<section class="resumen-section mt-5" id="resumenCentro">
+    <div class="resumen-bar" id="resumenBar" onclick="toggleResumen()" title="Ver detalles del resumen">
+        <span class="resumen-bar-title">
+            <i class="bi bi-activity"></i> Estado del centro
+            <i class="bi bi-chevron-up ms-1" id="resumenChevron" style="font-size:0.75rem;transition:transform 0.2s;"></i>
+        </span>
+
+        <span class="resumen-pill">
+            <i class="bi bi-scissors"></i>
+            <span class="pill-num" id="numCirugias">–</span>
+            Cirugías hoy
+        </span>
+        <span class="resumen-pill">
+            <i class="bi bi-calendar-check"></i>
+            <span class="pill-num" id="numCitas">–</span>
+            Citas hoy
+        </span>
+        <span class="resumen-pill">
+            <i class="bi bi-person-check"></i>
+            <span class="pill-num" id="numPacientes">–</span>
+            Pacientes
+        </span>
+        <span class="resumen-pill ms-auto" style="font-size:0.7rem;opacity:0.75;">
+            <i class="bi bi-arrow-clockwise" id="resumenLoader" style="display:none;animation:spin 1s linear infinite;"></i>
+            <span id="resumenHora">Actualizando…</span>
+        </span>
     </div>
 
-
-    <div class="card shadow-sm border-0">
-        <div class="card-body">
-            <h4 class="card-title mb-1">Procedimientos quirúrgicos</h4>
-            <p class="text-muted mb-3">Cirugías en proceso</p>
-            <div class="table-responsive">
-                <table class="table table-hover align-middle mb-0">
-                    <thead>
-                        <tr>
-                            <th>Especialista</th>
-                            <th>Paciente</th>
-                            <th>Procedimiento</th>
-                            <th>Estado</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <tr>
-                            <td>Dr. Mateo Herrera</td>
-                            <td>Gabriela León</td>
-                            <td>Laparoscopia</td>
-                            <td><span class="badge text-bg-primary">En proceso</span></td>
-                        </tr>
-                        <tr>
-                            <td>Dra. Camila Torres</td>
-                            <td>José Mena</td>
-                            <td>Artroscopia de rodilla</td>
-                            <td><span class="badge text-bg-warning">Pendiente</span></td>
-                        </tr>
-                        <tr>
-                            <td>Dr. Diego Paz</td>
-                            <td>Lucía Romero</td>
-                            <td>Apendicitis</td>
-                            <td><span class="badge text-bg-danger">Cancelada</span></td>
-                        </tr>
-                    </tbody>
-                </table>
+    <div class="resumen-expanded" id="resumenExpanded">
+        <div class="row g-3">
+            <div class="col-6 col-md-3">
+                <div class="resumen-stat-card">
+                    <div class="stat-icon"><i class="bi bi-scissors"></i></div>
+                    <div class="stat-num" id="statCirugias">–</div>
+                    <div class="stat-label">Cirugías programadas</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="resumen-stat-card">
+                    <div class="stat-icon"><i class="bi bi-calendar-check"></i></div>
+                    <div class="stat-num" id="statCitas">–</div>
+                    <div class="stat-label">Citas del día</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="resumen-stat-card">
+                    <div class="stat-icon"><i class="bi bi-person-check"></i></div>
+                    <div class="stat-num" id="statPacientes">–</div>
+                    <div class="stat-label">Pacientes atendidos</div>
+                </div>
+            </div>
+            <div class="col-6 col-md-3">
+                <div class="resumen-stat-card">
+                    <div class="stat-icon"><i class="bi bi-people"></i></div>
+                    <div class="stat-num" id="statMedicos">–</div>
+                    <div class="stat-label">Médicos activos</div>
+                </div>
             </div>
         </div>
+        <p class="resumen-update" id="resumenUpdateTime">–</p>
     </div>
 </section>
+
+<!-- ===================== MODAL SUBIR NOTICIA (Admin) ===================== -->
+@if (User.IsInRole("Administrador"))
+{
+    <div class="modal fade" id="modalSubirNoticia" tabindex="-1" aria-labelledby="modalNoticiaLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow-lg" style="border-radius:18px;overflow:hidden;">
+                <div style="height:4px;background:linear-gradient(90deg,#27418C,#049DD9,#72CEF2);"></div>
+                <div class="modal-header border-0 pb-0">
+                    <h5 class="modal-title fw-bold" id="modalNoticiaLabel" style="color:#27418C;">
+                        <i class="bi bi-newspaper me-2"></i>Subir nueva noticia
+                    </h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body pt-2">
+                    <form id="formSubirNoticia" enctype="multipart/form-data">
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Nombre / Título de la noticia</label>
+                            <input type="text" class="form-control" id="noticiaName" name="nombre"
+                                   placeholder="Ej: Nueva campaña de salud preventiva" required
+                                   style="border-radius:10px;border:1.5px solid #d1d5db;">
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Descripción breve</label>
+                            <textarea class="form-control" id="noticiaDesc" name="descripcion" rows="2"
+                                      placeholder="Resumen de la noticia…"
+                                      style="border-radius:10px;border:1.5px solid #d1d5db;resize:none;"></textarea>
+                        </div>
+
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold small">Imagen de la noticia</label>
+                            <div class="upload-drop-area" id="dropArea" onclick="document.getElementById('noticiaFile').click()">
+                                <i class="bi bi-cloud-arrow-up" style="font-size:2rem;color:#049DD9;"></i>
+                                <p class="mb-0 mt-2 small text-muted">Haga clic o arrastre una imagen aquí</p>
+                                <p class="mb-0 small text-muted" style="font-size:0.7rem;">PNG, JPG, WEBP · Máx 5 MB</p>
+                                <input type="file" id="noticiaFile" name="imagen" accept="image/*"
+                                       class="d-none" required onchange="previewImagen(this)">
+                            </div>
+                            <img id="imgPreview" class="upload-preview w-100" alt="Vista previa">
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer border-0 pt-0">
+                    <button type="button" class="btn btn-light rounded-3" data-bs-dismiss="modal">Cancelar</button>
+                    <button type="button" class="btn rounded-3 fw-bold" id="btnSubirNoticia"
+                            style="background:linear-gradient(135deg,#27418C,#049DD9);color:#fff;"
+                            onclick="subirNoticia()">
+                        <i class="bi bi-upload me-1"></i>Publicar noticia
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+
+@section Scripts {
+    <style>
+        @@keyframes spin {
+            to {
+                transform: rotate(360deg);
+            }
+        }
+    </style>
+    <script>
+        // ===================== RESUMEN DEL CENTRO =====================
+        const RESUMEN_KEY = 'caces_resumen';
+        const RESUMEN_DATE_KEY = 'caces_resumen_date';
+
+        function getToday() {
+            const d = new Date();
+            return `${d.getFullYear()}-${d.getMonth()}-${d.getDate()}`;
+        }
+
+        function shouldRefresh() {
+            const saved = localStorage.getItem(RESUMEN_DATE_KEY);
+            if (!saved || saved !== getToday()) return true;
+            // Después de las 2am siempre refrescar datos del día anterior
+            const lastRaw = localStorage.getItem('caces_resumen_ts');
+            if (lastRaw) {
+                const last = new Date(parseInt(lastRaw));
+                const now = new Date();
+                if (last.getDate() !== now.getDate()) return true;
+                if (now.getHours() >= 2 && last.getHours() < 2 && last.getDate() === now.getDate()) return true;
+            }
+            return false;
+        }
+
+        function saveResumen(data) {
+            localStorage.setItem(RESUMEN_KEY, JSON.stringify(data));
+            localStorage.setItem(RESUMEN_DATE_KEY, getToday());
+            localStorage.setItem('caces_resumen_ts', Date.now().toString());
+        }
+
+        function loadResumenFromCache() {
+            try {
+                const raw = localStorage.getItem(RESUMEN_KEY);
+                return raw ? JSON.parse(raw) : null;
+            } catch { return null; }
+        }
+
+        function renderResumen(data) {
+            document.getElementById('numCirugias').textContent = data.cirugias ?? '–';
+            document.getElementById('numCitas').textContent = data.citas ?? '–';
+            document.getElementById('numPacientes').textContent = data.pacientes ?? '–';
+            document.getElementById('statCirugias').textContent = data.cirugias ?? '–';
+            document.getElementById('statCitas').textContent = data.citas ?? '–';
+            document.getElementById('statPacientes').textContent = data.pacientes ?? '–';
+            document.getElementById('statMedicos').textContent = data.medicos ?? '–';
+
+            const ts = data.timestamp ? new Date(data.timestamp) : new Date();
+            document.getElementById('resumenHora').textContent = ts.toLocaleTimeString('es-SV', {hour:'2-digit',minute:'2-digit'});
+            document.getElementById('resumenUpdateTime').textContent = 'Última actualización: ' + ts.toLocaleString('es-SV');
+        }
+
+        async function fetchResumen(force = false) {
+            const cached = loadResumenFromCache();
+            if (!force && cached && !shouldRefresh()) {
+                renderResumen(cached);
+                return;
+            }
+
+            document.getElementById('resumenLoader').style.display = 'inline-block';
+
+            // Cuando el endpoint de resumen exista, descomentar:
+            // try {
+            //     const resp = await fetch('/Home/ResumenCentro');
+            //     if (resp.ok) {
+            //         const data = await resp.json();
+            //         data.timestamp = Date.now();
+            //         saveResumen(data);
+            //         renderResumen(data);
+            //         return;
+            //     }
+            // } catch(e) {}
+
+            // Datos simulados hasta que el endpoint esté disponible
+            const simulado = {
+                cirugias: Math.floor(Math.random()*6)+2,
+                citas: Math.floor(Math.random()*15)+5,
+                pacientes: Math.floor(Math.random()*20)+10,
+                medicos: Math.floor(Math.random()*8)+4,
+                timestamp: Date.now()
+            };
+            saveResumen(simulado);
+            renderResumen(simulado);
+            document.getElementById('resumenLoader').style.display = 'none';
+        }
+
+        function toggleResumen() {
+            const exp = document.getElementById('resumenExpanded');
+            const chv = document.getElementById('resumenChevron');
+            const isOpen = exp.classList.contains('show');
+            exp.classList.toggle('show');
+            chv.style.transform = isOpen ? 'rotate(0deg)' : 'rotate(180deg)';
+        }
+
+        // Auto-refresh nocturno (revisar cada minuto si son las 2am)
+        function scheduleNightRefresh() {
+            setInterval(() => {
+                const h = new Date().getHours(), m = new Date().getMinutes();
+                if (h === 2 && m === 0) {
+                    localStorage.removeItem(RESUMEN_KEY);
+                    localStorage.removeItem(RESUMEN_DATE_KEY);
+                    fetchResumen(true);
+                }
+            }, 60000);
+        }
+
+        // ===================== IMAGEN DE DOCTORES (fix crash) =====================
+        // Se aplica globalmente a todas las imágenes de especialistas
+        document.addEventListener('error', function(e) {
+            if (e.target.tagName === 'IMG') {
+                const src = e.target.getAttribute('src') || '';
+                if (src.includes('/imagenes/') || src.includes('medicos') || src.includes('foto')) {
+                    e.target.src = '/img/hombreD.png'; // fallback local
+                }
+            }
+        }, true);
+
+        // ===================== ADMIN: SUBIR NOTICIA =====================
+        function previewImagen(input) {
+            const file = input.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = e => {
+                const prev = document.getElementById('imgPreview');
+                prev.src = e.target.result;
+                prev.style.display = 'block';
+            };
+            reader.readAsDataURL(file);
+        }
+
+        // Drag & drop en el área de subida
+        const dropArea = document.getElementById('dropArea');
+        if (dropArea) {
+            ['dragenter','dragover'].forEach(ev => dropArea.addEventListener(ev, e => {
+                e.preventDefault(); dropArea.classList.add('dragover');
+            }));
+            ['dragleave','drop'].forEach(ev => dropArea.addEventListener(ev, e => {
+                e.preventDefault(); dropArea.classList.remove('dragover');
+            }));
+            dropArea.addEventListener('drop', e => {
+                const files = e.dataTransfer.files;
+                if (files[0]) {
+                    document.getElementById('noticiaFile').files = files;
+                    previewImagen(document.getElementById('noticiaFile'));
+                }
+            });
+        }
+
+        function subirNoticia() {
+            const nombre = document.getElementById('noticiaName')?.value?.trim();
+            const file   = document.getElementById('noticiaFile')?.files[0];
+
+            if (!nombre) { alert('Por favor ingrese un nombre para la noticia.'); return; }
+            if (!file)   { alert('Por favor seleccione una imagen.'); return; }
+
+            const formData = new FormData();
+            formData.append('nombre', nombre);
+            formData.append('descripcion', document.getElementById('noticiaDesc')?.value ?? '');
+            formData.append('imagen', file);
+
+            const btn = document.getElementById('btnSubirNoticia');
+            btn.disabled = true;
+            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Publicando…';
+
+            // Endpoint real cuando esté disponible:
+            // fetch('/Noticias/Crear', { method:'POST', body: formData })
+            //   .then(r => r.json()).then(data => { ... })
+
+            // Por ahora simular éxito visual
+            setTimeout(() => {
+                btn.disabled = false;
+                btn.innerHTML = '<i class="bi bi-upload me-1"></i>Publicar noticia';
+                bootstrap.Modal.getInstance(document.getElementById('modalSubirNoticia'))?.hide();
+                // Mostrar toast de éxito
+                mostrarToast('Noticia publicada correctamente.', 'success');
+            }, 1200);
+        }
+
+        function mostrarToast(msg, tipo) {
+            const t = document.createElement('div');
+            t.style.cssText = 'position:fixed;bottom:5rem;right:1rem;z-index:9999;background:'
+                + (tipo==='success' ? '#16a34a' : '#dc2626')
+                + ';color:#fff;padding:0.75rem 1.25rem;border-radius:10px;font-weight:600;font-size:0.875rem;box-shadow:0 4px 16px rgba(0,0,0,0.2);';
+            t.textContent = msg;
+            document.body.appendChild(t);
+            setTimeout(() => t.remove(), 3500);
+        }
+
+        // ===================== INIT =====================
+        document.addEventListener('DOMContentLoaded', () => {
+            fetchResumen();
+            scheduleNightRefresh();
+        });
+    </script>
+}
