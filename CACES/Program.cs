@@ -81,7 +81,7 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("SoloMedico", policy => policy.RequireRole("Medico"))
     .AddPolicy("SoloPaciente", policy => policy.RequireRole("Paciente"));
 
-
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.

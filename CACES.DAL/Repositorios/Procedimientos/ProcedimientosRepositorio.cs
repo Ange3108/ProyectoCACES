@@ -76,5 +76,18 @@ namespace CACES.DAL.Repositorios.Procedimientos
                 .Include(c => c.Horario)
                 .ToListAsync();
         }
+
+        public async Task<Cirugias?> ObtenerCirugiaParaReporteAsync(int idCirugia)
+        {
+            return await _context.Cirugias
+                .Include(c => c.Procedimiento)
+
+                .Include(c => c.Paciente)
+
+                .Include(c => c.Medico)
+                    .ThenInclude(m => m.Usuario)
+
+                .FirstOrDefaultAsync(c => c.Id_Cirugia == idCirugia);
+        }
     }
 }

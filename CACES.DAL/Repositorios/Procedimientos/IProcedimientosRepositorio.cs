@@ -10,5 +10,6 @@ namespace CACES.DAL.Repositorios.Procedimientos
         Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync();
         Task<List<Cirugias>> ObtenerCirugiasPorMedicoAsync(int idMedico);
         Task<List<Cirugias>> ObtenerTodasLasCirugiasAsync();
+        Task<Cirugias?> ObtenerCirugiaParaReporteAsync(int idCirugia);
     }
 }

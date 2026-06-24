@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Procedimientos;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Procedimientos;
@@ -162,5 +163,33 @@ namespace CACES.BLL.Servicios.Procedimientos
 
             return listaDtos;
         }
+
+        public async Task<respuestaErrores<MostrarProcedimientosDTO>> ObtenerDatosReporteAsync(int idCirugia)
+        {
+            var respuesta = new respuestaErrores<MostrarProcedimientosDTO>();
+
+            var listaCirugias = await _procedimientosRepositorio.ObtenerTodasLasCirugiasAsync();
+            var cirugiaFisica = listaCirugias.FirstOrDefault(c => c.Id_Cirugia == idCirugia);
+
+            if (cirugiaFisica == null)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "El registro de la cirugía o procedimiento no fue encontrado en el sistema.";
+                respuesta.codigo = 404;
+                return respuesta;
+            }
+
+            var listaDtoMapeada = MapearListaCirugiasAMostrarDTO(new List<Cirugias> { cirugiaFisica });
+            var dto = listaDtoMapeada.First();
+
+            respuesta.EsCorrecto = true;
+            respuesta.mensaje = "Información del procedimiento cargada con éxito.";
+            respuesta.Dato = dto;
+
+            return respuesta;
+        }
+
+
     }
 }
+
