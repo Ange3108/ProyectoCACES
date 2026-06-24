@@ -12,5 +12,15 @@ namespace CACES.BLL.Servicios.Citas
         Task<bool> ActualizarFechaCitaAsync(int idCita, DateTime nuevaFecha);
 
         Task<bool> CancelarCitasPorMedicoYFechaAsync(int idMedico, DateTime fechaCita);
+
+        Task<bool> RegistrarCitaAsync(CACES.DAL.Entidades.Cita cita);
+
+        Task<List<Cita>> ObtenerCitasPorPacienteAsync(int idPaciente);
+
+        Task<Cita?> ObtenerTicketAsync(int idCita);
+
+        Task<List<Cita>> ObtenerCitasPorMedicoAsync(int idMedico);
+
+        Task<bool> CancelarCitaAsync(int idCita);
     }
 }

@@ -1,0 +1,91 @@
+﻿@model List<CACES.DAL.Entidades.Cita>
+
+@{
+    ViewData["Title"] = "Mis Citas";
+}
+
+<div class="container py-5">
+    <div class="card shadow border-0 rounded-4">
+        <div class="card-header text-white p-4" style="background-color:#27418C;">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1">Mis Citas Médicas</h3>
+                    <p class="mb-0">Consulta las citas registradas en el centro CACES.</p>
+                </div>
+
+                <a asp-controller="Cita"
+                   asp-action="RegistrarCita"
+                   class="btn btn-light fw-semibold">
+                    + Registrar Cita
+                </a>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success">@TempData["Mensaje"]</div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">@TempData["Error"]</div>
+            }
+
+            @if (Model != null && Model.Any())
+            {
+                <div class="table-responsive">
+                    <table class="table table-hover align-middle">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Motivo</th>
+                                <th>Estado</th>
+                                <th>Ticket</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @foreach (var cita in Model)
+                            {
+                                <tr>
+                                    <td>@cita.FechaCita.ToString("dd/MM/yyyy")</td>
+                                    <td>@cita.Hora</td>
+                                    <td>@cita.Motivo</td>
+                                    <td>
+                                        @if (cita.Estado == 1)
+                                        {
+                                            <span class="badge bg-warning text-dark">Pendiente</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">Cancelada</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <a asp-controller="Cita"
+                                           asp-action="Ticket"
+                                           asp-route-id="@cita.IdCita"
+                                           class="btn btn-info btn-sm text-white">
+                                            Ver Ticket
+                                        </a>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+
+                    </table>
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    No tienes citas registradas.
+                </div>
+            }
+
+        </div>
+    </div>
+</div>

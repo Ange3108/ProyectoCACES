@@ -1,0 +1,135 @@
+﻿@model CACES.DAL.Entidades.HistorialMedico
+
+@{
+    ViewData["Title"] = "Historial Médico";
+
+    var archivos = ViewBag.Archivos as List<CACES.DAL.Entidades.ArchivoHistorial>;
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+        <div class="card-header bg-primary text-white">
+            <h3>Historial Médico</h3>
+        </div>
+
+        <div class="card-body">
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Mensaje"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Tipo de Sangre:</strong>
+                    <p>@Model.TipoSangre</p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Alergias:</strong>
+                    <p>@Model.Alergias</p>
+                </div>
+            </div>
+
+            <div class="row mb-3">
+                <div class="col-md-6">
+                    <strong>Enfermedades Crónicas:</strong>
+                    <p>@Model.EnfermedadesCronicas</p>
+                </div>
+
+                <div class="col-md-6">
+                    <strong>Medicamentos:</strong>
+                    <p>@Model.Medicamentos</p>
+                </div>
+            </div>
+
+            <div class="mb-3">
+                <strong>Antecedentes:</strong>
+                <p>@Model.Antecedentes</p>
+            </div>
+
+            <div class="mb-3">
+                <strong>Detalles:</strong>
+                <p>@Model.Detalles</p>
+            </div>
+
+            <div class="mb-3">
+                <strong>Fecha de Creación:</strong>
+                <p>@Model.FechaDeCreacion.ToString("dd/MM/yyyy")</p>
+            </div>
+
+            <hr />
+
+            <h5 class="fw-bold mb-3">Imágenes médicas / archivos del historial</h5>
+
+            @if (archivos != null && archivos.Any())
+            {
+                <div class="row g-3">
+                    @foreach (var archivo in archivos)
+                    {
+                        <div class="col-md-4">
+                            <div class="card h-100 shadow-sm">
+                                <div class="card-body">
+
+                                    <p class="fw-bold mb-1">@archivo.NombreArchivo</p>
+                                    <p class="text-muted small mb-2">
+                                        @archivo.FechaDeSubida.ToString("dd/MM/yyyy")
+                                    </p>
+
+                                    @if (archivo.TipoArchivo != null && archivo.TipoArchivo.StartsWith("image"))
+                                    {
+                                        <img src="@archivo.RutaArchivo"
+                                             class="img-fluid rounded mb-2"
+                                             alt="@archivo.NombreArchivo" />
+                                    }
+
+                                    <a href="@archivo.RutaArchivo"
+                                       target="_blank"
+                                       class="btn btn-outline-primary btn-sm">
+                                        Ver archivo
+                                    </a>
+
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    No hay imágenes médicas registradas en este historial.
+                </div>
+            }
+
+            <div class="mt-4 d-flex gap-2">
+                <a asp-action="Editar"
+                   asp-route-id="@Model.IdHistorial"
+                   class="btn btn-warning">
+                    Editar Historial
+                </a>
+
+                @if (User.IsInRole("Medico"))
+                {
+                    <a asp-action="SubirImagen"
+                       asp-route-idHistorial="@Model.IdHistorial"
+                       class="btn btn-primary">
+                        Subir Imagen Médica
+                    </a>
+                }
+            </div>
+
+        </div>
+    </div>
+
+</div>

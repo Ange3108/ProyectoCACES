@@ -35,7 +35,9 @@ namespace CACES.DAL.Repositorios.Medicos
             return await _context.Medicos
                 .Include(x => x.Usuario)
                 .Include(x => x.Especialidad)
-                .Where(m => m.Usuario.Estado == true &&
+
+                .Where(m => m.Usuario.Estado == 1 &&
+
                             m.Especialidad != null &&
                             m.Especialidad.Estado == true)
                 .ToListAsync();
@@ -127,7 +129,7 @@ namespace CACES.DAL.Repositorios.Medicos
                 await _context.Database.ExecuteSqlRawAsync(
                     "UPDATE HorariosDisponibles SET Estado = 0 WHERE Id_Medico = {0}", id);
 
-                medico.Usuario.Estado = false;
+                medico.Usuario.Estado = 0;
 
                 var ok = await _context.SaveChangesAsync() > 0;
                 await transaction.CommitAsync();
@@ -143,21 +145,62 @@ namespace CACES.DAL.Repositorios.Medicos
         public async Task<bool> CreateMedicoConUsuarioAsync(Entidades.Usuario usuario, Medico medico)
         {
             await using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
                 await _context.Usuarios.AddAsync(usuario);
-                await _context.SaveChangesAsync(); // genera el IdUsuario
+                await _context.SaveChangesAsync();
 
-                medico.IdUsuario = usuario.IdUsuario; // ahora sí lo tienes
+                medico.IdUsuario = usuario.IdUsuario;
+
                 await _context.Medicos.AddAsync(medico);
 
-                await _context.UsuarioRoles.AddAsync(new UsuarioRoles
+                var aspUser = await _context.AspNetUsers
+                    .FirstOrDefaultAsync(x => x.Email == usuario.CorreoElectronico);
+
+                if (aspUser == null)
                 {
-                    IdUsuario = usuario.IdUsuario,
-                    RoleId = "2"
-                });
+                    aspUser = new ApplicationUser
+                    {
+                        Id = Guid.NewGuid().ToString(),
+                        UserName = usuario.CorreoElectronico,
+                        Email = usuario.CorreoElectronico,
+                        EmailConfirmed = usuario.EmailConfirmed,
+                        PasswordHash = usuario.PasswordHash,
+                        SecurityStamp = usuario.SecurityStamp,
+                        PhoneNumber = usuario.Telefono,
+                        PhoneNumberConfirmed = false,
+                        TwoFactorEnabled = false,
+                        LockoutEnabled = false,
+                        AccessFailedCount = 0
+                    };
+
+                    await _context.AspNetUsers.AddAsync(aspUser);
+                    await _context.SaveChangesAsync();
+                }
+
+                var rolMedico = await _context.AspNetRoles
+                    .FirstOrDefaultAsync(r => r.Name == "Medico");
+
+                if (rolMedico == null)
+                {
+                    throw new Exception("No existe el rol Medico.");
+                }
+
+                var yaTieneRol = await _context.AspNetUserRoles
+                    .AnyAsync(x => x.UserId == aspUser.Id && x.RoleId == rolMedico.Id);
+
+                if (!yaTieneRol)
+                {
+                    await _context.AspNetUserRoles.AddAsync(new AspNetUserRole
+                    {
+                        UserId = aspUser.Id,
+                        RoleId = rolMedico.Id
+                    });
+                }
 
                 await _context.SaveChangesAsync();
+
                 await transaction.CommitAsync();
                 return true;
             }

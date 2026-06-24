@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
+
 namespace CACES.Controllers
 {
     public class PacienteController : Controller
@@ -51,7 +52,7 @@ namespace CACES.Controllers
                 }
 
                 TempData["Mensaje"] = "Paciente registrado correctamente.";
-                return RedirectToAction("Login", "Auth");
+                return RedirectToAction("Login", "Login_Logout");
             }
             catch (Exception ex)
             {

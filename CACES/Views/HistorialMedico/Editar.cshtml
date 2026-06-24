@@ -1,0 +1,84 @@
+﻿@model CACES.DAL.Entidades.HistorialMedico
+
+@{
+    ViewData["Title"] = "Editar Historial Médico";
+}
+
+<div class="container mt-5">
+
+    <div class="card shadow">
+        <div class="card-header bg-warning">
+            <h3>Editar Historial Médico</h3>
+        </div>
+
+        <div class="card-body">
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Mensaje"]
+                </div>
+            }
+
+            <form asp-action="Editar" method="post">
+
+                <input type="hidden" asp-for="IdHistorial" />
+
+                <div class="mb-3">
+                    <label asp-for="TipoSangre" class="form-label"></label>
+                    <input asp-for="TipoSangre" class="form-control" />
+                    <span asp-validation-for="TipoSangre" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Alergias" class="form-label"></label>
+                    <input asp-for="Alergias" class="form-control" />
+                    <span asp-validation-for="Alergias" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="EnfermedadesCronicas" class="form-label"></label>
+                    <input asp-for="EnfermedadesCronicas" class="form-control" />
+                    <span asp-validation-for="EnfermedadesCronicas" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Medicamentos" class="form-label"></label>
+                    <input asp-for="Medicamentos" class="form-control" />
+                    <span asp-validation-for="Medicamentos" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Antecedentes" class="form-label"></label>
+                    <input asp-for="Antecedentes" class="form-control" />
+                    <span asp-validation-for="Antecedentes" class="text-danger"></span>
+                </div>
+
+                <div class="mb-3">
+                    <label asp-for="Detalles" class="form-label"></label>
+                    <textarea asp-for="Detalles"
+                              rows="4"
+                              class="form-control"></textarea>
+                    <span asp-validation-for="Detalles" class="text-danger"></span>
+                </div>
+
+                <button type="submit" class="btn btn-success">
+                    Guardar Cambios
+                </button>
+
+                <a asp-action="Detalle"
+                   asp-route-id="@Model.IdHistorial"
+                   class="btn btn-secondary">
+                    Cancelar
+                </a>
+
+            </form>
+
+        </div>
+    </div>
+
+</div>
+
+@section Scripts{
+    <partial name="_ValidationScriptsPartial" />
+}

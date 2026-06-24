@@ -29,5 +29,30 @@ namespace CACES.BLL.Servicios.Citas
         {
             return await _citaRepositorio.CancelarCitasPorMedicoYFechaAsync(idMedico, fechaCita);
         }
+
+        public async Task<bool> RegistrarCitaAsync(Cita cita)
+        {
+            return await _citaRepositorio.RegistrarCitaAsync(cita);
+        }
+
+        public async Task<List<Cita>> ObtenerCitasPorPacienteAsync(int idPaciente)
+        {
+            return await _citaRepositorio.ObtenerCitasPorPacienteAsync(idPaciente);
+        }
+
+        public async Task<Cita?> ObtenerTicketAsync(int idCita)
+        {
+            return await _citaRepositorio.ObtenerTicketAsync(idCita);
+        }
+
+        public async Task<List<Cita>> ObtenerCitasPorMedicoAsync(int idMedico)
+        {
+            return await _citaRepositorio.ObtenerCitasPorMedicoAsync(idMedico);
+        }
+
+        public async Task<bool> CancelarCitaAsync(int idCita)
+        {
+            return await _citaRepositorio.CancelarCitaAsync(idCita);
+        }
     }
 }

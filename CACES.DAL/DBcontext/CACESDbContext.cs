@@ -28,7 +28,8 @@ namespace CACES.DAL.DBContext
         public DbSet<Procedimiento> Procedimientos { get; set; }
         public DbSet<Cirugias> Cirugias { get; set; }
 
-        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
+        public DbSet<ArchivoHistorial> ArchivosHistorial { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -72,7 +73,6 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.IdPaciente).HasColumnName("Id_Paciente");
                 entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
                 entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
-                entity.Property(e => e.IdHorario).HasColumnName("Id_Horario");
                 entity.Property(e => e.FechaCita).HasColumnName("Fecha");
                 entity.Property(e => e.Hora).HasColumnName("Hora");
                 entity.Property(e => e.Motivo).HasColumnName("Motivo").HasMaxLength(100);
@@ -154,22 +154,8 @@ namespace CACES.DAL.DBContext
                       .HasForeignKey(r => r.IdCita);
             });
 
-            modelBuilder.Entity<UsuarioRoles>()
-
-         .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
-
-            modelBuilder.Entity<UsuarioRoles>()
-                .HasOne(ur => ur.Usuario)
-                .WithMany(u => u.UsuarioRoles)
-                .HasForeignKey(ur => ur.IdUsuario)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<UsuarioRoles>()
-                .HasOne(ur => ur.Rol)
-                .WithMany(r => r.UsuarioRoles)
-                .HasForeignKey(ur => ur.RoleId)
-                .OnDelete(DeleteBehavior.Cascade);
-
+  
+            
 
             // Configuración de ApplicationUser
             modelBuilder.Entity<ApplicationUser>(entity =>
@@ -316,6 +302,41 @@ namespace CACES.DAL.DBContext
                   .WithMany()
                   .HasForeignKey(d => d.Id_Medico)
                   .OnDelete(DeleteBehavior.ClientSetNull);
+            });
+
+            // Configuración de la entidad ArchivoHistorial
+            modelBuilder.Entity<ArchivoHistorial>(entity =>
+            {
+                entity.HasKey(e => e.IdArchivo);
+
+                entity.Property(e => e.IdArchivo)
+                    .HasColumnName("Id_Archivo");
+
+                entity.Property(e => e.IdHistorial)
+                    .HasColumnName("Id_Historial")
+                    .IsRequired();
+
+                entity.Property(e => e.NombreArchivo)
+                    .HasColumnName("NombreArchivo")
+                    .HasMaxLength(200)
+                    .IsRequired();
+
+                entity.Property(e => e.RutaArchivo)
+                    .HasColumnName("RutaArchivo")
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(e => e.TipoArchivo)
+                    .HasColumnName("TipoArchivo")
+                    .HasMaxLength(50);
+
+                entity.Property(e => e.FechaDeSubida)
+                    .HasColumnName("FechaDeSubida");
+
+                entity.HasOne(e => e.HistorialMedico)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdHistorial)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }

@@ -1,0 +1,138 @@
+﻿@model List<CACES.DAL.Entidades.Cita>
+
+@{
+    ViewData["Title"] = "Citas del Médico";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4">
+
+        <div class="card-header text-white p-4"
+             style="background-color:#27418C;">
+
+            <h3 class="mb-1">
+                Agenda de Citas Médicas
+            </h3>
+
+            <p class="mb-0">
+                Administración de citas asignadas.
+            </p>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Mensaje"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead>
+                            <tr>
+                                <th>Cita</th>
+                                <th>Fecha</th>
+                                <th>Hora</th>
+                                <th>Motivo</th>
+                                <th>Estado</th>
+                                <th>Acción</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var cita in Model)
+                            {
+                                <tr>
+
+                                    <td>@cita.IdCita</td>
+
+                                    <td>
+                                        @cita.FechaCita.ToString("dd/MM/yyyy")
+                                    </td>
+
+                                    <td>
+                                        @cita.Hora
+                                    </td>
+
+                                    <td>
+                                        @cita.Motivo
+                                    </td>
+
+                                    <td>
+
+                                        @if (cita.Estado == 1)
+                                        {
+                                            <span class="badge bg-success">
+                                                Activa
+                                            </span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-secondary">
+                                                Cancelada
+                                            </span>
+                                        }
+
+                                    </td>
+
+                                    <td>
+
+                                        @if (cita.Estado == 1)
+                                        {
+                                            <form asp-action="CancelarCita"
+                                                  method="post">
+
+                                                <input type="hidden"
+                                                       name="idCita"
+                                                       value="@cita.IdCita" />
+
+                                                <button type="submit"
+                                                        class="btn btn-danger btn-sm"
+                                                        onclick="return confirm('¿Desea cancelar esta cita?')">
+
+                                                    Cancelar
+
+                                                </button>
+
+                                            </form>
+                                        }
+
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="alert alert-info">
+                    No existen citas asignadas.
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

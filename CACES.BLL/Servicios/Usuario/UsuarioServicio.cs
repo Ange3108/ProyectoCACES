@@ -78,7 +78,7 @@ namespace CACES.BLL.Servicios.Usuario
                 nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
                 nuevoUsuario.FechaDeRegistro = DateTime.UtcNow;
                 nuevoUsuario.SecurityStamp = Guid.NewGuid().ToString();
-                nuevoUsuario.Estado = true;
+                nuevoUsuario.Estado = 1;
                 nuevoUsuario.EmailConfirmed = false;
                 nuevoUsuario.TwoFactorEnabled = false;
                 nuevoUsuario.LockoutEnabled = false;

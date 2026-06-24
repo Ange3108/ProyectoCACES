@@ -80,7 +80,7 @@
                                     <td>@paciente.Usuario.Direccion</td>
 
                                     <td>
-                                        @if (paciente.Usuario.Estado.Equals(true))
+                                        @if (paciente.Usuario.Estado == 1)
                                         {
                                             <span class="badge bg-success">Activo</span>
                                         }
@@ -92,12 +92,11 @@
 
                                     <td>
                                         <div class="d-flex gap-2">
-
-                                            <a asp-controller="Paciente"
-                                               asp-action="DetallePaciente"
-                                               asp-route-id="@paciente.IdPaciente"
+                                            <a asp-controller="HistorialMedico"
+                                               asp-action="Detalle"
+                                               asp-route-id="@paciente.IdHistorial"
                                                class="btn btn-info btn-sm text-white"
-                                               title="Ver detalle">
+                                               title="Ver historial médico">
                                                 <i class="bi bi-eye-fill"></i>
                                             </a>
 
@@ -109,7 +108,7 @@
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            @if (paciente.Usuario.Estado.Equals(true))
+                                            @if (User.IsInRole("Administrador") && paciente.Usuario.Estado == 1)
                                             {
                                                 <form asp-controller="Paciente"
                                                       asp-action="DesactivarPaciente"
