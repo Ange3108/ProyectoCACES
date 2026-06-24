@@ -102,6 +102,8 @@ namespace CACES.BLL
                 .ReverseMap();
             CreateMap<Procedimiento, DTOs.Procedimientos.EditarProcedimientosDTO>()
                 .ReverseMap();
+            CreateMap<Procedimiento, DTOs.Procedimientos.RegistrarProcedimientosDto>()
+                .ReverseMap();
         }
     }
 }

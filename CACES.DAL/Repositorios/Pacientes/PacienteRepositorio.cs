@@ -124,5 +124,11 @@ namespace CACES.DAL.Repositorios.Pacientes
             _context.Pacientes.Update(existing);
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<Paciente?> ObtenerPorUsuarioIdAsync(int idUsuario)
+        {
+            return await _context.Pacientes
+                .FirstOrDefaultAsync(p => p.IdUsuario == idUsuario);
+        }
     }
 }

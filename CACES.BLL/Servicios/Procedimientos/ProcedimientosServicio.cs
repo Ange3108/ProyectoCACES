@@ -1,4 +1,6 @@
-﻿using CACES.BLL.DTOs.Procedimientos;
+﻿using AutoMapper;
+using CACES.BLL.DTOs.Procedimientos;
+using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Procedimientos;
 using System.Reflection.Metadata.Ecma335;
 
@@ -7,60 +9,17 @@ namespace CACES.BLL.Servicios.Procedimientos
     public class ProcedimientosServicio : IProcedimientosServicio
     {
         private readonly IProcedimientosRepositorio _procedimientosRepositorio;
-
-        public ProcedimientosServicio(IProcedimientosRepositorio procedimientosRepositorio)
+        private readonly IMapper _mapper;
+        public ProcedimientosServicio(IProcedimientosRepositorio procedimientosRepositorio, IMapper mapper)
         {
             _procedimientosRepositorio = procedimientosRepositorio;
+            _mapper = mapper;
         }
 
-        public async Task<List<MostrarProcedimientosDTO?>> ObtenerDetalleCirugiaAsync(int idPaciente)
+        public async Task<List<MostrarProcedimientosDTO>> ObtenerDetalleCirugiaAsync(int idPaciente)
         {
             var listaCirugias = await _procedimientosRepositorio.ObtenerDetalleCirugiaAsync(idPaciente);
-            var listaDtos = new List<MostrarProcedimientosDTO>();
-
-            foreach (var cirugia in listaCirugias)
-            {
-                DateTime fechaFinalCita = DateTime.Today;
-
-                if (cirugia.Horario != null)
-                {
-                    DayOfWeek diaObjetivo = (DayOfWeek)cirugia.Horario.DiaSemana;
-                    while (fechaFinalCita.DayOfWeek != diaObjetivo)
-                    {
-                        fechaFinalCita = fechaFinalCita.AddDays(1);
-                    }
-                    fechaFinalCita = fechaFinalCita.Add(cirugia.Horario.HoraInicio);
-                }
-
-                string nombreDelMedico = cirugia.Medico?.Usuario != null
-                    ? $"Dr. {cirugia.Medico.Usuario.Nombres}"
-                    : "Médico No Asignado";
-
-                string nombreDelPaciente = "Paciente Desconocido";
-
-                if (cirugia.Paciente?.Usuario != null)
-                {
-                    var u = cirugia.Paciente.Usuario;
-
-                    nombreDelPaciente = $"{u.Nombres} {u.PrimerApellido} {u.SegundoApellido}".Trim();
-                }
-
-                listaDtos.Add(new MostrarProcedimientosDTO
-                {
-                    Id_Cirugia = cirugia.Id_Cirugia,
-                    Id_Paciente = cirugia.Id_Paciente,
-                    Nombre = cirugia.Procedimiento?.Nombre ?? "Procedimiento Desconocido",
-                    NombreMedico = nombreDelMedico,
-                    NombrePaciente = nombreDelPaciente,
-                    PrimerApellidoPaciente = cirugia.Paciente?.Usuario?.PrimerApellido ?? "Desconocido",
-                    SegundoApellidoPaciente = cirugia.Paciente?.Usuario?.SegundoApellido ?? "",
-                    Fecha = fechaFinalCita,
-                    Estado = cirugia.Estado,
-                    Descripcion = cirugia.Procedimiento?.Descripcion ?? "Sin indicaciones particulares."
-                });
-            }
-
-            return listaDtos;
+            return MapearListaCirugiasAMostrarDTO(listaCirugias);
         }
 
         public async Task<bool> ActualizarProcedimientoAsync(EditarProcedimientosDTO editarProcedimientosDTO, int idPaciente)
@@ -113,6 +72,95 @@ namespace CACES.BLL.Servicios.Procedimientos
                 Estado = cirugia.Estado,
                 Descripcion = cirugia.Procedimiento?.Descripcion ?? "Sin indicaciones particulares."
             };
+        }
+
+        public async Task<bool> RegistrarProcedimientoAsync(RegistrarProcedimientosDto registrarProcedimientosDto)
+        {
+            var nuevoHorario = new HorariosDisponibles
+            {
+                Id_Medico = registrarProcedimientosDto.Id_Medico,
+                DiaSemana = (int)registrarProcedimientosDto.FechaProgramada.DayOfWeek,
+                HoraInicio = registrarProcedimientosDto.FechaProgramada.TimeOfDay,
+                HoraFin = registrarProcedimientosDto.FechaProgramada.TimeOfDay.Add(TimeSpan.FromHours(2)),
+                Activo = true
+            };
+
+            var nuevaCirugia = new Cirugias
+            {
+                Id_Paciente = registrarProcedimientosDto.Id_Paciente,
+                Id_Medico = registrarProcedimientosDto.Id_Medico,
+                Id_Procedimiento = registrarProcedimientosDto.Id_Procedimiento,
+                Estado = true, 
+
+                Horario = nuevoHorario
+            };
+
+            return await _procedimientosRepositorio.RegistrarProcedimientosAsync(nuevaCirugia);
+        }
+
+        public async Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync()
+        {
+            return await _procedimientosRepositorio.ObtenerProcedimientosFijosAsync();
+        }
+
+        public async Task<List<MostrarProcedimientosDTO>> ObtenerCirugiasPorMedicoAsync(int idMedico)
+        {
+            var listaCirugias = await _procedimientosRepositorio.ObtenerCirugiasPorMedicoAsync(idMedico);
+
+            return MapearListaCirugiasAMostrarDTO(listaCirugias);
+        }
+
+        public async Task<List<MostrarProcedimientosDTO>> ObtenerTodasLasCirugiasAsync()
+        {
+            var listaCirugias = await _procedimientosRepositorio.ObtenerTodasLasCirugiasAsync();
+            return MapearListaCirugiasAMostrarDTO(listaCirugias);
+        }
+
+        private List<MostrarProcedimientosDTO> MapearListaCirugiasAMostrarDTO(List<Cirugias> listaCirugias)
+        {
+            var listaDtos = new List<MostrarProcedimientosDTO>();
+
+            foreach (var cirugia in listaCirugias)
+            {
+                DateTime fechaFinalCita = DateTime.Today;
+
+                if (cirugia.Horario != null)
+                {
+                    DayOfWeek diaObjetivo = (DayOfWeek)cirugia.Horario.DiaSemana;
+                    while (fechaFinalCita.DayOfWeek != diaObjetivo)
+                    {
+                        fechaFinalCita = fechaFinalCita.AddDays(1);
+                    }
+                    fechaFinalCita = fechaFinalCita.Add(cirugia.Horario.HoraInicio);
+                }
+
+                string nombreDelMedico = cirugia.Medico?.Usuario != null
+                    ? $"Dr. {cirugia.Medico.Usuario.Nombres}"
+                    : "Médico No Asignado";
+
+                string nombreDelPaciente = "Paciente Desconocido";
+                if (cirugia.Paciente?.Usuario != null)
+                {
+                    var u = cirugia.Paciente.Usuario;
+                    nombreDelPaciente = $"{u.Nombres} {u.PrimerApellido} {u.SegundoApellido}".Trim();
+                }
+
+                listaDtos.Add(new MostrarProcedimientosDTO
+                {
+                    Id_Cirugia = cirugia.Id_Cirugia,
+                    Id_Paciente = cirugia.Id_Paciente,
+                    Nombre = cirugia.Procedimiento?.Nombre ?? "Procedimiento Desconocido",
+                    NombreMedico = nombreDelMedico,
+                    NombrePaciente = nombreDelPaciente,
+                    PrimerApellidoPaciente = cirugia.Paciente?.Usuario?.PrimerApellido ?? "Desconocido",
+                    SegundoApellidoPaciente = cirugia.Paciente?.Usuario?.SegundoApellido ?? "",
+                    Fecha = fechaFinalCita,
+                    Estado = cirugia.Estado,
+                    Descripcion = cirugia.Procedimiento?.Descripcion ?? "Sin indicaciones particulares."
+                });
+            }
+
+            return listaDtos;
         }
     }
 }
