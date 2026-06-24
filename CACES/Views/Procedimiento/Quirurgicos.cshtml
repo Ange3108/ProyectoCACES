@@ -71,7 +71,12 @@
                                             <i class="bi bi-pencil-square"></i> Editar Procedimiento
                                         </a>
                                     }
-                                    <a class="btn btn-cotizar px-4" href="#">Descargar Historial Médico</a>
+                                    <a class="btn btn-cotizar px-4"
+                                       asp-controller="Procedimientos"
+                                       asp-action="DescargarReporteProcedimiento"
+                                       asp-route-id="@cirugia.Id_Cirugia">
+                                        <i class="bi bi-file-earmark-pdf"></i> Descargar Historial Médico
+                                    </a>
                                 </div>
                             </div>
                         </article>

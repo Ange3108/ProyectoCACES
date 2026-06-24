@@ -247,7 +247,6 @@ namespace CACES.BLL.Servicios.Especialidad
                     Descripcion = especialidad.Descripcion,
                     Icono = especialidad.Icono ?? "bi bi-heart-pulse",
 
-                    // Mapeamos los procedimientos fijos de la lista
                     Procedimientos = especialidad.Procedimientos != null
             ? especialidad.Procedimientos.Select(p => new MostrarProcedimientosDTO
             {
@@ -256,7 +255,6 @@ namespace CACES.BLL.Servicios.Especialidad
             }).ToList()
             : new List<MostrarProcedimientosDTO>(),
 
-                    // Mapeamos el equipo médico
                     Medicos = especialidad.Medicos != null
             ? especialidad.Medicos.Select(m => new mostrarMedicoEspecialidadDTO
             {

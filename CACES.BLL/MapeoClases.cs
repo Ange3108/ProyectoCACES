@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using System.Text;
 using CACES.BLL.DTOs.Medico;
 using CACES.BLL.DTOs.Perfil;
+using CACES.BLL.DTOs.Procedimientos;
 
 namespace CACES.BLL
 {
@@ -104,6 +105,23 @@ namespace CACES.BLL
                 .ReverseMap();
             CreateMap<Procedimiento, DTOs.Procedimientos.RegistrarProcedimientosDto>()
                 .ReverseMap();
+
+            // Mapeo para el Reporte PDF de Pacientes
+            CreateMap<Cirugias, ReporteProcedimientosPaciente>()
+                .ForMember(dest => dest.NombrePaciente,
+                           opt => opt.MapFrom(src => $"{src.Paciente.Usuario.Nombres} {src.Paciente.Usuario.PrimerApellido}"))
+
+                .ForMember(dest => dest.Identificacion,
+                           opt => opt.MapFrom(src => src.Paciente.Usuario.DUI))
+
+                .ForMember(dest => dest.Procedimiento,
+                           opt => opt.MapFrom(src => src.Procedimiento.Nombre))
+
+                .ForMember(dest => dest.MedicoResponsable,
+                           opt => opt.MapFrom(src => $"Dr(a). {src.Medico.Usuario.Nombres} {src.Medico.Usuario.PrimerApellido}"))
+
+                .ForMember(dest => dest.Estado,
+                           opt => opt.MapFrom(src => src.Estado ? "Realizado" : "Pendiente"));
         }
     }
 }
