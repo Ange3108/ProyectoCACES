@@ -133,5 +133,10 @@ namespace CACES.DAL.Repositorios.Pacientes
                 .FirstOrDefaultAsync(p => p.IdUsuario == idUsuario);
         }
 
+        public async Task<Paciente?> ObtenerPorUsuarioIdAsync(int idUsuario)
+        {
+            return await _context.Pacientes
+                .FirstOrDefaultAsync(p => p.IdUsuario == idUsuario);
+        }
     }
 }

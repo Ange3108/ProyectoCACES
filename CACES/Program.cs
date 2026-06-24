@@ -3,6 +3,7 @@ using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Especialidad;
+using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;

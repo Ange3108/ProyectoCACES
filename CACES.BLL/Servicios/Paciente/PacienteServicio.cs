@@ -177,7 +177,6 @@ namespace CACES.BLL.Servicios.Paciente
 
             throw new Exception("No se pudo crear el paciente con su historial médico.");
         }
-
         public async Task<bool> RegistrarPacienteAsync(RegistrarPacienteDTO pacienteDto)
         {
             var usuarioCreado = await CreatePacienteAsync(pacienteDto);
@@ -188,5 +187,14 @@ namespace CACES.BLL.Servicios.Paciente
         {
             return await _pacienteRepositorio.GetPacienteByUsuarioIdAsync(idUsuario);
         }
+
+        public async Task<int> ObtenerIdPacientePorUsuarioIdAsync(int idUsuario)
+        {
+            var paciente = await _pacienteRepositorio.ObtenerPorUsuarioIdAsync(idUsuario);
+
+            return paciente != null ? paciente.IdPaciente : 0;
+        }
+    
+
     }
 }

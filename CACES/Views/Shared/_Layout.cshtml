@@ -16,72 +16,175 @@
             <div class="container-fluid px-3 px-lg-4">
 
                 <a class="navbar-brand brand-block" asp-controller="Home" asp-action="Index">
-                    <span class="brand-icon"><img src="~/img/logoCACES.jpg" alt="Logo"></span>
+                    <span class="brand-icon">
+                        <img src="~/img/logoCACES.jpg" alt="Logo">
+                    </span>
                     <span class="brand-name">CACES</span>
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <button class="navbar-toggler"
+                        type="button"
+                        data-bs-toggle="collapse"
+                        data-bs-target="#navbarNav">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <div class="collapse navbar-collapse" id="navbarNav">
+
                     <ul class="navbar-nav mx-auto nav-center-list">
 
                         <!-- ENLACES PÚBLICOS -->
-                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Index">Inicio</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Especialidad" asp-action="Especialidades">Especialidades</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Paquete" asp-action="ObtenerPaquetesSoloActivos">Turismo Médico</a></li>
-                        <li class="nav-item"><a class="nav-link" asp-controller="Medico" asp-action="Especialistas">Especialistas</a></li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Home" asp-action="Index">
+                                Inicio
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Especialidad" asp-action="Especialidades">
+                                Especialidades
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Paquete" asp-action="ObtenerPaquetesSoloActivos">
+                                Turismo Médico
+                            </a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Medico" asp-action="Especialistas">
+                                Especialistas
+                            </a>
+                        </li>
 
                         <!-- ENLACES PARA PACIENTES -->
-                        @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Paciente"))
+                        @if (User.Identity != null &&
+                        User.Identity.IsAuthenticated &&
+                        User.IsInRole("Paciente"))
                         {
-                            <li class="nav-item"><a class="nav-link" asp-controller="HistorialMedico" asp-action="MiHistorial">Mi Historial</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-controller="Citas" asp-action="GestionCitas">Mis Citas</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-controller="Paciente" asp-action="Pacientes">Historiales Pacientes</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="HistorialMedico"
+                                   asp-action="MiHistorial">
+                                    Mi Historial
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Citas"
+                                   asp-action="GestionCitas">
+                                    Mis Citas
+                                </a>
+                            </li>
                         }
 
                         <!-- ENLACES PARA MÉDICOS -->
-                        @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Medico"))
+                        @if (User.Identity != null &&
+                        User.Identity.IsAuthenticated &&
+                        User.IsInRole("Medico"))
                         {
-                            <li class="nav-item"><a class="nav-link" asp-controller="AgendaMedica" asp-action="AgendaMedica">Agenda Médica</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-controller="Paciente" asp-action="Pacientes">Historiales Pacientes</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="AgendaMedica"
+                                   asp-action="AgendaMedica">
+                                    Agenda Médica
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Paciente"
+                                   asp-action="Pacientes">
+                                    Historiales Pacientes
+                                </a>
+                            </li>
                         }
 
                         <!-- ENLACES PARA ADMINISTRADOR -->
-                        @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
+                        @if (User.Identity != null &&
+                        User.Identity.IsAuthenticated &&
+                        User.IsInRole("Administrador"))
                         {
-                            <li class="nav-item"><a class="nav-link" asp-controller="Paquete" asp-action="ObtenerPaquetes">Turismo Médico - Admin</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-controller="Rol" asp-action="GestionRoles">Gestión de Roles</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Reportes">Reportes</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Paquete"
+                                   asp-action="ObtenerPaquetes">
+                                    Turismo Médico - Admin
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Rol"
+                                   asp-action="GestionRoles">
+                                    Gestión de Roles
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Home"
+                                   asp-action="Reportes">
+                                    Reportes
+                                </a>
+                            </li>
                         }
 
                         <!-- ENLACES PARA USUARIOS AUTENTICADOS -->
-                        @if (User.Identity != null && User.Identity.IsAuthenticated)
+                        @if (User.Identity != null &&
+                        User.Identity.IsAuthenticated)
                         {
-                            <li class="nav-item"><a class="nav-link" asp-controller="Procedimientos" asp-action="ObtenerProcedimientos">Procedimientos Quirúrgicos</a></li>
-                            <li class="nav-item"><a class="nav-link" asp-controller="Configuracion" asp-action="Configuracion">Configuración</a></li>
+                            <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Procedimientos"
+                                   asp-action="ObtenerProcedimientos">
+                                    Procedimientos Quirúrgicos
+                                </a>
+                            </li>
 
                             <li class="nav-item">
-                                <form asp-controller="Login_Logout" asp-action="Logout" method="post" class="d-inline">
+                                <a class="nav-link"
+                                   asp-controller="Configuracion"
+                                   asp-action="Configuracion">
+                                    Configuración
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <form asp-controller="Login_Logout"
+                                      asp-action="Logout"
+                                      method="post"
+                                      class="d-inline">
+
                                     @Html.AntiForgeryToken()
-                                    <button type="submit" class="nav-link btn btn-link">Cerrar Sesión</button>
+
+                                    <button type="submit"
+                                            class="nav-link btn btn-link">
+                                        Cerrar Sesión
+                                    </button>
                                 </form>
                             </li>
                         }
 
                     </ul>
+
                 </div>
 
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    <a class="account-link" asp-controller="Perfil" asp-action="VerPerfil">
+                    <a class="account-link"
+                       asp-controller="Perfil"
+                       asp-action="VerPerfil">
                         <i class="bi bi-person"></i>
                     </a>
                 }
                 else
                 {
-                    <a class="account-link" asp-controller="Login_Logout" asp-action="Login">
+                    <a class="account-link"
+                       asp-controller="Login_Logout"
+                       asp-action="Login">
                         <i class="bi bi-person"></i>
                     </a>
                 }
@@ -98,7 +201,9 @@
 
     <footer class="mt-5 py-4" style="background:#72CEF2;">
         <div class="container text-center">
-            <p class="mb-1 fw-semibold" style="color:#27418C;">Centro Ambulatorio de Cirugía Escalón</p>
+            <p class="mb-1 fw-semibold" style="color:#27418C;">
+                Centro Ambulatorio de Cirugía Escalón
+            </p>
         </div>
     </footer>
 

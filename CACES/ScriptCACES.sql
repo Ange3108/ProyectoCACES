@@ -1,5 +1,5 @@
-DROP DATABASE [CACES];
-GO
+--DROP DATABASE [CACES];
+--GO
 
 CREATE DATABASE CACES;
 GO
@@ -333,10 +333,10 @@ VALUES
 GO
 
 -- MEDICOS
-INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Telefono, Certificaciones, FechaDeRegistro) VALUES
-(1, 2, 10, '2222-2222', 'Especialista en Cirugía General y Laparoscópica', GETDATE()),
-(2, 2, 8, '3333-3333', 'Especialista en Ginecología y Obstetricia', GETDATE()),
-(4, 2, 12, '4444-4444', 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE());
+INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Certificaciones, FechaDeRegistro) VALUES
+(1, 2, 10, 'Especialista en Cirugía General y Laparoscópica', GETDATE()),
+(2, 4, 8, 'Especialista en Ginecología y Obstetricia', GETDATE()),
+(4, 5, 12, 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE());
 GO
 
 -- HISTORIAL MEDICO
@@ -450,8 +450,8 @@ VALUES
 (1, '1'),
 (2, '2'),
 (3, '3'),
-(4, '3'), -- Paciente
-(5, '4'); -- Paciente
+(4, '2'), -- Paciente
+(5, '2'); -- Paciente
 GO
 
 

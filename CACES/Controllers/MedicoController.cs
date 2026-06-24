@@ -120,7 +120,8 @@ namespace CACES.Controllers
                 return BadRequest(resultado);   
             }
 
-            return Json(resultado);
+            TempData["Exito"] = resultado.mensaje;
+            return RedirectToAction(nameof(Medicos));
         }
 
         [Authorize(Roles = "Administrador")]

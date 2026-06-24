@@ -1,5 +1,6 @@
-﻿using CACES.DAL.Entidades;
-using CACES.DAL.DBContext;
+﻿using CACES.DAL.DBContext;
+using CACES.DAL.Entidades;
+using CACES.DAL.Entidades.Roles;
 using Microsoft.EntityFrameworkCore;
 
 namespace CACES.DAL.Repositorios.Usuario
@@ -20,6 +21,14 @@ namespace CACES.DAL.Repositorios.Usuario
                 return false;
 
             await _context.Usuarios.AddAsync(usuario);
+            await _context.SaveChangesAsync(); 
+
+            await _context.UsuarioRoles.AddAsync(new UsuarioRoles
+            {
+                IdUsuario = usuario.IdUsuario,
+                RoleId = "3"
+            });
+
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -70,7 +79,7 @@ namespace CACES.DAL.Repositorios.Usuario
             if (usuario == null)
                 return false;
 
-            usuario.Estado = 0;
+            usuario.Estado = false;
             usuario.EmailConfirmed = false;
             usuario.FechaDeModificacion = DateTime.Now;
 
