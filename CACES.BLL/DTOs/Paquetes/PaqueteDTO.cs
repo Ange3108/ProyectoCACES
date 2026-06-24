@@ -20,5 +20,6 @@ namespace CACES.BLL.DTOs.Paquete
 
         public bool Estado { get; set; }
 
+
     }
 }
