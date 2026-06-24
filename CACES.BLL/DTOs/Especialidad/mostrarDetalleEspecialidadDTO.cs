@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 
 using CACES.BLL.DTOs.Medico;
+using CACES.BLL.DTOs.Procedimientos;
 
 namespace CACES.BLL.DTOs.Especialidad
 {
@@ -11,7 +12,7 @@ namespace CACES.BLL.DTOs.Especialidad
         public string Descripcion { get; set; } = null!;
         public string Icono { get; set; } = null!;
 
-       // public List<mostrarProcedimientoDTO> Procedimientos { get; set; } = new List<mostrarProcedimientoDTO>();
+        public List<MostrarProcedimientosDTO> Procedimientos { get; set; } = new List<MostrarProcedimientosDTO>();
         public List<mostrarMedicoEspecialidadDTO> Medicos { get; set; } = new List<mostrarMedicoEspecialidadDTO>();
     }
 }

@@ -230,7 +230,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.PrecioBase).HasColumnName("PrecioBase");
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
                 entity.HasOne(d => d.Especialidad)
-                  .WithMany()
+                  .WithMany(p => p.Procedimientos)
                   .HasForeignKey(d => d.Id_Especialidad)
                   .OnDelete(DeleteBehavior.ClientSetNull);
             });
