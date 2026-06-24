@@ -25,6 +25,7 @@ namespace CACES.DAL.Entidades
         [Column("Estado")]
         public bool Estado { get; set; }
 
+        [ForeignKey("Id_Especialidad")]
         public Especialidad? Especialidad { get; set; }
 
         public ICollection<Precios>? Precios { get; set; }
