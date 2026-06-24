@@ -1,5 +1,4 @@
-﻿using CACES.DAL.Entidades.Roles;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CACES.DAL.Entidades
@@ -55,7 +54,7 @@ namespace CACES.DAL.Entidades
         
         public virtual Paciente? Paciente { get; set; }
 
-        public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
+
 
         
 

@@ -43,10 +43,9 @@ namespace CACES.DAL.Repositorios.Usuario
         public async Task<Entidades.Usuario> GetUsuarioByEmailAsync(string email)
         {
             if (string.IsNullOrEmpty(email)) return null;
-            return await _context.Usuarios.Include(u => u.UsuarioRoles)
-                .ThenInclude(ur => ur.Rol)
-                 .FirstOrDefaultAsync(u => u.CorreoElectronico == email);
-        }
+            return await _context.Usuarios
+            . FirstOrDefaultAsync(u => u.CorreoElectronico == email);
+            }
 
         public async Task<List<Entidades.Usuario>> GetUsuariosAsync()
         {

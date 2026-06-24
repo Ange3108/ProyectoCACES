@@ -92,7 +92,7 @@ namespace CACES.BLL.Servicios.Medicos
                     Nacimiento = medico.Usuario.Nacimiento,
                     Telefono = medico.Usuario.Telefono,
                     Foto = medico.Usuario.Foto,
-                    Estado = medico.Usuario.Estado,
+                    Estado = medico.Usuario.Estado == 1,
                     IdEspecialidad = medico.IdEspecialidad,
                     Experiencia = medico.Experiencia,
                     Certificaciones = medico.Certificaciones

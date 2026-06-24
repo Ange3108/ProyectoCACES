@@ -15,7 +15,7 @@ namespace CACES.BLL.Servicios.Paciente
         Task<MostrarUsuarioDTO> CreatePacienteAsync(RegistrarPacienteDTO pacienteDto);
         Task<bool> DesactivarPacienteAsync(int idPaciente);
         Task<bool> RegistrarPacienteAsync(RegistrarPacienteDTO pacienteDto);
+        Task<CACES.DAL.Entidades.Paciente> GetPacienteByUsuarioIdAsync(int idUsuario);
 
-        
     }
 }
