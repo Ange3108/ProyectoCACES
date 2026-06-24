@@ -3,11 +3,24 @@
 
 @{
     ViewData["Title"] = "Procedimientos Quirúrgicos - CACES";
+    int idPaciente = ViewBag.IdPaciente ?? Model?.FirstOrDefault()?.Id_Paciente ?? 0;
 }
 
 <main class="container py-5">
     <section class="mt-4">
-        <h4 class="section-title mb-5">Próximos procedimientos quirúrgicos del paciente</h4>
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center mb-5 gap-3">
+            <h4 class="section-title mb-0">Próximos procedimientos quirúrgicos del paciente</h4>
+
+            @if (User.IsInRole("Administrador") && idPaciente > 0)
+            {
+                <a class="btn btn-success shadow-sm px-4 fw-semibold"
+                   asp-controller="Procedimientos"
+                   asp-action="Registrar"
+                   asp-route-idPaciente="@idPaciente">
+                    <i class="bi bi-calendar-plus-fill me-1"></i> Agendar Nueva Cirugía
+                </a>
+            }
+        </div>
 
         <div class="row g-4">
             @if (Model != null && Model.Any())
@@ -31,7 +44,7 @@
                                         }
                                     </div>
 
-                                    @if (User.IsInRole("Medico"))
+                                    @if (User.IsInRole("Medico") || User.IsInRole("Administrador"))
                                     {
                                         <p class="text-primary fw-bold mb-2">
                                             <i class="bi bi-person-fill"></i> Paciente: @cirugia.NombrePaciente
@@ -48,7 +61,7 @@
                                 </div>
 
                                 <div class="d-flex justify-content-center mt-3">
-                                    @if (User.IsInRole("Medico"))
+                                    @if (User.IsInRole("Administrador"))
                                     {
                                         <a class="btn btn-outline-primary w-100"
                                            asp-controller="Procedimientos"

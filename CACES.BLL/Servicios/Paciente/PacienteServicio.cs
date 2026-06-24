@@ -183,5 +183,12 @@ namespace CACES.BLL.Servicios.Paciente
             var usuarioCreado = await CreatePacienteAsync(pacienteDto);
             return usuarioCreado != null;
         }
+
+        public async Task<int> ObtenerIdPacientePorUsuarioIdAsync(int idUsuario)
+        {
+            var paciente = await _pacienteRepositorio.ObtenerPorUsuarioIdAsync(idUsuario);
+
+            return paciente != null ? paciente.IdPaciente : 0;
+        }
     }
 }

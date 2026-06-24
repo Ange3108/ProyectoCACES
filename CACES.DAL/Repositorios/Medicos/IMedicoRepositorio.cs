@@ -16,6 +16,5 @@ namespace CACES.DAL.Repositorios.Medicos
         Task<bool> UpdateMedicoAsync(Medico medico);
         Task<bool> UpdateMedicoConUsuarioAsync(Medico medico);
         Task<bool> DesactivarMedicoAsync(int id);
-
     }
 }

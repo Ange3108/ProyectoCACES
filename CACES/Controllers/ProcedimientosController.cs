@@ -1,5 +1,8 @@
 ﻿using CACES.BLL.DTOs.Procedimientos;
+using CACES.BLL.Servicios.Medicos;
+using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Procedimientos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
 
@@ -8,29 +11,52 @@ namespace CACES.Controllers
     public class ProcedimientosController : Controller
     {
         private readonly IProcedimientosServicio _procedimientosServicio;
-
-        public ProcedimientosController(IProcedimientosServicio procedimientosServicio)
+        private readonly IMedicoServicio _medicoServicio;
+        private readonly IPacienteServicio _pacienteServicio;
+        public ProcedimientosController(IProcedimientosServicio procedimientosServicio, IMedicoServicio medicoServicio, IPacienteServicio pacienteServicio)
         {
             _procedimientosServicio = procedimientosServicio;
+            _medicoServicio = medicoServicio;
+            _pacienteServicio = pacienteServicio;
         }
 
 
-        [HttpGet]
-        public async Task<IActionResult> ObtenerProcedimientos()
-        {
-            var claimId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
 
-            if (claimId == null)
+        [HttpGet]
+        [Authorize(Roles = "Administrador,Medico,Paciente")]
+        public async Task<IActionResult> ObtenerProcedimientos(int? idPaciente)
+        {
+            if (User.IsInRole("Paciente"))
             {
-                return Challenge(); 
+                var idUsuarioClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+
+                if (string.IsNullOrEmpty(idUsuarioClaim))
+                {
+                    return View("~/Views/Procedimiento/Quirurgicos.cshtml", new List<MostrarProcedimientosDTO>());
+                }
+
+                int idUsuarioLogueado = int.Parse(idUsuarioClaim);
+
+                int idPacienteReal = await _pacienteServicio.ObtenerIdPacientePorUsuarioIdAsync(idUsuarioLogueado);
+
+                if (idPacienteReal == 0) 
+                {
+                    ModelState.AddModelError("", "No se encontró un perfil de paciente asociado a este usuario.");
+                    return View("~/Views/Procedimiento/Quirurgicos.cshtml", new List<MostrarProcedimientosDTO>());
+                }
+
+                var procedimientosPaciente = await _procedimientosServicio.ObtenerDetalleCirugiaAsync(idPacienteReal);
+                return View("~/Views/Procedimiento/Quirurgicos.cshtml", procedimientosPaciente);
             }
 
-            int idPacienteLogueado = int.Parse(claimId);
+            if (idPaciente == null || idPaciente <= 0)
+            {
+                var todosLosProcedimientos = await _procedimientosServicio.ObtenerTodasLasCirugiasAsync();
+                return View("~/Views/Procedimiento/Quirurgicos.cshtml", todosLosProcedimientos);
+            }
 
-            var modeloVista = await _procedimientosServicio.ObtenerDetalleCirugiaAsync(idPacienteLogueado);
-
-            return View("~/Views/Procedimiento/Quirurgicos.cshtml",modeloVista);
-
+            var procedimientosEspecificos = await _procedimientosServicio.ObtenerDetalleCirugiaAsync(idPaciente.Value);
+            return View("~/Views/Procedimiento/Quirurgicos.cshtml", procedimientosEspecificos);
         }
 
         [HttpGet]
@@ -77,6 +103,62 @@ namespace CACES.Controllers
 
             ModelState.AddModelError("", "No se pudieron guardar los cambios. Verifique los datos ingresados.");
             return View("~/Views/Procedimiento/EditarProcedimientos.cshtml", dto);
+        }
+
+        [HttpGet]
+        [Authorize(Roles = "Administrador")] 
+        public async Task<IActionResult> Registrar(int idPaciente)
+        {
+            if (idPaciente <= 0)
+            {
+                return BadRequest("El ID del paciente no es válido.");
+            }
+
+            var dto = new RegistrarProcedimientosDto
+            {
+                Id_Paciente = idPaciente
+            };
+
+            var medicos = await _medicoServicio.GetEspecialistasActivosAsync();
+            var procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
+
+            ViewBag.Medicos = medicos.Dato;
+            ViewBag.Procedimientos = procedimientos;
+
+            return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Registrar(RegistrarProcedimientosDto dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                var medicos = await _medicoServicio.GetEspecialistasActivosAsync();
+
+                ViewBag.Medicos = medicos.Dato;
+
+                ViewBag.Procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
+
+                return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
+            }
+
+            bool guardadoExitoso = await _procedimientosServicio.RegistrarProcedimientoAsync(dto);
+
+            if (guardadoExitoso)
+            {
+                return RedirectToAction("ObtenerProcedimientos", new { idPaciente = dto.Id_Paciente });
+            }
+
+            ModelState.AddModelError("", "No se pudo agendar el procedimiento quirúrgico. Verifique la disponibilidad del médico.");
+
+            var medicosFallo = await _medicoServicio.GetEspecialistasActivosAsync();
+
+            ViewBag.Medicos = medicosFallo.Dato;
+            ViewBag.Procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
+
+            return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
         }
     }
 }
