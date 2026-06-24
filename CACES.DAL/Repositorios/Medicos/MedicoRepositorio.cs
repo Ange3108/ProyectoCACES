@@ -36,7 +36,7 @@ namespace CACES.DAL.Repositorios.Medicos
                 .Include(x => x.Usuario)
                 .Include(x => x.Especialidad)
 
-                .Where(m => m.Usuario.Estado == 1 &&
+                .Where(m => m.Usuario.Estado == true &&
 
                             m.Especialidad != null &&
                             m.Especialidad.Estado == true)
