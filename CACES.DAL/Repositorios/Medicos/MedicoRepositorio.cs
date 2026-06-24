@@ -167,8 +167,7 @@ namespace CACES.DAL.Repositorios.Medicos
                 throw;
             }
         }
-        
 
-       
+
     }
     }
