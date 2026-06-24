@@ -13,10 +13,13 @@ using System.Text;
 
 namespace CACES.BLL.Servicios.Especialidad
 {
+    using AutoMapper;
+    using CACES.BLL.DTOs.Medico;
+    using CACES.BLL.DTOs.Procedimientos;
+    using Microsoft.EntityFrameworkCore;
     using System;
     using System.Collections.Generic;
     using System.Threading.Tasks;
-    using AutoMapper;
 
     namespace ProyectoCACES.CACES.BLL.Servicios
     {
@@ -232,13 +235,46 @@ namespace CACES.BLL.Servicios.Especialidad
                 if (especialidad == null)
                 {
                     respuesta.EsCorrecto = false;
-                    respuesta.mensaje = "Especialidad no encontrada"; 
-                     respuesta.codigo = 404;
+                    respuesta.mensaje = "Especialidad no encontrada";
+                    respuesta.codigo = 404;
                     return respuesta;
                 }
+
+                var dto = new mostrarDetalleEspecialidadDTO
+                {
+                    IdEspecialidad = especialidad.IdEspecialidad,
+                    Nombre = especialidad.Nombre,
+                    Descripcion = especialidad.Descripcion,
+                    Icono = especialidad.Icono ?? "bi bi-heart-pulse",
+
+                    // Mapeamos los procedimientos fijos de la lista
+                    Procedimientos = especialidad.Procedimientos != null
+            ? especialidad.Procedimientos.Select(p => new MostrarProcedimientosDTO
+            {
+                Nombre = p.Nombre,
+                Descripcion = p.Descripcion ?? "Sin descripción disponible."
+            }).ToList()
+            : new List<MostrarProcedimientosDTO>(),
+
+                    // Mapeamos el equipo médico
+                    Medicos = especialidad.Medicos != null
+            ? especialidad.Medicos.Select(m => new mostrarMedicoEspecialidadDTO
+            {
+                IdMedico = m.IdMedico,
+                Nombres = m.Usuario?.Nombres ?? "Especialista",
+                PrimerApellido = m.Usuario?.PrimerApellido ?? "",
+                SegundoApellido = m.Usuario?.SegundoApellido ?? "",
+                Telefono = m.Usuario?.Telefono ?? "N/A",
+                Foto = m.Usuario?.Foto
+            }).ToList()
+            : new List<mostrarMedicoEspecialidadDTO>()
+                };
+
+
                 respuesta.EsCorrecto = true;
                 respuesta.Dato = _mapper.Map<mostrarDetalleEspecialidadDTO>(especialidad);
                 return respuesta;
+
             }
         }
     }
