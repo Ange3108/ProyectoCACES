@@ -31,5 +31,6 @@ namespace CACES.DAL.Entidades
         public ICollection<Precios>? Precios { get; set; }
         public ICollection<Cirugias>? Cirugias { get; set; }
 
+
     }
 }
