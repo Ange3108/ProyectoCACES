@@ -80,7 +80,7 @@
                                     <td>@paciente.Usuario.Direccion</td>
 
                                     <td>
-                                        @if (paciente.Usuario.Estado == 1)
+                                        @if (paciente.Usuario.Estado == true)
                                         {
                                             <span class="badge bg-success">Activo</span>
                                         }
@@ -108,7 +108,7 @@
                                                 <i class="bi bi-pencil"></i>
                                             </a>
 
-                                            @if (User.IsInRole("Administrador") && paciente.Usuario.Estado == 1)
+                                            @if (User.IsInRole("Administrador") && paciente.Usuario.Estado == true)
                                             {
                                                 <form asp-controller="Paciente"
                                                       asp-action="DesactivarPaciente"
@@ -116,7 +116,7 @@
                                                       class="d-inline">
 
                                                     <input type="hidden"
-                                                           name="id"
+                                                           name="id"        
                                                            value="@paciente.IdPaciente" />
 
                                                     <button type="submit"

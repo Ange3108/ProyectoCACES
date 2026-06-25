@@ -129,7 +129,7 @@ namespace CACES.DAL.Repositorios.Medicos
                 await _context.Database.ExecuteSqlRawAsync(
                     "UPDATE HorariosDisponibles SET Estado = 0 WHERE Id_Medico = {0}", id);
 
-                medico.Usuario.Estado = 0;
+                medico.Usuario.Estado = false;
 
                 var ok = await _context.SaveChangesAsync() > 0;
                 await transaction.CommitAsync();
