@@ -18,7 +18,7 @@ namespace CACES.DAL.Repositorios.Medicos
         {
             return await _context.Medicos
                 .Include(x => x.Usuario)
-                .Include (x=> x.Especialidad)
+                .Include(x => x.Especialidad)
                 .ToListAsync();
         }
 
@@ -28,21 +28,19 @@ namespace CACES.DAL.Repositorios.Medicos
                 .Include(x => x.Usuario)
                 .FirstOrDefaultAsync(x => x.IdMedico == id);
         }
-        
-           public async Task<List<Medico>> GetEspecialistasActivosAsync()
+
+        public async Task<List<Medico>> GetEspecialistasActivosAsync()
         {
             //filtra el estado verdadero del medico
             return await _context.Medicos
                 .Include(x => x.Usuario)
                 .Include(x => x.Especialidad)
-
                 .Where(m => m.Usuario.Estado == true &&
-
                             m.Especialidad != null &&
                             m.Especialidad.Estado == true)
                 .ToListAsync();
         }
-        
+
 
         public async Task<Medico?> GetMedicoConUsuarioByIdAsync(int id)
         {
@@ -145,62 +143,21 @@ namespace CACES.DAL.Repositorios.Medicos
         public async Task<bool> CreateMedicoConUsuarioAsync(Entidades.Usuario usuario, Medico medico)
         {
             await using var transaction = await _context.Database.BeginTransactionAsync();
-
             try
             {
                 await _context.Usuarios.AddAsync(usuario);
-                await _context.SaveChangesAsync();
+                await _context.SaveChangesAsync(); // genera el IdUsuario
 
-                medico.IdUsuario = usuario.IdUsuario;
-
+                medico.IdUsuario = usuario.IdUsuario; // ahora sí lo tienes
                 await _context.Medicos.AddAsync(medico);
 
-                var aspUser = await _context.AspNetUsers
-                    .FirstOrDefaultAsync(x => x.Email == usuario.CorreoElectronico);
-
-                if (aspUser == null)
+                await _context.UsuarioRoles.AddAsync(new UsuarioRoles
                 {
-                    aspUser = new ApplicationUser
-                    {
-                        Id = Guid.NewGuid().ToString(),
-                        UserName = usuario.CorreoElectronico,
-                        Email = usuario.CorreoElectronico,
-                        EmailConfirmed = usuario.EmailConfirmed,
-                        PasswordHash = usuario.PasswordHash,
-                        SecurityStamp = usuario.SecurityStamp,
-                        PhoneNumber = usuario.Telefono,
-                        PhoneNumberConfirmed = false,
-                        TwoFactorEnabled = false,
-                        LockoutEnabled = false,
-                        AccessFailedCount = 0
-                    };
-
-                    await _context.AspNetUsers.AddAsync(aspUser);
-                    await _context.SaveChangesAsync();
-                }
-
-                var rolMedico = await _context.AspNetRoles
-                    .FirstOrDefaultAsync(r => r.Name == "Medico");
-
-                if (rolMedico == null)
-                {
-                    throw new Exception("No existe el rol Medico.");
-                }
-
-                var yaTieneRol = await _context.AspNetUserRoles
-                    .AnyAsync(x => x.UserId == aspUser.Id && x.RoleId == rolMedico.Id);
-
-                if (!yaTieneRol)
-                {
-                    await _context.AspNetUserRoles.AddAsync(new AspNetUserRole
-                    {
-                        UserId = aspUser.Id,
-                        RoleId = rolMedico.Id
-                    });
-                }
+                    IdUsuario = usuario.IdUsuario,
+                    RoleId = "2"
+                });
 
                 await _context.SaveChangesAsync();
-
                 await transaction.CommitAsync();
                 return true;
             }
@@ -213,4 +170,4 @@ namespace CACES.DAL.Repositorios.Medicos
 
 
     }
-    }
+}

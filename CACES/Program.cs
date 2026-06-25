@@ -69,11 +69,10 @@ builder.Services.AddScoped<IPaqueteServicio, PaqueteServicio>();
 builder.Services.AddScoped<IProcedimientosServicio, ProcedimientosServicio>();
 builder.Services.AddScoped<IHistorialMedicoServicio, HistorialMedicoServicio>();
 builder.Services.AddScoped<IArchivoHistorialServicio, ArchivoHistorialServicio>();
-
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
-//Configura el esquema de autenticación y autorización basado en Cookies
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -87,14 +86,14 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("SoloMedico", policy => policy.RequireRole("Medico"))
     .AddPolicy("SoloPaciente", policy => policy.RequireRole("Paciente"));
 
-QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-  
+
     app.UseHsts();
 }
 
