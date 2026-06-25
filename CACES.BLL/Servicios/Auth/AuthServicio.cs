@@ -110,9 +110,7 @@ namespace CACES.BLL.Servicios.Auth
                 _usuarioService.ValidarContraseña(dto.NuevaContrasena);
 
             if (!validacionPass.IsValid)
-            {
                 return (false, validacionPass.Message);
-            }
 
             usuario.PasswordHash = HashContraseña(dto.NuevaContrasena);
             usuario.SecurityStamp = Guid.NewGuid().ToString();

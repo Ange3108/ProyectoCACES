@@ -10,7 +10,7 @@
 
 body {
     margin: 0;
-    font-family: "Manrope";
+    font-family: 'Segoe UI';
     background: #F2F2F2;
 }
 
@@ -659,7 +659,7 @@ body {
 }
 
 .chapter-title {
-    font-family: "Playfair Display", serif;
+    font-family: "Sogoe UI";
     font-weight: 700;
     color: #12364f;
     font-size: clamp(2rem, 4vw, 2.8rem);

@@ -69,11 +69,10 @@ builder.Services.AddScoped<IPaqueteServicio, PaqueteServicio>();
 builder.Services.AddScoped<IProcedimientosServicio, ProcedimientosServicio>();
 builder.Services.AddScoped<IHistorialMedicoServicio, HistorialMedicoServicio>();
 builder.Services.AddScoped<IArchivoHistorialServicio, ArchivoHistorialServicio>();
-
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
-//Configura el esquema de autenticación y autorización basado en Cookies
+
 builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>
     {
@@ -94,7 +93,7 @@ var app = builder.Build();
 if (!app.Environment.IsDevelopment())
 {
     app.UseExceptionHandler("/Home/Error");
-  
+
     app.UseHsts();
 }
 

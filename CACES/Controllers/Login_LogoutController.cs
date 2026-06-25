@@ -1,10 +1,8 @@
 ﻿using CACES.BLL.DTOs.Auth;
 using CACES.BLL.Servicios.Auth;
-using CACES.DAL.DBContext;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using System.Security.Claims;
 
 namespace CACES.Controllers
@@ -12,14 +10,10 @@ namespace CACES.Controllers
     public class Login_LogoutController : Controller
     {
         private readonly IAuthServicio _authServicio;
-        private readonly CACESDbContext _context;
 
-        public Login_LogoutController(
-            IAuthServicio authServicio,
-            CACESDbContext context)
+        public Login_LogoutController(IAuthServicio authServicio)
         {
             _authServicio = authServicio;
-            _context = context;
         }
 
         [HttpGet]
@@ -47,17 +41,12 @@ namespace CACES.Controllers
                     new Claim(ClaimTypes.Name, $"{usuario.Nombres} {usuario.PrimerApellido}")
                 };
 
-                var roles = await (
-                     from ur in _context.UsuarioRoles
-                     join r in _context.AspNetRoles
-                         on ur.RoleId equals r.Id
-                     where ur.IdUsuario == usuario.IdUsuario
-                     select r.Name
-                 ).ToListAsync();
-
-                foreach (var rol in roles)
+                foreach (var usuarioRol in usuario.UsuarioRoles)
                 {
-                    claims.Add(new Claim(ClaimTypes.Role, rol));
+                    if (usuarioRol.Rol != null && !string.IsNullOrEmpty(usuarioRol.Rol.Name))
+                    {
+                        claims.Add(new Claim(ClaimTypes.Role, usuarioRol.Rol.Name));
+                    }
                 }
 
                 var claimsIdentity = new ClaimsIdentity(

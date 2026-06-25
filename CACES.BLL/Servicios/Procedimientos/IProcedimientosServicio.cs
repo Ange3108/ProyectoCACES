@@ -1,4 +1,5 @@
-﻿using CACES.BLL.DTOs.Procedimientos;
+﻿using CACES.BLL.DTOs;
+using CACES.BLL.DTOs.Procedimientos;
 using CACES.DAL.Entidades;
 using System;
 using System.Collections.Generic;
@@ -15,5 +16,6 @@ namespace CACES.BLL.Servicios.Procedimientos
         Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync();
         Task<List<MostrarProcedimientosDTO>> ObtenerCirugiasPorMedicoAsync(int idMedico);
         Task<List<MostrarProcedimientosDTO>> ObtenerTodasLasCirugiasAsync();
+        Task<respuestaErrores<MostrarProcedimientosDTO>> ObtenerDatosReporteAsync(int idCirugia);
     }
 }

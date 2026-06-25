@@ -14,6 +14,8 @@ namespace CACES.DAL.Entidades.Roles
         [Column("Name")]
         public string Name { get; set; } = null!;
 
+
+        // Navegación a usuarios con este rol
         public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
     }
 }

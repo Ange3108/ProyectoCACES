@@ -27,9 +27,9 @@ namespace CACES.DAL.DBContext
         public DbSet<HorariosDisponibles> HorariosDisponibles { get; set; }
         public DbSet<Procedimiento> Procedimientos { get; set; }
         public DbSet<Cirugias> Cirugias { get; set; }
+        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         public DbSet<ArchivoHistorial> ArchivosHistorial { get; set; }
 
-        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
