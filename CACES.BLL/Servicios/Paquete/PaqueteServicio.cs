@@ -51,6 +51,7 @@ namespace CACES.BLL.Servicios.Paquete
             return respuesta;
         }
 
+
         public async Task<List<PaqueteDTO>> GetPaquetesAsync()
         {
             var entidades = await _paqueteRepositorio.GetPaquetesAsync();
