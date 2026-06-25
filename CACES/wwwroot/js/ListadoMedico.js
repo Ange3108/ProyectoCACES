@@ -1,4 +1,25 @@
 (() => {
+    const IMG_FALLBACK_HOMBRE = '/img/hombreD.png';
+    const IMG_FALLBACK_MUJER = '/img/mujerD.jpg';
+
+    function getFallback(nombre) {
+        const prefijosF = ['dra', 'dra.', 'doctora'];
+        const lower = nombre.toLowerCase();
+        return prefijosF.some(p => lower.startsWith(p)) ? IMG_FALLBACK_MUJER : IMG_FALLBACK_HOMBRE;
+    }
+
+    /**
+     * Construye la URL de la foto de forma segura:
+     * - Si ya es una ruta absoluta o relativa válida, la usa.
+     * - Si es nula/vacía/undefined, usa el fallback.
+     */
+    function resolverFoto(foto, nombre) {
+        if (!foto || typeof foto !== 'string' || foto.trim() === '') {
+            return getFallback(nombre);
+        }
+        // Evitar rutas que apunten solo a "/imagenes/default.jpg" si no existe
+        return foto.trim();
+    }
 
     const Medicos = {
 
@@ -23,7 +44,7 @@
                     {
                         data: null,
                         render: function (data, type, row) {
-                            const foto = row.usuario?.foto ?? '/imagenes/default.jpg';
+                            const foto = row.usuario?.foto ?? '/img/default.jpg';
                             const nombre = `${row.usuario?.nombres ?? ''} ${row.usuario?.primerApellido ?? ''} ${row.usuario?.segundoApellido ?? ''}`.trim();
                             return `
                                 <div class="d-flex align-items-center gap-2">

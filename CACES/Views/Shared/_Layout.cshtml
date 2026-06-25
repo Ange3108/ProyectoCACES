@@ -39,6 +39,7 @@
 
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
+
                             @if (User.IsInRole("Paciente"))
                             {
                                 <li class="nav-item"><a class="nav-link" asp-controller="HistorialMedico" asp-action="MiHistorial">Mi Historial</a></li>
@@ -67,6 +68,26 @@
                                     @Html.AntiForgeryToken()
                                     <button type="submit" class="nav-link btn btn-link">Cerrar Sesión</button>
                                 </form>
+
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Configuracion" asp-action="Configuracion">Configuración</a></li>
+                        
+                         @if(User.IsInRole("Paciente"))
+                          {
+                              <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Cita" asp-action="MisCitas">Citas</a></li>   
+                              <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="Procedimientos" asp-action="ObtenerProcedimientos">Procedimientos Quirúrgicos</a></li>
+                          }
+
+                         <!--Si el usuario es un médico-->
+						@if (User.IsInRole("Medico"))
+						{
+                            <li class="nav-item"><a class="nav-link" asp-area="" asp-controller="AgendaMedica" asp-action="AgendaMedica">Agenda Médica</a></li>
+                             <li class="nav-item">
+                                <a class="nav-link"
+                                   asp-controller="Cita"
+                                   asp-action="CitasMedico">
+                                    Citas Médicas
+                                </a>
+
                             </li>
                         }
                     </ul>

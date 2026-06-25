@@ -57,12 +57,12 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> CrearMedico(RegistrarMedicoDTO medicoDto)
         {
-            if(!ModelState.IsValid)
+            if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-        
-        var resultado = await _medicoServicio.CreateMedicoAsync(medicoDto);
+
+            var resultado = await _medicoServicio.CreateMedicoAsync(medicoDto);
 
             if (!resultado.EsCorrecto)
             {
@@ -90,7 +90,7 @@ namespace CACES.Controllers
 
         [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public async Task<IActionResult> EditarMedico(int id,EditarMedicoDTO dto, IFormFile? FotoArchivo)
+        public async Task<IActionResult> EditarMedico(int id, EditarMedicoDTO dto, IFormFile? FotoArchivo)
         {
             if (!ModelState.IsValid)
             {
@@ -117,7 +117,7 @@ namespace CACES.Controllers
 
             if (!resultado.EsCorrecto)
             {
-                return BadRequest(resultado);   
+                return BadRequest(resultado);
             }
 
             TempData["Exito"] = resultado.mensaje;
@@ -130,12 +130,12 @@ namespace CACES.Controllers
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
-        
-        var resultado = await _medicoServicio.DesactivarMedicoAsync(id);
-            if(!resultado.EsCorrecto) 
+
+            var resultado = await _medicoServicio.DesactivarMedicoAsync(id);
+            if (!resultado.EsCorrecto)
             {
                 return NotFound(resultado);
-             }
+            }
             return Json(resultado);
 
 
