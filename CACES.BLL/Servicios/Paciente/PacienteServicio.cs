@@ -151,6 +151,20 @@ namespace CACES.BLL.Servicios.Paciente
                 await _context.AspNetUserRoles.AddAsync(usuarioRol);
             }
 
+            var yaTieneRolUsuarioRoles = await _context.UsuarioRoles
+                 .AnyAsync(x => x.IdUsuario == usuarioEntidad.IdUsuario && x.RoleId == rolPaciente.Id);
+
+            if (!yaTieneRolUsuarioRoles)
+            {
+                var usuarioRolSistema = new UsuarioRoles
+                {
+                    IdUsuario = usuarioEntidad.IdUsuario,
+                    RoleId = rolPaciente.Id
+                };
+
+                await _context.UsuarioRoles.AddAsync(usuarioRolSistema);
+            }
+
             await _context.SaveChangesAsync();
 
             var nuevoHistorial = new HistorialMedico

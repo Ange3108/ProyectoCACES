@@ -47,23 +47,17 @@ namespace CACES.Controllers
                     new Claim(ClaimTypes.Name, $"{usuario.Nombres} {usuario.PrimerApellido}")
                 };
 
-                var aspUser = await _context.AspNetUsers
-                    .FirstOrDefaultAsync(x => x.Email == usuario.CorreoElectronico);
+                var roles = await (
+                     from ur in _context.UsuarioRoles
+                     join r in _context.AspNetRoles
+                         on ur.RoleId equals r.Id
+                     where ur.IdUsuario == usuario.IdUsuario
+                     select r.Name
+                 ).ToListAsync();
 
-                if (aspUser != null)
+                foreach (var rol in roles)
                 {
-                    var roles = await (
-                        from ur in _context.AspNetUserRoles
-                        join r in _context.AspNetRoles
-                            on ur.RoleId equals r.Id
-                        where ur.UserId == aspUser.Id
-                        select r.Name
-                    ).ToListAsync();
-
-                    foreach (var rol in roles)
-                    {
-                        claims.Add(new Claim(ClaimTypes.Role, rol));
-                    }
+                    claims.Add(new Claim(ClaimTypes.Role, rol));
                 }
 
                 var claimsIdentity = new ClaimsIdentity(

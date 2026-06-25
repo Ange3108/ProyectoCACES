@@ -42,12 +42,17 @@ namespace CACES.DAL.Repositorios.Usuario
                 return null;
 
             return await _context.Usuarios
+                .Include(u => u.UsuarioRoles)
+                    .ThenInclude(ur => ur.Rol)
                 .FirstOrDefaultAsync(u => u.CorreoElectronico == email);
         }
 
         public async Task<List<Entidades.Usuario>> GetUsuariosAsync()
         {
-            return await _context.Usuarios.ToListAsync();
+            return await _context.Usuarios
+                .Include(u => u.UsuarioRoles)
+                    .ThenInclude(ur => ur.Rol)
+                .ToListAsync();
         }
 
         public async Task<bool> UpdateUsuarioAsync(Entidades.Usuario usuario)

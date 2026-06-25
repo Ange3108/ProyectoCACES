@@ -19,8 +19,11 @@ namespace CACES.DAL.Entidades
         [Column("Id_Especialidad")]
         public int IdEspecialidad { get; set; }
 
-        [Column("Fecha")]
+        [Column("Id_Horario")]
         public int IdHorario { get; set; }
+
+        [Column("Fecha")]
+        public DateTime Fecha { get; set; }
 
         [Column("Hora")]
         public TimeSpan Hora { get; set; }

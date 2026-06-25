@@ -30,10 +30,10 @@ namespace CACES.DAL.Entidades
 
         public bool Estado { get; set; } = true;
 
-      
         public string Direccion { get; set; } = null!;
 
         public string Telefono { get; set; } = null!;
+
         public int Edad { get; set; }
 
         public DateTime Nacimiento { get; set; }
@@ -52,16 +52,8 @@ namespace CACES.DAL.Entidades
 
         public bool EmailConfirmed { get; set; } = false;
 
-        
         public virtual Paciente? Paciente { get; set; }
 
-
-
         public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
-
-
-
-
-
     }
 }

@@ -127,7 +127,7 @@ namespace CACES.DAL.Repositorios.Medicos
                     "UPDATE Precios SET Estado = 0 WHERE Id_Medico = {0}", id);
 
                 await _context.Database.ExecuteSqlRawAsync(
-                    "UPDATE HorariosDisponibles SET Estado = 0 WHERE Id_Medico = {0}", id);
+                    "UPDATE HorariosDisponibles SET Activo = 0 WHERE Id_Medico = {0}", id);
 
                 medico.Usuario.Estado = false;
 
@@ -187,14 +187,15 @@ namespace CACES.DAL.Repositorios.Medicos
                     throw new Exception("No existe el rol Medico.");
                 }
 
-                var yaTieneRol = await _context.AspNetUserRoles
-                    .AnyAsync(x => x.UserId == aspUser.Id && x.RoleId == rolMedico.Id);
+                
+                var yaTieneRolUsuarioRoles = await _context.UsuarioRoles
+             .AnyAsync(x => x.IdUsuario == usuario.IdUsuario && x.RoleId == rolMedico.Id);
 
-                if (!yaTieneRol)
+                if (!yaTieneRolUsuarioRoles)
                 {
-                    await _context.AspNetUserRoles.AddAsync(new AspNetUserRole
+                    await _context.UsuarioRoles.AddAsync(new UsuarioRoles
                     {
-                        UserId = aspUser.Id,
+                        IdUsuario = usuario.IdUsuario,
                         RoleId = rolMedico.Id
                     });
                 }

@@ -92,7 +92,7 @@ namespace CACES.BLL.Servicios.Medicos
                     Nacimiento = medico.Usuario.Nacimiento,
                     Telefono = medico.Usuario.Telefono,
                     Foto = medico.Usuario.Foto,
-                    Estado = medico.Usuario.Estado == 1,
+                    Estado = medico.Usuario.Estado == true,
                     IdEspecialidad = medico.IdEspecialidad,
                     Experiencia = medico.Experiencia,
                     Certificaciones = medico.Certificaciones
@@ -118,7 +118,7 @@ namespace CACES.BLL.Servicios.Medicos
             //variables del medico
             medico.IdEspecialidad = dto.IdEspecialidad;
             medico.Experiencia = dto.Experiencia;
-            medico.Experiencia = dto.Experiencia;
+            medico.Certificaciones = dto.Certificaciones;
 
             //variables del usuario
             medico.Usuario.Nombres = dto.Nombres;
@@ -184,7 +184,7 @@ namespace CACES.BLL.Servicios.Medicos
                 PasswordHash = HashContraseña(dto.Password),
                 SecurityStamp = Guid.NewGuid().ToString(),
                 Foto = string.IsNullOrWhiteSpace(dto.Foto) ? "default.jpg" : dto.Foto,
-                Estado = 1,
+                Estado = true,
                 FechaDeRegistro = DateTime.UtcNow,
                 EmailConfirmed = false,
                 TwoFactorEnabled = false,

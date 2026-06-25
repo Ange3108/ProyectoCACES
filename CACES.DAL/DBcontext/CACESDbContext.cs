@@ -28,8 +28,8 @@ namespace CACES.DAL.DBContext
         public DbSet<Procedimiento> Procedimientos { get; set; }
         public DbSet<Cirugias> Cirugias { get; set; }
         public DbSet<ArchivoHistorial> ArchivosHistorial { get; set; }
-        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
 
+        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -73,7 +73,8 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.IdPaciente).HasColumnName("Id_Paciente");
                 entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
                 entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
-                entity.Property(e => e.FechaCita).HasColumnName("Fecha");
+                entity.Property(e => e.IdHorario).HasColumnName("Id_Horario");
+                entity.Property(e => e.Fecha).HasColumnName("Fecha");
                 entity.Property(e => e.Hora).HasColumnName("Hora");
                 entity.Property(e => e.Motivo).HasColumnName("Motivo").HasMaxLength(100);
                 entity.Property(e => e.FechaCita).HasColumnName("FechaCita");
@@ -155,22 +156,22 @@ namespace CACES.DAL.DBContext
             });
 
 
+            modelBuilder.Entity<UsuarioRoles>(entity =>
+            {
+                entity.HasKey(e => new { e.IdUsuario, e.RoleId });
 
-            modelBuilder.Entity<UsuarioRoles>()
+                entity.ToTable("UsuarioRoles");
 
-         .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
+                entity.HasOne(e => e.Usuario)
+                    .WithMany(u => u.UsuarioRoles)
+                    .HasForeignKey(e => e.IdUsuario)
+                    .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<UsuarioRoles>()
-                .HasOne(ur => ur.Usuario)
-                .WithMany(u => u.UsuarioRoles)
-                .HasForeignKey(ur => ur.IdUsuario)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<UsuarioRoles>()
-                .HasOne(ur => ur.Rol)
-                .WithMany(r => r.UsuarioRoles)
-                .HasForeignKey(ur => ur.RoleId)
-                .OnDelete(DeleteBehavior.Cascade);
+                entity.HasOne(e => e.Rol)
+                    .WithMany(r => r.UsuarioRoles)
+                    .HasForeignKey(e => e.RoleId)
+                    .OnDelete(DeleteBehavior.Cascade);
+            });
 
 
             // Configuración de ApplicationUser
@@ -194,33 +195,14 @@ namespace CACES.DAL.DBContext
                 entity.ToTable("AspNetUserRoles");
             });
 
-            modelBuilder.Entity<ApplicationUser>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.ToTable("AspNetUsers");
-            });
-
+          
             modelBuilder.Entity<AspNetRole>(entity =>
             {
                 entity.HasKey(e => e.Id);
                 entity.ToTable("AspNetRoles");
             });
 
-            modelBuilder.Entity<UsuarioRoles>()
-
-        .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
-
-            modelBuilder.Entity<UsuarioRoles>()
-                .HasOne(ur => ur.Usuario)
-                .WithMany(u => u.UsuarioRoles)
-                .HasForeignKey(ur => ur.IdUsuario)
-                .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<UsuarioRoles>()
-                .HasOne(ur => ur.Rol)
-                .WithMany(r => r.UsuarioRoles)
-                .HasForeignKey(ur => ur.RoleId)
-                .OnDelete(DeleteBehavior.Cascade);
+            
 
             //configuración de la entidad Especialidad
             modelBuilder.Entity<Especialidad>(entity =>
