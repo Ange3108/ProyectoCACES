@@ -21,7 +21,8 @@ namespace CACES.BLL.DTOs.Usuario
 
         public bool Estado { get; set; }
         public string SegundoApellido { get; set; } = null!;
-      
+        public string? Foto { get; set; } 
+
 
 
     }
