@@ -806,3 +806,9 @@ body {
         transition: none !important;
     }
 }
+/* ── Responsive ── */
+@media (max-width: 576px) {
+    .reports-grid {
+        grid-template-columns: 1fr;
+    }
+}

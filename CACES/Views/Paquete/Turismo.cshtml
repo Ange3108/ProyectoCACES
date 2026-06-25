@@ -4,58 +4,263 @@
     ViewData["Title"] = "Turismo Médico - CACES";
 }
 
-<main class="container py-5">
-
-    @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
-    {
-        <div class="top-action mb-4">
-            <a class="btn text-white fw-semibold" style="background-color: #27418C;" asp-action="CrearPaquete" asp-controller="Paquete">+ Registrar Paquete</a>
-        </div>
+<style>
+    .turismo-hero {
+        background: linear-gradient(135deg, #27418C 0%, #1a2d6b 100%);
+        border-radius: 16px;
+        padding: 2.5rem;
+        color: white;
+        margin-bottom: 2.5rem;
+        position: relative;
+        overflow: hidden;
     }
 
-    <section class="mt-4">
-        <h1 class="h2 fw-bold mb-5" style="color: #27418C;">Paquetes de Turismo Médico</h1>
-        <p class="text-muted mb-4">
-            Pacientes extranjeros eligen nuestros paquetes porque combinan atención médica especializada,
-            acompañamiento logístico y costos competitivos en un solo plan.
-        </p>
+        .turismo-hero::after {
+            content: '';
+            position: absolute;
+            right: -40px;
+            top: -40px;
+            width: 200px;
+            height: 200px;
+            border-radius: 50%;
+            background: rgba(114, 206, 242, 0.12);
+            pointer-events: none;
+        }
+
+        .turismo-hero h1 {
+            font-size: 1.75rem;
+            font-weight: 800;
+            letter-spacing: -0.03em;
+            margin-bottom: 0.5rem;
+        }
+
+        .turismo-hero p {
+            opacity: 0.8;
+            font-size: 0.95rem;
+            max-width: 600px;
+            margin: 0;
+            line-height: 1.6;
+        }
+
+    .btn-registrar {
+        background: white;
+        color: #27418C;
+        font-weight: 700;
+        border: none;
+        border-radius: 10px;
+        padding: 0.55rem 1.4rem;
+        font-size: 0.88rem;
+        white-space: nowrap;
+        transition: background 0.2s, box-shadow 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+        margin-top: 1.25rem;
+    }
+
+        .btn-registrar:hover {
+            background: #e8eef8;
+            color: #1a2d6b;
+            box-shadow: 0 4px 14px rgba(0,0,0,0.15);
+        }
+
+    .paquete-card {
+        border: none !important;
+        border-radius: 16px;
+        box-shadow: 0 2px 12px rgba(0,0,0,0.07);
+        border-top: 4px solid #72CEF2 !important;
+        transition: transform 0.2s, box-shadow 0.2s;
+        overflow: hidden;
+    }
+
+        .paquete-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 30px rgba(39,65,140,0.13);
+        }
+
+        .paquete-card .card-body {
+            padding: 1.6rem;
+        }
+
+    .paquete-nombre {
+        font-size: 1.1rem;
+        font-weight: 800;
+        color: #1a2d6b;
+        margin-bottom: 0.4rem;
+        line-height: 1.25;
+    }
+
+    .paquete-descripcion {
+        font-size: 0.85rem;
+        color: #6c757d;
+        line-height: 1.55;
+        margin-bottom: 1rem;
+        min-height: 2.5rem;
+    }
+
+    .paquete-precio {
+        font-size: 1.5rem;
+        font-weight: 800;
+        color: #27418C;
+        margin-bottom: 0.4rem;
+        line-height: 1;
+    }
+
+        .paquete-precio span {
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: #888;
+            display: block;
+            margin-bottom: 0.1rem;
+        }
+
+    .badge-duracion {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.35rem;
+        background-color: #e8f7fd;
+        color: #27418C;
+        font-size: 0.8rem;
+        font-weight: 600;
+        padding: 0.35rem 0.8rem;
+        border-radius: 20px;
+        border: 1px solid #b8e9f9;
+        margin-bottom: 1.25rem;
+    }
+
+    .divider-soft {
+        border: none;
+        border-top: 1px solid #f0f0f0;
+        margin: 1rem 0;
+    }
+
+    .btn-reservar {
+        background-color: #27418C;
+        color: white;
+        border: none;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        font-weight: 700;
+        padding: 0.6rem 1rem;
+        flex: 1;
+        text-align: center;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.4rem;
+    }
+
+        .btn-reservar:hover {
+            background-color: #1a2d6b;
+            color: white;
+        }
+
+    .btn-editar-paquete {
+        background: transparent;
+        border: 1.5px solid #72CEF2;
+        color: #27418C;
+        border-radius: 10px;
+        font-size: 0.88rem;
+        font-weight: 600;
+        padding: 0.6rem 0.8rem;
+        transition: background 0.2s;
+        text-decoration: none;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+        .btn-editar-paquete:hover {
+            background-color: #e8f7fd;
+            color: #1a2d6b;
+        }
+
+    .empty-state {
+        background: #f8fafc;
+        border-radius: 16px;
+        padding: 4rem 2rem;
+        text-align: center;
+        color: #adb5bd;
+    }
+
+        .empty-state i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+            display: block;
+        }
+
+        .empty-state p {
+            font-size: 1rem;
+            margin: 0;
+        }
+</style>
+
+<main class="container py-5">
+    <section class="mt-3">
+
+        <div class="turismo-hero d-flex flex-column flex-md-row justify-content-between align-items-md-start gap-3">
+            <div>
+                <h1><i class="bi bi-globe-americas me-2" style="opacity:0.75;"></i>Turismo Médico</h1>
+                <p>
+                    Atención médica especializada, acompañamiento logístico y costos competitivos,
+                    todo en un solo plan diseñado para pacientes internacionales.
+                </p>
+
+                @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
+                {
+                    <a class="btn-registrar"
+                       asp-action="CrearPaquete"
+                       asp-controller="Paquete">
+                        <i class="bi bi-plus-circle-fill"></i> Registrar Paquete
+                    </a>
+                }
+            </div>
+        </div>
 
         <div class="row g-4">
             @if (Model != null && Model.Any())
             {
                 @foreach (var paquete in Model)
                 {
-                    <div class="col-12 col-lg-4">
-                        <article class="card h-100 border-0 shadow-sm overflow-hidden" style="border-top: 4px solid #72CEF2 !important;">
-                            <div class="card-body d-flex flex-column justify-content-between p-4">
-                                <div>
-                                    <h5 class="fw-bold mb-2" style="color: #27418C;">@paquete.Nombre</h5>
-                                    <p class="text-muted small mb-3">@paquete.Descripcion</p>
-                                    <p class="fw-bold mb-2" style="color: #27418C;">Precio: USD $@paquete.Precio</p>
+                    <div class="col-12 col-md-6 col-lg-4">
+                        <article class="card paquete-card h-100">
+                            <div class="card-body d-flex flex-column">
 
-                                    <span class="badge rounded-pill px-3 py-2 fw-semibold" style="background-color: #72CEF2; color: #27418C;">
-                                        <i class="bi bi-clock me-1"></i> Duración: @paquete.Duracion
-                                    </span>
+                                <h5 class="paquete-nombre">@paquete.Nombre</h5>
+                                <p class="paquete-descripcion">@paquete.Descripcion</p>
+
+                                <div class="paquete-precio">
+                                    <span>Precio total</span>
+                                    USD $@paquete.Precio
                                 </div>
 
-                                <div class="mt-4">
-                                    <div class="d-flex gap-2">
-                                        <a href="https://wa.me" class="btn text-white fw-semibold w-100 py-2" style="background-color: #27418C;" target="_blank" rel="noopener noreferrer">
-                                            <i class="bi bi-whatsapp me-2"></i>Reservar
-                                        </a>
+                                <div class="badge-duracion">
+                                    <i class="bi bi-clock"></i> @paquete.Duracion
+                                </div>
 
-                                        @* BOTÓN DE EDITAR: Exclusivo para administradores *@
-                                        @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
-                                        {
-                                            <a class="btn btn-outline-warning fw-semibold px-3"
-                                               asp-action="ActualizarPaquete"
-                                               asp-controller="Paquete"
-                                               asp-route-id="@paquete.IdPaquete"
-                                               title="Editar paquete">
-                                                <i class="bi bi-pencil-square"></i>
-                                            </a>
-                                        }
-                                    </div>
+                                <hr class="divider-soft mt-auto" />
+
+                                <div class="d-flex gap-2">
+                                    <a href="https://wa.me"
+                                       class="btn-reservar"
+                                       target="_blank"
+                                       rel="noopener noreferrer">
+                                        <i class="bi bi-whatsapp"></i> Reservar
+                                    </a>
+
+                                    @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
+                                    {
+                                        <a class="btn-editar-paquete"
+                                           asp-action="ActualizarPaquete"
+                                           asp-controller="Paquete"
+                                           asp-route-id="@paquete.IdPaquete"
+                                           title="Editar paquete">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    }
                                 </div>
 
                             </div>
@@ -65,11 +270,14 @@
             }
             else
             {
-                <div class="col-12 text-center py-5 bg-light rounded-3">
-                    <i class="bi bi-archive text-muted" style="font-size: 2.5rem;"></i>
-                    <p class="text-muted mt-2 mb-0">No hay paquetes disponibles en este momento.</p>
+                <div class="col-12">
+                    <div class="empty-state">
+                        <i class="bi bi-archive"></i>
+                        <p>No hay paquetes disponibles en este momento.</p>
+                    </div>
                 </div>
             }
         </div>
+
     </section>
 </main>

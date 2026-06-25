@@ -31,8 +31,7 @@ namespace CACES.DAL.Entidades
         [Column("Motivo")]
         public string Motivo { get; set; } = null!;
 
-        [Column("FechaCita")]
-        public DateTime FechaCita { get; set; }
+    
 
         [Column("FechaDeRegistro")]
         public DateTime FechaDeRegistro { get; set; }

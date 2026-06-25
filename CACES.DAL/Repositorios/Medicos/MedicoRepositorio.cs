@@ -108,8 +108,8 @@ namespace CACES.DAL.Repositorios.Medicos
 
             try
             {
-                await _context.Database.ExecuteSqlRawAsync(
-                    "UPDATE Recetas SET Id_Cita = NULL WHERE Id_Cita IN (SELECT Id_Cita FROM Citas WHERE Id_Medico = {0})", id);
+                //await _context.Database.ExecuteSqlRawAsync(
+                   // "UPDATE Recetas SET Id_Cita = NULL WHERE Id_Cita IN (SELECT Id_Cita FROM Citas WHERE Id_Medico = {0})", id);
 
                 await _context.Database.ExecuteSqlRawAsync(
                     "DELETE FROM Citas WHERE Id_Medico = {0}", id);

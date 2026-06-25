@@ -88,7 +88,7 @@ namespace CACES.Controllers
                 IdPaciente = dto.IdPaciente,
                 IdMedico = dto.IdMedico,
                 IdEspecialidad = dto.IdEspecialidad,
-                FechaCita = dto.FechaCita.Date,
+                Fecha = dto.FechaCita.Date,
                 Hora = dto.Hora,
                 Motivo = dto.Motivo,
                 FechaDeRegistro = DateTime.Now,
