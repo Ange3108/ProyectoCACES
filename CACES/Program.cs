@@ -86,6 +86,8 @@ builder.Services.AddAuthorizationBuilder()
     .AddPolicy("SoloMedico", policy => policy.RequireRole("Medico"))
     .AddPolicy("SoloPaciente", policy => policy.RequireRole("Paciente"));
 
+//Por favor no borrar esta linea sino no descarga la info de cirugias
+QuestPDF.Settings.License = QuestPDF.Infrastructure.LicenseType.Community;
 
 var app = builder.Build();
 
