@@ -80,9 +80,6 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
                 entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
                 entity.Property(e => e.Estado).HasColumnName("Estado");
-                entity.HasOne(c => c.Receta)
-                .WithMany()
-                .HasForeignKey(c => c.IdCita);
             });
 
             // Configuración de la entidad HistorialMedico

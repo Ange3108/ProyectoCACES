@@ -77,8 +77,13 @@ namespace CACES.Controllers
 
             if (!ModelState.IsValid)
             {
-                ViewBag.Medicos = await _context.Medicos.Include(m => m.Usuario).ToListAsync();
-                ViewBag.Especialidades = await _context.Especialidades.Where(e => e.Estado == true).ToListAsync();
+                ViewBag.Medicos = await _context.Medicos
+                    .Include(m => m.Usuario)
+                    .ToListAsync();
+
+                ViewBag.Especialidades = await _context.Especialidades
+                    .Where(e => e.Estado == true)
+                    .ToListAsync();
 
                 return View("~/Views/Cita/RegistrarCita.cshtml", dto);
             }
@@ -88,12 +93,12 @@ namespace CACES.Controllers
                 IdPaciente = dto.IdPaciente,
                 IdMedico = dto.IdMedico,
                 IdEspecialidad = dto.IdEspecialidad,
+                IdHorario = dto.IdMedico == 1 ? 1 : 2,
                 Fecha = dto.FechaCita.Date,
                 Hora = dto.Hora,
                 Motivo = dto.Motivo,
                 FechaDeRegistro = DateTime.Now,
-                Estado = 1,
-                IdHorario = dto.IdMedico == 1 ? 1 : 2
+                Estado = 1
             };
 
             var resultado = await _citaServicio.RegistrarCitaAsync(cita);
@@ -157,7 +162,7 @@ namespace CACES.Controllers
         public async Task<IActionResult> GestionCitas()
         {
             var citas = await _citaServicio.GetCitasAsync();
-            return View(citas);
+            return View("~/Views/Cita/GestionCitas.cshtml", citas);
         }
 
         [HttpPost]

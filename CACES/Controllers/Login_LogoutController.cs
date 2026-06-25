@@ -59,6 +59,7 @@ namespace CACES.Controllers
                     new ClaimsPrincipal(claimsIdentity)
                 );
 
+              
                 return RedirectToAction("Index", "Home");
             }
 

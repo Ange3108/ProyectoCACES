@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using CACES.DAL.DBContext;
+﻿using CACES.DAL.DBContext;
 using CACES.DAL.Entidades;
 using Microsoft.EntityFrameworkCore;
 
@@ -68,11 +64,11 @@ namespace CACES.DAL.Repositorios.Citas
         public async Task<bool> RegistrarCitaAsync(Cita cita)
         {
             var filas = await _context.Database.ExecuteSqlInterpolatedAsync($@"
-        INSERT INTO Citas
-        (Id_Paciente, Id_Medico, Id_Especialidad, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado, FechaCita)
-        VALUES
-        ({cita.IdPaciente}, {cita.IdMedico}, {cita.IdEspecialidad}, {cita.IdHorario}, {cita.Hora}, {cita.Motivo}, {cita.FechaDeRegistro}, NULL, {cita.Estado}, {cita.Fecha})
-    ");
+                INSERT INTO Citas
+                (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)
+                VALUES
+                ({cita.IdPaciente}, {cita.IdMedico}, {cita.IdEspecialidad}, {cita.IdHorario}, {cita.Fecha}, {cita.Hora}, {cita.Motivo}, {cita.FechaDeRegistro}, NULL, {cita.Estado})
+            ");
 
             return filas > 0;
         }
