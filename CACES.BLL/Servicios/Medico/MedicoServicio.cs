@@ -118,7 +118,7 @@ namespace CACES.BLL.Servicios.Medicos
             //variables del medico
             medico.IdEspecialidad = dto.IdEspecialidad;
             medico.Experiencia = dto.Experiencia;
-            medico.Experiencia = dto.Experiencia;
+            medico.Certificaciones = dto.Certificaciones;
 
             //variables del usuario
             medico.Usuario.Nombres = dto.Nombres;

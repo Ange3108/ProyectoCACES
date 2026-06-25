@@ -31,7 +31,6 @@ namespace CACES.DAL.Repositorios.Medicos
 
         public async Task<List<Medico>> GetEspecialistasActivosAsync()
         {
-            //filtra el estado verdadero del medico
             return await _context.Medicos
                 .Include(x => x.Usuario)
                 .Include(x => x.Especialidad)
@@ -40,7 +39,6 @@ namespace CACES.DAL.Repositorios.Medicos
                             m.Especialidad.Estado == true)
                 .ToListAsync();
         }
-
 
         public async Task<Medico?> GetMedicoConUsuarioByIdAsync(int id)
         {
@@ -107,17 +105,15 @@ namespace CACES.DAL.Repositorios.Medicos
                 return false;
 
             await using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
-                // Se desvincula la receta de la cita
                 await _context.Database.ExecuteSqlRawAsync(
                     "UPDATE Recetas SET Id_Cita = NULL WHERE Id_Cita IN (SELECT Id_Cita FROM Citas WHERE Id_Medico = {0})", id);
 
-                // Citas sí se elimina físicamente
                 await _context.Database.ExecuteSqlRawAsync(
                     "DELETE FROM Citas WHERE Id_Medico = {0}", id);
 
-                // El resto solo se desactiva
                 await _context.Database.ExecuteSqlRawAsync(
                     "UPDATE Cirugias SET Estado = 0 WHERE Id_Medico = {0}", id);
 
@@ -125,11 +121,13 @@ namespace CACES.DAL.Repositorios.Medicos
                     "UPDATE Precios SET Estado = 0 WHERE Id_Medico = {0}", id);
 
                 await _context.Database.ExecuteSqlRawAsync(
-                    "UPDATE HorariosDisponibles SET Estado = 0 WHERE Id_Medico = {0}", id);
+                    "UPDATE HorariosDisponibles SET Activo = 0 WHERE Id_Medico = {0}", id);
 
                 medico.Usuario.Estado = false;
+                medico.Usuario.FechaDeModificacion = DateTime.Now;
 
                 var ok = await _context.SaveChangesAsync() > 0;
+
                 await transaction.CommitAsync();
                 return ok;
             }
@@ -143,21 +141,36 @@ namespace CACES.DAL.Repositorios.Medicos
         public async Task<bool> CreateMedicoConUsuarioAsync(Entidades.Usuario usuario, Medico medico)
         {
             await using var transaction = await _context.Database.BeginTransactionAsync();
+
             try
             {
                 await _context.Usuarios.AddAsync(usuario);
-                await _context.SaveChangesAsync(); // genera el IdUsuario
+                await _context.SaveChangesAsync();
 
-                medico.IdUsuario = usuario.IdUsuario; // ahora sí lo tienes
+                medico.IdUsuario = usuario.IdUsuario;
                 await _context.Medicos.AddAsync(medico);
 
-                await _context.UsuarioRoles.AddAsync(new UsuarioRoles
+                var rolMedico = await _context.AspNetRoles
+                    .FirstOrDefaultAsync(r => r.Name == "Medico");
+
+                if (rolMedico == null)
+                    throw new Exception("No existe el rol Medico.");
+
+                var yaTieneRolUsuarioRoles = await _context.UsuarioRoles
+                    .AnyAsync(x => x.IdUsuario == usuario.IdUsuario &&
+                                   x.RoleId == rolMedico.Id);
+
+                if (!yaTieneRolUsuarioRoles)
                 {
-                    IdUsuario = usuario.IdUsuario,
-                    RoleId = "2"
-                });
+                    await _context.UsuarioRoles.AddAsync(new UsuarioRoles
+                    {
+                        IdUsuario = usuario.IdUsuario,
+                        RoleId = rolMedico.Id
+                    });
+                }
 
                 await _context.SaveChangesAsync();
+
                 await transaction.CommitAsync();
                 return true;
             }
@@ -167,7 +180,5 @@ namespace CACES.DAL.Repositorios.Medicos
                 throw;
             }
         }
-
-
     }
 }

@@ -49,23 +49,43 @@ namespace CACES.DAL.Repositorios.Roles
 
         public async Task<bool> CambiarRolAsync(string userId, string roleId)
         {
-            var rolesActuales = await _context.AspNetUserRoles
+            var aspUser = await _context.AspNetUsers
+                .FirstOrDefaultAsync(x => x.Id == userId);
+
+            if (aspUser == null)
+                return false;
+
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(x => x.CorreoElectronico == aspUser.Email);
+
+            if (usuario == null)
+                return false;
+
+            var rolesActualesAspNet = await _context.AspNetUserRoles
                 .Where(x => x.UserId == userId)
                 .ToListAsync();
 
-            if (rolesActuales.Any(x => x.RoleId == roleId))
-                return true;
+            if (rolesActualesAspNet.Any())
+                _context.AspNetUserRoles.RemoveRange(rolesActualesAspNet);
 
-            if (rolesActuales.Any())
-                _context.AspNetUserRoles.RemoveRange(rolesActuales);
-
-            var nuevoRol = new AspNetUserRole
+            await _context.AspNetUserRoles.AddAsync(new AspNetUserRole
             {
                 UserId = userId,
                 RoleId = roleId
-            };
+            });
 
-            await _context.AspNetUserRoles.AddAsync(nuevoRol);
+            var rolesActualesUsuario = await _context.UsuarioRoles
+                .Where(x => x.IdUsuario == usuario.IdUsuario)
+                .ToListAsync();
+
+            if (rolesActualesUsuario.Any())
+                _context.UsuarioRoles.RemoveRange(rolesActualesUsuario);
+
+            await _context.UsuarioRoles.AddAsync(new UsuarioRoles
+            {
+                IdUsuario = usuario.IdUsuario,
+                RoleId = roleId
+            });
 
             return await _context.SaveChangesAsync() > 0;
         }
@@ -99,6 +119,14 @@ namespace CACES.DAL.Repositorios.Roles
             usuario.FechaDeModificacion = DateTime.Now;
 
             _context.AspNetUserRoles.Remove(rolUsuario);
+
+            var usuarioRol = await _context.UsuarioRoles
+                 .FirstOrDefaultAsync(x => x.IdUsuario == usuario.IdUsuario && x.RoleId == rolUsuario.RoleId);
+
+            if (usuarioRol != null)
+            {
+                _context.UsuarioRoles.Remove(usuarioRol);
+            }
 
             return await _context.SaveChangesAsync() > 0;
         }
