@@ -274,14 +274,52 @@ body {
     padding: 20px;
 }
 
-.custom-table thead {
-    background: #72CEF2;
-    color: #fff;
+.custom-table thead,
+.table thead {
+    background: #F0F7FC;
+    border-bottom: none;
 }
 
-.custom-table th,
-.custom-table td {
-    padding: 14px;
+    .custom-table thead th,
+    .table thead th {
+        color: #27418C;
+        font-size: 0.72rem;
+        font-weight: 800;
+        letter-spacing: 0.13em;
+        text-transform: uppercase;
+        padding: 13px 16px;
+        border: none;
+        white-space: nowrap;
+    }
+
+        .custom-table thead th:first-child,
+        .table thead th:first-child {
+            border-radius: 10px 0 0 10px;
+        }
+
+        .custom-table thead th:last-child,
+        .table thead th:last-child {
+            border-radius: 0 10px 10px 0;
+        }
+
+.custom-table td,
+.table td {
+    padding: 13px 16px;
+    color: #12364f;
+    font-size: 0.92rem;
+    border-bottom: 1px solid #EEF3F7;
+    vertical-align: middle;
+}
+
+.custom-table tbody tr:last-child td,
+.table tbody tr:last-child td {
+    border-bottom: none;
+}
+
+.custom-table tbody tr:hover td,
+.table-hover tbody tr:hover td {
+    background: #F5FAFD;
+    transition: background 0.15s ease;
 }
 
 .status-badge {
@@ -403,6 +441,7 @@ body {
     }
 }
 
+
 .container {
     color: #1973b8;
 }
@@ -440,9 +479,39 @@ body {
 }
 
 .banner-header {
-    background: linear-gradient(135deg, #1f3c88, #4fc3f7);
-    color: white;
+    background: #27418C;
+    color: #fff;
+    border-bottom: none;
+    padding: 1.75rem 2rem !important;
 }
+
+    .banner-header h3 {
+        color: #fff;
+        font-size: 1.4rem;
+        letter-spacing: 0.01em;
+    }
+
+    .banner-header p {
+        color: aliceblue;
+        font-size: 0.9rem;
+    }
+
+    .banner-header .btn-light {
+        background: #72CEF2;
+        color: #12364f;
+        border: none;
+        font-weight: 700;
+        border-radius: 10px;
+        padding: 0.5rem 1.1rem;
+        font-size: 0.9rem;
+        transition: background 0.2s ease, transform 0.15s ease;
+    }
+
+        .banner-header .btn-light:hover {
+            background: #fff;
+            color: #12364f;
+            transform: translateY(-1px);
+        }
 
 /* ==========================================================
    Directorio de Especialidades — sistema "Atlas Clínico"
@@ -748,6 +817,7 @@ body {
     border: 2px solid #72CEF2;
     margin-bottom: 0.9rem;
 }
+
 .staff-photo-placeholder {
     display: inline-flex;
     align-items: center;

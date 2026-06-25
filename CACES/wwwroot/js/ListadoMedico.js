@@ -1,23 +1,8 @@
 (() => {
-    const IMG_FALLBACK_HOMBRE = '/img/hombreD.png';
-    const IMG_FALLBACK_MUJER = '/img/mujerD.jpg';
-
-    function getFallback(nombre) {
-        const prefijosF = ['dra', 'dra.', 'doctora'];
-        const lower = nombre.toLowerCase();
-        return prefijosF.some(p => lower.startsWith(p)) ? IMG_FALLBACK_MUJER : IMG_FALLBACK_HOMBRE;
-    }
-
-    /**
-     * Construye la URL de la foto de forma segura:
-     * - Si ya es una ruta absoluta o relativa válida, la usa.
-     * - Si es nula/vacía/undefined, usa el fallback.
-     */
-    function resolverFoto(foto, nombre) {
+    function resolverFoto(foto) {
         if (!foto || typeof foto !== 'string' || foto.trim() === '') {
-            return getFallback(nombre);
+            return '/img/default.jpg';
         }
-        // Evitar rutas que apunten solo a "/imagenes/default.jpg" si no existe
         return foto.trim();
     }
 
@@ -51,7 +36,7 @@
                                     <img src="${foto}" alt="${nombre}"
                                          class="rounded-circle border"
                                          style="width:40px;height:40px;object-fit:cover;"
-                                         onerror="this.src='/imagenes/default.jpg'" />
+                                         onerror="this.src='/img/default.jpg'" />
                                     <span>${nombre}</span>
                                 </div>`;
                         }
