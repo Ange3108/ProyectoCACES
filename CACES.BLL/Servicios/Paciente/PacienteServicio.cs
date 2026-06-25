@@ -20,6 +20,7 @@ namespace CACES.BLL.Servicios.Paciente
         private readonly IUsuarioRepositorio _usuarioRepositorio;
         private readonly IEmailServicio _emailServicio;
         private readonly CACESDbContext _context;
+        private readonly IHistorialMedicoRepositorio _historialRepositorio;
 
         public PacienteServicio(
             IPacienteRepositorio pacienteRepositorio,
@@ -33,6 +34,7 @@ namespace CACES.BLL.Servicios.Paciente
             _pacienteRepositorio = pacienteRepositorio;
             _usuarioServicio = usuarioServicio;
             _usuarioRepositorio = usuarioRepositorio;
+            _historialRepositorio = historialRepositorio;
             _emailServicio = emailServicio;
             _context = context;
         }
@@ -130,10 +132,12 @@ namespace CACES.BLL.Servicios.Paciente
                 FechaDeCreacion = DateTime.Now
             };
 
+            var historialCreado = await _historialRepositorio.CreateHistorialAsync(nuevoHistorial);
+
             var paciente = new DAL.Entidades.Paciente
             {
                 IdUsuario = usuarioEntidad.IdUsuario,
-                HistorialMedico = nuevoHistorial
+                IdHistorial = historialCreado.IdHistorial
             };
 
             bool pacienteCreado = await _pacienteRepositorio.CreatePacienteAsync(paciente);
