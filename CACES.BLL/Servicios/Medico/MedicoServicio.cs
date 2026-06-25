@@ -131,6 +131,7 @@ namespace CACES.BLL.Servicios.Medicos
             {
                 medico.Usuario.Foto = dto.Foto;
             }
+            medico.Usuario.Estado = dto.Estado;
             medico.Usuario.FechaDeModificacion = DateTime.UtcNow;
 
             bool resultado = await _medicoRepositorio.UpdateMedicoConUsuarioAsync(medico);
