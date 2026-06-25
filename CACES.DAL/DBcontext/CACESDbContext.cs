@@ -27,6 +27,7 @@ namespace CACES.DAL.DBContext
         public DbSet<HorariosDisponibles> HorariosDisponibles { get; set; }
         public DbSet<Procedimiento> Procedimientos { get; set; }
         public DbSet<Cirugias> Cirugias { get; set; }
+        public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
 
         public DbSet<ArchivoHistorial> ArchivosHistorial { get; set; }
 
@@ -190,6 +191,21 @@ namespace CACES.DAL.DBContext
                 entity.ToTable("AspNetRoles");
             });
 
+            modelBuilder.Entity<UsuarioRoles>()
+
+        .HasKey(ur => new { ur.IdUsuario, ur.RoleId });
+
+            modelBuilder.Entity<UsuarioRoles>()
+                .HasOne(ur => ur.Usuario)
+                .WithMany(u => u.UsuarioRoles)
+                .HasForeignKey(ur => ur.IdUsuario)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<UsuarioRoles>()
+                .HasOne(ur => ur.Rol)
+                .WithMany(r => r.UsuarioRoles)
+                .HasForeignKey(ur => ur.RoleId)
+                .OnDelete(DeleteBehavior.Cascade);
 
             //configuración de la entidad Especialidad
             modelBuilder.Entity<Especialidad>(entity =>
