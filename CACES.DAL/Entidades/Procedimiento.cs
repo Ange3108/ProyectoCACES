@@ -27,9 +27,9 @@ namespace CACES.DAL.Entidades
 
         [ForeignKey("Id_Especialidad")]
         public Especialidad? Especialidad { get; set; }
-
         public ICollection<Precios>? Precios { get; set; }
         public ICollection<Cirugias>? Cirugias { get; set; }
+
 
     }
 }
