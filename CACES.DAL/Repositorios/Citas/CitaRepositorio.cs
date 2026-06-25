@@ -20,7 +20,7 @@ namespace CACES.DAL.Repositorios.Citas
         public async Task<List<Cita>> GetCitasAsync()
         {
             return await _context.Citas
-                .OrderBy(c => c.FechaCita)
+                .OrderBy(c => c.Fecha)
                 .ThenBy(c => c.Hora)
                 .ToListAsync();
         }
@@ -39,7 +39,7 @@ namespace CACES.DAL.Repositorios.Citas
             if (cita == null)
                 return false;
 
-            cita.FechaCita = nuevaFecha.Date;
+            cita.Fecha = nuevaFecha.Date;
             cita.FechaDeModificacion = DateTime.Now;
 
             return await _context.SaveChangesAsync() > 0;
@@ -49,7 +49,7 @@ namespace CACES.DAL.Repositorios.Citas
         {
             var citas = await _context.Citas
                 .Where(c => c.IdMedico == idMedico &&
-                            c.FechaCita.Date == fechaCita.Date &&
+                            c.Fecha.Date == fechaCita.Date &&
                             c.Estado == 1)
                 .ToListAsync();
 
@@ -69,9 +69,9 @@ namespace CACES.DAL.Repositorios.Citas
         {
             var filas = await _context.Database.ExecuteSqlInterpolatedAsync($@"
         INSERT INTO Citas
-        (Id_Paciente, Id_Medico, Id_Especialidad, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado, FechaCita)
+        (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)
         VALUES
-        ({cita.IdPaciente}, {cita.IdMedico}, {cita.IdEspecialidad}, {cita.IdHorario}, {cita.Hora}, {cita.Motivo}, {cita.FechaDeRegistro}, NULL, {cita.Estado}, {cita.FechaCita})
+        ({cita.IdPaciente}, {cita.IdMedico}, {cita.IdEspecialidad}, {cita.IdHorario}, {cita.Fecha}, {cita.Hora}, {cita.Motivo}, {cita.FechaDeRegistro}, NULL, {cita.Estado})
     ");
 
             return filas > 0;
@@ -81,7 +81,7 @@ namespace CACES.DAL.Repositorios.Citas
         {
             return await _context.Citas
                 .Where(c => c.IdPaciente == idPaciente)
-                .OrderByDescending(c => c.FechaCita)
+                .OrderByDescending(c => c.Fecha)
                 .ToListAsync();
         }
 
@@ -95,7 +95,7 @@ namespace CACES.DAL.Repositorios.Citas
         {
             return await _context.Citas
                 .Where(c => c.IdMedico == idMedico)
-                .OrderBy(c => c.FechaCita)
+                .OrderBy(c => c.Fecha)
                 .ToListAsync();
         }
 

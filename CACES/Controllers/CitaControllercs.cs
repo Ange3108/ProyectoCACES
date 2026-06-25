@@ -88,12 +88,12 @@ namespace CACES.Controllers
                 IdPaciente = dto.IdPaciente,
                 IdMedico = dto.IdMedico,
                 IdEspecialidad = dto.IdEspecialidad,
-                FechaCita = dto.FechaCita.Date,
+                IdHorario = dto.IdMedico == 1 ? 1 : 2,
+                Fecha = dto.FechaCita.Date,
                 Hora = dto.Hora,
                 Motivo = dto.Motivo,
                 FechaDeRegistro = DateTime.Now,
-                Estado = 1,
-                IdHorario = dto.IdMedico == 1 ? 1 : 2
+                Estado = 1
             };
 
             var resultado = await _citaServicio.RegistrarCitaAsync(cita);
