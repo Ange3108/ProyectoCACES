@@ -18,7 +18,6 @@ namespace CACES.DAL.DBContext
         public DbSet<Medico> Medicos { get; set; }
         public DbSet<ApplicationUser> AspNetUsers { get; set; }
         public DbSet<AspNetRole> AspNetRoles { get; set; }
-        public DbSet<AspNetUserRole> AspNetUserRoles { get; set; }
         public DbSet<Cita> Citas { get; set; }
         public DbSet<Receta> Recetas { get; set; }
         public DbSet<Especialidad> Especialidades { get; set; }
@@ -184,21 +183,7 @@ namespace CACES.DAL.DBContext
                 entity.ToTable("AspNetRoles");
             });
 
-            // Configuración de AspNetUserRole
-            modelBuilder.Entity<AspNetUserRole>(entity =>
-            {
-                entity.HasKey(e => new { e.UserId, e.RoleId });
-                entity.ToTable("AspNetUserRoles");
-            });
-
           
-            modelBuilder.Entity<AspNetRole>(entity =>
-            {
-                entity.HasKey(e => e.Id);
-                entity.ToTable("AspNetRoles");
-            });
-
-            
 
             //configuración de la entidad Especialidad
             modelBuilder.Entity<Especialidad>(entity =>
