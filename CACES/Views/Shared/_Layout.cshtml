@@ -4,28 +4,26 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - CACES</title>
-
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/style.css" asp-append-version="true" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
-    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.8/datatables.min.css" rel="stylesheet" crossorigin="anonymous">
+    <link href="https://cdn.datatables.net/v/bs5/dt-2.3.8/datatables.min.css" rel="stylesheet" integrity="sha384-UclYA0TM50oo4lzbw9CylacalWmOxu+RipNT22BDrqDD9v2F0M+262NAs03TOfhw" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
 </head>
-
 <body>
     <header>
         <nav class="navbar navbar-expand-lg custom-navbar">
             <div class="container-fluid px-3 px-lg-4">
-
-                <a class="navbar-brand brand-block" asp-controller="Home" asp-action="Index">
+                <a class="navbar-brand brand-block" asp-area="" asp-controller="Home" asp-action="Index">
                     <span class="brand-icon"><img src="~/img/logoCACES.jpg" alt="Logo"></span>
                     <span class="brand-name">CACES</span>
                 </a>
 
-                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav">
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+                        aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
@@ -38,6 +36,7 @@
 
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
+                            @* Menú Paciente *@
                             @if (User.IsInRole("Paciente"))
                             {
                                 <li class="nav-item"><a class="nav-link" asp-controller="HistorialMedico" asp-action="MiHistorial">Mi Historial</a></li>
@@ -45,6 +44,7 @@
                                 <li class="nav-item"><a class="nav-link" asp-controller="Procedimientos" asp-action="ObtenerProcedimientos">Procedimientos Quirúrgicos</a></li>
                             }
 
+                            @* Menú Médico *@
                             @if (User.IsInRole("Medico"))
                             {
                                 <li class="nav-item"><a class="nav-link" asp-controller="Cita" asp-action="CitasMedico">Agenda Médica</a></li>
@@ -52,15 +52,15 @@
                                 <li class="nav-item"><a class="nav-link" asp-controller="Paciente" asp-action="Pacientes">Historiales Pacientes</a></li>
                             }
 
+                            @* Menú Administrador *@
                             @if (User.IsInRole("Administrador"))
                             {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Cita" asp-action="GestionCitas">Gestión de Citas</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-controller="Rol" asp-action="GestionRoles">Gestión de Roles</a></li>
+                                
                                 <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Reportes">Reportes</a></li>
                             }
 
+                            @* Opciones comunes *@
                             <li class="nav-item"><a class="nav-link" asp-controller="Configuracion" asp-action="Configuracion">Configuración</a></li>
-
                             <li class="nav-item">
                                 <form asp-controller="Login_Logout" asp-action="Logout" method="post" class="d-inline">
                                     @Html.AntiForgeryToken()
@@ -71,19 +71,19 @@
                     </ul>
                 </div>
 
+                @* Icono de cuenta *@
                 @if (User.Identity != null && User.Identity.IsAuthenticated)
                 {
-                    <a class="account-link" asp-controller="Perfil" asp-action="VerPerfil" aria-label="Cuenta">
+                    <a class="account-link" asp-area="" asp-controller="Perfil" asp-action="VerPerfil" aria-label="Cuenta">
                         <i class="bi bi-person"></i>
                     </a>
                 }
                 else
                 {
-                    <a class="account-link" asp-controller="Login_Logout" asp-action="Login" aria-label="Iniciar sesión">
+                    <a class="account-link" asp-area="" asp-controller="Login_Logout" asp-action="Login" aria-label="Iniciar sesión">
                         <i class="bi bi-person"></i>
                     </a>
                 }
-
             </div>
         </nav>
     </header>
@@ -97,15 +97,33 @@
     <footer class="mt-5 py-4" style="background:#72CEF2;">
         <div class="container text-center">
             <p class="mb-1 fw-semibold" style="color:#27418C;">Centro Ambulatorio de Cirugía Escalón</p>
+            <p class="mb-0">
+                <a asp-area="" asp-controller="Soporte" asp-action="Contacto" class="text-decoration-none fw-bold" style="color:#27418C;">
+                    Contacto y soporte
+                </a>
+            </p>
+            <div class="d-flex justify-content-center gap-3 mt-3">
+                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="color:#27418C; font-size:1.25rem;">
+                    <i class="bi bi-facebook"></i>
+                </a>
+                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="color:#27418C; font-size:1.25rem;">
+                    <i class="bi bi-instagram"></i>
+                </a>
+                <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" style="color:#27418C; font-size:1.25rem;">
+                    <i class="bi bi-twitter-x"></i>
+                </a>
+                <a href="https://wa.me/50600000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style="color:#27418C; font-size:1.25rem;">
+                    <i class="bi bi-whatsapp"></i>
+                </a>
+            </div>
         </div>
     </footer>
 
     <script src="~/lib/jquery/dist/jquery.min.js"></script>
     <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.8/datatables.min.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.datatables.net/v/bs5/dt-2.3.8/datatables.min.js" integrity="sha384-M6UGhVy7VWBGzDEGllTBBFgXu43d6sWM07qFvlFrfOr/R3GhL8TLsG0iwMzJuX3N" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
-
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

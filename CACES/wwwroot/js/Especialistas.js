@@ -1,24 +1,10 @@
 (() => {
 
-    const IMG_FALLBACK_HOMBRE = '/img/hombreD.png';
-    const IMG_FALLBACK_MUJER = '/img/mujerD.jpg';
-
-    function getFallback(nombre) {
-        const prefijosF = ['dra', 'dra.', 'doctora'];
-        const lower = nombre.toLowerCase();
-        return prefijosF.some(p => lower.startsWith(p)) ? IMG_FALLBACK_MUJER : IMG_FALLBACK_HOMBRE;
-    }
-
-    /**
-     * Construye la URL de la foto de forma segura:
-     * - Si ya es una ruta absoluta o relativa válida, la usa.
-     * - Si es nula/vacía/undefined, usa el fallback.
-     */
-    function resolverFoto(foto, nombre) {
+   
+    function resolverFoto(foto) {
         if (!foto || typeof foto !== 'string' || foto.trim() === '') {
-            return getFallback(nombre);
+            return '/img/default.jpg';
         }
-        // Evitar rutas que apunten solo a "/imagenes/default.jpg" si no existe
         return foto.trim();
     }
 
@@ -54,8 +40,7 @@
                             medico.usuario?.segundoApellido ?? ''
                         ].join(' ').replace(/\s+/g, ' ').trim();
 
-                        const foto = resolverFoto(medico.usuario?.foto, nombre);
-                        const fallback = getFallback(nombre);
+                        const foto = resolverFoto(medico.usuario?.foto);
 
                         const especialidad = medico.nombreEspecialidad ?? 'Especialista';
                         const experiencia = medico.experiencia ?? 0;
@@ -69,7 +54,7 @@
                                          alt="Foto de ${nombre}"
                                          class="rounded-circle border border-2 shadow-sm"
                                          style="width:130px;height:130px;object-fit:cover;border-color:#72CEF2 !important;"
-                                         onerror="this.onerror=null;this.src='${fallback}';" />
+                                         onerror="this.onerror=null;this.src='/img/default.jpg';" />
                                 </div>
                                 <div class="card-body text-center p-4">
                                     <h5 class="fw-bold mb-1">Dr(a). ${nombre}</h5>

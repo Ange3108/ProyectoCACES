@@ -41,7 +41,6 @@ namespace CACES.BLL.Servicios.Perfil
             return respuesta;
         }
         
-
         public async Task<respuestaErrores<ActualizarPerfilDTO>> ActualizarPerfilUsuarioAsync(int id, ActualizarPerfilDTO perfilDto)
         {
             var respuesta = new respuestaErrores<ActualizarPerfilDTO>();
