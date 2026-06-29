@@ -6,17 +6,18 @@
 
 <div class="container py-5">
 
-    <div class="card shadow-lg border-0 rounded-4">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
 
-        <div class="card-header text-white p-4"
-             style="background-color:#27418C;">
+        <div class="card-header border-0 p-4"
+             style="background:#163B73;">
 
-            <h3 class="mb-1">
+            <h2 class="text-white fw-bold mb-1">
+                <i class="bi bi-calendar-week-fill me-2"></i>
                 Agenda de Citas Médicas
-            </h3>
+            </h2>
 
-            <p class="mb-0">
-                Administración de citas asignadas.
+            <p class="text-white-50 mb-0">
+                Visualice y administre las citas asignadas a su agenda médica.
             </p>
 
         </div>
@@ -25,25 +26,27 @@
 
             @if (TempData["Mensaje"] != null)
             {
-                <div class="alert alert-success">
+                <div class="alert alert-success rounded-3 shadow-sm">
+                    <i class="bi bi-check-circle-fill me-2"></i>
                     @TempData["Mensaje"]
                 </div>
             }
 
             @if (TempData["Error"] != null)
             {
-                <div class="alert alert-danger">
+                <div class="alert alert-danger rounded-3 shadow-sm">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     @TempData["Error"]
                 </div>
             }
 
             @if (Model.Any())
             {
-                <div class="table-responsive">
+                <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
 
-                    <table class="table table-hover align-middle">
+                    <table class="table table-hover align-middle mb-0">
 
-                        <thead>
+                        <thead style="background:#163B73;color:white;">
                             <tr>
                                 <th>Cita</th>
                                 <th>Fecha</th>
@@ -60,7 +63,9 @@
                             {
                                 <tr>
 
-                                    <td>@cita.IdCita</td>
+                                    <td class="fw-semibold">
+                                        @cita.IdCita
+                                    </td>
 
                                     <td>
                                         @cita.Fecha.ToString("dd/MM/yyyy")
@@ -75,24 +80,22 @@
                                     </td>
 
                                     <td>
-
                                         @if (cita.Estado == 1)
                                         {
-                                            <span class="badge bg-success">
+                                            <span class="badge rounded-pill px-3 py-2"
+                                                  style="background:#DDF7F8;color:#0B6F73;">
                                                 Activa
                                             </span>
                                         }
                                         else
                                         {
-                                            <span class="badge bg-secondary">
+                                            <span class="badge rounded-pill bg-secondary px-3 py-2">
                                                 Cancelada
                                             </span>
                                         }
-
                                     </td>
 
                                     <td>
-
                                         @if (cita.Estado == 1)
                                         {
                                             <form asp-action="CancelarCita"
@@ -103,16 +106,15 @@
                                                        value="@cita.IdCita" />
 
                                                 <button type="submit"
-                                                        class="btn btn-danger btn-sm"
+                                                        class="btn btn-sm text-white rounded-3"
+                                                        style="background:#B42318;border:none;"
                                                         onclick="return confirm('¿Desea cancelar esta cita?')">
-
+                                                    <i class="bi bi-x-circle-fill me-1"></i>
                                                     Cancelar
-
                                                 </button>
 
                                             </form>
                                         }
-
                                     </td>
 
                                 </tr>
@@ -126,8 +128,12 @@
             }
             else
             {
-                <div class="alert alert-info">
+                <div class="alert border-0 rounded-4 shadow-sm"
+                     style="background:#EAF9FC;color:#163B73;">
+
+                    <i class="bi bi-info-circle-fill me-2"></i>
                     No existen citas asignadas.
+
                 </div>
             }
 

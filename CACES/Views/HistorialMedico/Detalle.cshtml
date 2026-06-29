@@ -2,134 +2,204 @@
 
 @{
     ViewData["Title"] = "Historial Médico";
-
     var archivos = ViewBag.Archivos as List<CACES.DAL.Entidades.ArchivoHistorial>;
 }
 
-<div class="container mt-5">
+<div class="container py-5">
 
-    <div class="card shadow">
-        <div class="card-header bg-primary text-white">
-            <h3>Historial Médico</h3>
+    <div class="card border-0 shadow-lg rounded-4">
+
+        <div class="card-header border-0 rounded-top-4 py-4"
+             style="background:#163B73;">
+
+            <h2 class="text-white fw-bold mb-1">
+                <i class="bi bi-heart-pulse-fill me-2"></i>
+                Historial Médico
+            </h2>
+
+            <p class="text-white-50 mb-0">
+                Información clínica del paciente
+            </p>
+
         </div>
 
-        <div class="card-body">
+        <div class="card-body p-4">
 
             @if (TempData["Mensaje"] != null)
             {
-                <div class="alert alert-success">
+                <div class="alert alert-success rounded-3 shadow-sm">
+                    <i class="bi bi-check-circle-fill me-2"></i>
                     @TempData["Mensaje"]
                 </div>
             }
 
             @if (TempData["Error"] != null)
             {
-                <div class="alert alert-danger">
+                <div class="alert alert-danger rounded-3 shadow-sm">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     @TempData["Error"]
                 </div>
             }
 
-            <div class="row mb-3">
+            <div class="row g-4">
+
                 <div class="col-md-6">
-                    <strong>Tipo de Sangre:</strong>
-                    <p>@Model.TipoSangre</p>
+                    <div class="border rounded-4 p-3 h-100 bg-white shadow-sm">
+                        <small class="text-muted">Tipo de Sangre</small>
+                        <h5 class="fw-bold text-dark mt-2">@Model.TipoSangre</h5>
+                    </div>
                 </div>
 
                 <div class="col-md-6">
-                    <strong>Alergias:</strong>
-                    <p>@Model.Alergias</p>
-                </div>
-            </div>
-
-            <div class="row mb-3">
-                <div class="col-md-6">
-                    <strong>Enfermedades Crónicas:</strong>
-                    <p>@Model.EnfermedadesCronicas</p>
+                    <div class="border rounded-4 p-3 h-100 bg-white shadow-sm">
+                        <small class="text-muted">Alergias</small>
+                        <h5 class="fw-bold text-dark mt-2">@Model.Alergias</h5>
+                    </div>
                 </div>
 
                 <div class="col-md-6">
-                    <strong>Medicamentos:</strong>
-                    <p>@Model.Medicamentos</p>
+                    <div class="border rounded-4 p-3 h-100 bg-white shadow-sm">
+                        <small class="text-muted">Enfermedades Crónicas</small>
+                        <h5 class="fw-bold text-dark mt-2">@Model.EnfermedadesCronicas</h5>
+                    </div>
                 </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded-4 p-3 h-100 bg-white shadow-sm">
+                        <small class="text-muted">Medicamentos</small>
+                        <h5 class="fw-bold text-dark mt-2">@Model.Medicamentos</h5>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="border rounded-4 p-3 shadow-sm">
+                        <small class="text-muted">Antecedentes</small>
+                        <p class="mb-0 mt-2">@Model.Antecedentes</p>
+                    </div>
+                </div>
+
+                <div class="col-12">
+                    <div class="border rounded-4 p-3 shadow-sm">
+                        <small class="text-muted">Detalles Médicos</small>
+                        <p class="mb-0 mt-2">@Model.Detalles</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="border rounded-4 p-3 shadow-sm">
+                        <small class="text-muted">Fecha de creación</small>
+                        <h6 class="fw-bold mt-2">
+                            @Model.FechaDeCreacion.ToString("dd/MM/yyyy")
+                        </h6>
+                    </div>
+                </div>
+
             </div>
 
-            <div class="mb-3">
-                <strong>Antecedentes:</strong>
-                <p>@Model.Antecedentes</p>
+            <hr class="my-5">
+
+            <div class="d-flex justify-content-between align-items-center mb-4">
+
+                <div>
+                    <h4 class="fw-bold mb-1" style="color:#163B73;">
+                        Imágenes Médicas
+                    </h4>
+
+                    <span class="text-muted">
+                        Archivos asociados al historial clínico
+                    </span>
+                </div>
+
             </div>
-
-            <div class="mb-3">
-                <strong>Detalles:</strong>
-                <p>@Model.Detalles</p>
-            </div>
-
-            <div class="mb-3">
-                <strong>Fecha de Creación:</strong>
-                <p>@Model.FechaDeCreacion.ToString("dd/MM/yyyy")</p>
-            </div>
-
-            <hr />
-
-            <h5 class="fw-bold mb-3">Imágenes médicas / archivos del historial</h5>
 
             @if (archivos != null && archivos.Any())
             {
-                <div class="row g-3">
+                <div class="row g-4">
+
                     @foreach (var archivo in archivos)
                     {
-                        <div class="col-md-4">
-                            <div class="card h-100 shadow-sm">
+                        <div class="col-lg-4">
+
+                            <div class="card border-0 shadow-sm rounded-4 h-100">
+
+                                @if (archivo.TipoArchivo != null &&
+                                     archivo.TipoArchivo.StartsWith("image"))
+                                {
+                                    <img src="@archivo.RutaArchivo"
+                                         class="card-img-top rounded-top-4"
+                                         style="height:220px;object-fit:cover;" />
+                                }
+
                                 <div class="card-body">
 
-                                    <p class="fw-bold mb-1">@archivo.NombreArchivo</p>
-                                    <p class="text-muted small mb-2">
+                                    <h5 class="fw-bold">
+                                        @archivo.NombreArchivo
+                                    </h5>
+
+                                    <p class="text-muted mb-3">
                                         @archivo.FechaDeSubida.ToString("dd/MM/yyyy")
                                     </p>
 
-                                    @if (archivo.TipoArchivo != null && archivo.TipoArchivo.StartsWith("image"))
-                                    {
-                                        <img src="@archivo.RutaArchivo"
-                                             class="img-fluid rounded mb-2"
-                                             alt="@archivo.NombreArchivo" />
-                                    }
-
                                     <a href="@archivo.RutaArchivo"
                                        target="_blank"
-                                       class="btn btn-outline-primary btn-sm">
+                                       class="btn text-white w-100"
+                                       style="background:#20C4D8;border:none;">
+                                        <i class="bi bi-eye-fill me-2"></i>
                                         Ver archivo
                                     </a>
 
                                 </div>
+
                             </div>
+
                         </div>
                     }
+
                 </div>
             }
             else
             {
-                <div class="alert alert-info">
-                    No hay imágenes médicas registradas en este historial.
+                <div class="alert rounded-4 border-0 shadow-sm"
+                     style="background:#EAF9FC;color:#163B73;">
+
+                    <i class="bi bi-info-circle-fill me-2"></i>
+
+                    No hay imágenes médicas registradas.
+
                 </div>
             }
 
-            <div class="mt-4 d-flex gap-2">
+            <div class="mt-5 d-flex gap-3">
+
                 <a asp-action="Editar"
                    asp-route-id="@Model.IdHistorial"
-                   class="btn btn-warning">
+                   class="btn px-4 py-2 text-white"
+                   style="background:#163B73;border:none;">
+
+                    <i class="bi bi-pencil-square me-2"></i>
+
                     Editar Historial
+
                 </a>
 
                 @if (User.IsInRole("Medico"))
                 {
                     <a asp-action="SubirImagen"
                        asp-route-idHistorial="@Model.IdHistorial"
-                       class="btn btn-primary">
+                       class="btn px-4 py-2 text-white"
+                       style="background:#20C4D8;border:none;">
+
+                        <i class="bi bi-upload me-2"></i>
+
                         Subir Imagen Médica
+
                     </a>
                 }
+
             </div>
 
         </div>
+
     </div>
 
 </div>

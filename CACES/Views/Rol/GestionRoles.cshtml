@@ -6,43 +6,55 @@
 }
 
 <div class="container py-5">
-    <div class="card shadow-lg border-0 rounded-4">
 
-        <div class="card-header bg-primary text-white">
-            <h3 class="mb-0">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+        <div class="card-header border-0 py-4"
+             style="background:#163B73;">
+
+            <h2 class="text-white fw-bold mb-1">
                 <i class="bi bi-person-gear me-2"></i>
                 Gestión de Roles
-            </h3>
+            </h2>
+
+            <p class="text-white-50 mb-0">
+                Administre los permisos y roles de los usuarios registrados.
+            </p>
+
         </div>
 
-        <div class="card-body">
+        <div class="card-body p-4">
 
             @if (TempData["Mensaje"] != null)
             {
-                <div class="alert alert-success">
+                <div class="alert alert-success rounded-3 shadow-sm">
+                    <i class="bi bi-check-circle-fill me-2"></i>
                     @TempData["Mensaje"]
                 </div>
             }
 
             @if (TempData["Error"] != null)
             {
-                <div class="alert alert-danger">
+                <div class="alert alert-danger rounded-3 shadow-sm">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     @TempData["Error"]
                 </div>
             }
 
-            <div class="table-responsive">
+            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
 
-                <table class="table table-hover align-middle">
+                <table class="table table-hover align-middle mb-0">
 
-                    <thead>
+                    <thead style="background:#163B73;color:white;">
+
                         <tr>
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Rol Actual</th>
-                            <th>Cambiar Rol</th>
-                            <th>Acciones</th>
+                            <th style="width:320px;">Cambiar Rol</th>
+                            <th style="width:180px;">Acciones</th>
                         </tr>
+
                     </thead>
 
                     <tbody>
@@ -51,17 +63,27 @@
                         {
                             <tr>
 
-                                <td>@usuario.NombreCompleto</td>
-
-                                <td>@usuario.CorreoElectronico</td>
-
-                                <td>
-                                    <span class="badge bg-info">
-                                        @usuario.NombreRol
-                                    </span>
+                                <td class="fw-semibold">
+                                    @usuario.NombreCompleto
                                 </td>
 
                                 <td>
+                                    @usuario.CorreoElectronico
+                                </td>
+
+                                <td>
+
+                                    <span class="badge rounded-pill px-3 py-2"
+                                          style="background:#DDF7F8;color:#0B6F73;">
+
+                                        @usuario.NombreRol
+
+                                    </span>
+
+                                </td>
+
+                                <td>
+
                                     <form asp-action="CambiarRol"
                                           asp-controller="Rol"
                                           method="post"
@@ -72,7 +94,7 @@
                                                value="@usuario.UserId" />
 
                                         <select name="roleId"
-                                                class="form-select form-select-sm">
+                                                class="form-select form-select-sm rounded-3 shadow-sm">
 
                                             @foreach (var rol in roles)
                                             {
@@ -85,11 +107,15 @@
                                         </select>
 
                                         <button type="submit"
-                                                class="btn btn-warning btn-sm">
-                                            Guardar
+                                                class="btn btn-sm text-white"
+                                                style="background:#20C4D8;border:none;">
+
+                                            <i class="bi bi-check-lg"></i>
+
                                         </button>
 
                                     </form>
+
                                 </td>
 
                                 <td>
@@ -105,9 +131,13 @@
                                                    value="@usuario.UserId" />
 
                                             <button type="submit"
-                                                    class="btn btn-danger btn-sm"
+                                                    class="btn btn-danger btn-sm rounded-3"
                                                     onclick="return confirm('¿Desea eliminar este médico?');">
-                                                Eliminar Médico
+
+                                                <i class="bi bi-person-x-fill me-1"></i>
+
+                                                Eliminar
+
                                             </button>
 
                                         </form>
@@ -124,9 +154,13 @@
                                                    value="@usuario.UserId" />
 
                                             <button type="submit"
-                                                    class="btn btn-danger btn-sm"
+                                                    class="btn btn-danger btn-sm rounded-3"
                                                     onclick="return confirm('¿Desea eliminar este administrador?');">
-                                                Eliminar Admin
+
+                                                <i class="bi bi-person-x-fill me-1"></i>
+
+                                                Eliminar
+
                                             </button>
 
                                         </form>
@@ -146,4 +180,5 @@
         </div>
 
     </div>
+
 </div>
