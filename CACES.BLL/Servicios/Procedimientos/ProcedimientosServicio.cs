@@ -33,7 +33,7 @@ namespace CACES.BLL.Servicios.Procedimientos
             {
                 cirugia.Horario.DiaSemana = (int)editarProcedimientosDTO.Fecha.DayOfWeek;
                 cirugia.Horario.HoraInicio = editarProcedimientosDTO.Fecha.TimeOfDay;
-                cirugia.Horario.HoraFin = editarProcedimientosDTO.Fecha.TimeOfDay.Add(TimeSpan.FromHours(2));
+                
             }
             if (cirugia.Procedimiento != null)
             {
@@ -82,7 +82,7 @@ namespace CACES.BLL.Servicios.Procedimientos
                 Id_Medico = registrarProcedimientosDto.Id_Medico,
                 DiaSemana = (int)registrarProcedimientosDto.FechaProgramada.DayOfWeek,
                 HoraInicio = registrarProcedimientosDto.FechaProgramada.TimeOfDay,
-                HoraFin = registrarProcedimientosDto.FechaProgramada.TimeOfDay.Add(TimeSpan.FromHours(2)),
+               
                 Activo = true
             };
 

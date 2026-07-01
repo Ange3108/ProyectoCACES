@@ -108,5 +108,19 @@ namespace CACES.DAL.Repositorios.Citas
 
             return await _context.SaveChangesAsync() > 0;
         }
+
+        public async Task<int> ContarCitasPorFechaAsync(DateTime fecha)
+        {
+            return await _context.Citas
+                .CountAsync(c => c.Fecha.Date == fecha.Date && c.Estado == 1);
+        }
+
+        public async Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana)
+        {
+            return await _context.HorariosDisponibles
+                .AnyAsync(h => h.Id_Medico == idMedico &&
+                               h.DiaSemana == diaSemana &&
+                               h.Activo == true);
+        }
     }
 }

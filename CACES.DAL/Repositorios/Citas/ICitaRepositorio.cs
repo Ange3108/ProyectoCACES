@@ -25,5 +25,9 @@ namespace CACES.DAL.Repositorios.Citas
         Task<List<Cita>> ObtenerCitasPorMedicoAsync(int idMedico);
 
         Task<bool> CancelarCitaAsync(int idCita);
+
+        //metodos para manejar los horarios
+        Task<int> ContarCitasPorFechaAsync(DateTime fecha);
+        Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana);
     }
 }

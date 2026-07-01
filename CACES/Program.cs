@@ -1,24 +1,31 @@
 using CACES.BLL;
+using CACES.BLL.Servicios.ArchivosHistorial;
 using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Especialidad;
 using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
+using CACES.BLL.Servicios.HistorialMedicos;
+using CACES.BLL.Servicios.Horario;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;
 using CACES.BLL.Servicios.Perfil;
 using CACES.BLL.Servicios.Procedimientos;
+using CACES.BLL.Servicios.Quirofano;
 using CACES.BLL.Servicios.Roles;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
+using CACES.DAL.Repositorios.ArchivosHistorial;
 using CACES.DAL.Repositorios.Citas;
 using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
+using CACES.DAL.Repositorios.Horarios;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Paquetes;
 using CACES.DAL.Repositorios.Procedimientos;
+using CACES.DAL.Repositorios.Quirofano;
 using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -27,7 +34,7 @@ using CACES.BLL.Servicios.HistorialMedicos;
 using CACES.DAL.Repositorios.ArchivosHistorial;
 using CACES.BLL.Servicios.ArchivosHistorial;
 using CACES.DAL.Repositorios.Horarios;
-using CACES.BLL.Servicios.Horarios;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -53,6 +60,7 @@ builder.Services.AddScoped<IEspecialidadRepositorio, EspecialidadRepositorio>();
 builder.Services.AddScoped<IPaqueteRepositorio, PaqueteRepositorio>();
 builder.Services.AddScoped<IProcedimientosRepositorio, ProcedimientosRepositorio>();
 builder.Services.AddScoped<IArchivoHistorialRepositorio, ArchivoHistorialRepositorio>();
+builder.Services.AddScoped<IQuirofanoRepositorio, QuirofanoRepositorio>();
 builder.Services.AddScoped<IHorariosRepositorio, HorariosRepositorio>();
 
 // Servicios
@@ -72,7 +80,9 @@ builder.Services.AddScoped<IPaqueteServicio, PaqueteServicio>();
 builder.Services.AddScoped<IProcedimientosServicio, ProcedimientosServicio>();
 builder.Services.AddScoped<IHistorialMedicoServicio, HistorialMedicoServicio>();
 builder.Services.AddScoped<IArchivoHistorialServicio, ArchivoHistorialServicio>();
+builder.Services.AddScoped<IQuirofanoServicio, QuirofanoServicio>();
 builder.Services.AddScoped<IHorarioServicio, HorarioServicio>();
+
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
