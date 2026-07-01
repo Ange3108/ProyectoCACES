@@ -20,7 +20,6 @@ namespace CACES.DAL.Repositorios.Horarios
             await _context.Set<HorariosDisponibles>().AddRangeAsync(horarios, cancellationToken);
 
             int filasAfectadas = await _context.SaveChangesAsync(cancellationToken);
-
             return filasAfectadas > 0;
         }
     }
