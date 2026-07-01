@@ -1,0 +1,160 @@
+@{
+    ViewData["Title"] = "Gestión de Horarios";
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header banner-header p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 fw-bold">
+                        <i class="bi bi-calendar-week me-2"></i>Gestión de Horarios
+                    </h3>
+                    <p class="mb-0 opacity-75">
+                        Administre los días disponibles de cada médico para cirugías.
+                    </p>
+                </div>
+                <button class="btn btn-light fw-semibold" data-bs-toggle="modal" data-bs-target="#modalCrearHorario">
+                    + Agregar Horario
+                </button>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="row mb-4">
+                <div class="col-12 col-md-4">
+                    <label for="selectMedico" class="form-label fw-semibold">Seleccione un médico</label>
+                    <select id="selectMedico" class="form-select">
+                        <option value="">-- Seleccionar --</option>
+                        @if (ViewBag.Medicos != null)
+                        {
+                            foreach (var medico in ViewBag.Medicos)
+                            {
+                                <option value="@medico.IdMedico">
+                                    @medico.Usuario.Nombres @medico.Usuario.PrimerApellido
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+            </div>
+
+            <div id="contenedorHorarios">
+                <div class="alert alert-info text-center rounded-3 py-4">
+                    <i class="bi bi-arrow-up-circle fs-2 d-block mb-2 text-muted"></i>
+                    Seleccione un médico para ver sus horarios.
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalCrearHorario" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-calendar-plus me-2"></i>Agregar Horario
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                    <label for="nuevoMedico" class="form-label">Médico</label>
+                    <select id="nuevoMedico" class="form-select">
+                        <option value="">-- Seleccionar médico --</option>
+                        @if (ViewBag.Medicos != null)
+                        {
+                            foreach (var medico in ViewBag.Medicos)
+                            {
+                                <option value="@medico.IdMedico">
+                                    @medico.Usuario.Nombres @medico.Usuario.PrimerApellido
+                                </option>
+                            }
+                        }
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="nuevoDia" class="form-label">Día de la semana</label>
+                    <select id="nuevoDia" class="form-select">
+                        <option value="">-- Seleccionar día --</option>
+                        <option value="0">Domingo</option>
+                        <option value="1">Lunes</option>
+                        <option value="2">Martes</option>
+                        <option value="3">Miércoles</option>
+                        <option value="4">Jueves</option>
+                        <option value="5">Viernes</option>
+                        <option value="6">Sábado</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="nuevoHora" class="form-label">Hora de inicio</label>
+                    <input type="time" id="nuevoHora" class="form-control" />
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarHorario">
+                    Guardar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+<div class="modal fade" id="modalEditarHorario" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title fw-bold">
+                    <i class="bi bi-pencil-square me-2"></i>Editar Horario
+                </h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="editarIdHorario" />
+
+                <div class="mb-3">
+                    <label for="editarDia" class="form-label">Día de la semana</label>
+                    <select id="editarDia" class="form-select">
+                        <option value="0">Domingo</option>
+                        <option value="1">Lunes</option>
+                        <option value="2">Martes</option>
+                        <option value="3">Miércoles</option>
+                        <option value="4">Jueves</option>
+                        <option value="5">Viernes</option>
+                        <option value="6">Sábado</option>
+                    </select>
+                </div>
+
+                <div class="mb-3">
+                    <label for="editarHora" class="form-label">Hora de inicio</label>
+                    <input type="time" id="editarHora" class="form-control" />
+                </div>
+
+                <div class="mb-3 form-check">
+                    <input type="checkbox" class="form-check-input" id="editarActivo" />
+                    <label class="form-check-label" for="editarActivo">Activo</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnActualizarHorario">
+                    Guardar cambios
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+    <script src="~/js/Horario.js" asp-append-version="true"></script>
+}

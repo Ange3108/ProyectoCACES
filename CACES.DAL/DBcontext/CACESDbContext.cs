@@ -28,6 +28,7 @@ namespace CACES.DAL.DBContext
         public DbSet<Cirugias> Cirugias { get; set; }
         public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         public DbSet<ArchivoHistorial> ArchivosHistorial { get; set; }
+        public DbSet<ConfiguracionQuirofano> ConfiguracionQuirofano { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -63,6 +64,13 @@ namespace CACES.DAL.DBContext
                 .WithMany()
                 .HasForeignKey(p => p.IdUsuario)// Apunta a la propiedad IdUsuario
                 .IsRequired(false);
+            });
+
+            modelBuilder.Entity<ConfiguracionQuirofano>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("Id");
+                entity.Property(e => e.CupoMaximoDiario).HasColumnName("CupoMaximoDiario").IsRequired();
             });
 
             modelBuilder.Entity<Cita>(entity =>
@@ -290,8 +298,8 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
                 entity.Property(e => e.DiaSemana).HasColumnName("DiaSemana").IsRequired();
                 entity.Property(e => e.HoraInicio).HasColumnName("HoraInicio").IsRequired();
-                entity.Property(e => e.HoraFin).HasColumnName("HoraFin").IsRequired();
-                entity.Property(e => e.Activo).HasColumnName("Activo").IsRequired().HasDefaultValue(true);
+              
+                entity.Property(e => e.Activo).HasColumnName("Activo").IsRequired();
                 entity.HasOne(d => d.Medico)
                   .WithMany()
                   .HasForeignKey(d => d.Id_Medico)

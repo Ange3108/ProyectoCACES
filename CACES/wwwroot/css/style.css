@@ -6,14 +6,14 @@
     --turquoise-dark: #1AAEB0;
     --turquoise-soft: #E8FAFA;
     --background: #F7F9FB;
-    --white: var(--white)FFF;
-    --surface: var(--white)FFF;
+    --white: #FFFFFF;
+    --surface: #FFFFFF;
     --border: #E5ECF2;
     --text: #1E2A36;
     --text-muted: #6F7C8C;
     --shadow-soft: 0 10px 28px rgba(16, 58, 113, 0.08);
     --primary-blue: #103A71;
-    --text-light: var(--white)FFF;
+    --text-light: #FFFFFF;
     --glass-bg: #F7F9FB;
 }
 
@@ -306,7 +306,7 @@ body {
 }
 
 .status-pendiente {
-    background: var(--white)4cc;
+    background: #fff4cc;
 }
 
 .status-confirmada {

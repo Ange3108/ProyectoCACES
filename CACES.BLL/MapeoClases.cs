@@ -1,5 +1,6 @@
 ﻿using AutoMapper;
-using CACES.BLL.DTOs.HorariosDisponibles;
+using CACES.BLL.DTOs.Horario;
+
 using CACES.BLL.DTOs.Medico;
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Perfil;
@@ -9,6 +10,7 @@ using CACES.DAL.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
+
 
 namespace CACES.BLL
 {
@@ -100,11 +102,11 @@ namespace CACES.BLL
                 .ForMember(dest => dest.FechaDeRegistro, opt => opt.Ignore());
 
             //mapeo de los dto de procedimientos quirurgicos
-            CreateMap<Procedimiento, DTOs.Procedimientos.MostrarProcedimientosDTO>()
+            CreateMap<Procedimiento, MostrarProcedimientosDTO>()
                 .ReverseMap();
-            CreateMap<Procedimiento, DTOs.Procedimientos.EditarProcedimientosDTO>()
+            CreateMap<Procedimiento, EditarProcedimientosDTO>()
                 .ReverseMap();
-            CreateMap<Procedimiento, DTOs.Procedimientos.RegistrarProcedimientosDto>()
+            CreateMap<Procedimiento, RegistrarProcedimientosDto>()
                 .ReverseMap();
 
             // Mapeo para el Reporte PDF de Pacientes
@@ -124,14 +126,14 @@ namespace CACES.BLL
                 .ForMember(dest => dest.Estado,
                            opt => opt.MapFrom(src => src.Estado ? "Realizado" : "Pendiente"));
 
-            //mapeo de los dto de horarios disponibles para los medicos
-            CreateMap<DetalleHorarioDto, HorariosDisponibles>()
-                .ForMember(dest => dest.Id_Medico, opt => opt.Ignore());
+            //mapeo para dtos de horario
+            CreateMap<HorariosDisponibles, MostrarHorarioDTO>().ReverseMap();
 
-            CreateMap<MedicoDTO, RegistrarHorarioDto>()
-                .ForMember(dest => dest.IdMedico, opt => opt.MapFrom(src => src.IdMedico))
-                .ForMember(dest => dest.Horarios, opt => opt.Ignore());
+            CreateMap<HorariosDisponibles, EditarHorarioDTO>().ReverseMap();
+            CreateMap<HorariosDisponibles, RegistrarHorarioDTO>().ReverseMap();
+
+
         }
-        }
+    }
     }
 
