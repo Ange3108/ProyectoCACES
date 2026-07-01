@@ -20,6 +20,5 @@ namespace CACES.BLL.DTOs.Especialidad
         public bool Estado { get; set; }
         public DateTime FechaDeRegistro { get; set; }
 
-
     }
 }

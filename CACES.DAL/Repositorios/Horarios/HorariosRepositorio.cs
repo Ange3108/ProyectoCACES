@@ -51,18 +51,8 @@ namespace CACES.DAL.Repositorios.Horarios
             return await _context.HorariosDisponibles.FindAsync(idHorario);
         }
 
-        public async Task<List<HorariosDisponibles>> GetHorariosDisponiblesPorMedicoAsync(int idMedico)
-        {
-            return await _context.HorariosDisponibles.Where(h => h.Id_Medico == idMedico).ToListAsync();
-        }
-
-        public async Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana, int idExcluir = 0)
-        {
-            return await _context.HorariosDisponibles.AnyAsync(h =>
-                h.Id_Medico == idMedico &&
-                h.DiaSemana == diaSemana &&
-                h.Activo == true &&
-                h.Id_Horario != idExcluir);
+            int filasAfectadas = await _context.SaveChangesAsync(cancellationToken);
+            return filasAfectadas > 0;
         }
     }
 }
