@@ -501,95 +501,99 @@
 }
 
 <!-- ===================== SECCIONES PÚBLICAS ===================== -->
+
 <section class="mt-4">
     <h3 class="section-title mb-3">Principales especialidades</h3>
+
     <div class="row g-3">
-        <div class="col-12 col-md-6 col-xl-3">
-            <a class="card-link-wrap" href="@Url.Action("Especialidades", "Especialidad")">
-                <article class="card info-card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <i class="bi bi-bandaid-fill info-icon"></i>
-                        <h5 class="mt-2 mb-1">Traumatología</h5>
-                        <p class="text-muted mb-0">Diagnóstico y tratamiento de lesiones osteomusculares.</p>
-                    </div>
-                </article>
-            </a>
-        </div>
-        <div class="col-12 col-md-6 col-xl-3">
-            <a class="card-link-wrap" href="@Url.Action("Especialidades", "Especialidad")">
-                <article class="card info-card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <i class="bi bi-capsule info-icon"></i>
-                        <h5 class="mt-2 mb-1">Colonoscopia</h5>
-                        <p class="text-muted mb-0">Procedimiento de diagnóstico gastrointestinal.</p>
-                    </div>
-                </article>
-            </a>
-        </div>
-        <div class="col-12 col-md-6 col-xl-3">
-            <a class="card-link-wrap" href="@Url.Action("Especialidades", "Especialidad")">
-                <article class="card info-card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <i class="bi bi-person-raised-hand info-icon"></i>
-                        <h5 class="mt-2 mb-1">Fisioterapia</h5>
-                        <p class="text-muted mb-0">Rehabilitación y recuperación funcional.</p>
-                    </div>
-                </article>
-            </a>
-        </div>
-        <div class="col-12 col-md-6 col-xl-3">
-            <a class="card-link-wrap" href="@Url.Action("Especialidades", "Especialidad")">
-                <article class="card info-card h-100 border-0 shadow-sm">
-                    <div class="card-body">
-                        <i class="bi bi-lungs info-icon"></i>
-                        <h5 class="mt-2 mb-1">Terapia Respiratoria</h5>
-                        <p class="text-muted mb-0">Atención integral del sistema respiratorio.</p>
-                    </div>
-                </article>
-            </a>
-        </div>
+
+        @if (ViewBag.Especialidades != null)
+        {
+            foreach (var especialidad in ViewBag.Especialidades)
+            {
+                <div class="col-12 col-md-6 col-xl-3">
+                    <a class="card-link-wrap"
+                       asp-controller="Especialidad"
+                       asp-action="Especialidades">
+
+                        <article class="card info-card h-100 border-0 shadow-sm">
+                            <div class="card-body">
+
+                                <i class="bi bi-hospital info-icon"></i>
+
+                                <h5 class="mt-2 mb-1">
+                                    @especialidad.Nombre
+                                </h5>
+
+                                <p class="text-muted mb-0">
+                                    @especialidad.Descripcion
+                                </p>
+
+                            </div>
+                        </article>
+
+                    </a>
+                </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info rounded-3">
+                    No hay especialidades activas registradas.
+                </div>
+            </div>
+        }
+
     </div>
 </section>
 
 <section class="mt-5">
     <h3 class="section-title mb-3">Paquetes de turismo médico</h3>
+
     <div class="row g-3">
-        <div class="col-12 col-lg-4">
-            <article class="card info-card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="mb-1">Paquete Evaluación Integral</h5>
-                    <p class="text-muted mb-2">Consulta + exámenes + traslado interno</p>
-                    <span class="badge text-bg-info">3 días</span>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a href="@Url.Action("ObtenerPaquetesSoloActivos", "Paquete")" class="btn btn-cotizar px-4">Cotizar</a>
-                    </div>
+
+        @if (ViewBag.Paquetes != null)
+        {
+            foreach (var paquete in ViewBag.Paquetes)
+            {
+                <div class="col-12 col-lg-4">
+                    <article class="card info-card h-100 border-0 shadow-sm">
+                        <div class="card-body">
+
+                            <h5 class="mb-1">
+                                @paquete.Nombre
+                            </h5>
+
+                            <p class="text-muted mb-2">
+                                @paquete.Descripcion
+                            </p>
+
+                            <span class="badge text-bg-info">
+                                @paquete.Duracion
+                            </span>
+
+                            <div class="d-flex justify-content-center mt-3">
+                                <a href="@Url.Action("ObtenerPaquetesSoloActivos", "Paquete")"
+                                   class="btn btn-cotizar px-4">
+                                    Cotizar
+                                </a>
+                            </div>
+
+                        </div>
+                    </article>
                 </div>
-            </article>
-        </div>
-        <div class="col-12 col-lg-4">
-            <article class="card info-card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="mb-1">Paquete Quirúrgico Básico</h5>
-                    <p class="text-muted mb-2">Valoración prequirúrgica + cirugía + control</p>
-                    <span class="badge text-bg-info">5 días</span>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a href="@Url.Action("ObtenerPaquetesSoloActivos", "Paquete")" class="btn btn-cotizar px-4">Cotizar</a>
-                    </div>
+            }
+        }
+        else
+        {
+            <div class="col-12">
+                <div class="alert alert-info">
+                    No existen paquetes registrados.
                 </div>
-            </article>
-        </div>
-        <div class="col-12 col-lg-4">
-            <article class="card info-card h-100 border-0 shadow-sm">
-                <div class="card-body">
-                    <h5 class="mb-1">Paquete Recuperación Premium</h5>
-                    <p class="text-muted mb-2">Cirugía + rehabilitación + hospedaje asistido</p>
-                    <span class="badge text-bg-info">7 días</span>
-                    <div class="d-flex justify-content-center mt-3">
-                        <a href="@Url.Action("ObtenerPaquetesSoloActivos", "Paquete")" class="btn btn-cotizar px-4">Cotizar</a>
-                    </div>
-                </div>
-            </article>
-        </div>
+            </div>
+        }
+
     </div>
 </section>
 
