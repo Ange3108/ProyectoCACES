@@ -52,7 +52,6 @@ namespace CACES.BLL.Servicios.Usuario
 
             return (true, "Contraseña válida");
         }
-
         public async Task<respuestaErrores<MostrarUsuarioDTO>> CrearUsuarioAsync(RegistrarUsuarioDTO usuarioDto)
         {
             //Validaciones de negocio
