@@ -26,6 +26,8 @@ using Microsoft.EntityFrameworkCore;
 using CACES.BLL.Servicios.HistorialMedicos;
 using CACES.DAL.Repositorios.ArchivosHistorial;
 using CACES.BLL.Servicios.ArchivosHistorial;
+using CACES.DAL.Repositorios.Horarios;
+using CACES.BLL.Servicios.Horarios;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -51,6 +53,7 @@ builder.Services.AddScoped<IEspecialidadRepositorio, EspecialidadRepositorio>();
 builder.Services.AddScoped<IPaqueteRepositorio, PaqueteRepositorio>();
 builder.Services.AddScoped<IProcedimientosRepositorio, ProcedimientosRepositorio>();
 builder.Services.AddScoped<IArchivoHistorialRepositorio, ArchivoHistorialRepositorio>();
+builder.Services.AddScoped<IHorariosRepositorio, HorariosRepositorio>();
 
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
@@ -69,6 +72,7 @@ builder.Services.AddScoped<IPaqueteServicio, PaqueteServicio>();
 builder.Services.AddScoped<IProcedimientosServicio, ProcedimientosServicio>();
 builder.Services.AddScoped<IHistorialMedicoServicio, HistorialMedicoServicio>();
 builder.Services.AddScoped<IArchivoHistorialServicio, ArchivoHistorialServicio>();
+builder.Services.AddScoped<IHorarioServicio, HorarioServicio>();
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();

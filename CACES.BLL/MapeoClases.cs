@@ -1,13 +1,14 @@
 ﻿using AutoMapper;
-using CACES.BLL.DTOs.Usuario;
+using CACES.BLL.DTOs.HorariosDisponibles;
+using CACES.BLL.DTOs.Medico;
 using CACES.BLL.DTOs.Paciente;
+using CACES.BLL.DTOs.Perfil;
+using CACES.BLL.DTOs.Procedimientos;
+using CACES.BLL.DTOs.Usuario;
 using CACES.DAL.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CACES.BLL.DTOs.Medico;
-using CACES.BLL.DTOs.Perfil;
-using CACES.BLL.DTOs.Procedimientos;
 
 namespace CACES.BLL
 {
@@ -49,7 +50,7 @@ namespace CACES.BLL
 
             // Mapeo de los DTOs de perfil
             CreateMap<Usuario, PerfilUsuarioDTO>()
-    
+
                 .AfterMap((src, dest) =>
                 {
                     var paciente = src.Paciente;
@@ -122,6 +123,15 @@ namespace CACES.BLL
 
                 .ForMember(dest => dest.Estado,
                            opt => opt.MapFrom(src => src.Estado ? "Realizado" : "Pendiente"));
+
+            //mapeo de los dto de horarios disponibles para los medicos
+            CreateMap<DetalleHorarioDto, HorariosDisponibles>()
+                .ForMember(dest => dest.Id_Medico, opt => opt.Ignore());
+
+            CreateMap<MedicoDTO, RegistrarHorarioDto>()
+                .ForMember(dest => dest.IdMedico, opt => opt.MapFrom(src => src.IdMedico))
+                .ForMember(dest => dest.Horarios, opt => opt.Ignore());
+        }
         }
     }
-}
+
