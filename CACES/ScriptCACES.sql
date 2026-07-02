@@ -76,7 +76,6 @@ CREATE TABLE HorariosDisponibles(
     Id_Medico INT NOT NULL,
     DiaSemana INT NOT NULL, -- 0=Lunes, 6=Domingo
     HoraInicio TIME NOT NULL,
-    HoraFin TIME NOT NULL,
     Activo BIT NOT NULL,
     CONSTRAINT FK_Horarios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
 );
@@ -181,7 +180,10 @@ CREATE TABLE Noticias(
     Estado BIT NOT NULL
 );
 
-
+create table ConfiguracionQuirofano(
+    id int Primary Key Identity(1,1),
+    CupoMaximoDiario int
+);
 
 
 
@@ -275,6 +277,9 @@ GO
 ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_Usuarios]
 GO
 
+create table ConfiguracionQuirofano(
+    id int 
+)
 
 
 
@@ -465,3 +470,10 @@ UPDATE Usuarios
 SET PasswordHash = 'vk9oxOJiD5aPcsdU83YBvVgNVjLrvgij3NO2UQAh88I=',
     Estado = 1
 WHERE CorreoElectronico = 'juan.admin@caces.com';
+
+--Cupo del quirofano
+
+insert into ConfiguracionQuirofano(CupoMaximoDiario)
+values 
+( 5)
+GO

@@ -1,13 +1,16 @@
 ﻿using AutoMapper;
-using CACES.BLL.DTOs.Usuario;
+using CACES.BLL.DTOs.Horario;
+
+using CACES.BLL.DTOs.Medico;
 using CACES.BLL.DTOs.Paciente;
+using CACES.BLL.DTOs.Perfil;
+using CACES.BLL.DTOs.Procedimientos;
+using CACES.BLL.DTOs.Usuario;
 using CACES.DAL.Entidades;
 using System;
 using System.Collections.Generic;
 using System.Text;
-using CACES.BLL.DTOs.Medico;
-using CACES.BLL.DTOs.Perfil;
-using CACES.BLL.DTOs.Procedimientos;
+
 
 namespace CACES.BLL
 {
@@ -49,7 +52,7 @@ namespace CACES.BLL
 
             // Mapeo de los DTOs de perfil
             CreateMap<Usuario, PerfilUsuarioDTO>()
-    
+
                 .AfterMap((src, dest) =>
                 {
                     var paciente = src.Paciente;
@@ -99,11 +102,11 @@ namespace CACES.BLL
                 .ForMember(dest => dest.FechaDeRegistro, opt => opt.Ignore());
 
             //mapeo de los dto de procedimientos quirurgicos
-            CreateMap<Procedimiento, DTOs.Procedimientos.MostrarProcedimientosDTO>()
+            CreateMap<Procedimiento, MostrarProcedimientosDTO>()
                 .ReverseMap();
-            CreateMap<Procedimiento, DTOs.Procedimientos.EditarProcedimientosDTO>()
+            CreateMap<Procedimiento, EditarProcedimientosDTO>()
                 .ReverseMap();
-            CreateMap<Procedimiento, DTOs.Procedimientos.RegistrarProcedimientosDto>()
+            CreateMap<Procedimiento, RegistrarProcedimientosDto>()
                 .ReverseMap();
 
             // Mapeo para el Reporte PDF de Pacientes
@@ -122,6 +125,15 @@ namespace CACES.BLL
 
                 .ForMember(dest => dest.Estado,
                            opt => opt.MapFrom(src => src.Estado ? "Realizado" : "Pendiente"));
+
+            //mapeo para dtos de horario
+            CreateMap<HorariosDisponibles, MostrarHorarioDTO>().ReverseMap();
+
+            CreateMap<HorariosDisponibles, EditarHorarioDTO>().ReverseMap();
+            CreateMap<HorariosDisponibles, RegistrarHorarioDTO>().ReverseMap();
+
+
         }
     }
-}
+    }
+
