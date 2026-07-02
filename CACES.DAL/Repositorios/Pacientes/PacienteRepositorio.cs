@@ -47,7 +47,7 @@ namespace CACES.DAL.Repositorios.Pacientes
 
             //*Mover esto a la logiva de paciente, no es responsabilidad del repositorio de usuario traer la receta, ademas de que esta consulta es muy pesada y puede afectar el rendimientoreturn await _context.Usuarios
 
-            {
+            
                 // 1. Una sola consulta eficiente usando proyecciones y sin rastreo de memoria
                 var datos = await _context.Usuarios
                     .AsNoTracking() // ◄ Evita que EF guarde esto en caché de seguimiento (mejora radical de velocidad)
@@ -91,7 +91,7 @@ namespace CACES.DAL.Repositorios.Pacientes
 
                 return usuario;
 
-            }
+            
         }
         public async Task<Paciente> GetPacienteByIdAsync(int id)
         {
