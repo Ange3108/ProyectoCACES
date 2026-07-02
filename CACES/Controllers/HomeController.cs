@@ -43,7 +43,14 @@ namespace CACES.Controllers
                 .Where(m => m.Usuario.Estado == true)
                 .CountAsync();
 
+            ViewBag.Noticias = await _context.Noticias
+            .Where(n => n.Estado == true)
+            .OrderByDescending(n => n.FechaDePublicacion)
+            .Take(5)
+            .ToListAsync();
+
             return View();
+
         }
 
         public IActionResult Privacy()

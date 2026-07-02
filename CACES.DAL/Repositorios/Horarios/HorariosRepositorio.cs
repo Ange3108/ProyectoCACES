@@ -20,10 +20,10 @@ namespace CACES.DAL.Repositorios.Horarios
             if (horario == null) return false;
             var horarioExistente = await _context.HorariosDisponibles.FindAsync(horario.Id_Horario);
             if (horarioExistente == null) return false;
-
+            
             horarioExistente.DiaSemana = horario.DiaSemana;
             horarioExistente.HoraInicio = horario.HoraInicio;
-
+ 
             horarioExistente.Activo = horario.Activo;
             horarioExistente.Id_Medico = horario.Id_Medico;
 
@@ -51,8 +51,18 @@ namespace CACES.DAL.Repositorios.Horarios
             return await _context.HorariosDisponibles.FindAsync(idHorario);
         }
 
-            int filasAfectadas = await _context.SaveChangesAsync(cancellationToken);
-            return filasAfectadas > 0;
+        public async Task<List<HorariosDisponibles>> GetHorariosDisponiblesPorMedicoAsync(int idMedico)
+        {
+            return await _context.HorariosDisponibles.Where(h => h.Id_Medico == idMedico).ToListAsync();
+        }
+
+        public async Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana, int idExcluir = 0)
+        {
+            return await _context.HorariosDisponibles.AnyAsync(h =>
+                h.Id_Medico == idMedico &&
+                h.DiaSemana == diaSemana &&
+                h.Activo == true &&
+                h.Id_Horario != idExcluir);
         }
     }
 }

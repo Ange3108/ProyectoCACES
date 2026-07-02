@@ -28,7 +28,9 @@ namespace CACES.DAL.DBContext
         public DbSet<Cirugias> Cirugias { get; set; }
         public DbSet<UsuarioRoles> UsuarioRoles { get; set; }
         public DbSet<ArchivoHistorial> ArchivosHistorial { get; set; }
+        public DbSet<Noticia> Noticias { get; set; }
         public DbSet<ConfiguracionQuirofano> ConfiguracionQuirofano { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

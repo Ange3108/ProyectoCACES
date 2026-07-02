@@ -321,58 +321,87 @@
 <section class="noticias-section">
     <div class="d-flex justify-content-between align-items-center mb-3">
         <h3 class="section-title mb-0">Noticias recientes</h3>
+
         @if (User.IsInRole("Administrador"))
         {
-            <button class="btn btn-sm" style="background:#049DD9;color:#fff;border-radius:8px;font-weight:600;font-size:0.8rem;"
-                    data-bs-toggle="modal" data-bs-target="#modalSubirNoticia">
+            <button class="btn btn-sm"
+                    style="background:#049DD9;color:#fff;border-radius:8px;font-weight:600;font-size:0.8rem;"
+                    data-bs-toggle="modal"
+                    data-bs-target="#modalSubirNoticia">
                 <i class="bi bi-plus-circle me-1"></i>Subir noticia
             </button>
         }
     </div>
 
     <div id="contenedorCarrusel">
-        <!-- Se carga dinámicamente; fallback estático mientras tanto -->
-        <div id="carouselNoticia" class="carousel slide carousel-caces" data-bs-ride="carousel" data-bs-interval="4500">
-            <div class="carousel-indicators">
-                <button type="button" data-bs-target="#carouselNoticia" data-bs-slide-to="0" class="active"></button>
-                <button type="button" data-bs-target="#carouselNoticia" data-bs-slide-to="1"></button>
-                <button type="button" data-bs-target="#carouselNoticia" data-bs-slide-to="2"></button>
-            </div>
-            <div class="carousel-inner" id="carouselInner">
-                <div class="carousel-item active">
-                    <img src="~/img/noticia1.png" class="d-block w-100" alt="Noticia"
-                         onerror="this.parentElement.classList.add('no-image'); this.style.display='none';">
-                    <div class="carousel-caption-custom">
-                        <span class="noticia-badge">Destacado</span>
-                        <h5>Bienvenido al Sistema CACES</h5>
-                        <p>Centro Ambulatorio de Cirugía Escalón — Atención médica de calidad.</p>
-                    </div>
+        <div id="carouselNoticia"
+             class="carousel slide carousel-caces"
+             data-bs-ride="carousel"
+             data-bs-interval="4500">
+
+            @if (ViewBag.Noticias != null && ViewBag.Noticias.Count > 0)
+            {
+                <div class="carousel-indicators">
+                    @for (int i = 0; i < ViewBag.Noticias.Count; i++)
+                    {
+                        <button type="button"
+                                data-bs-target="#carouselNoticia"
+                                data-bs-slide-to="@i"
+                                class="@(i == 0 ? "active" : "")">
+                        </button>
+                    }
                 </div>
-                <div class="carousel-item">
-                    <img src="~/img/pasilloCaces.jpg" class="d-block w-100" alt="Instalaciones"
-                         onerror="this.parentElement.classList.add('no-image'); this.style.display='none';">
-                    <div class="carousel-caption-custom">
-                        <span class="noticia-badge">Instalaciones</span>
-                        <h5>Modernas instalaciones a su servicio</h5>
-                        <p>Contamos con tecnología de punta para su atención y recuperación.</p>
-                    </div>
+
+                <div class="carousel-inner" id="carouselInner">
+
+                    @for (int i = 0; i < ViewBag.Noticias.Count; i++)
+                    {
+                        var noticia = ViewBag.Noticias[i];
+
+                        <div class="carousel-item @(i == 0 ? "active" : "")">
+
+                            <img src="~/img/@noticia.Imagen"
+                                 class="d-block w-100"
+                                 alt="@noticia.Titulo"
+                                 onerror="this.parentElement.classList.add('no-image'); this.style.display='none';" />
+
+                            <div class="carousel-caption-custom">
+                                <span class="noticia-badge">
+                                    Noticia
+                                </span>
+
+                                <h5>@noticia.Titulo</h5>
+
+                                <p>@noticia.Contenido</p>
+                            </div>
+
+                        </div>
+                    }
+
                 </div>
-                <div class="carousel-item">
-                    <img src="~/img/imagen2.jpg" class="d-block w-100" alt="Especialistas"
-                         onerror="this.parentElement.classList.add('no-image'); this.style.display='none';">
-                    <div class="carousel-caption-custom">
-                        <span class="noticia-badge">Equipo médico</span>
-                        <h5>Especialistas comprometidos con su salud</h5>
-                        <p>Nuestro equipo multidisciplinario está listo para atenderle.</p>
-                    </div>
+
+                <button class="carousel-control-prev"
+                        type="button"
+                        data-bs-target="#carouselNoticia"
+                        data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon"></span>
+                </button>
+
+                <button class="carousel-control-next"
+                        type="button"
+                        data-bs-target="#carouselNoticia"
+                        data-bs-slide="next">
+                    <span class="carousel-control-next-icon"></span>
+                </button>
+            }
+            else
+            {
+                <div class="no-noticias-msg">
+                    <i class="bi bi-info-circle me-2"></i>
+                    No hay noticias recientes registradas.
                 </div>
-            </div>
-            <button class="carousel-control-prev" type="button" data-bs-target="#carouselNoticia" data-bs-slide="prev">
-                <span class="carousel-control-prev-icon"></span>
-            </button>
-            <button class="carousel-control-next" type="button" data-bs-target="#carouselNoticia" data-bs-slide="next">
-                <span class="carousel-control-next-icon"></span>
-            </button>
+            }
+
         </div>
     </div>
 </section>
