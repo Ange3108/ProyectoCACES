@@ -219,7 +219,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Duracion).HasColumnName("Duracion").IsRequired().HasMaxLength(50);
                 entity.Property(e => e.Precio).HasColumnName("Precio").IsRequired();
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
-                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().ValueGeneratedNever();
 
             });
             //configuración de la entidad Procedimiento
