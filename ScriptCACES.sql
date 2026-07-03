@@ -518,3 +518,7 @@ VALUES
 (3, 3, '12:00', '16:00', 1),
 (3, 4, '07:00', '11:00', 1),
 (3, 5, '12:00', '16:00', 1);
+
+UPDATE Usuarios
+SET Foto = 'carlos.jpg'
+WHERE Id_Usuario = 9;
