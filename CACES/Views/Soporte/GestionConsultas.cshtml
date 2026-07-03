@@ -1,0 +1,105 @@
+﻿@model List<CACES.DAL.Entidades.Soporte>
+
+@{
+    ViewData["Title"] = "Gestión de Soporte";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header text-white py-4"
+             style="background:#0B2E59;">
+
+            <h3 class="mb-2 fw-bold">
+                <i class="bi bi-chat-left-text-fill me-2"></i>
+                Solicitudes de Soporte
+            </h3>
+
+            <p class="mb-0 text-light">
+                Consultas enviadas por los pacientes.
+            </p>
+
+        </div>
+
+        <div class="card-body p-4" style="background:#F8FBFD;">
+
+            @if (Model.Any())
+            {
+                <div class="table-responsive">
+
+                    <table class="table table-hover align-middle">
+
+                        <thead style="background:#EAF2F8;">
+
+                            <tr>
+
+                                <th class="text-dark fw-semibold">Paciente</th>
+
+                                <th class="text-dark fw-semibold">Correo</th>
+
+                                <th class="text-dark fw-semibold">Asunto</th>
+
+                                <th class="text-dark fw-semibold">Fecha</th>
+
+                                <th class="text-dark fw-semibold">Mensaje</th>
+
+                            </tr>
+
+                        </thead>
+
+                        <tbody>
+
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+
+                                    <td class="fw-semibold">
+                                        @item.Usuario.Nombres @item.Usuario.PrimerApellido
+                                    </td>
+
+                                    <td>
+                                        @item.Usuario.CorreoElectronico
+                                    </td>
+
+                                    <td>
+                                        <span class="badge text-white"
+                                              style="background:#1AA6A6;">
+                                            @item.Asunto
+                                        </span>
+                                    </td>
+
+                                    <td>
+                                        @item.FechaConsulta.ToString("dd/MM/yyyy HH:mm")
+                                    </td>
+
+                                    <td style="max-width:400px;">
+                                        @item.Mensaje
+                                    </td>
+
+                                </tr>
+                            }
+
+                        </tbody>
+
+                    </table>
+
+                </div>
+            }
+            else
+            {
+                <div class="alert border-0 text-white"
+                     style="background:#1AA6A6;">
+
+                    <i class="bi bi-info-circle-fill me-2"></i>
+
+                    No hay consultas registradas por los pacientes.
+
+                </div>
+            }
+
+        </div>
+
+    </div>
+
+</div>

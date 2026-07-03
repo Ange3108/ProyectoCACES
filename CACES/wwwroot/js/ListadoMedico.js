@@ -59,18 +59,27 @@
                         data: null,
                         orderable: false,
                         render: function (data, type, row) {
-                            return `
-                                <a href="/Medico/EditarMedico?id=${row.idMedico}"
-                                   class="btn btn-sm btn-warning"
-                                   title="Editar médico">
-                                    <i class="bi bi-pencil"></i>
-                                </a>
+
+                            let botones = `
+                            <a href="/Medico/EditarMedico?id=${row.idMedico}"
+                               class="btn btn-sm btn-warning"
+                               title="Editar médico">
+                                <i class="bi bi-pencil"></i>
+                            </a>
+                        `;
+
+                                            if (row.usuario?.estado === true) {
+                                                botones += `
                                 <button type="button"
                                         class="btn btn-sm btn-danger btnDesactivar"
                                         data-id="${row.idMedico}"
                                         title="Desactivar médico">
                                     <i class="bi bi-person-dash"></i>
-                                </button>`;
+                                </button>
+                            `;
+                            }
+
+                            return botones;
                         }
                     }
                 ],

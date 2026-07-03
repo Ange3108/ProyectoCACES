@@ -30,7 +30,7 @@ namespace CACES.DAL.DBContext
         public DbSet<ArchivoHistorial> ArchivosHistorial { get; set; }
         public DbSet<Noticia> Noticias { get; set; }
         public DbSet<ConfiguracionQuirofano> ConfiguracionQuirofano { get; set; }
-
+        public DbSet<Soporte> Soportes { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

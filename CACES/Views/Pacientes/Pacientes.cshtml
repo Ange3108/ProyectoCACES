@@ -5,66 +5,82 @@
 }
 
 <div class="container py-5">
-    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+    <div class="card shadow border-0 rounded-4 overflow-hidden">
 
-        <div class="card-header banner-header p-4">
+        <div class="card-header text-white p-4"
+             style="background:#0B2E59;">
+
             <div class="d-flex justify-content-between align-items-center">
 
                 <div>
                     <h3 class="mb-1 fw-bold">
                         <i class="bi bi-person-badge-fill me-2"></i>Gestión de Pacientes
                     </h3>
-                    <p class="mb-0 opacity-75">
+
+                    <p class="mb-0 text-light">
                         Consulta, registro y desactivación de pacientes del sistema.
                     </p>
                 </div>
 
                 <a asp-action="RegistrarPaciente"
                    asp-controller="Paciente"
-                   class="btn btn-light fw-semibold">
+                   class="btn fw-semibold text-white"
+                   style="background:#1AA6A6;border:none;">
+
                     + Registrar Paciente
+
                 </a>
 
             </div>
+
         </div>
 
-        <div class="card-body p-4">
+        <div class="card-body p-4" style="background:#F8FBFD;">
 
             @if (TempData["Mensaje"] != null)
             {
                 <div class="alert alert-success rounded-3">
-                    <i class="bi bi-check-circle-fill me-2"></i>@TempData["Mensaje"]
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    @TempData["Mensaje"]
                 </div>
             }
 
             @if (TempData["Error"] != null)
             {
                 <div class="alert alert-danger rounded-3">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>@TempData["Error"]
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    @TempData["Error"]
                 </div>
             }
 
             @if (Model != null && Model.Any())
             {
                 <div class="table-responsive">
+
                     <table class="table table-hover align-middle">
 
-                        <thead>
+                        <thead style="background:#EAF4F8;">
+
                             <tr>
-                                <th>Nombre</th>
-                                <th>DUI</th>
-                                <th>Correo</th>
-                                <th>Teléfono</th>
-                                <th>Dirección</th>
-                                <th>Estado</th>
-                                <th style="width:220px;">Acciones</th>
+
+                                <th class="fw-semibold">Nombre</th>
+                                <th class="fw-semibold">DUI</th>
+                                <th class="fw-semibold">Correo</th>
+                                <th class="fw-semibold">Teléfono</th>
+                                <th class="fw-semibold">Dirección</th>
+                                <th class="fw-semibold">Estado</th>
+                                <th class="fw-semibold" style="width:220px;">Acciones</th>
+
                             </tr>
+
                         </thead>
 
                         <tbody>
+
                             @foreach (var paciente in Model)
                             {
                                 <tr>
+
                                     <td>
                                         @paciente.Usuario.Nombres
                                         @paciente.Usuario.PrimerApellido
@@ -82,37 +98,49 @@
                                     <td>
 
                                         @if (paciente.Usuario.Estado)
-
                                         {
-                                            <span class="badge bg-success">Activo</span>
+                                            <span class="badge"
+                                                  style="background:#2E8B57;">
+                                                Activo
+                                            </span>
                                         }
                                         else
                                         {
-                                            <span class="badge bg-secondary">Desactivado</span>
+                                            <span class="badge"
+                                                  style="background:#6B7280;">
+                                                Desactivado
+                                            </span>
                                         }
+
                                     </td>
 
                                     <td>
+
                                         <div class="d-flex gap-2">
+
                                             <a asp-controller="HistorialMedico"
                                                asp-action="Detalle"
                                                asp-route-id="@paciente.IdHistorial"
-                                               class="btn btn-info btn-sm text-white"
+                                               class="btn btn-sm text-white"
+                                               style="background:#0B2E59;"
                                                title="Ver historial médico">
+
                                                 <i class="bi bi-eye-fill"></i>
+
                                             </a>
 
                                             <a asp-controller="Perfil"
                                                asp-action="ActualizarPerfil"
                                                asp-route-id="@paciente.IdPaciente"
-                                               class="btn btn-warning btn-sm text-white"
+                                               class="btn btn-sm text-white"
+                                               style="background:#1AA6A6;"
                                                title="Editar paciente">
+
                                                 <i class="bi bi-pencil"></i>
+
                                             </a>
 
-
                                             @if (User.IsInRole("Administrador") && paciente.Usuario.Estado)
-                                        
                                             {
                                                 <form asp-controller="Paciente"
                                                       asp-action="DesactivarPaciente"
@@ -120,35 +148,45 @@
                                                       class="d-inline">
 
                                                     <input type="hidden"
-                                                           name="id"        
+                                                           name="id"
                                                            value="@paciente.IdPaciente" />
 
                                                     <button type="submit"
                                                             class="btn btn-danger btn-sm"
                                                             title="Desactivar paciente"
                                                             onclick="return confirm('¿Desea desactivar este paciente?');">
+
                                                         <i class="bi bi-person-x-fill"></i>
+
                                                     </button>
 
                                                 </form>
                                             }
 
                                         </div>
+
                                     </td>
+
                                 </tr>
                             }
+
                         </tbody>
 
                     </table>
+
                 </div>
             }
             else
             {
-                <div class="alert alert-info rounded-3">
+                <div class="alert alert-info rounded-3"
+                     style="background:#EAF8F8;border-color:#1AA6A6;color:#0B2E59;">
+
                     No hay pacientes registrados.
+
                 </div>
             }
 
         </div>
+
     </div>
 </div>

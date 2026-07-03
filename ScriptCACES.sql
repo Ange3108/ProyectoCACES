@@ -487,3 +487,34 @@ WHERE Id_Noticia = 2;
 UPDATE Noticias
 SET Imagen = 'noticia3.png'
 WHERE Id_Noticia = 3;
+
+CREATE TABLE Soportes
+(
+    Id_Soporte INT IDENTITY(1,1) PRIMARY KEY,
+    Id_Usuario INT NOT NULL,
+    Asunto NVARCHAR(150) NOT NULL,
+    Mensaje NVARCHAR(1000) NOT NULL,
+    FechaConsulta DATETIME NOT NULL DEFAULT GETDATE(),
+    Estado BIT NOT NULL DEFAULT 1,
+
+    CONSTRAINT FK_Soportes_Usuarios
+        FOREIGN KEY (Id_Usuario)
+        REFERENCES Usuarios(Id_Usuario)
+);
+
+INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Activo)
+VALUES
+(1, 1, '13:00', '17:00', 1),
+(1, 2, '08:00', '12:00', 1),
+(1, 3, '13:00', '17:00', 1),
+(1, 4, '08:00', '12:00', 1),
+(1, 5, '13:00', '17:00', 1),
+
+(2, 2, '14:00', '18:00', 1),
+(2, 3, '09:00', '13:00', 1),
+(2, 4, '14:00', '18:00', 1),
+(2, 5, '09:00', '13:00', 1),
+
+(3, 3, '12:00', '16:00', 1),
+(3, 4, '07:00', '11:00', 1),
+(3, 5, '12:00', '16:00', 1);

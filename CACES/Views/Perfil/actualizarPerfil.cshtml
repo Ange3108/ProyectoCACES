@@ -6,100 +6,175 @@
 }
 
 <main class="container py-5">
-    <h1>Actualizar Perfil del Usuario</h1>
 
-    <form asp-action="ActualizarPerfil" asp-controller="Perfil" method="post" class="card border-0 shadow-sm p-4">
+    <h1 class="fw-bold mb-4" style="color:#0B2E59;">
+        Actualizar Perfil del Usuario
+    </h1>
 
-        <div asp-validation-summary="ModelOnly" class="alert alert-danger" role="alert"></div>
+    <form asp-action="ActualizarPerfil"
+          asp-controller="Perfil"
+          method="post"
+          class="card border-0 shadow p-4"
+          style="background:#F8FBFD;">
+
+        <div asp-validation-summary="ModelOnly"
+             class="alert alert-danger"
+             role="alert"></div>
 
         <input type="hidden" asp-for="IdUsuario" />
 
         <section class="text-center mb-5">
-            <h2 class="mt-3">@Model.Nombres @Model.PrimerApellido</h2>
-            <p class="text-muted">Paciente</p>
+
+            <h2 class="mt-3 fw-bold" style="color:#0B2E59;">
+                @Model.Nombres @Model.PrimerApellido
+            </h2>
+
+            <p class="text-muted">
+                Paciente
+            </p>
+
         </section>
 
         <section class="mb-5">
-            <h3 class="mb-3"><i class="bi bi-person-fill" style="color: #72CEF2;"></i> Información Personal</h3>
+
+            <h3 class="mb-3 fw-bold" style="color:#0B2E59;">
+                <i class="bi bi-person-fill"
+                   style="color:#1AA6A6;"></i>
+                Información Personal
+            </h3>
 
             <div class="row">
+
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Nombres" class="form-label">Nombre</label>
-                    <input type="text" asp-for="Nombres" class="form-control">
+                    <label asp-for="Nombres" class="form-label fw-semibold">Nombre</label>
+                    <input type="text"
+                           asp-for="Nombres"
+                           class="form-control"
+                           style="border-color:#D7E3EC;">
                     <span asp-validation-for="Nombres" class="text-danger"></span>
                 </div>
+
                 <div class="col-md-6 mb-3">
-                    <label asp-for="PrimerApellido" class="form-label">Primer Apellido</label>
-                    <input type="text" asp-for="PrimerApellido" class="form-control">
+                    <label asp-for="PrimerApellido" class="form-label fw-semibold">Primer Apellido</label>
+                    <input type="text"
+                           asp-for="PrimerApellido"
+                           class="form-control"
+                           style="border-color:#D7E3EC;">
                     <span asp-validation-for="PrimerApellido" class="text-danger"></span>
                 </div>
+
             </div>
 
             <div class="row">
+
                 <div class="col-md-6 mb-3">
-                    <label asp-for="SegundoApellido" class="form-label">Segundo Apellido</label>
-                    <input type="text" asp-for="SegundoApellido" class="form-control">
+                    <label asp-for="SegundoApellido" class="form-label fw-semibold">Segundo Apellido</label>
+                    <input type="text"
+                           asp-for="SegundoApellido"
+                           class="form-control"
+                           style="border-color:#D7E3EC;">
                     <span asp-validation-for="SegundoApellido" class="text-danger"></span>
                 </div>
+
                 <div class="col-md-6 mb-3">
-                    <label asp-for="Telefono" class="form-label">Teléfono</label>
-                    <input type="text" asp-for="Telefono" class="form-control">
+                    <label asp-for="Telefono" class="form-label fw-semibold">Teléfono</label>
+                    <input type="text"
+                           asp-for="Telefono"
+                           class="form-control"
+                           style="border-color:#D7E3EC;">
                     <span asp-validation-for="Telefono" class="text-danger"></span>
                 </div>
+
             </div>
 
             <div class="row">
+
                 <div class="col-md-6 mb-3">
-                    <label asp-for="CorreoElectronico" class="form-label">Correo Electrónico</label>
-                    <input type="email" asp-for="CorreoElectronico" class="form-control">
+                    <label asp-for="CorreoElectronico" class="form-label fw-semibold">Correo Electrónico</label>
+                    <input type="email"
+                           asp-for="CorreoElectronico"
+                           class="form-control"
+                           style="border-color:#D7E3EC;">
                     <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
                 </div>
+
                 <div class="col-md-6 mb-3">
-                    <label asp-for="DUI" class="form-label">Documento Único de Identidad (DUI)</label>
-                    <input type="text" asp-for="DUI" class="form-control">
+                    <label asp-for="DUI" class="form-label fw-semibold">Documento Único de Identidad (DUI)</label>
+                    <input type="text"
+                           asp-for="DUI"
+                           class="form-control"
+                           style="border-color:#D7E3EC;">
                     <span asp-validation-for="DUI" class="text-danger"></span>
                 </div>
+
             </div>
+
         </section>
 
-
         <section class="mb-5">
-            <h3 class="mb-3"><i class="bi bi-lock-fill" style="color: #72CEF2;"></i> Seguridad</h3>
+
+            <h3 class="mb-3 fw-bold" style="color:#0B2E59;">
+                <i class="bi bi-lock-fill"
+                   style="color:#1AA6A6;"></i>
+                Seguridad
+            </h3>
 
             <div class="row">
+
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Nueva Contraseña</label>
-                    <input type="password" class="form-control" placeholder="Dejar en blanco para mantener actual">
+                    <label class="form-label fw-semibold">Nueva Contraseña</label>
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Dejar en blanco para mantener actual"
+                           style="border-color:#D7E3EC;">
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label class="form-label">Confirmar Nueva Contraseña</label>
-                    <input type="password" class="form-control" placeholder="Dejar en blanco para mantener actual">
+                    <label class="form-label fw-semibold">Confirmar Nueva Contraseña</label>
+                    <input type="password"
+                           class="form-control"
+                           placeholder="Dejar en blanco para mantener actual"
+                           style="border-color:#D7E3EC;">
                 </div>
+
             </div>
 
             <div class="form-check">
-                <input class="form-check-input" type="checkbox" id="2fa">
-                <label class="form-check-label" for="2fa">Activar autenticación en dos pasos (2FA)</label>
+                <input class="form-check-input"
+                       type="checkbox"
+                       id="2fa">
+                <label class="form-check-label" for="2fa">
+                    Activar autenticación en dos pasos (2FA)
+                </label>
             </div>
+
         </section>
 
         <div class="row g-2">
+
             <div class="col-md-6">
-                <button type="submit" class="btn btn-warning w-100 fw-semibold">
-                    <i class="bi bi-save"></i> Guardar cambios
+                <button type="submit"
+                        class="btn w-100 fw-semibold text-white"
+                        style="background:#1AA6A6;">
+                    <i class="bi bi-save"></i>
+                    Guardar cambios
                 </button>
             </div>
+
             <div class="col-md-6">
-                <a asp-action="VerPerfil" asp-controller="Perfil" class="btn btn-secondary w-100 fw-semibold">
+                <a asp-action="VerPerfil"
+                   asp-controller="Perfil"
+                   class="btn w-100 fw-semibold text-white"
+                   style="background:#6B7280;">
                     Cancelar
                 </a>
             </div>
+
         </div>
 
     </form>
 </main>
 
 @section Scripts {
-<partial name="_ValidationScriptsPartial" />
+    <partial name="_ValidationScriptsPartial" />
 }

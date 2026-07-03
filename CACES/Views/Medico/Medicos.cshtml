@@ -3,36 +3,43 @@
 }
 
 <div class="container py-5">
-    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+    <div class="card shadow border-0 rounded-4 overflow-hidden">
 
-        <div class="card-header banner-header p-4">
+        <div class="card-header text-white p-4"
+             style="background:#0B2E59;">
+
             <div class="d-flex justify-content-between align-items-center">
                 <div>
                     <h3 class="mb-1 fw-bold">
                         <i class="bi bi-person-badge-fill me-2"></i>Gestión de Médicos
                     </h3>
-                    <p class="mb-0 opacity-75">
+                    <p class="mb-0 text-light">
                         Consulte y administre la información de los médicos del sistema.
                     </p>
                 </div>
-                <a asp-action="RegistrarEspecialista" asp-controller="Medico" class="btn btn-light fw-semibold">
+
+                <a asp-action="RegistrarEspecialista"
+                   asp-controller="Medico"
+                   class="btn fw-semibold text-white"
+                   style="background:#1AA6A6;border:none;">
                     + Registrar Médico
                 </a>
             </div>
         </div>
 
-        <div class="card-body p-4">
+        <div class="card-body p-4"
+             style="background:#F8FBFD;">
 
             <div class="table-responsive">
                 <table id="tbMedicos" class="table table-hover align-middle mb-0">
-                    <thead>
+                    <thead style="background:#EAF4F8;color:#0B2E59;">
                         <tr>
                             <th>Médico</th>
                             <th>Especialidad</th>
                             <th>Experiencia</th>
                             <th>Certificaciones</th>
                             <th>Estado</th>
-                            <th style="width: 120px;">Acciones</th>
+                            <th style="width:120px;">Acciones</th>
                         </tr>
                     </thead>
                 </table>
@@ -48,7 +55,3 @@
 @section Scripts {
     <script src="~/js/ListadoMedico.js" asp-append-version="true"></script>
 }
-    
-
-
-        

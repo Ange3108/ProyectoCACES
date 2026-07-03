@@ -34,8 +34,8 @@ using CACES.BLL.Servicios.HistorialMedicos;
 using CACES.DAL.Repositorios.ArchivosHistorial;
 using CACES.BLL.Servicios.ArchivosHistorial;
 using CACES.DAL.Repositorios.Horarios;
-
-
+using CACES.BLL.Servicios.Soportes;
+using CACES.DAL.Repositorios.Soportes;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -82,6 +82,8 @@ builder.Services.AddScoped<IHistorialMedicoServicio, HistorialMedicoServicio>();
 builder.Services.AddScoped<IArchivoHistorialServicio, ArchivoHistorialServicio>();
 builder.Services.AddScoped<IQuirofanoServicio, QuirofanoServicio>();
 builder.Services.AddScoped<IHorarioServicio, HorarioServicio>();
+builder.Services.AddScoped<ISoporteRepositorio, SoporteRepositorio>();
+builder.Services.AddScoped<ISoporteServicio, SoporteServicio>();
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();

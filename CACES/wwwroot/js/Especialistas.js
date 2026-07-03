@@ -5,7 +5,22 @@
         if (!foto || typeof foto !== 'string' || foto.trim() === '') {
             return '/img/default.jpg';
         }
-        return foto.trim();
+
+        foto = foto.trim();
+
+        if (foto.startsWith('/')) {
+            return foto;
+        }
+
+        if (foto.startsWith('http')) {
+            return foto;
+        }
+
+        if (foto.startsWith('img/') || foto.startsWith('uploads/')) {
+            return '/' + foto;
+        }
+
+        return '/img/' + foto;
     }
 
     const Especialistas = {

@@ -9,14 +9,14 @@
     <div class="row justify-content-center">
         <div class="col-md-5">
 
-            <div class="card shadow">
-                <div class="card-body p-4">
+            <div class="card shadow border-0 rounded-4">
+                <div class="card-body p-4" style="background:#F8FBFD;">
 
-                    <h3 class="text-center mb-4">Iniciar Sesión</h3>
+                    <h3 class="text-center mb-4 fw-bold" style="color:#0B2E59;">
+                        Iniciar Sesión
+                    </h3>
 
-                        <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
-
-
+                    <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
                     @if (ViewBag.Error != null)
                     {
@@ -28,23 +28,38 @@
                     <form asp-controller="Auth" asp-action="Login" method="post">
 
                         <div class="mb-3">
-                            <label class="form-label">Correo electrónico</label>
-                            <input asp-for="CorreoElectronico" class="form-control" placeholder="correo@gmail.com" />
+                            <label class="form-label fw-semibold" style="color:#0B2E59;">
+                                Correo electrónico
+                            </label>
+                            <input asp-for="CorreoElectronico"
+                                   class="form-control"
+                                   style="border-color:#D7E3EC;"
+                                   placeholder="correo@gmail.com" />
                             <span asp-validation-for="CorreoElectronico" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <input asp-for="Password" type="password" class="form-control" placeholder="Ingrese su contraseña" />
+                            <label class="form-label fw-semibold" style="color:#0B2E59;">
+                                Contraseña
+                            </label>
+                            <input asp-for="Password"
+                                   type="password"
+                                   class="form-control"
+                                   style="border-color:#D7E3EC;"
+                                   placeholder="Ingrese su contraseña" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
 
-                        <button type="submit" class="btn btn-primary w-100">
+                        <button type="submit"
+                                class="btn w-100 text-white fw-semibold"
+                                style="background:#1AA6A6;border:none;">
                             Iniciar Sesión
                         </button>
 
                         <div class="text-center mt-3">
-                            <a asp-controller="Usuario" asp-action="RegistroUsuario">
+                            <a asp-controller="Usuario"
+                               asp-action="RegistroUsuario"
+                               style="color:#0B2E59;font-weight:600;text-decoration:none;">
                                 ¿No tiene cuenta? Regístrese aquí
                             </a>
                         </div>

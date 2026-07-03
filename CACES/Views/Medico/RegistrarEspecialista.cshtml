@@ -11,7 +11,7 @@
 
         <div class="top-action mb-3">
             <a class="btn text-white px-4 py-2"
-               style="background:#20C4D8;border:none;"
+               style="background:#1AA6A6;border:none;"
                asp-controller="Medico"
                asp-action="Medicos">
                 <i class="bi bi-arrow-left me-2"></i>
@@ -19,23 +19,24 @@
             </a>
         </div>
 
-        <div class="card border-0 shadow-lg rounded-4">
+        <div class="card border-0 shadow rounded-4">
 
             <div class="card-header border-0 rounded-top-4 py-4"
-                 style="background:#163B73;">
+                 style="background:#0B2E59;">
 
                 <h2 class="text-white fw-bold mb-1">
                     <i class="bi bi-person-plus-fill me-2"></i>
                     Registrar Especialista
                 </h2>
 
-                <p class="text-white-50 mb-0">
+                <p class="text-light mb-0">
                     Agregue un nuevo profesional al equipo médico de CACES
                 </p>
 
             </div>
 
-            <div class="card-body p-4 p-md-5">
+            <div class="card-body p-4 p-md-5"
+                 style="background:#F8FBFD;">
 
                 <form id="formRegistrarMedico"
                       asp-controller="Medico"
@@ -46,75 +47,79 @@
                     @Html.AntiForgeryToken()
 
                     <div class="mb-4">
-                        <h5 class="fw-bold mb-1" style="color:#163B73;">
-                            <i class="bi bi-person-vcard me-2" style="color:#20C4D8;"></i>
+
+                        <h5 class="fw-bold mb-1" style="color:#0B2E59;">
+                            <i class="bi bi-person-vcard me-2"
+                               style="color:#1AA6A6;"></i>
                             Datos personales
                         </h5>
+
                         <p class="text-muted mb-0">
                             Información básica del especialista.
                         </p>
+
                     </div>
 
                     <div class="row g-4">
 
                         <div class="col-12 col-md-4">
-                            <label asp-for="Nombres" class="form-label fw-semibold" style="color:#163B73;">Nombre</label>
-                            <input asp-for="Nombres" type="text" class="form-control rounded-3 shadow-sm" placeholder="Ej. Ana">
+                            <label asp-for="Nombres" class="form-label fw-semibold" style="color:#0B2E59;">Nombre</label>
+                            <input asp-for="Nombres" type="text" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" placeholder="Ej. Ana">
                             <span asp-validation-for="Nombres" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-4">
-                            <label asp-for="PrimerApellido" class="form-label fw-semibold" style="color:#163B73;">Primer apellido</label>
-                            <input asp-for="PrimerApellido" type="text" class="form-control rounded-3 shadow-sm" placeholder="Ej. Morales">
+                            <label asp-for="PrimerApellido" class="form-label fw-semibold" style="color:#0B2E59;">Primer apellido</label>
+                            <input asp-for="PrimerApellido" type="text" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" placeholder="Ej. Morales">
                             <span asp-validation-for="PrimerApellido" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-4">
-                            <label asp-for="SegundoApellido" class="form-label fw-semibold" style="color:#163B73;">Segundo apellido</label>
-                            <input asp-for="SegundoApellido" type="text" class="form-control rounded-3 shadow-sm" placeholder="Ej. García">
+                            <label asp-for="SegundoApellido" class="form-label fw-semibold" style="color:#0B2E59;">Segundo apellido</label>
+                            <input asp-for="SegundoApellido" type="text" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" placeholder="Ej. García">
                             <span asp-validation-for="SegundoApellido" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label asp-for="CorreoElectronico" class="form-label fw-semibold" style="color:#163B73;">Correo electrónico</label>
-                            <input asp-for="CorreoElectronico" type="email" class="form-control rounded-3 shadow-sm" placeholder="correo@ejemplo.com">
+                            <label asp-for="CorreoElectronico" class="form-label fw-semibold" style="color:#0B2E59;">Correo electrónico</label>
+                            <input asp-for="CorreoElectronico" type="email" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" placeholder="correo@ejemplo.com">
                             <span asp-validation-for="CorreoElectronico" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label asp-for="DUI" class="form-label fw-semibold" style="color:#163B73;">DUI</label>
-                            <input asp-for="DUI" type="text" class="form-control rounded-3 shadow-sm" placeholder="00000000-0" maxlength="10">
+                            <label asp-for="DUI" class="form-label fw-semibold" style="color:#0B2E59;">DUI</label>
+                            <input asp-for="DUI" type="text" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" placeholder="00000000-0" maxlength="10">
                             <span asp-validation-for="DUI" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label asp-for="Telefono" class="form-label fw-semibold" style="color:#163B73;">Teléfono</label>
-                            <input asp-for="Telefono" type="tel" class="form-control rounded-3 shadow-sm" placeholder="Ej. 7777-8888">
+                            <label asp-for="Telefono" class="form-label fw-semibold" style="color:#0B2E59;">Teléfono</label>
+                            <input asp-for="Telefono" type="tel" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" placeholder="Ej. 7777-8888">
                             <span asp-validation-for="Telefono" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label asp-for="Nacimiento" class="form-label fw-semibold" style="color:#163B73;">Fecha de nacimiento</label>
-                            <input asp-for="Nacimiento" type="date" class="form-control rounded-3 shadow-sm">
+                            <label asp-for="Nacimiento" class="form-label fw-semibold" style="color:#0B2E59;">Fecha de nacimiento</label>
+                            <input asp-for="Nacimiento" type="date" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;">
                             <span asp-validation-for="Nacimiento" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12">
-                            <label asp-for="Direccion" class="form-label fw-semibold" style="color:#163B73;">Dirección</label>
-                            <input asp-for="Direccion" type="text" class="form-control rounded-3 shadow-sm" placeholder="Ej. Col. Escalón, San Salvador">
+                            <label asp-for="Direccion" class="form-label fw-semibold" style="color:#0B2E59;">Dirección</label>
+                            <input asp-for="Direccion" type="text" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" placeholder="Ej. Col. Escalón, San Salvador">
                             <span asp-validation-for="Direccion" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label asp-for="Password" class="form-label fw-semibold" style="color:#163B73;">Contraseña</label>
-                            <input asp-for="Password" type="password" class="form-control rounded-3 shadow-sm"
+                            <label asp-for="Password" class="form-label fw-semibold" style="color:#0B2E59;">Contraseña</label>
+                            <input asp-for="Password" type="password" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;"
                                    placeholder="Mínimo 8 caracteres, un número y un símbolo">
                             <span asp-validation-for="Password" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label class="form-label fw-semibold" style="color:#163B73;">Foto (opcional)</label>
-                            <input type="file" name="FotoArchivo" class="form-control rounded-3 shadow-sm" accept="image/*">
+                            <label class="form-label fw-semibold" style="color:#0B2E59;">Foto (opcional)</label>
+                            <input type="file" name="FotoArchivo" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" accept="image/*">
                         </div>
 
                     </div>
@@ -122,34 +127,41 @@
                     <hr class="my-5" />
 
                     <div class="mb-4">
-                        <h5 class="fw-bold mb-1" style="color:#163B73;">
-                            <i class="bi bi-hospital me-2" style="color:#20C4D8;"></i>
+
+                        <h5 class="fw-bold mb-1" style="color:#0B2E59;">
+                            <i class="bi bi-hospital me-2"
+                               style="color:#1AA6A6;"></i>
                             Información médica
                         </h5>
+
                         <p class="text-muted mb-0">
                             Especialidad, experiencia y certificaciones profesionales.
                         </p>
+
                     </div>
 
                     <div class="row g-4">
 
                         <div class="col-12 col-md-6">
-                            <label asp-for="IdEspecialidad" class="form-label fw-semibold" style="color:#163B73;">Especialidad</label>
-                            <select asp-for="IdEspecialidad" class="form-select rounded-3 shadow-sm" id="selectEspecialidad">
+                            <label asp-for="IdEspecialidad" class="form-label fw-semibold" style="color:#0B2E59;">Especialidad</label>
+                            <select asp-for="IdEspecialidad" class="form-select rounded-3 shadow-sm" style="border-color:#D7E3EC;" id="selectEspecialidad">
                                 <option value="">Selecciona una especialidad</option>
                             </select>
                             <span asp-validation-for="IdEspecialidad" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label asp-for="Experiencia" class="form-label fw-semibold" style="color:#163B73;">Años de experiencia</label>
-                            <input asp-for="Experiencia" type="number" class="form-control rounded-3 shadow-sm" min="0" placeholder="Ej. 12">
+                            <label asp-for="Experiencia" class="form-label fw-semibold" style="color:#0B2E59;">Años de experiencia</label>
+                            <input asp-for="Experiencia" type="number" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;" min="0" placeholder="Ej. 12">
                             <span asp-validation-for="Experiencia" class="text-danger small"></span>
                         </div>
 
                         <div class="col-12">
-                            <label asp-for="Certificaciones" class="form-label fw-semibold" style="color:#163B73;">Certificaciones</label>
-                            <textarea asp-for="Certificaciones" class="form-control rounded-3 shadow-sm" rows="4"
+                            <label asp-for="Certificaciones" class="form-label fw-semibold" style="color:#0B2E59;">Certificaciones</label>
+                            <textarea asp-for="Certificaciones"
+                                      class="form-control rounded-3 shadow-sm"
+                                      style="border-color:#D7E3EC;"
+                                      rows="4"
                                       placeholder="Ej. Doctorado en cirugía, Board Certified Surgeon"></textarea>
                             <span asp-validation-for="Certificaciones" class="text-danger small"></span>
                         </div>
@@ -160,14 +172,14 @@
 
                         <button type="reset"
                                 class="btn px-4 py-2 text-white"
-                                style="background:#6C757D;border:none;">
+                                style="background:#6B7280;border:none;">
                             <i class="bi bi-eraser me-2"></i>
                             Limpiar
                         </button>
 
                         <button type="submit"
                                 class="btn px-4 py-2 text-white"
-                                style="background:#163B73;border:none;">
+                                style="background:#1AA6A6;border:none;">
                             <i class="bi bi-save-fill me-2"></i>
                             Guardar especialista
                         </button>
@@ -189,21 +201,20 @@
     <script src="~/js/RegistrarMedico.js" asp-append-version="true"></script>
 
     <script>
-        // Carga las especialidades activas en el select al abrir la página
         $.ajax({
-        url: '/Especialidad/ObtenerListadoEspecialidades',
-        type: 'GET',
-        success: function (respuesta) {
-        if (!respuesta.dato) return;
+            url: '/Especialidad/ObtenerListadoEspecialidades',
+            type: 'GET',
+            success: function (respuesta) {
+                if (!respuesta.dato) return;
 
-        respuesta.dato.forEach(e => {
-        if (e.estado) {
-        $('#selectEspecialidad').append(
-        `<option value="${e.idEspecialidad}">${e.nombre}</option>`
-        );
-        }
-        });
-        }
+                respuesta.dato.forEach(e => {
+                    if (e.estado) {
+                        $('#selectEspecialidad').append(
+                            `<option value="${e.idEspecialidad}">${e.nombre}</option>`
+                        );
+                    }
+                });
+            }
         });
     </script>
 }

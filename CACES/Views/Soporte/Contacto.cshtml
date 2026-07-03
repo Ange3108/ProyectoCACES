@@ -1,0 +1,91 @@
+﻿@{
+    ViewData["Title"] = "Contacto y Soporte";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow border-0 rounded-4">
+
+        <div class="card-header text-white py-4"
+             style="background:#0B2E59;">
+
+            <h3 class="mb-2 fw-bold">
+                <i class="bi bi-chat-left-text-fill me-2"></i>
+                Contacto y Soporte
+            </h3>
+
+            <small class="text-light">
+                Envíe su consulta al equipo administrativo de CACES.
+            </small>
+
+        </div>
+
+        <div class="card-body p-5" style="background:#F8FBFD;">
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success">
+                    @TempData["Mensaje"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger">
+                    @TempData["Error"]
+                </div>
+            }
+
+            <form asp-action="Contacto"
+                  asp-controller="Soporte"
+                  method="post">
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold text-dark">
+                        Asunto
+                    </label>
+
+                    <input type="text"
+                           name="asunto"
+                           class="form-control border-2"
+                           maxlength="150"
+                           required
+                           style="border-color:#D4DEE8;" />
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label class="form-label fw-semibold text-dark">
+                        Mensaje
+                    </label>
+
+                    <textarea name="mensaje"
+                              rows="7"
+                              class="form-control border-2"
+                              maxlength="1000"
+                              required
+                              style="border-color:#D4DEE8;"></textarea>
+
+                </div>
+
+                <div class="text-end">
+
+                    <button class="btn px-4 py-2 text-white fw-semibold"
+                            style="background:#1AA6A6; border:none;">
+
+                        <i class="bi bi-send-fill me-2"></i>
+                        Enviar consulta
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>

@@ -8,125 +8,284 @@
 <main class="container py-5">
     <div class="row justify-content-center">
         <div class="col-12 col-lg-10">
-            
+
             <!-- Encabezado de la página -->
             <div class="d-flex align-items-center justify-content-between mb-4">
-                <h1 class="h2 fw-bold text-dark mb-0">Mi Perfil</h1>
+                <h1 class="h2 fw-bold mb-0" style="color:#0B2E59;">Mi Perfil</h1>
+
                 <span class="badge rounded-pill px-3 py-2 @(Model.Estado ? "bg-success-subtle text-success" : "bg-danger-subtle text-danger") fw-semibold">
-                    <i class="bi bi-circle-fill me-1" style="font-size: 0.5rem;"></i>
+                    <i class="bi bi-circle-fill me-1" style="font-size:0.5rem;"></i>
                     @(Model.Estado ? "Cuenta Activa" : "Cuenta Inactiva")
                 </span>
             </div>
 
-            <div class="card border-0 shadow-sm overflow-hidden">
-                <!-- Banner decorativo superior -->
-                <div style="height: 100px; background: linear-gradient(135deg, #27418C 0%, #72CEF2 100%);"></div>
+            <div class="card border-0 shadow overflow-hidden">
 
-                <div class="card-body p-4 p-md-5 position-relative">
-                    
-                    <!-- Sección Foto/Avatar de Perfil -->
-                    <div class="text-center text-md-start d-md-flex align-items-end gap-4 mb-5" style="margin-top: -75px;">
-                        <div class="rounded-circle shadow-sm d-flex align-items-center justify-content-center text-white fw-bold mx-auto mx-md-0" 
-                             style="width: 110px; height: 110px; background-color: #27418C; border: 4px solid #fff; font-size: 2.25rem; font-family: 'Manrope', sans-serif;">
+                <!-- Banner -->
+                <div style="height:100px;background:#0B2E59;"></div>
+
+                <div class="card-body p-4 p-md-5 position-relative" style="background:#F8FBFD;">
+
+                    <!-- Foto / Avatar -->
+                    <div class="text-center text-md-start d-md-flex align-items-end gap-4 mb-5"
+                         style="margin-top:-75px;">
+
+                        <div class="rounded-circle shadow-sm d-flex align-items-center justify-content-center text-white fw-bold mx-auto mx-md-0"
+                             style="width:110px;
+                                    height:110px;
+                                    background:#0B2E59;
+                                    border:4px solid #fff;
+                                    font-size:2.25rem;
+                                    font-family:'Manrope',sans-serif;">
+
                             @(Model.Nombres.Substring(0, 1))@(Model.PrimerApellido.Substring(0, 1))
+
                         </div>
+
                         <div class="mt-3 mt-md-0 pt-md-4">
-                            <h2 class="fw-bold h3 mb-1 text-dark">@Model.Nombres @Model.PrimerApellido @Model.SegundoApellido</h2>
-                            <p class="text-muted mb-0"><i class="bi bi-envelope me-1"></i> @Model.CorreoElectronico</p>
+
+                            <h2 class="fw-bold h3 mb-1" style="color:#1F2937;">
+                                @Model.Nombres @Model.PrimerApellido @Model.SegundoApellido
+                            </h2>
+
+                            <p class="text-muted mb-0">
+                                <i class="bi bi-envelope me-1"></i>
+                                @Model.CorreoElectronico
+                            </p>
+
                         </div>
+
                     </div>
 
                     <!-- INFORMACIÓN PERSONAL -->
                     <section class="mb-5">
+
                         <div class="d-flex align-items-center justify-content-between border-bottom pb-2 mb-4">
-                            <h3 class="h5 fw-bold mb-0" style="color: #27418C;">
-                                <i class="bi bi-person-fill me-2" style="color: #72CEF2;"></i>Información Personal
+
+                            <h3 class="h5 fw-bold mb-0" style="color:#0B2E59;">
+
+                                <i class="bi bi-person-fill me-2"
+                                   style="color:#1AA6A6;"></i>
+
+                                Información Personal
+
                             </h3>
-                            <a class="btn btn-sm btn-outline-warning fw-semibold px-3" asp-action="ActualizarPerfilObt" asp-controller="Perfil" asp-route-id="@Model.IdUsuario">
-                                <i class="bi bi-pencil-square me-1"></i> Editar
+
+                            <a class="btn btn-sm fw-semibold px-3 text-white"
+                               style="background:#1AA6A6;border:none;"
+                               asp-action="ActualizarPerfilObt"
+                               asp-controller="Perfil"
+                               asp-route-id="@Model.IdUsuario">
+
+                                <i class="bi bi-pencil-square me-1"></i>
+                                Editar
+
                             </a>
+
                         </div>
 
                         <div class="row g-3">
+
                             <div class="col-12 col-md-6">
-                                <div class="p-3 bg-light rounded-3 border-start border-4 border-primary-subtle">
-                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">Nombre completo</label>
-                                    <p class="mb-0 text-dark fw-medium">@Model.Nombres</p>
+
+                                <div class="p-3 rounded-3"
+                                     style="background:#fff;border-left:4px solid #1AA6A6;">
+
+                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">
+                                        Nombre completo
+                                    </label>
+
+                                    <p class="mb-0 fw-medium" style="color:#1F2937;">
+                                        @Model.Nombres
+                                    </p>
+
                                 </div>
+
                             </div>
+
                             <div class="col-12 col-md-6">
-                                <div class="p-3 bg-light rounded-3 border-start border-4 border-primary-subtle">
-                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">Apellidos</label>
-                                    <p class="mb-0 text-dark fw-medium">@Model.PrimerApellido @Model.SegundoApellido</p>
+
+                                <div class="p-3 rounded-3"
+                                     style="background:#fff;border-left:4px solid #1AA6A6;">
+
+                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">
+                                        Apellidos
+                                    </label>
+
+                                    <p class="mb-0 fw-medium" style="color:#1F2937;">
+                                        @Model.PrimerApellido @Model.SegundoApellido
+                                    </p>
+
                                 </div>
+
                             </div>
+
                             <div class="col-12 col-md-6">
-                                <div class="p-3 bg-light rounded-3 border-start border-4 border-primary-subtle">
-                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">Documento Único de Identidad (DUI)</label>
-                                    <p class="mb-0 text-dark fw-medium">@Model.DUI</p>
+
+                                <div class="p-3 rounded-3"
+                                     style="background:#fff;border-left:4px solid #1AA6A6;">
+
+                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">
+                                        Documento Único de Identidad (DUI)
+                                    </label>
+
+                                    <p class="mb-0 fw-medium" style="color:#1F2937;">
+                                        @Model.DUI
+                                    </p>
+
                                 </div>
+
                             </div>
+
                             <div class="col-12 col-md-6">
-                                <div class="p-3 bg-light rounded-3 border-start border-4 border-primary-subtle">
-                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">Teléfono de Contacto</label>
-                                    <p class="mb-0 text-dark fw-medium">@Model.Telefono</p>
+
+                                <div class="p-3 rounded-3"
+                                     style="background:#fff;border-left:4px solid #1AA6A6;">
+
+                                    <label class="form-label text-muted small fw-bold text-uppercase mb-1">
+                                        Teléfono de Contacto
+                                    </label>
+
+                                    <p class="mb-0 fw-medium" style="color:#1F2937;">
+                                        @Model.Telefono
+                                    </p>
+
                                 </div>
+
                             </div>
+
                         </div>
+
                     </section>
 
                     <!-- INFORMACIÓN MÉDICA -->
                     <section class="mb-3">
+
                         <div class="d-flex align-items-center justify-content-between border-bottom pb-2 mb-4">
-                            <h3 class="h5 fw-bold mb-0" style="color: #27418C;">
-                                <i class="bi bi-heart-pulse-fill me-2" style="color: #72CEF2;"></i>Ficha Médica General
+
+                            <h3 class="h5 fw-bold mb-0" style="color:#0B2E59;">
+
+                                <i class="bi bi-heart-pulse-fill me-2"
+                                   style="color:#1AA6A6;"></i>
+
+                                Ficha Médica General
+
                             </h3>
-                            <a class="btn btn-sm text-white fw-semibold px-3" style="background-color: #27418C;" asp-action="HistorialMedico" asp-controller="Usuario">
-                                <i class="bi bi-file-earmark-medical me-1"></i> Ver Historial Completo
+
+                            <a class="btn btn-sm text-white fw-semibold px-3"
+                               style="background:#0B2E59;"
+                               asp-action="HistorialMedico"
+                               asp-controller="Usuario">
+
+                                <i class="bi bi-file-earmark-medical me-1"></i>
+                                Ver Historial Completo
+
                             </a>
+
                         </div>
 
                         <div class="row g-3">
+
                             <div class="col-12 col-md-4">
-                                <div class="p-3 bg-light rounded-3 h-100">
+
+                                <div class="p-3 rounded-3 h-100"
+                                     style="background:#fff;">
+
                                     <label class="form-label text-muted small fw-bold text-uppercase mb-1">
-                                        <i class="bi bi-droplet-fill text-danger me-1"></i> Tipo de sangre
+
+                                        <i class="bi bi-droplet-fill me-1"
+                                           style="color:#2E8B57;"></i>
+
+                                        Tipo de sangre
+
                                     </label>
-                                    <p class="mb-0 text-dark fw-bold h5">@Model.TipoSangre</p>
+
+                                    <p class="mb-0 fw-bold h5"
+                                       style="color:#0B2E59;">
+
+                                        @Model.TipoSangre
+
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="col-12 col-md-8">
-                                <div class="p-3 bg-light rounded-3 h-100">
+
+                                <div class="p-3 rounded-3 h-100"
+                                     style="background:#fff;">
+
                                     <label class="form-label text-muted small fw-bold text-uppercase mb-1">
-                                        <i class="bi bi-exclamation-triangle-fill text-warning me-1"></i> Alergias Conocidas
+
+                                        <i class="bi bi-exclamation-triangle-fill me-1"
+                                           style="color:#1AA6A6;"></i>
+
+                                        Alergias Conocidas
+
                                     </label>
-                                    <p class="mb-0 text-muted italic small">@Model.Alergias</p>
+
+                                    <p class="mb-0 text-muted small">
+                                        @Model.Alergias
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <div class="p-3 bg-light rounded-3 h-100">
+
+                                <div class="p-3 rounded-3 h-100"
+                                     style="background:#fff;">
+
                                     <label class="form-label text-muted small fw-bold text-uppercase mb-1">
-                                        <i class="bi bi-clipboard2-pulse me-1"></i> Patologías o Enfermedades Previas
+
+                                        <i class="bi bi-clipboard2-pulse me-1"
+                                           style="color:#0B2E59;"></i>
+
+                                        Patologías o Enfermedades Previas
+
                                     </label>
-                                    <p class="mb-0 text-muted small">@Model.EnfermedadesCronicas</p>
+
+                                    <p class="mb-0 text-muted small">
+                                        @Model.EnfermedadesCronicas
+                                    </p>
+
                                 </div>
+
                             </div>
 
                             <div class="col-12 col-md-6">
-                                <div class="p-3 bg-light rounded-3 h-100">
+
+                                <div class="p-3 rounded-3 h-100"
+                                     style="background:#fff;">
+
                                     <label class="form-label text-muted small fw-bold text-uppercase mb-1">
-                                        <i class="bi bi-capsule text-primary me-1"></i> Últimos Medicamentos Recetados
+
+                                        <i class="bi bi-capsule me-1"
+                                           style="color:#1AA6A6;"></i>
+
+                                        Últimos Medicamentos Recetados
+
                                     </label>
-                                    <p class="mb-0 text-dark fw-semibold small">@Model.MedicamentosActuales</p>
+
+                                    <p class="mb-0 fw-semibold small"
+                                       style="color:#1F2937;">
+
+                                        @Model.MedicamentosActuales
+
+                                    </p>
+
                                 </div>
 
                             </div>
+
                         </div>
+
                     </section>
 
                 </div>
+
             </div>
 
         </div>
