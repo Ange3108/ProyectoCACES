@@ -44,6 +44,16 @@ namespace CACES.DAL.Repositorios.Procedimientos
             }
         }
 
+        public async Task<HorariosDisponibles> ObtenerHorarioPorRangoAsync(int idMedico, int diaSemana, TimeSpan hora)
+        {
+            return await _context.HorariosDisponibles
+                .FirstOrDefaultAsync(h => h.Id_Medico == idMedico
+                                       && h.DiaSemana == diaSemana
+                                       && h.Activo
+                                       && h.HoraInicio <= hora
+                                       && h.HoraFin >= hora);
+        }
+
         public async Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync()
         {
             return await _context.Procedimientos

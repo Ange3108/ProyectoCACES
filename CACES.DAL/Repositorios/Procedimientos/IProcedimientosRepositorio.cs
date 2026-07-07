@@ -11,5 +11,6 @@ namespace CACES.DAL.Repositorios.Procedimientos
         Task<List<Cirugias>> ObtenerCirugiasPorMedicoAsync(int idMedico);
         Task<List<Cirugias>> ObtenerTodasLasCirugiasAsync();
         Task<Cirugias?> ObtenerCirugiaParaReporteAsync(int idCirugia);
+        Task<HorariosDisponibles> ObtenerHorarioPorRangoAsync(int idMedico, int diaSemana, TimeSpan hora);
     }
 }

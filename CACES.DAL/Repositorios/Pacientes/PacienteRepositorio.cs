@@ -138,5 +138,14 @@ namespace CACES.DAL.Repositorios.Pacientes
             return await _context.Pacientes
                 .FirstOrDefaultAsync(p => p.IdUsuario == idUsuario);
         }
+
+        public async Task<IEnumerable<Paciente>> ObtenerPacientesActivosAsync()
+        {
+            return await _context.Pacientes
+                .Include(p => p.Usuario) 
+                .Where(p => p.Usuario.Estado == true) 
+                .OrderBy(p => p.Usuario.PrimerApellido)
+                .ToListAsync();
+        }
     }
 }

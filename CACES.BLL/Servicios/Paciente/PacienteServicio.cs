@@ -164,5 +164,9 @@ namespace CACES.BLL.Servicios.Paciente
             var paciente = await _pacienteRepositorio.ObtenerPorUsuarioIdAsync(idUsuario);
             return paciente != null ? paciente.IdPaciente : 0;
         }
+        public async Task<IEnumerable<DAL.Entidades.Paciente>> ObtenerPacientesActivosAsync()
+        {
+            return await _pacienteRepositorio.ObtenerPacientesActivosAsync();
+        }
     }
 }

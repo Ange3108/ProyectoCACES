@@ -110,24 +110,21 @@ namespace CACES.Controllers
 
         [HttpGet]
         [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Registrar(int idPaciente)
+        public async Task<IActionResult> Registrar(int? idPaciente)
         {
-            if (idPaciente <= 0)
-            {
-                return BadRequest("El ID del paciente no es válido.");
-            }
+
 
             var dto = new RegistrarProcedimientosDto
             {
-                Id_Paciente = idPaciente
+                Id_Paciente = idPaciente ?? 0
             };
 
             var medicos = await _medicoServicio.GetEspecialistasActivosAsync();
             var procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
-
+            var pacientes = await _pacienteServicio.ObtenerPacientesActivosAsync();
             ViewBag.Medicos = medicos.Dato;
             ViewBag.Procedimientos = procedimientos;
-
+            ViewBag.Pacientes = pacientes;
             return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
         }
 
@@ -143,6 +140,8 @@ namespace CACES.Controllers
                 ViewBag.Medicos = medicos.Dato;
 
                 ViewBag.Procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
+
+                ViewBag.Pacientes = await _pacienteServicio.ObtenerPacientesActivosAsync(); 
 
                 return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
             }
@@ -160,6 +159,7 @@ namespace CACES.Controllers
 
             ViewBag.Medicos = medicosFallo.Dato;
             ViewBag.Procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
+            ViewBag.Pacientes = await _pacienteServicio.ObtenerPacientesActivosAsync();
 
             return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
         }

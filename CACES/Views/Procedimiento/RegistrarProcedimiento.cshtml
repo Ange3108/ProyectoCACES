@@ -27,7 +27,24 @@
 
                         <div asp-validation-summary="ModelOnly" class="alert alert-danger small p-2" role="alert"></div>
 
-                        <input type="hidden" asp-for="Id_Paciente" />
+                        <div class="mb-3">
+                            <label asp-for="Id_Paciente" class="form-label fw-semibold text-secondary">
+                                <i class="bi bi-person-fill me-1"></i> Paciente
+                            </label>
+                            <select asp-for="Id_Paciente" class="form-select border-2">
+                                <option value="" selected disabled>-- Seleccione el paciente --</option>
+                                @if (ViewBag.Pacientes != null)
+                                {
+                                    foreach (var paciente in ViewBag.Pacientes)
+                                    {
+                                        <option value="@paciente.IdPaciente">
+                                            @paciente.Usuario?.Nombres @paciente.Usuario?.PrimerApellido @paciente.Usuario?.SegundoApellido
+                                        </option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="Id_Paciente" class="text-danger small"></span>
+                        </div>
 
                         <div class="mb-3">
                             <label asp-for="Id_Procedimiento" class="form-label fw-semibold text-secondary">
@@ -85,7 +102,6 @@
         </div>
     </div>
 </div>
-
 
 @section Scripts {
     @{
