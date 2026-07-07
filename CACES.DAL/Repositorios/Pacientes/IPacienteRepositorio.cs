@@ -24,5 +24,7 @@ namespace CACES.DAL.Repositorios.Pacientes
         Task<CACES.DAL.Entidades.Paciente> GetPacienteByUsuarioIdAsync(int idUsuario);
 
         Task<Paciente?> ObtenerPorUsuarioIdAsync(int idUsuario);
+
+        Task<IEnumerable<Paciente>> ObtenerPacientesActivosAsync();
     }
 }

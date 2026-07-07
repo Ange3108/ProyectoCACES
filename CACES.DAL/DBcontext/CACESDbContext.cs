@@ -247,7 +247,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
                 entity.Property(e => e.Id_Procedimiento).HasColumnName("Id_Procedimiento").IsRequired();
                 entity.Property(e => e.Id_Horario).HasColumnName("Id_Horario").IsRequired();
-                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.HasOne(d => d.Paciente)
                       .WithMany()
                       .HasForeignKey(d => d.Id_Paciente)
@@ -300,7 +300,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
                 entity.Property(e => e.DiaSemana).HasColumnName("DiaSemana").IsRequired();
                 entity.Property(e => e.HoraInicio).HasColumnName("HoraInicio").IsRequired();
-              
+                entity.Property(e => e.HoraFin).HasColumnName("HoraFin").IsRequired();
                 entity.Property(e => e.Activo).HasColumnName("Activo").IsRequired();
                 entity.HasOne(d => d.Medico)
                   .WithMany()

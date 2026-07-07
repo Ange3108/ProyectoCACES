@@ -23,5 +23,7 @@ namespace CACES.BLL.Servicios.Paciente
         Task<CACES.DAL.Entidades.Paciente> GetPacienteByUsuarioIdAsync(int idUsuario);
 
         Task<int> ObtenerIdPacientePorUsuarioIdAsync(int idUsuario);
+
+        Task<IEnumerable<DAL.Entidades.Paciente>> ObtenerPacientesActivosAsync();
     }
 }
