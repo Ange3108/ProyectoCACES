@@ -15,5 +15,6 @@
         public string EnfermedadesCronicas { get; set; } = null!;
 
         public string MedicamentosActuales { get; set; } = null!;
+        public int IdHistorial { get; set; }
     }
 }

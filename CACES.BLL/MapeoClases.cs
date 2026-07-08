@@ -57,6 +57,11 @@ namespace CACES.BLL
                 {
                     var paciente = src.Paciente;
 
+                    if (paciente != null)
+                    {
+                        dest.IdHistorial = paciente.IdHistorial;
+                    }
+
                     // Datos del historial médico
                     if (paciente?.HistorialMedico != null)
                     {
