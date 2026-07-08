@@ -16,5 +16,6 @@
 
         public string MedicamentosActuales { get; set; } = null!;
         public int IdHistorial { get; set; }
+        public string? Foto { get; set; }
     }
 }
