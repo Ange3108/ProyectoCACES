@@ -84,6 +84,7 @@ namespace CACES.BLL
                     {
                         dest.MedicamentosActuales = "Sin medicamentos prescritos";
                     }
+
                 });
 
 
