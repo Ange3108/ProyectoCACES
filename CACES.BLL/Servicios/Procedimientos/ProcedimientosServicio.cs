@@ -80,33 +80,28 @@ namespace CACES.BLL.Servicios.Procedimientos
             int diaSemanaNet = (int)registrarProcedimientosDto.FechaProgramada.DayOfWeek;
             int diaSemanaSql = diaSemanaNet == 0 ? 6 : diaSemanaNet - 1;
 
-            // 2. Extraer la hora exacta elegida
             TimeSpan horaElegida = registrarProcedimientosDto.FechaProgramada.TimeOfDay;
 
-            // 3. Consultar al repositorio (aquí se ejecuta el LINQ de forma aislada)
             var horarioDisponible = await _procedimientosRepositorio.ObtenerHorarioPorRangoAsync(
                 registrarProcedimientosDto.Id_Medico,
                 diaSemanaSql,
                 horaElegida
             );
 
-            // Si el repositorio no encuentra ningún bloque de horario activo que calce, se rechaza
             if (horarioDisponible == null)
             {
                 return false;
             }
 
-            // 4. Mapear y enlazar el ID del horario encontrado a la nueva cirugía
             var nuevaCirugia = new Cirugias
             {
                 Id_Paciente = registrarProcedimientosDto.Id_Paciente,
                 Id_Medico = registrarProcedimientosDto.Id_Medico,
                 Id_Procedimiento = registrarProcedimientosDto.Id_Procedimiento,
-                Id_Horario = horarioDisponible.Id_Horario, // Seteamos la FK existente
+                Id_Horario = horarioDisponible.Id_Horario, 
                 Estado = true
             };
 
-            // 5. Mandar a guardar la cirugía
             return await _procedimientosRepositorio.RegistrarProcedimientosAsync(nuevaCirugia);
         }
 
