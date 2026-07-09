@@ -11,6 +11,6 @@ namespace CACES.DAL.Repositorios.Roles
         Task<List<GestionRolDTO>> GetUsuariosConRolesAsync();
         Task<List<AspNetRole>> GetRolesAsync();
         Task<bool> CambiarRolAsync(string userId, string roleId);
-        Task<bool> EliminarUsuarioPorRolAsync(string userId, string nombreRol);
+        Task<bool> DesactivarUsuarioPorRolAsync(string userId, string nombreRol);
     }
 }

@@ -38,9 +38,9 @@ namespace CACES.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EliminarMedico(string userId)
+        public async Task<IActionResult> DesactivarMedico(string userId)
         {
-            var resultado = await _rolServicio.EliminarUsuarioPorRolAsync(userId, "Medico");
+            var resultado = await _rolServicio.DesactivarUsuarioPorRolAsync(userId, "Medico");
 
             if (resultado)
                 TempData["Mensaje"] = "El usuario médico fue desactivado correctamente.";
@@ -51,9 +51,9 @@ namespace CACES.Controllers
         }
 
         [HttpPost]
-        public async Task<IActionResult> EliminarAdministrador(string userId)
+        public async Task<IActionResult> DesactivarAdministrador(string userId)
         {
-            var resultado = await _rolServicio.EliminarUsuarioPorRolAsync(userId, "Administrador");
+            var resultado = await _rolServicio.DesactivarUsuarioPorRolAsync(userId, "Administrador");
 
             if (resultado)
                 TempData["Mensaje"] = "El usuario administrador fue desactivado correctamente.";
