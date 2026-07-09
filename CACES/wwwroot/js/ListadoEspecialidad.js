@@ -45,25 +45,34 @@
                         orderable: false,
                         render: function (data, type, row) {
 
-                            return `
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-warning btnEditar"
-                                    data-id="${row.idEspecialidad}"
-                                    data-nombre="${row.nombre}"
-                                    data-icono="${row.icono}"
-                                    data-descripcion="${row.descripcion}"
-                                    data-estado="${row.estado}">
-                                    <i class="bi bi-pencil"></i>
-                                </button>
+                         
 
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-danger desactivar"
-                                    data-id="${row.idEspecialidad}">
-                                    <i class="bi bi-trash"></i>
-                                </button>
-                            `;
+                                let botones = `
+        <button
+            type="button"
+            class="btn btn-sm btn-warning btnEditar"
+            data-id="${row.idEspecialidad}"
+            data-nombre="${row.nombre}"
+            data-icono="${row.icono}"
+            data-descripcion="${row.descripcion}"
+            data-estado="${row.estado}">
+            <i class="bi bi-pencil"></i>
+        </button>
+    `;
+
+                                if (row.estado === true) {
+                                    botones += `
+            <button
+                type="button"
+                class="btn btn-sm btn-danger desactivar"
+                data-id="${row.idEspecialidad}">
+                <i class="bi bi-trash"></i>
+            </button>
+        `;
+                                }
+
+                                return botones;
+                            }
                         }
                     }
                 ],

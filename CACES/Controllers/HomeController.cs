@@ -71,7 +71,10 @@ namespace CACES.Controllers
 
             var data = new
             {
-                cirugias = await _context.Cirugias.CountAsync(),
+                cirugias = await _context.Cirugias
+                    .Include(c => c.Cita)
+                    .Where(c => c.Cita != null && c.Cita.Fecha.Date == hoy)
+                    .CountAsync(),
                 citas = await _context.Citas
                     .Where(c => c.Fecha.Date == hoy)
                     .CountAsync(),
