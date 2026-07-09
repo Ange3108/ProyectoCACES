@@ -53,6 +53,7 @@ namespace CACES.DAL.Entidades
         public bool EmailConfirmed { get; set; } = false;
 
         public virtual Paciente? Paciente { get; set; }
+        public virtual Medico? Medico { get; set; }
 
         public virtual ICollection<UsuarioRoles> UsuarioRoles { get; set; } = new List<UsuarioRoles>();
     }

@@ -25,125 +25,126 @@ namespace CACES.Controllers
             _context = context;
         }
 
+        // ---------- VISTAS (solo devuelven el Razor, sin datos pesados) ----------
+
         [Authorize(Roles = "Paciente")]
         [HttpGet]
-        public async Task<IActionResult> MisCitas()
+        public IActionResult MisCitas()
         {
-            var claimId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
-            if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
-                return Unauthorized();
-
-            var paciente = await _pacienteServicio.GetPacienteByUsuarioIdAsync(idUsuario);
-
-            if (paciente == null)
-                return NotFound();
-
-            var citas = await _citaServicio.ObtenerCitasPorPacienteAsync(paciente.IdPaciente);
-
-            return View("~/Views/Cita/MisCitas.cshtml", citas);
+            return View("~/Views/Cita/MisCitas.cshtml");
         }
 
         [Authorize(Roles = "Paciente")]
         [HttpGet]
-        public async Task<IActionResult> RegistrarCita()
+        public IActionResult RegistrarCita()
         {
-            ViewBag.Medicos = await _context.Medicos
-                .Include(m => m.Usuario)
-                .ToListAsync();
-
-            ViewBag.Especialidades = await _context.Especialidades
-                .Where(e => e.Estado == true)
-                .ToListAsync();
-
-            return View("~/Views/Cita/RegistrarCita.cshtml", new RegistrarCitaDTO());
+            return View("~/Views/Cita/RegistrarCita.cshtml");
         }
 
-        [Authorize(Roles = "Paciente")]
-        [HttpPost]
-        public async Task<IActionResult> RegistrarCita(RegistrarCitaDTO dto)
+        [Authorize(Roles = "Medico")]
+        [HttpGet]
+        public IActionResult CitasMedico()
         {
-            var claimId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            return View("~/Views/Cita/CitasMedico.cshtml");
+        }
 
-            if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
-                return Unauthorized();
-
-            var paciente = await _pacienteServicio.GetPacienteByUsuarioIdAsync(idUsuario);
-
-            if (paciente == null)
-                return NotFound();
-
-            dto.IdPaciente = paciente.IdPaciente;
-
-            if (!ModelState.IsValid)
-            {
-                ViewBag.Medicos = await _context.Medicos
-                    .Include(m => m.Usuario)
-                    .ToListAsync();
-
-                ViewBag.Especialidades = await _context.Especialidades
-                    .Where(e => e.Estado == true)
-                    .ToListAsync();
-
-                return View("~/Views/Cita/RegistrarCita.cshtml", dto);
-            }
-
-            var cita = new CACES.DAL.Entidades.Cita
-            {
-                IdPaciente = dto.IdPaciente,
-                IdMedico = dto.IdMedico,
-                IdEspecialidad = dto.IdEspecialidad,
-                IdHorario = dto.IdMedico == 1 ? 1 : 2,
-                Fecha = dto.FechaCita.Date,
-                Hora = dto.Hora,
-                Motivo = dto.Motivo,
-                FechaDeRegistro = DateTime.Now,
-                Estado = 1
-            };
-
-            var resultado = await _citaServicio.RegistrarCitaAsync(cita);
-
-            if (!resultado)
-            {
-                TempData["Error"] = "No se pudo registrar la cita médica.";
-                return RedirectToAction("RegistrarCita");
-            }
-
-            TempData["Mensaje"] = "Cita registrada correctamente.";
-            return RedirectToAction("MisCitas");
+        [HttpGet]
+        public IActionResult GestionCitas()
+        {
+            return View("~/Views/Cita/GestionCitas.cshtml");
         }
 
         [Authorize]
         [HttpGet]
         public async Task<IActionResult> Ticket(int id)
         {
-            var cita = await _citaServicio.ObtenerTicketAsync(id);
+            var resultado = await _citaServicio.ObtenerTicketAsync(id);
 
-            if (cita == null)
+            if (!resultado.EsCorrecto || resultado.Dato == null)
                 return NotFound();
 
-            return View("~/Views/Cita/Ticket.cshtml", cita);
+            return View("~/Views/Cita/Ticket.cshtml", resultado.Dato);
+        }
+
+        // ---------- ENDPOINTS JSON ----------
+
+        [Authorize(Roles = "Paciente")]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerMisCitas()
+        {
+            var claimId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
+                return Unauthorized();
+
+            var paciente = await _pacienteServicio.GetPacienteByUsuarioIdAsync(idUsuario);
+            if (paciente == null)
+                return NotFound();
+
+            var resultado = await _citaServicio.ObtenerCitasPorPacienteAsync(paciente.IdPaciente);
+            return Json(resultado);
+        }
+
+        [Authorize(Roles = "Paciente")]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerMedicos()
+        {
+            var medicos = await _context.Medicos
+                .Include(m => m.Usuario)
+                .Select(m => new
+                {
+                    idMedico = m.IdMedico,
+                    nombre = m.Usuario.Nombres + " " + m.Usuario.PrimerApellido
+                })
+                .ToListAsync();
+
+            return Json(medicos);
+        }
+
+        [Authorize(Roles = "Paciente")]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerEspecialidadesActivas()
+        {
+            var especialidades = await _context.Especialidades
+                .Where(e => e.Estado == true)
+                .Select(e => new { idEspecialidad = e.IdEspecialidad, nombre = e.Nombre })
+                .ToListAsync();
+
+            return Json(especialidades);
+        }
+
+        [Authorize(Roles = "Paciente")]
+        [HttpPost]
+        public async Task<IActionResult> RegistrarCita(RegistrarCitaDTO dto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var claimId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
+            if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
+                return Unauthorized();
+
+            var paciente = await _pacienteServicio.GetPacienteByUsuarioIdAsync(idUsuario);
+            if (paciente == null)
+                return NotFound();
+
+            var resultado = await _citaServicio.RegistrarCitaAsync(dto, paciente.IdPaciente);
+            return Json(resultado);
         }
 
         [Authorize(Roles = "Medico")]
         [HttpGet]
-        public async Task<IActionResult> CitasMedico()
+        public async Task<IActionResult> ObtenerCitasMedico()
         {
             var claimId = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-
             if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
                 return Unauthorized();
 
-            var medico = await _context.Medicos
-                .Include(m => m.Usuario)
-                .FirstOrDefaultAsync(m => m.IdUsuario == idUsuario);
-
+            var medico = await _context.Medicos.FirstOrDefaultAsync(m => m.IdUsuario == idUsuario);
             if (medico == null)
                 return NotFound();
 
-            var citas = await _citaServicio.ObtenerCitasPorMedicoAsync(medico.IdMedico);
-
-            return View("~/Views/Cita/CitasMedico.cshtml", citas);
+            var resultado = await _citaServicio.ObtenerCitasPorMedicoAsync(medico.IdMedico);
+            return Json(resultado);
         }
 
         [Authorize(Roles = "Medico")]
@@ -151,40 +152,28 @@ namespace CACES.Controllers
         public async Task<IActionResult> CancelarCita(int idCita)
         {
             var resultado = await _citaServicio.CancelarCitaAsync(idCita);
-
-            TempData[resultado ? "Mensaje" : "Error"] =
-                resultado ? "Cita cancelada correctamente." : "No se pudo cancelar la cita.";
-
-            return RedirectToAction("CitasMedico");
+            return Json(resultado);
         }
 
         [HttpGet]
-        public async Task<IActionResult> GestionCitas()
+        public async Task<IActionResult> ObtenerListadoCitas()
         {
-            var citas = await _citaServicio.GetCitasAsync();
-            return View("~/Views/Cita/GestionCitas.cshtml", citas);
+            var resultado = await _citaServicio.GetCitasAsync();
+            return Json(resultado);
         }
 
         [HttpPost]
         public async Task<IActionResult> ActualizarFechaCita(int idCita, DateTime nuevaFecha)
         {
             var resultado = await _citaServicio.ActualizarFechaCitaAsync(idCita, nuevaFecha);
-
-            TempData[resultado ? "Mensaje" : "Error"] =
-                resultado ? "La fecha de la cita se actualizó correctamente." : "No se pudo actualizar la fecha de la cita.";
-
-            return RedirectToAction("GestionCitas");
+            return Json(resultado);
         }
 
         [HttpPost]
         public async Task<IActionResult> CancelarCitasPorMedicoYFecha(int idMedico, DateTime fechaCita)
         {
             var resultado = await _citaServicio.CancelarCitasPorMedicoYFechaAsync(idMedico, fechaCita);
-
-            TempData[resultado ? "Mensaje" : "Error"] =
-                resultado ? "Las citas del médico fueron canceladas correctamente." : "No se encontraron citas activas para cancelar.";
-
-            return RedirectToAction("GestionCitas");
+            return Json(resultado);
         }
     }
 }

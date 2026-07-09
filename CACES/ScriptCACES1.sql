@@ -277,11 +277,6 @@ GO
 ALTER TABLE [dbo].[UsuarioRoles] CHECK CONSTRAINT [FK_UsuarioRoles_Usuarios]
 GO
 
-create table ConfiguracionQuirofano(
-    id int 
-)
-
-
 
 
 -- ============================================
@@ -295,7 +290,7 @@ INSERT INTO [dbo].[AspNetRoles] ([Id], [Name]) VALUES
 ('3', 'Paciente');
 GO
 
--- ESPECIALIDADESZ
+-- ESPECIALIDADES
 INSERT INTO Especialidad
 (Nombre, Descripcion, Icono, FechaDeRegistro, Estado)
 VALUES
@@ -328,13 +323,21 @@ VALUES
  GETDATE(), NULL, 1, 'Heredia', 28, '8888-3333',
  '1996-03-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
  
- ('Liam', 'Ramírez', 'Mora', 'carlos.paciente@caces.com', '22334455', 'carlos.jpg',
+ ('Liam', 'Ramírez', 'Mora', 'liam.medico@caces.com', '22334455', 'liam.jpg',
  GETDATE(), NULL, 1, 'Alajuela', 42, '8888-4444',
  '1984-07-12', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
 
-('Ana', 'Fernández', 'Rojas', 'ana.paciente@caces.com', '33445566', 'ana.jpg',
+('Ana', 'Fernández', 'Rojas', 'ana.medico@caces.com', '33445566', 'ana.jpg',
  GETDATE(), NULL, 1, 'Cartago', 31, '8888-5555',
- '1995-11-08', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
+ '1995-11-08', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+ ('David', 'Jiménez', 'Vargas', 'david.paciente@caces.com', '44556677', 'david.jpg',
+GETDATE(), NULL, 1, 'Heredia', 38, '8888-6666',
+'1987-03-21', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Juana', 'Solano', 'Castro', 'juana.paciente@caces.com', '55667788', 'maria.jpg',
+GETDATE(), NULL, 1, 'San José', 35, '8888-7777',
+'1990-09-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
 GO
 
 -- MEDICOS
@@ -354,15 +357,15 @@ GO
 -- PACIENTES
 INSERT INTO Pacientes (Id_Usuario, Id_Historial) VALUES
 (3, 1),
-(4, 2),
-(5, 3);
+(6, 2),
+(7, 3);
 GO
 
 -- HORARIOS DISPONIBLES
-INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Activo) VALUES
-(1, 0, '08:00', '12:00', 1),
-(2, 1, '09:00', '13:00', 1),
-(3, 2, '07:00', '11:00', 1);
+INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, Activo) VALUES
+(1, 0, '08:00', 1),
+(2, 1, '09:00', 1),
+(3, 2, '07:00', 1);
 GO
 
 -- CITAS
@@ -437,9 +440,9 @@ GO
 
 -- NOTICIAS
 INSERT INTO Noticias (Titulo, Contenido, FechaDePublicacion, FechaDeModificacion, Imagen, Estado) VALUES
-('Ventajas de la cirugía laparoscópica', 'La laparoscopia reduce el trauma quirúrgico y acelera la recuperación...', GETDATE(), NULL, 'laparoscopia-news.jpg', 1),
-('Avances en tratamiento del cáncer', 'Nuevas terapias oncológicas ofrecen mejores resultados en pacientes...', GETDATE(), NULL, 'oncology-news.jpg', 1),
-('Preparación para cirugía: lo que debes saber', 'Prepararse correctamente antes de una cirugía es fundamental...', GETDATE(), NULL, 'surgery-news.jpg', 1);
+('Ventajas de la cirugía laparoscópica', 'La laparoscopia reduce el trauma quirúrgico y acelera la recuperación...', GETDATE(), NULL, 'noticia1.png', 1),
+('Avances en tratamiento del cáncer', 'Nuevas terapias oncológicas ofrecen mejores resultados en pacientes...', GETDATE(), NULL, 'noticia2.png', 1),
+('Preparación para cirugía: lo que debes saber', 'Prepararse correctamente antes de una cirugía es fundamental...', GETDATE(), NULL, 'noticia3.png', 1);
 GO
 
 

@@ -42,5 +42,7 @@ namespace CACES.DAL.Entidades
 
         [NotMapped]
         public virtual Receta? Receta { get; set; }
+
+      
     }
 }
