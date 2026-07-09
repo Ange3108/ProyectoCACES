@@ -140,7 +140,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.Experiencia).HasColumnName("Experiencia").IsRequired();
                 entity.Property(e => e.Certificaciones).HasColumnName("Certificaciones").HasMaxLength(500);
-                entity.HasOne(e => e.Usuario).WithMany().HasForeignKey(e => e.IdUsuario);
+                entity.HasOne(e => e.Usuario).WithOne(u => u.Medico).HasForeignKey<Medico>(e => e.IdUsuario);
                 entity.HasOne(e => e.Especialidad).WithMany(es => es.Medicos).HasForeignKey(e => e.IdEspecialidad);
             });
 

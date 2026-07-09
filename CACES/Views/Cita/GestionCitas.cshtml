@@ -1,6 +1,4 @@
-﻿@model List<CACES.DAL.Entidades.Cita>
-
-@{
+﻿@{
     ViewData["Title"] = "Gestión de Citas";
 }
 
@@ -8,89 +6,49 @@
 
     <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
 
-        <div class="card-header border-0 p-4"
-             style="background:#163B73;">
-
+        <div class="card-header border-0 p-4" style="background:#163B73;">
             <h2 class="text-white fw-bold mb-1">
                 <i class="bi bi-calendar-check-fill me-2"></i>
                 Gestión de Citas
             </h2>
-
             <p class="text-white-50 mb-0">
                 Modifique fechas de citas y cancele citas por médico y fecha
             </p>
-
         </div>
 
         <div class="card-body p-4">
 
-            @if (TempData["Mensaje"] != null)
-            {
-                <div class="alert alert-success rounded-3 shadow-sm">
-                    <i class="bi bi-check-circle-fill me-2"></i>
-                    @TempData["Mensaje"]
-                </div>
-            }
+            <div class="border rounded-4 p-4 shadow-sm mb-5" style="background:#F8FBFD;">
 
-            @if (TempData["Error"] != null)
-            {
-                <div class="alert alert-danger rounded-3 shadow-sm">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    @TempData["Error"]
-                </div>
-            }
-
-            <div class="border rounded-4 p-4 shadow-sm mb-5"
-                 style="background:#F8FBFD;">
-
-                <h5 class="fw-bold mb-1"
-                    style="color:#163B73;">
-
-                    <i class="bi bi-calendar-x-fill me-2"
-                       style="color:#20C4D8;"></i>
-
+                <h5 class="fw-bold mb-1" style="color:#163B73;">
+                    <i class="bi bi-calendar-x-fill me-2" style="color:#20C4D8;"></i>
                     Cancelar citas por médico y fecha
-
                 </h5>
 
                 <p class="text-muted mb-4">
                     Ingrese el ID del médico y la fecha para cancelar las citas activas correspondientes.
                 </p>
 
-                <form asp-action="CancelarCitasPorMedicoYFecha"
-                      asp-controller="Cita"
-                      method="post"
-                      class="row g-3 align-items-end">
+                <form id="formCancelarPorMedico" class="row g-3 align-items-end">
 
                     <div class="col-md-5">
-                        <label class="form-label fw-semibold"
-                               style="color:#163B73;">
+                        <label class="form-label fw-semibold" style="color:#163B73;">
                             ID del médico
                         </label>
-
-                        <input type="number"
-                               name="idMedico"
-                               class="form-control rounded-3 shadow-sm"
-                               required />
+                        <input type="number" name="idMedico" class="form-control rounded-3 shadow-sm" required />
                     </div>
 
                     <div class="col-md-5">
-                        <label class="form-label fw-semibold"
-                               style="color:#163B73;">
+                        <label class="form-label fw-semibold" style="color:#163B73;">
                             Fecha de cita
                         </label>
-
-                        <input type="date"
-                               name="fechaCita"
-                               class="form-control rounded-3 shadow-sm"
-                               required />
+                        <input type="date" name="fechaCita" class="form-control rounded-3 shadow-sm" required />
                     </div>
 
                     <div class="col-md-2">
                         <button type="submit"
                                 class="btn text-white w-100 rounded-3"
-                                style="background:#B42318;border:none;"
-                                onclick="return confirm('¿Desea cancelar las citas de este médico en esta fecha?');">
+                                style="background:#B42318;border:none;">
                             Cancelar
                         </button>
                     </div>
@@ -100,29 +58,19 @@
             </div>
 
             <div class="d-flex justify-content-between align-items-center mb-3">
-
                 <div>
-                    <h5 class="fw-bold mb-1"
-                        style="color:#163B73;">
-
-                        <i class="bi bi-list-ul me-2"
-                           style="color:#20C4D8;"></i>
-
+                    <h5 class="fw-bold mb-1" style="color:#163B73;">
+                        <i class="bi bi-list-ul me-2" style="color:#20C4D8;"></i>
                         Listado de citas
-
                     </h5>
-
                     <p class="text-muted mb-0">
                         Registro general de citas médicas.
                     </p>
                 </div>
-
             </div>
 
             <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
-
-                <table class="table table-hover align-middle mb-0">
-
+                <table id="tbGestionCitas" class="table table-hover align-middle mb-0">
                     <thead style="background:#163B73;color:white;">
                         <tr>
                             <th>ID</th>
@@ -136,73 +84,8 @@
                             <th style="width:260px;">Modificar Fecha</th>
                         </tr>
                     </thead>
-
-                    <tbody>
-                        @if (Model != null && Model.Any())
-                        {
-                            foreach (var cita in Model)
-                            {
-                                <tr>
-                                    <td class="fw-semibold">@cita.IdCita</td>
-                                    <td>@cita.IdPaciente</td>
-                                    <td>@cita.IdMedico</td>
-                                    <td>@cita.IdEspecialidad</td>
-                                    <td>@cita.Fecha.ToString("dd/MM/yyyy")</td>
-                                    <td>@cita.Hora</td>
-                                    <td>@cita.Motivo</td>
-                                    <td>
-                                        @if (cita.Estado == 1)
-                                        {
-                                            <span class="badge rounded-pill"
-                                                  style="background:#DDF7F8;color:#0B6F73;">
-                                                Activa
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge rounded-pill bg-secondary">
-                                                Cancelada
-                                            </span>
-                                        }
-                                    </td>
-                                    <td>
-                                        <form asp-action="ActualizarFechaCita"
-                                              asp-controller="Cita"
-                                              method="post"
-                                              class="d-flex gap-2">
-
-                                            <input type="hidden"
-                                                   name="idCita"
-                                                   value="@cita.IdCita" />
-
-                                            <input type="date"
-                                                   name="nuevaFecha"
-                                                   class="form-control form-control-sm rounded-3"
-                                                   required />
-
-                                            <button type="submit"
-                                                    class="btn btn-sm text-white rounded-3"
-                                                    style="background:#20C4D8;border:none;">
-                                                Guardar
-                                            </button>
-                                        </form>
-                                    </td>
-                                </tr>
-                            }
-                        }
-                        else
-                        {
-                            <tr>
-                                <td colspan="9"
-                                    class="text-center text-muted py-4">
-                                    No hay citas registradas.
-                                </td>
-                            </tr>
-                        }
-                    </tbody>
-
+                    <tbody></tbody>
                 </table>
-
             </div>
 
         </div>
@@ -210,3 +93,7 @@
     </div>
 
 </div>
+
+@section Scripts {
+    <script src="~/js/Cita/GestionCitas.js"></script>
+}

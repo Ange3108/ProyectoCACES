@@ -1,6 +1,4 @@
-﻿@model List<CACES.DAL.Entidades.Cita>
-
-@{
+﻿@{
     ViewData["Title"] = "Mis Citas";
 }
 
@@ -23,69 +21,29 @@
 
         <div class="card-body p-4">
 
-            @if (TempData["Mensaje"] != null)
-            {
-                <div class="alert alert-success">@TempData["Mensaje"]</div>
-            }
+            <div id="sinCitas" class="alert alert-info" style="display:none;">
+                No tienes citas registradas.
+            </div>
 
-            @if (TempData["Error"] != null)
-            {
-                <div class="alert alert-danger">@TempData["Error"]</div>
-            }
-
-            @if (Model != null && Model.Any())
-            {
-                <div class="table-responsive">
-                    <table class="table table-hover align-middle">
-                        <thead>
-                            <tr>
-                                <th>Fecha</th>
-                                <th>Hora</th>
-                                <th>Motivo</th>
-                                <th>Estado</th>
-                                <th>Ticket</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var cita in Model)
-                            {
-                                <tr>
-                                    <td>@cita.Fecha.ToString("dd/MM/yyyy")</td>
-                                    <td>@cita.Hora</td>
-                                    <td>@cita.Motivo</td>
-                                    <td>
-                                        @if (cita.Estado == 1)
-                                        {
-                                            <span class="badge bg-warning text-dark">Pendiente</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge bg-secondary">Cancelada</span>
-                                        }
-                                    </td>
-                                    <td>
-                                        <a asp-controller="Cita"
-                                           asp-action="Ticket"
-                                           asp-route-id="@cita.IdCita"
-                                           class="btn btn-info btn-sm text-white">
-                                            Ver Ticket
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-
-                    </table>
-                </div>
-            }
-            else
-            {
-                <div class="alert alert-info">
-                    No tienes citas registradas.
-                </div>
-            }
+            <div class="table-responsive">
+                <table id="tbMisCitas" class="table table-hover align-middle">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Hora</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
+                            <th>Ticket</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
 
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="~/js/Cita/MisCitas.js"></script>
+}

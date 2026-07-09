@@ -1,6 +1,4 @@
-﻿@model List<CACES.DAL.Entidades.Cita>
-
-@{
+﻿@{
     ViewData["Title"] = "Citas del Médico";
 }
 
@@ -8,137 +6,45 @@
 
     <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
 
-        <div class="card-header border-0 p-4"
-             style="background:#163B73;">
-
+        <div class="card-header border-0 p-4" style="background:#163B73;">
             <h2 class="text-white fw-bold mb-1">
                 <i class="bi bi-calendar-week-fill me-2"></i>
                 Agenda de Citas Médicas
             </h2>
-
             <p class="text-white-50 mb-0">
                 Visualice y administre las citas asignadas a su agenda médica.
             </p>
-
         </div>
 
         <div class="card-body p-4">
 
-            @if (TempData["Mensaje"] != null)
-            {
-                <div class="alert alert-success rounded-3 shadow-sm">
-                    <i class="bi bi-check-circle-fill me-2"></i>
-                    @TempData["Mensaje"]
-                </div>
-            }
+            <div id="sinCitasMedico" class="alert border-0 rounded-4 shadow-sm" style="background:#EAF9FC;color:#163B73;display:none;">
+                <i class="bi bi-info-circle-fill me-2"></i>
+                No existen citas asignadas.
+            </div>
 
-            @if (TempData["Error"] != null)
-            {
-                <div class="alert alert-danger rounded-3 shadow-sm">
-                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
-                    @TempData["Error"]
-                </div>
-            }
-
-            @if (Model.Any())
-            {
-                <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
-
-                    <table class="table table-hover align-middle mb-0">
-
-                        <thead style="background:#163B73;color:white;">
-                            <tr>
-                                <th>Cita</th>
-                                <th>Fecha</th>
-                                <th>Hora</th>
-                                <th>Motivo</th>
-                                <th>Estado</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
-
-                        <tbody>
-
-                            @foreach (var cita in Model)
-                            {
-                                <tr>
-
-                                    <td class="fw-semibold">
-                                        @cita.IdCita
-                                    </td>
-
-                                    <td>
-                                        @cita.Fecha.ToString("dd/MM/yyyy")
-                                    </td>
-
-                                    <td>
-                                        @cita.Hora
-                                    </td>
-
-                                    <td>
-                                        @cita.Motivo
-                                    </td>
-
-                                    <td>
-                                        @if (cita.Estado == 1)
-                                        {
-                                            <span class="badge rounded-pill px-3 py-2"
-                                                  style="background:#DDF7F8;color:#0B6F73;">
-                                                Activa
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span class="badge rounded-pill bg-secondary px-3 py-2">
-                                                Cancelada
-                                            </span>
-                                        }
-                                    </td>
-
-                                    <td>
-                                        @if (cita.Estado == 1)
-                                        {
-                                            <form asp-action="CancelarCita"
-                                                  method="post">
-
-                                                <input type="hidden"
-                                                       name="idCita"
-                                                       value="@cita.IdCita" />
-
-                                                <button type="submit"
-                                                        class="btn btn-sm text-white rounded-3"
-                                                        style="background:#B42318;border:none;"
-                                                        onclick="return confirm('¿Desea cancelar esta cita?')">
-                                                    <i class="bi bi-x-circle-fill me-1"></i>
-                                                    Cancelar
-                                                </button>
-
-                                            </form>
-                                        }
-                                    </td>
-
-                                </tr>
-                            }
-
-                        </tbody>
-
-                    </table>
-
-                </div>
-            }
-            else
-            {
-                <div class="alert border-0 rounded-4 shadow-sm"
-                     style="background:#EAF9FC;color:#163B73;">
-
-                    <i class="bi bi-info-circle-fill me-2"></i>
-                    No existen citas asignadas.
-
-                </div>
-            }
+            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+                <table id="tbCitasMedico" class="table table-hover align-middle mb-0">
+                    <thead style="background:#163B73;color:white;">
+                        <tr>
+                            <th>Cita</th>
+                            <th>Hora</th>
+                            <th>Motivo</th>
+                            <th>Estado</th>
+                            <th></th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
 
         </div>
 
     </div>
 
 </div>
+
+@section Scripts {
+    <script src="~/js/Cita/CitasMedico.js"></script>
+}
