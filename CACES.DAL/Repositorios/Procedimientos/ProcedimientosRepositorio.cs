@@ -50,8 +50,7 @@ namespace CACES.DAL.Repositorios.Procedimientos
                 .FirstOrDefaultAsync(h => h.Id_Medico == idMedico
                                        && h.DiaSemana == diaSemana
                                        && h.Activo
-                                       && h.HoraInicio <= hora
-                                       && h.HoraFin >= hora);
+                                       && h.HoraInicio <= hora);
         }
 
         public async Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync()

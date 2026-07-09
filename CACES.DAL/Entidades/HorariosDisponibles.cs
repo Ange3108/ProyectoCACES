@@ -16,12 +16,11 @@ namespace CACES.DAL.Entidades
         public int DiaSemana { get; set; }
         [Column("HoraInicio")]
         public TimeSpan HoraInicio { get; set; }
-        [Column("HoraFin")]
-        public TimeSpan HoraFin { get; set; }
+        
         [Column("Activo")]
         public bool Activo { get; set; }
 
-        public Medico Medico { get; set; }
+        public Medico? Medico { get; set; }
         public ICollection<Cirugias>? Cirugias { get; set; }
     }
 }

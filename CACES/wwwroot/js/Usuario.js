@@ -61,7 +61,7 @@
                         orderable: false,
                         render: function (data, type, row) {
 
-                            return `
+                            let botones = `
                                 <button
                                     type="button"
                                     class="btn btn-sm btn-warning btnEditar"
@@ -76,14 +76,20 @@
                                     data-estado="${row.estado}">
                                     <i class="bi bi-pencil"></i>
                                 </button>
-
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-danger desactivar"
-                                    data-id="${row.idUsuario}">
-                                    <i class="bi bi-person-x-fill"></i>
-                                </button>
                             `;
+
+                            if (row.estado === true) {
+                                botones += `
+                                    <button
+                                        type="button"
+                                        class="btn btn-sm btn-danger desactivar"
+                                        data-id="${row.idUsuario}">
+                                        <i class="bi bi-person-x-fill"></i>
+                                    </button>
+                                `;
+                            }
+
+                            return botones;
                         }
                     }
                 ],

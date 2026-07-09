@@ -162,11 +162,14 @@ CREATE TABLE Cirugias(
     Id_Medico INT NOT NULL,
     Id_Procedimiento INT NOT NULL,
     Id_Horario INT NOT NULL,
+    Id_Cita INT not null,
     Estado BIT NOT NULL,
     CONSTRAINT FK_Cirugias_Paciente FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Cirugias_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
     CONSTRAINT FK_Cirugias_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento),
-    CONSTRAINT FK_Cirugia_Fecha FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
+    CONSTRAINT FK_Cirugia_Fecha FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario),
+    CONSTRAINT FK_Cirugia_Cita FOREIGN KEY (Id_Cita) REFERENCES Citas(Id_Cita),
+
 );
 
 
