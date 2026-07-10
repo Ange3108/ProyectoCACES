@@ -21,6 +21,7 @@ namespace CACES.DAL.Entidades
         public bool Estado { get; set; }
         [Column("Id_Cita")]
         public int Id_Cita { get; set; }
+
         public Cita? Cita { get; set; }
         public Paciente? Paciente { get; set; }
         public Medico? Medico { get; set; }

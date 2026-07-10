@@ -1,4 +1,4 @@
-﻿@model CACES.DAL.Entidades.Cita
+﻿@model CACES.BLL.DTOs.Cita.MostrarCitaDTO
 
 @{
     ViewData["Title"] = "Ticket de Cita";
@@ -23,7 +23,7 @@
 
                 <div class="col-md-6">
                     <strong>Fecha:</strong>
-                    <p>@Model.Fecha.ToString("dd/MM/yyyy")</p>
+                    <p>@Model.FechaCita.ToString("dd/MM/yyyy")</p>
                 </div>
             </div>
 

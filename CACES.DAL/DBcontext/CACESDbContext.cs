@@ -1,6 +1,8 @@
 using CACES.DAL.Entidades;
 using CACES.DAL.Entidades.Roles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Runtime.ConstrainedExecution;
 
 namespace CACES.DAL.DBContext
 {
@@ -84,12 +86,32 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
                 entity.Property(e => e.IdHorario).HasColumnName("Id_Horario");
                 entity.Property(e => e.Fecha).HasColumnName("Fecha");
-                entity.Property(e => e.Hora).HasColumnName("Hora");
                 entity.Property(e => e.Motivo).HasColumnName("Motivo").HasMaxLength(100);
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
                 entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
                 entity.Property(e => e.Estado).HasColumnName("Estado");
-            });
+
+            
+    entity.HasOne(c => c.Paciente)
+          .WithMany()
+          .HasForeignKey(c => c.IdPaciente)
+          .OnDelete(DeleteBehavior.ClientSetNull);
+
+    entity.HasOne(c => c.Medico)
+          .WithMany()
+          .HasForeignKey(c => c.IdMedico)
+          .OnDelete(DeleteBehavior.ClientSetNull);
+
+    entity.HasOne(c => c.Especialidad)
+          .WithMany()
+          .HasForeignKey(c => c.IdEspecialidad)
+          .OnDelete(DeleteBehavior.ClientSetNull);
+
+    entity.HasOne(c => c.Horario)
+          .WithMany()
+          .HasForeignKey(c => c.IdHorario)
+          .OnDelete(DeleteBehavior.ClientSetNull);
+});
 
             // Configuración de la entidad HistorialMedico
             modelBuilder.Entity<HistorialMedico>(entity =>
@@ -267,6 +289,11 @@ namespace CACES.DAL.DBContext
                 entity.HasOne(d => d.Horario)
                       .WithMany(h => h.Cirugias)
                       .HasForeignKey(d => d.Id_Horario)
+                      .OnDelete(DeleteBehavior.ClientSetNull);
+          
+                entity.HasOne(d => d.Cita)
+                      .WithOne(c => c.Cirugia)
+                      .HasForeignKey<Cirugias>(d => d.Id_Cita)
                       .OnDelete(DeleteBehavior.ClientSetNull);
 
             });
