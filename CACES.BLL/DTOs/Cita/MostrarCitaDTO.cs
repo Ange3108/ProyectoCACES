@@ -13,6 +13,7 @@ namespace CACES.BLL.DTOs.Cita
         public int IdMedico { get; set; }
 
         public int IdEspecialidad { get; set; }
+  
 
         public string NombrePaciente { get; set; } = string.Empty;
 
@@ -29,5 +30,7 @@ namespace CACES.BLL.DTOs.Cita
         public byte Estado { get; set; }
 
         public string EstadoTexto => Estado == 1 ? "Pendiente" : "Cancelada";
+
+
     }
 }

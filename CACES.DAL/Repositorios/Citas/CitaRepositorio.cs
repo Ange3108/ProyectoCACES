@@ -17,7 +17,6 @@ namespace CACES.DAL.Repositorios.Citas
         {
             return await _context.Citas
                 .OrderBy(c => c.Fecha)
-                .ThenBy(c => c.Hora)
                 .ToListAsync();
         }
 
@@ -65,9 +64,9 @@ namespace CACES.DAL.Repositorios.Citas
         {
             var filas = await _context.Database.ExecuteSqlInterpolatedAsync($@"
                 INSERT INTO Citas
-                (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario, Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)
+                (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario, Fecha, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)
                 VALUES
-                ({cita.IdPaciente}, {cita.IdMedico}, {cita.IdEspecialidad}, {cita.IdHorario}, {cita.Fecha}, {cita.Hora}, {cita.Motivo}, {cita.FechaDeRegistro}, NULL, {cita.Estado})
+                ({cita.IdPaciente}, {cita.IdMedico}, {cita.IdEspecialidad}, {cita.IdHorario}, {cita.Fecha}, {cita.Motivo}, {cita.FechaDeRegistro}, NULL, {cita.Estado})
             ");
 
             return filas > 0;
