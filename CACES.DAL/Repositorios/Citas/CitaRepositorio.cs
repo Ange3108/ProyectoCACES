@@ -94,14 +94,19 @@ namespace CACES.DAL.Repositorios.Citas
             return cita;
         }
 
-        public async Task<bool> ExisteCitaAsync(int idMedico, DateTime fecha, TimeSpan hora, int? excluir = null)
+        public async Task<bool> ExisteCitaAsync(
+            int idMedico,
+            DateTime fecha,
+            TimeSpan hora,
+            int? excluir = null)
         {
             var consulta = _context.Citas
                 .AsNoTracking()
-                .Where(c => c.IdMedico == idMedico &&
-                            c.Fecha.Date == fecha.Date &&
-                            c.Hora == hora &&
-                            c.Estado == 1);
+                .Where(c =>
+                    c.IdMedico == idMedico &&
+                    c.Fecha.Date == fecha.Date &&
+                    c.Hora == hora &&
+                    c.Estado == 1);
 
             if (excluir.HasValue)
             {
@@ -146,16 +151,21 @@ namespace CACES.DAL.Repositorios.Citas
         {
             return await _context.Citas
                 .AsNoTracking()
-                .CountAsync(c => c.Fecha.Date == fecha.Date && c.Estado == 1);
+                .CountAsync(c =>
+                    c.Fecha.Date == fecha.Date &&
+                    c.Estado == 1);
         }
 
-        public async Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana)
+        public async Task<bool> TieneHorarioActivoAsync(
+            int idMedico,
+            int diaSemana)
         {
             return await _context.HorariosDisponibles
                 .AsNoTracking()
-                .AnyAsync(h => h.Id_Medico == idMedico &&
-                               h.DiaSemana == diaSemana &&
-                               h.Activo);
+                .AnyAsync(h =>
+                    h.Id_Medico == idMedico &&
+                    h.DiaSemana == diaSemana &&
+                    h.Activo);
         }
     }
 }

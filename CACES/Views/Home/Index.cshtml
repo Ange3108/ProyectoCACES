@@ -415,7 +415,7 @@
 
             @* Accesos comunes a todos los autenticados *@
             <div class="col">
-                <a href="@Url.Action("GestionCitas", "Citas")" class="acceso-card">
+                <a href="@Url.Action("MisCitas", "Cita")" class="acceso-card">
                     <div class="acceso-icon" style="background:#e0f2fe;">
                         <i class="bi bi-calendar-check" style="color:#0284c7;"></i>
                     </div>
@@ -626,6 +626,8 @@
     </div>
 </section>
 
+@if (User.IsInRole("Administrador"))
+{
 <!-- ===================== RESUMEN DEL CENTRO (sticky bottom) ===================== -->
 <section class="resumen-section mt-5" id="resumenCentro">
     <div class="resumen-bar" id="resumenBar" onclick="toggleResumen()" title="Ver detalles del resumen">
@@ -691,8 +693,7 @@
 </section>
 
 <!-- ===================== MODAL SUBIR NOTICIA (Admin) ===================== -->
-@if (User.IsInRole("Administrador"))
-{
+
     <div class="modal fade" id="modalSubirNoticia" tabindex="-1" aria-labelledby="modalNoticiaLabel" aria-hidden="true">
         <div class="modal-dialog modal-dialog-centered">
             <div class="modal-content border-0 shadow-lg" style="border-radius:18px;overflow:hidden;">
@@ -945,5 +946,6 @@
             fetchResumen();
             scheduleNightRefresh();
         });
-    </script>
+	</script>
+	<script src="~/js/resumencentro.js"></script>
 }

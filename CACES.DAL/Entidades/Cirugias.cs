@@ -22,8 +22,13 @@ namespace CACES.DAL.Entidades
         [Column("Id_Horario")]
         public int Id_Horario { get; set; }
 
+        [Column("Id_Cita")]
+        public int Id_Cita { get; set; }
+
         [Column("Estado")]
         public bool Estado { get; set; }
+
+        public virtual Cita? Cita { get; set; }
 
         public virtual Paciente Paciente { get; set; } = null!;
 

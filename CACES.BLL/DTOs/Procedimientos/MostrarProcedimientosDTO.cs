@@ -8,6 +8,8 @@ namespace CACES.BLL.DTOs.Procedimientos
     {
         public int Id_Cirugia { get; set; }
         public int Id_Paciente { get; set; }
+       
+
 
         public string Nombre { get; set; } 
         public string NombreMedico { get; set; }      

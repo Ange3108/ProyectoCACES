@@ -72,7 +72,7 @@ namespace CACES.DAL.Repositorios.Roles
             return await _context.SaveChangesAsync() > 0;
         }
 
-        public async Task<bool> EliminarUsuarioPorRolAsync(string userId, string nombreRol)
+        public async Task<bool> DesactivarUsuarioPorRolAsync(string userId, string nombreRol)
         {
             if (!int.TryParse(userId, out int idUsuario))
                 return false;
@@ -97,7 +97,7 @@ namespace CACES.DAL.Repositorios.Roles
             usuario.Estado = false;
             usuario.FechaDeModificacion = DateTime.Now;
 
-            _context.UsuarioRoles.Remove(usuarioRol);
+            _context.Usuarios.Update(usuario);
 
             return await _context.SaveChangesAsync() > 0;
         }

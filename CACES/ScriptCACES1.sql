@@ -87,7 +87,6 @@ CREATE TABLE Citas(
     Id_Especialidad INT NOT NULL,
     Id_Horario INT NOT NULL,
     Fecha Date NOT NULL,
-    Hora TIME NOT NULL,
     Motivo VARCHAR(100) NOT NULL,
     FechaDeRegistro DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL,
@@ -162,11 +161,14 @@ CREATE TABLE Cirugias(
     Id_Medico INT NOT NULL,
     Id_Procedimiento INT NOT NULL,
     Id_Horario INT NOT NULL,
+    Id_Cita INT not null,
     Estado BIT NOT NULL,
     CONSTRAINT FK_Cirugias_Paciente FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Cirugias_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
     CONSTRAINT FK_Cirugias_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento),
-    CONSTRAINT FK_Cirugia_Fecha FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
+    CONSTRAINT FK_Cirugia_Fecha FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario),
+    CONSTRAINT FK_Cirugia_Cita FOREIGN KEY (Id_Cita) REFERENCES Citas(Id_Cita),
+
 );
 
 
@@ -369,10 +371,10 @@ INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, Activo) VALUE
 GO
 
 -- CITAS
-INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario,Fecha, Hora, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)VALUES
-(1, 1, 1, 1, '2026-07-01', '09:00','Valoración para colecistectomía laparoscópica',GETDATE(), NULL, 1),
-(2, 2, 2, 2, '2026-07-02', '10:30','Valoración para histerectomía',GETDATE(), NULL, 1),
-(3, 3, 4, 3, '2026-07-03', '08:00','Consulta para lipoescultura',GETDATE(), NULL, 1);
+INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario,Fecha, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)VALUES
+(1, 1, 1, 1, '2026-07-01','Valoración para colecistectomía laparoscópica',GETDATE(), NULL, 1),
+(2, 2, 2, 2, '2026-07-02','Valoración para histerectomía',GETDATE(), NULL, 1),
+(3, 3, 4, 3, '2026-07-03', 'Consulta para lipoescultura',GETDATE(), NULL, 1);
 GO
 
 -- ARCHIVOS HISTORIAL
@@ -431,11 +433,11 @@ GO
 
 -- CIRUGIAS
 INSERT INTO Cirugias
-(Id_Paciente, Id_Medico, Id_Procedimiento, Id_Horario, Estado)
+(Id_Paciente, Id_Medico, Id_Procedimiento, Id_Horario, Id_Cita, Estado)
 VALUES
-(1, 1, 1, 1, 1),   -- Colecistectomía
-(2, 2, 13, 2, 1),  -- Mastectomía
-(3, 3, 2, 3, 1);   -- Apendicectomía
+(1, 1, 1, 1,1, 1),   -- Colecistectomía
+(2, 2, 13, 2,2, 1),  -- Mastectomía
+(3, 3, 2, 3,3, 1);   -- Apendicectomía
 GO
 
 -- NOTICIAS

@@ -106,12 +106,6 @@ namespace CACES.Controllers
             return Json(resultado);
         }
 
-        [Authorize(Roles = "Administrador")]
-        [HttpPost]
-        public async Task<IActionResult> EliminarEspecialidad(int id)
-        {
-            var resultado = await _especialidadServicio.DesactivarEspecialidadAsync(id);
-            return Json(resultado);
-        }
+       
     }
 }

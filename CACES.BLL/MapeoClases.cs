@@ -1,4 +1,5 @@
 ﻿using AutoMapper;
+using CACES.BLL.DTOs.Cita;
 using CACES.BLL.DTOs.Horario;
 
 using CACES.BLL.DTOs.Medico;
@@ -132,15 +133,32 @@ namespace CACES.BLL
 
                 .ForMember(dest => dest.MedicoResponsable,
                            opt => opt.MapFrom(src => $"Dr(a). {src.Medico.Usuario.Nombres} {src.Medico.Usuario.PrimerApellido}"))
+                .ForMember(dest => dest.FechaProcedimiento,
+                           opt => opt.MapFrom(src => src.Cita.Fecha))
 
                 .ForMember(dest => dest.Estado,
-                           opt => opt.MapFrom(src => src.Estado ? "Realizado" : "Pendiente"));
+                           opt => opt.MapFrom(src => src.Cita.Estado == 1 ? "Realizado" : "Pendiente"))
+                .ForMember(dest => dest.HoraProcedimiento,
+                           opt => opt.MapFrom(src => src.Cita.Horario.HoraInicio));
 
             //mapeo para dtos de horario
             CreateMap<HorariosDisponibles, MostrarHorarioDTO>().ReverseMap();
 
             CreateMap<HorariosDisponibles, EditarHorarioDTO>().ReverseMap();
             CreateMap<HorariosDisponibles, RegistrarHorarioDTO>().ReverseMap();
+
+            //mapeo para dtos de citas
+            CreateMap<Cita, MostrarCitaDTO>()
+                .ForMember(dest => dest.NombrePaciente,
+                           opt => opt.MapFrom(src => $"{src.Paciente.Usuario.Nombres} {src.Paciente.Usuario.PrimerApellido}"))
+                .ForMember(dest => dest.NombreMedico,
+                           opt => opt.MapFrom(src => $"{src.Medico.Usuario.Nombres} {src.Medico.Usuario.PrimerApellido}"))
+                .ForMember(dest => dest.NombreEspecialidad,
+                           opt => opt.MapFrom(src => src.Especialidad.Nombre))
+                .ForMember(dest => dest.Hora,
+                           opt => opt.MapFrom(src => src.Horario.HoraInicio))
+                .ForMember(dest => dest.Estado,
+                           opt => opt.MapFrom(src => src.Estado == 1 ? "Activa" : "Cancelada"));
 
 
         }

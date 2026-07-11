@@ -1,6 +1,8 @@
 using CACES.DAL.Entidades;
 using CACES.DAL.Entidades.Roles;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Runtime.ConstrainedExecution;
 
 namespace CACES.DAL.DBContext
 {
@@ -76,31 +78,51 @@ namespace CACES.DAL.DBContext
             });
 
             modelBuilder.Entity<Cita>(entity =>
-            {
-                entity.HasKey(e => e.IdCita);
+{
+    entity.HasKey(e => e.IdCita);
 
-                entity.ToTable("Citas");
+    entity.ToTable("Citas");
 
-                entity.Property(e => e.IdCita).HasColumnName("Id_Cita");
-                entity.Property(e => e.IdPaciente).HasColumnName("Id_Paciente");
-                entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
-                entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
-                entity.Property(e => e.IdHorario).HasColumnName("Id_Horario");
-                entity.Property(e => e.Fecha).HasColumnName("Fecha");
-                entity.Property(e => e.Hora).HasColumnName("Hora");
-                entity.Property(e => e.Motivo).HasColumnName("Motivo").HasMaxLength(100).IsRequired();
-                entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
-                entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
-                entity.Property(e => e.Estado).HasColumnName("Estado");
+    entity.Property(e => e.IdCita).HasColumnName("Id_Cita");
+    entity.Property(e => e.IdPaciente).HasColumnName("Id_Paciente");
+    entity.Property(e => e.IdMedico).HasColumnName("Id_Medico");
+    entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
+    entity.Property(e => e.IdHorario).HasColumnName("Id_Horario");
+    entity.Property(e => e.Fecha).HasColumnName("Fecha");
+    entity.Property(e => e.Hora).HasColumnName("Hora");
+    entity.Property(e => e.Motivo)
+          .HasColumnName("Motivo")
+          .HasMaxLength(100)
+          .IsRequired();
 
-                entity.HasOne(c => c.Paciente).WithMany(p => p.Citas).HasForeignKey(c => c.IdPaciente).OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_Citas_Pacientes");
+    entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
+    entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
+    entity.Property(e => e.Estado).HasColumnName("Estado");
 
-                entity.HasOne(c => c.Medico).WithMany(m => m.Citas).HasForeignKey(c => c.IdMedico).OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_Citas_Medicos");
+    entity.HasOne(c => c.Paciente)
+          .WithMany(p => p.Citas)
+          .HasForeignKey(c => c.IdPaciente)
+          .OnDelete(DeleteBehavior.Restrict)
+          .HasConstraintName("FK_Citas_Pacientes");
 
-                entity.HasOne(c => c.Especialidad).WithMany(e => e.Citas).HasForeignKey(c => c.IdEspecialidad).OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_Citas_Especialidad");
+    entity.HasOne(c => c.Medico)
+          .WithMany(m => m.Citas)
+          .HasForeignKey(c => c.IdMedico)
+          .OnDelete(DeleteBehavior.Restrict)
+          .HasConstraintName("FK_Citas_Medicos");
 
-                entity.HasOne(c => c.Horario).WithMany(h => h.Citas).HasForeignKey(c => c.IdHorario).OnDelete(DeleteBehavior.Restrict).HasConstraintName("FK_Citas_Horario");
-            });
+    entity.HasOne(c => c.Especialidad)
+          .WithMany(e => e.Citas)
+          .HasForeignKey(c => c.IdEspecialidad)
+          .OnDelete(DeleteBehavior.Restrict)
+          .HasConstraintName("FK_Citas_Especialidad");
+
+    entity.HasOne(c => c.Horario)
+          .WithMany(h => h.Citas)
+          .HasForeignKey(c => c.IdHorario)
+          .OnDelete(DeleteBehavior.Restrict)
+          .HasConstraintName("FK_Citas_Horario");
+});
 
             // Configuración de la entidad HistorialMedico
             modelBuilder.Entity<HistorialMedico>(entity =>
@@ -266,6 +288,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
                 entity.Property(e => e.Id_Procedimiento).HasColumnName("Id_Procedimiento").IsRequired();
                 entity.Property(e => e.Id_Horario).HasColumnName("Id_Horario").IsRequired();
+                entity.Property(e => e.Id_Cita).HasColumnName("Id_Cita").IsRequired();
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.HasOne(d => d.Paciente)
                       .WithMany()
@@ -285,6 +308,11 @@ namespace CACES.DAL.DBContext
                 entity.HasOne(d => d.Horario)
                       .WithMany(h => h.Cirugias)
                       .HasForeignKey(d => d.Id_Horario)
+                      .OnDelete(DeleteBehavior.ClientSetNull);
+          
+                entity.HasOne(d => d.Cita)
+                      .WithOne(c => c.Cirugia)
+                      .HasForeignKey<Cirugias>(d => d.Id_Cita)
                       .OnDelete(DeleteBehavior.ClientSetNull);
 
             });
@@ -313,21 +341,21 @@ namespace CACES.DAL.DBContext
             //configuración de la entidad HorariosDisponibles
 
             modelBuilder.Entity<HorariosDisponibles>(entity =>
-            {
-                entity.HasKey(e => e.Id_Horario);
+{
+    entity.HasKey(e => e.Id_Horario);
 
-                entity.Property(e => e.Id_Horario).HasColumnName("Id_Horario");
-                entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico");
-                entity.Property(e => e.DiaSemana).HasColumnName("DiaSemana");
-                entity.Property(e => e.HoraInicio).HasColumnName("HoraInicio");
-                entity.Property(e => e.HoraFin).HasColumnName("HoraFin");
-                entity.Property(e => e.Activo).HasColumnName("Activo");
+    entity.Property(e => e.Id_Horario).HasColumnName("Id_Horario");
+    entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico");
+    entity.Property(e => e.DiaSemana).HasColumnName("DiaSemana");
+    entity.Property(e => e.HoraInicio).HasColumnName("HoraInicio");
+    entity.Property(e => e.HoraFin).HasColumnName("HoraFin");
+    entity.Property(e => e.Activo).HasColumnName("Activo");
 
-                entity.HasOne(h => h.Medico)
-                      .WithMany(m => m.HorariosDisponibles)
-                      .HasForeignKey(h => h.Id_Medico)
-                      .OnDelete(DeleteBehavior.Restrict);
-            });
+    entity.HasOne(h => h.Medico)
+          .WithMany(m => m.HorariosDisponibles)
+          .HasForeignKey(h => h.Id_Medico)
+          .OnDelete(DeleteBehavior.Restrict);
+});
 
             // Configuración de la entidad ArchivoHistorial
             modelBuilder.Entity<ArchivoHistorial>(entity =>

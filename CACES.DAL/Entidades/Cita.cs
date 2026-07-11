@@ -49,5 +49,7 @@ namespace CACES.DAL.Entidades
         public virtual HorariosDisponibles Horario { get; set; } = null!;
 
         public virtual Receta? Receta { get; set; }
+
+        public virtual Cirugias? Cirugia { get; set; }
     }
 }
