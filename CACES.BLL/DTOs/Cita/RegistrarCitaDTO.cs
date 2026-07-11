@@ -21,7 +21,8 @@ namespace CACES.BLL.DTOs.Cita
         [Required(ErrorMessage = "La fecha de la cita es requerida")]
         public DateTime FechaCita { get; set; }
 
-
+        [Required(ErrorMessage = "La hora es requerida")]
+        public TimeSpan Hora { get; set; }
 
         [Required(ErrorMessage = "El motivo es requerido")]
         [StringLength(100)]
