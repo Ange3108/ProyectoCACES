@@ -522,3 +522,15 @@ VALUES
 UPDATE Usuarios
 SET Foto = 'carlos.jpg'
 WHERE Id_Usuario = 9;
+
+-- Agregar la columna
+ALTER TABLE Cirugias
+ADD Id_Cita INT NULL;
+GO
+
+-- Crear la llave foránea
+ALTER TABLE Cirugias
+ADD CONSTRAINT FK_Cirugias_Citas
+FOREIGN KEY (Id_Cita)
+REFERENCES Citas(Id_Cita);
+GO

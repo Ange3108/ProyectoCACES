@@ -1,7 +1,8 @@
 ﻿using AutoMapper;
 using CACES.BLL.DTOs.Cita;
+using CACES.BLL.DTOs.Especialidad;
 using CACES.BLL.DTOs.Horario;
-
+using CACES.BLL.DTOs.Icono;
 using CACES.BLL.DTOs.Medico;
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Perfil;
@@ -77,9 +78,13 @@ namespace CACES.BLL
                         dest.EnfermedadesCronicas = "Ninguna registrada";
                     }
 
-                    if (paciente?.Cita?.Receta != null)
+                    var ultimaCita = paciente?.Citas?
+                     .OrderByDescending(c => c.IdCita)
+                     .FirstOrDefault();
+
+                    if (ultimaCita?.Receta != null)
                     {
-                        dest.MedicamentosActuales = paciente.Cita.Receta.Medicamentos;
+                        dest.MedicamentosActuales = ultimaCita.Receta.Medicamentos;
                     }
                     else
                     {
@@ -95,12 +100,19 @@ namespace CACES.BLL
 
             //mapeo de los dto de especialidad
 
-            CreateMap<Especialidad, DTOs.Especialidad.especialidadDTO>()
-                .ReverseMap();
-            CreateMap<Especialidad, DTOs.Especialidad.mostrarEspecialidadDTO>()
-               .ReverseMap();
-            CreateMap<Especialidad, DTOs.Especialidad.mostrarDetalleEspecialidadDTO>()
-               .ReverseMap();
+            CreateMap<Especialidad, mostrarEspecialidadDTO>()
+     .ForMember(dest => dest.NombreIcono, opt => opt.MapFrom(src => src.Icono.Codigo));
+
+            CreateMap<Especialidad, mostrarDetalleEspecialidadDTO>()
+                .ForMember(dest => dest.NombreIcono, opt => opt.MapFrom(src => src.Icono.Codigo));
+
+            // Para mostrar datos (lectura)
+            CreateMap<Especialidad, especialidadDTO>()
+                .ForMember(dest => dest.NombreIcono, opt => opt.MapFrom(src => src.Icono.Codigo));
+
+            // Para guardar datos (registro/edición) - ignora la navegación Icono, solo usa IdIcono
+            CreateMap<especialidadDTO, Especialidad>()
+                .ForMember(dest => dest.Icono, opt => opt.Ignore());
 
             //mapeo de los dto de turismo medico(paquetes)
             CreateMap<Paquete, DTOs.Paquete.PaqueteDTO>()
@@ -156,7 +168,9 @@ namespace CACES.BLL
                 .ForMember(dest => dest.Estado,
                            opt => opt.MapFrom(src => src.Estado == 1 ? "Activa" : "Cancelada"));
 
-
+            //mapeo de los dto de iconos
+            CreateMap<Icono, IconoDTO>()
+                .ReverseMap();
         }
     }
     }

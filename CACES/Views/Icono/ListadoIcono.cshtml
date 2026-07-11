@@ -1,0 +1,114 @@
+﻿@using CACES.BLL.DTOs.Icono
+@model IEnumerable<IconoDTO>
+
+@{
+    ViewData["Title"] = "Gestión de Íconos";
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header banner-header p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 fw-bold">
+                        <i class="bi bi-image me-2"></i>Gestión de Íconos
+                    </h3>
+                    <p class="mb-0 opacity-75">
+                        Catálogo de íconos disponibles para especialidades.
+                    </p>
+                </div>
+                <button type="button" class="btn btn-light fw-semibold" data-bs-toggle="modal" data-bs-target="#registroIconoModal">
+                    + Registrar Ícono
+                </button>
+            </div>
+        </div>
+        <div class="card-body p-4">
+            <div class="table-responsive">
+                <table id="tbIconos" class="table table-hover align-middle mb-0">
+                    <thead>
+                        <tr>
+                            <th style="width: 80px;">Vista previa</th>
+
+                            <th>Codigo</th>
+                            <th>Nombre </th>
+                            <th style="width: 100px;">Acciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Registrar -->
+<div class="modal fade" id="registroIconoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formRegistroIcono" asp-controller="Icono" asp-action="RegistroIcono" method="post">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar Ícono</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre descriptivo</label>
+                        <input type="text" class="form-control" id="NombreRegistro" name="Nombre" placeholder="Ej. Cardiología" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Clase de Bootstrap Icons</label>
+                        <input type="text" class="form-control" id="CodigoRegistro" name="Codigo" placeholder="bi bi-heart-pulse" required>
+                        <div class="form-text">
+                            Consulta la lista completa en
+                            <a href="https://icons.getbootstrap.com/" target="_blank">icons.getbootstrap.com</a>
+                        </div>
+                    </div>
+                    <div class="text-center py-3">
+                        <span class="fs-1"><i id="previewRegistro" class="bi bi-question-circle"></i></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar ícono</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal Editar -->
+<div class="modal fade" id="editarIconoModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formEditarIcono" asp-controller="Icono" asp-action="ActualizarIcono" method="post">
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="IdIcono" name="id" />
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar Ícono</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nombre descriptivo</label>
+                        <input type="text" class="form-control" id="NombreEditar" name="Nombre" required>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Codigo de iconoIcons</label>
+                        <input type="text" class="form-control" id="CodigoEditar" name="Codigo" required>
+                    </div>
+                    <div class="text-center py-3">
+                        <span class="fs-1"><i id="previewEditar" class="bi bi-question-circle"></i></span>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+    <script src="~/js/ListadoIcono.js" asp-append-version="true"></script>
+}

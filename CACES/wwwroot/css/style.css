@@ -974,3 +974,360 @@ body {
         background: #1AA6A6;
         color: #fff;
     }
+
+.module-card {
+    background: var(--white);
+    border: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 0.75rem 2rem rgba(11, 46, 89, 0.12);
+}
+
+.module-header {
+    background: var(--navy);
+    color: var(--white);
+    padding: 1.5rem;
+}
+
+    .module-header h3 {
+        color: var(--white);
+        margin: 0 0 0.25rem;
+        font-weight: 800;
+    }
+
+    .module-header p {
+        color: rgba(255, 255, 255, 0.78);
+        margin: 0;
+    }
+
+.module-body {
+    padding: 1.5rem;
+}
+
+.module-action {
+    background: var(--white);
+    color: var(--navy);
+    border: 1px solid var(--white);
+    border-radius: 0.55rem;
+    padding: 0.65rem 1rem;
+    font-weight: 700;
+}
+
+    .module-action:hover {
+        background: var(--turquoise);
+        color: var(--white);
+        border-color: var(--turquoise);
+    }
+
+.table-responsive {
+    border-radius: 0.75rem;
+}
+
+.table-caces {
+    width: 100%;
+    margin-bottom: 0;
+    color: var(--text);
+}
+
+    .table-caces thead th {
+        background: #F5F7F9;
+        color: #111827;
+        border-bottom: 1px solid var(--border);
+        padding: 0.85rem 0.75rem;
+        font-weight: 800;
+        vertical-align: middle;
+    }
+
+    .table-caces tbody td {
+        padding: 0.85rem 0.75rem;
+        border-bottom: 1px solid #E6EDF2;
+        vertical-align: middle;
+    }
+
+    .table-caces tbody tr:hover {
+        background: rgba(26, 166, 166, 0.05);
+    }
+
+.btn-action-edit {
+    color: #0D6EFD;
+    background: transparent;
+    border: 1px solid #0D6EFD;
+}
+
+    .btn-action-edit:hover {
+        color: var(--white);
+        background: #0D6EFD;
+    }
+
+.btn-action-danger {
+    color: #DC3545;
+    background: transparent;
+    border: 1px solid #DC3545;
+}
+
+    .btn-action-danger:hover {
+        color: var(--white);
+        background: #DC3545;
+    }
+
+.btn-action-view {
+    color: var(--turquoise-dark);
+    background: transparent;
+    border: 1px solid var(--turquoise);
+}
+
+    .btn-action-view:hover {
+        color: var(--white);
+        background: var(--turquoise);
+    }
+
+.badge-active {
+    background: #198754;
+    color: var(--white);
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.45rem;
+    font-weight: 700;
+}
+
+.badge-inactive {
+    background: #6C757D;
+    color: var(--white);
+    padding: 0.35rem 0.55rem;
+    border-radius: 0.45rem;
+    font-weight: 700;
+}
+
+.modal-content {
+    border: 0;
+    border-radius: 1rem;
+    overflow: hidden;
+    box-shadow: 0 1rem 3rem rgba(11, 46, 89, 0.18);
+}
+
+.modal-header {
+    background: var(--navy);
+    color: var(--white);
+    border-bottom: 0;
+}
+
+    .modal-header .btn-close {
+        filter: invert(1);
+    }
+
+.modal-footer {
+    background: #F8FAFC;
+    border-top: 1px solid var(--border);
+}
+
+.empty-state {
+    border: 1px dashed var(--border);
+    border-radius: 0.8rem;
+    background: #F9FCFD;
+    padding: 2rem;
+    text-align: center;
+    color: var(--text-muted);
+}
+
+@media (max-width: 768px) {
+    .module-header {
+        padding: 1.25rem;
+    }
+
+    .module-action {
+        width: 100%;
+    }
+
+    .module-body {
+        padding: 1rem;
+    }
+}
+
+/* ==========================================================
+   TABLAS Y BOTONES COMPACTOS — ESTILO GESTIÓN DE HORARIOS
+   ========================================================== */
+
+#tbGestionCitas,
+#tbCitasMedico,
+#tbMisCitas {
+    font-size: 0.92rem;
+}
+
+    #tbGestionCitas thead th,
+    #tbCitasMedico thead th,
+    #tbMisCitas thead th {
+        background: #F5F7F9 !important;
+        color: #111827 !important;
+        font-weight: 700;
+        padding: 0.65rem 0.55rem !important;
+        border-bottom: 1px solid var(--border) !important;
+        white-space: nowrap;
+    }
+
+    #tbGestionCitas tbody td,
+    #tbCitasMedico tbody td,
+    #tbMisCitas tbody td {
+        padding: 0.55rem !important;
+        vertical-align: middle;
+        border-bottom: 1px solid #E6EDF2;
+    }
+
+    #tbGestionCitas tbody tr:hover,
+    #tbCitasMedico tbody tr:hover,
+    #tbMisCitas tbody tr:hover {
+        background: rgba(26, 166, 166, 0.04);
+    }
+
+    /* Botones pequeños de acciones */
+    #tbGestionCitas .btn,
+    #tbCitasMedico .btn,
+    #tbMisCitas .btn {
+        min-width: 30px;
+        height: 30px;
+        padding: 0.2rem 0.45rem;
+        border-radius: 0.4rem;
+        font-size: 0.78rem;
+        font-weight: 600;
+        line-height: 1;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    /* Botón ticket compacto */
+    #tbGestionCitas .btn-info,
+    #tbCitasMedico .btn-info,
+    #tbMisCitas .btn-info {
+        background: transparent;
+        color: var(--turquoise-dark);
+        border: 1px solid var(--turquoise);
+    }
+
+        #tbGestionCitas .btn-info:hover,
+        #tbCitasMedico .btn-info:hover,
+        #tbMisCitas .btn-info:hover {
+            background: var(--turquoise);
+            color: var(--white);
+        }
+
+    /* Botón cancelar compacto */
+    #tbGestionCitas .btn-danger,
+    #tbCitasMedico .btn-danger,
+    #tbMisCitas .btn-danger {
+        background: transparent;
+        color: #DC3545;
+        border: 1px solid #DC3545;
+    }
+
+        #tbGestionCitas .btn-danger:hover,
+        #tbCitasMedico .btn-danger:hover,
+        #tbMisCitas .btn-danger:hover {
+            background: #DC3545;
+            color: var(--white);
+        }
+
+    /* Badges pequeños como Gestión de Horarios */
+    #tbGestionCitas .badge,
+    #tbCitasMedico .badge,
+    #tbMisCitas .badge {
+        padding: 0.3rem 0.5rem;
+        border-radius: 0.4rem;
+        font-size: 0.72rem;
+        font-weight: 700;
+    }
+
+/* DataTables compacto */
+.dataTables_wrapper {
+    color: var(--text);
+    font-size: 0.92rem;
+}
+
+    .dataTables_wrapper .dataTables_length select,
+    .dataTables_wrapper .dataTables_filter input {
+        min-height: 36px;
+        padding: 0.3rem 0.55rem;
+        border: 1px solid var(--border);
+        border-radius: 0.55rem;
+        background: var(--white);
+    }
+
+    .dataTables_wrapper .dataTables_filter input {
+        width: 185px;
+        margin-left: 0.45rem;
+    }
+
+    .dataTables_wrapper .dataTables_length {
+        margin-bottom: 0.9rem;
+    }
+
+    .dataTables_wrapper .dataTables_filter {
+        margin-bottom: 0.9rem;
+    }
+
+    .dataTables_wrapper .dataTables_info {
+        padding-top: 0.9rem !important;
+        font-size: 0.88rem;
+    }
+
+    .dataTables_wrapper .dataTables_paginate {
+        padding-top: 0.6rem !important;
+    }
+
+        .dataTables_wrapper .dataTables_paginate .paginate_button {
+            min-width: 36px;
+            padding: 0.4rem 0.65rem !important;
+            margin-left: 0 !important;
+            border: 1px solid var(--border) !important;
+            border-radius: 0 !important;
+            background: #F3F6F8 !important;
+            color: var(--text-muted) !important;
+            font-size: 0.86rem;
+        }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button:first-child {
+                border-radius: 0.45rem 0 0 0.45rem !important;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button:last-child {
+                border-radius: 0 0.45rem 0.45rem 0 !important;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current,
+            .dataTables_wrapper .dataTables_paginate .paginate_button.current:hover {
+                background: var(--navy) !important;
+                color: var(--white) !important;
+                border-color: var(--navy) !important;
+            }
+
+            .dataTables_wrapper .dataTables_paginate .paginate_button:hover {
+                background: #EAF4F8 !important;
+                color: var(--navy) !important;
+            }
+
+/* Botón principal del banner igual a Horarios */
+.banner-header .btn-light {
+    padding: 0.55rem 0.9rem;
+    border-radius: 0.45rem;
+    font-size: 0.9rem;
+    font-weight: 700;
+    color: #111827;
+    box-shadow: none;
+}
+
+    .banner-header .btn-light:hover {
+        background: #EEF5F8;
+        color: var(--navy);
+        border-color: #EEF5F8;
+    }
+
+/* Evita botones uno debajo del otro */
+#tbGestionCitas td:last-child,
+#tbCitasMedico td:last-child,
+#tbMisCitas td:last-child {
+    white-space: nowrap;
+}
+
+    #tbGestionCitas td:last-child .btn,
+    #tbCitasMedico td:last-child .btn,
+    #tbMisCitas td:last-child .btn {
+        margin-right: 0.25rem;
+    }

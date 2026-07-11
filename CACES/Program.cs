@@ -30,12 +30,10 @@ using CACES.DAL.Repositorios.Roles;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using CACES.BLL.Servicios.HistorialMedicos;
-using CACES.DAL.Repositorios.ArchivosHistorial;
-using CACES.BLL.Servicios.ArchivosHistorial;
-using CACES.DAL.Repositorios.Horarios;
 using CACES.BLL.Servicios.Soportes;
 using CACES.DAL.Repositorios.Soportes;
+using CACES.DAL.Repositorios.Icono;
+using CACES.BLL.Servicios.Icono;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -62,6 +60,7 @@ builder.Services.AddScoped<IProcedimientosRepositorio, ProcedimientosRepositorio
 builder.Services.AddScoped<IArchivoHistorialRepositorio, ArchivoHistorialRepositorio>();
 builder.Services.AddScoped<IQuirofanoRepositorio, QuirofanoRepositorio>();
 builder.Services.AddScoped<IHorariosRepositorio, HorariosRepositorio>();
+builder.Services.AddScoped<IIconoRepositorio, IconoRepositorio>();
 
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
@@ -84,6 +83,8 @@ builder.Services.AddScoped<IQuirofanoServicio, QuirofanoServicio>();
 builder.Services.AddScoped<IHorarioServicio, HorarioServicio>();
 builder.Services.AddScoped<ISoporteRepositorio, SoporteRepositorio>();
 builder.Services.AddScoped<ISoporteServicio, SoporteServicio>();
+builder.Services.AddScoped<IIconoServicio, IconoServicio>();
+
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();

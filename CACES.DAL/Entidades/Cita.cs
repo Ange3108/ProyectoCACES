@@ -25,6 +25,9 @@ namespace CACES.DAL.Entidades
         [Column("Fecha")]
         public DateTime Fecha { get; set; }
 
+        [Column("Hora")]
+        public TimeSpan Hora { get; set; }
+
         [Column("Motivo")]
         public string Motivo { get; set; } = null!;
 
@@ -37,17 +40,16 @@ namespace CACES.DAL.Entidades
         [Column("Estado")]
         public byte Estado { get; set; }
 
+        public virtual Paciente Paciente { get; set; } = null!;
 
+        public virtual Medico Medico { get; set; } = null!;
 
-        [NotMapped]
+        public virtual Especialidad Especialidad { get; set; } = null!;
+
+        public virtual HorariosDisponibles Horario { get; set; } = null!;
+
         public virtual Receta? Receta { get; set; }
 
-        public virtual Paciente Paciente { get; set; } = null!;
-        public virtual Medico Medico { get; set; } = null!;
-        public virtual Especialidad Especialidad { get; set; } = null!;
-        public virtual HorariosDisponibles Horario { get; set; } = null!;
         public virtual Cirugias? Cirugia { get; set; }
-
-
     }
 }

@@ -23,6 +23,7 @@ namespace CACES.DAL.Repositorios.Especialidades
         public async Task<List<Especialidad>> GetEspecialidadesActivasAsync()
         {
             return await _context.Especialidades
+                .Include(e => e.Icono)
                 .Where(e => e.Estado)
                 .ToListAsync();
         }
@@ -75,6 +76,7 @@ namespace CACES.DAL.Repositorios.Especialidades
         {
             return await _context.Especialidades
                 .Include(e => e.Procedimientos)
+                .Include(e => e.Icono)
                 .Where(p => p.Estado == true)
                 .Include(e => e.Medicos)
                 .ThenInclude(m => m.Usuario)

@@ -19,9 +19,10 @@ namespace CACES.Controllers
             var hoy = DateTime.Today;
 
             ViewBag.Especialidades = await _context.Especialidades
-                .Where(e => e.Estado == true)
-                .Take(4)
-                .ToListAsync();
+
+     .Where(e => e.Estado == true)
+     .Take(4)
+     .ToListAsync();
 
             ViewBag.Paquetes = await _context.Paquetes
                 .Where(p => p.Estado == true)

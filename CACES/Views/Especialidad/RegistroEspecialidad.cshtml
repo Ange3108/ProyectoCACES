@@ -5,47 +5,57 @@
 	ViewData["Title"] = "Registrar Especialidad";
 }
 
-	<main class="container py-5">
-		<section class="form-shell">
-			<div class="top-action mb-3">
-				<a class="btn btn-add" href="../Especialidades.html">Volver al listado</a>
-			</div>
-			<div class="card form-card shadow-sm">
-				<div class="card-body p-4 p-md-5">
-					<h1 class="section-title mb-3">Registrar Especialidad Médica</h1>
-					<p class="text-muted mb-4">Agrega una nueva especialidad al catálogo del sistema.</p>
+<main class="container py-5">
+	<section class="form-shell">
+		<div class="top-action mb-3">
+			<a class="btn btn-add" asp-controller="Especialidad" asp-action="ListadoEspecialidad">Volver al listado</a>
+		</div>
+		<div class="card form-card shadow-sm">
+			<div class="card-body p-4 p-md-5">
+				<h1 class="section-title mb-3">Registrar Especialidad Médica</h1>
+				<p class="text-muted mb-4">Agrega una nueva especialidad al catálogo del sistema.</p>
 				<form id="formEspecialidad"
 					  asp-controller="Especialidad"
 					  asp-action="RegistroEspecialidad"
 					  method="post">
-						<div class="row g-3">
-							<div class="col-12 col-md-6">
-								<label for="nombreEspecialidad" class="form-label">Nombre</label>
-								<input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Ej. Endoscopia" required>
-							</div>
-							<div class="col-12 col-md-6">
-								<label for="iconoEspecialidad" class="form-label">Ícono</label>
-								<input type="text" class="form-control" id="Icono" name="Icono" placeholder="bi bi-heart-fill" required>
-							</div>
-							<div class="col-12">
-								<label for="descripcionEspecialidad" class="form-label">Descripcion</label>
-								<textarea class="form-control" id="Descripcion" name="Descripcion" rows="4" placeholder="Describe la especialidad" required></textarea>
-							</div>
-							<div class="col-12 col-md-6">
-								<label for="estadoEspecialidad" class="form-label">Estado</label>
-								<select class="form-select" id="Estado" name="Estado" required>
-									<option value="">Selecciona una opción</option>
-									<option value="true">Activa</option>
-									<option value="false">Inactiva</option>
-								</select>
-							</div>
-                            
+					<div class="row g-3">
+						<div class="col-12 col-md-6">
+							<label for="Nombre" class="form-label">Nombre</label>
+							<input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Ej. Endoscopia" required>
 						</div>
-						<div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
-							<button type="submit" class="btn btn-add">Guardar especialidad</button>
+						<div class="col-12 col-md-6">
+							<label for="Icono" class="form-label">Ícono</label>
+							<select class="form-control" id="Icono" name="IdIcono" required>
+								<option value="">Seleccione un icono</option>
+							</select>
 						</div>
-					</form>
-				</div>
+						<div class="col-12">
+							<label for="Descripcion" class="form-label">Descripcion</label>
+							<textarea class="form-control" id="Descripcion" name="Descripcion" rows="4" placeholder="Describe la especialidad" required></textarea>
+						</div>
+						<div class="col-12 col-md-6">
+							<label for="Estado" class="form-label">Estado</label>
+							<select class="form-select" id="Estado" name="Estado" required>
+								<option value="">Selecciona una opción</option>
+								<option value="true">Activa</option>
+								<option value="false">Inactiva</option>
+							</select>
+						</div>
+					</div>
+					<div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+						<button type="submit" class="btn btn-add">Guardar especialidad</button>
+					</div>
+				</form>
 			</div>
-		</section>
-	</main>
+		</div>
+	</section>
+</main>
+
+@section Scripts {
+	<partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+
+	<link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
+	<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+
+	<script src="~/js/RegistrarEspecialidad.js"></script>
+}
