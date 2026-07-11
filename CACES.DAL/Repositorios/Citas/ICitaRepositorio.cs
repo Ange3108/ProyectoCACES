@@ -1,32 +1,23 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-using CACES.DAL.Entidades;
+﻿using CACES.DAL.Entidades;
 
 namespace CACES.DAL.Repositorios.Citas
 {
     public interface ICitaRepositorio
     {
-        Task<List<Cita>> GetCitasAsync();
+        Task<List<Cita>> ObtenerTodasAsync();
+        Task<List<Cita>> ObtenerPorPacienteAsync(int idPaciente);
+        Task<List<Cita>> ObtenerPorMedicoAsync(int idMedico);
+        Task<Cita?> ObtenerEntidadPorIdAsync(int idCita);
 
-        Task<Cita?> GetCitaByIdAsync(int idCita);
+        Task<Cita> RegistrarAsync(Cita cita);
+        Task<Cita> ActualizarAsync(Cita cita);
 
-        Task<bool> ActualizarFechaCitaAsync(int idCita, DateTime nuevaFecha);
+        Task<bool> ExisteCitaAsync(int idMedico, DateTime fecha, TimeSpan hora, int? excluir = null);
 
-        Task<bool> CancelarCitasPorMedicoYFechaAsync(int idMedico, DateTime fechaCita);
+        Task<List<Medico>> ObtenerMedicosAsync();
+        Task<List<Especialidad>> ObtenerEspecialidadesAsync();
+        Task<List<HorariosDisponibles>> ObtenerHorariosAsync(int idMedico);
 
-        Task<bool> RegistrarCitaAsync(CACES.DAL.Entidades.Cita cita);
-
-        Task<List<Cita>> ObtenerCitasPorPacienteAsync(int idPaciente);
-
-        Task<Cita?> ObtenerTicketAsync(int idCita);
-
-        Task<List<Cita>> ObtenerCitasPorMedicoAsync(int idMedico);
-
-        Task<bool> CancelarCitaAsync(int idCita);
-
-        //metodos para manejar los horarios
         Task<int> ContarCitasPorFechaAsync(DateTime fecha);
         Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana);
     }

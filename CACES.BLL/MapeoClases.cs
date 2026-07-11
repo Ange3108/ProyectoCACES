@@ -77,9 +77,13 @@ namespace CACES.BLL
                         dest.EnfermedadesCronicas = "Ninguna registrada";
                     }
 
-                    if (paciente?.Cita?.Receta != null)
+                    var ultimaCita = paciente?.Citas?
+                     .OrderByDescending(c => c.IdCita)
+                     .FirstOrDefault();
+
+                    if (ultimaCita?.Receta != null)
                     {
-                        dest.MedicamentosActuales = paciente.Cita.Receta.Medicamentos;
+                        dest.MedicamentosActuales = ultimaCita.Receta.Medicamentos;
                     }
                     else
                     {

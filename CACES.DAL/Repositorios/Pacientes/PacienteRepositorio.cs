@@ -68,7 +68,9 @@ namespace CACES.DAL.Repositorios.Pacientes
                     ultimaCita.Receta = recetaAsociada;
                 }
 
-                usuario.Paciente.Cita = ultimaCita;
+                usuario.Paciente.Citas = ultimaCita != null
+                ? new List<Cita> { ultimaCita }
+                : new List<Cita>();
             }
 
             return usuario;

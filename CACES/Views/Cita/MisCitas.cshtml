@@ -1,49 +1,82 @@
 ﻿@{
     ViewData["Title"] = "Mis Citas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="container py-5">
-    <div class="card shadow border-0 rounded-4">
-        <div class="card-header text-white p-4" style="background-color:#27418C;">
-            <div class="d-flex justify-content-between align-items-center">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <div class="card-header banner-header p-4">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
                 <div>
-                    <h3 class="mb-1">Mis Citas Médicas</h3>
-                    <p class="mb-0">Consulta las citas registradas en el centro CACES.</p>
+                    <h3 class="mb-1 fw-bold">
+                        <i class="bi bi-calendar-check me-2"></i>
+                        Mis Citas
+                    </h3>
+
+                    <p class="mb-0 opacity-75">
+                        Consulte y administre sus citas médicas registradas.
+                    </p>
                 </div>
 
                 <a asp-controller="Cita"
                    asp-action="RegistrarCita"
                    class="btn btn-light fw-semibold">
-                    + Registrar Cita
+
+                    <i class="bi bi-plus-circle me-1"></i>
+                    Nueva Cita
+
                 </a>
+
             </div>
+
         </div>
 
         <div class="card-body p-4">
 
-            <div id="sinCitas" class="alert alert-info" style="display:none;">
-                No tienes citas registradas.
+            <div id="sinMisCitas"
+                 class="alert alert-info text-center rounded-3 py-4 d-none">
+
+                <i class="bi bi-calendar-x fs-2 d-block mb-2 text-muted"></i>
+                No tiene citas médicas registradas.
+
             </div>
 
             <div class="table-responsive">
-                <table id="tbMisCitas" class="table table-hover align-middle">
-                    <thead>
+
+                <table class="table table-hover align-middle mb-0"
+                       id="tbMisCitas"
+                       style="width:100%;">
+
+                    <thead class="table-light">
+
                         <tr>
+                            <th>#</th>
                             <th>Fecha</th>
                             <th>Hora</th>
-                            <th>Motivo</th>
+                            <th>Médico</th>
+                            <th>Especialidad</th>
                             <th>Estado</th>
-                            <th>Ticket</th>
+                            <th>Acciones</th>
                         </tr>
+
                     </thead>
+
                     <tbody></tbody>
+
                 </table>
+
             </div>
 
         </div>
+
     </div>
+
 </div>
 
 @section Scripts {
-    <script src="~/js/Cita/MisCitas.js"></script>
+    <script src="~/js/citas.js" asp-append-version="true"></script>
 }
