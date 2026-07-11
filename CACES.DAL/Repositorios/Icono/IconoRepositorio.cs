@@ -1,4 +1,6 @@
-﻿using System;
+﻿using CACES.DAL.DBContext;
+using Microsoft.EntityFrameworkCore;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
@@ -6,24 +8,38 @@ namespace CACES.DAL.Repositorios.Icono
 {
     public class IconoRepositorio : IIconoRepositorio
     {
-        public Task<bool> ActualizarAsync(Icono icono)
+
+        private readonly CACESDbContext _context;
+
+        public IconoRepositorio(CACESDbContext context)
         {
-            throw new NotImplementedException();
+            _context = context;
+        }
+        public async Task<bool> ActualizarAsync(Entidades.Icono icono)
+        {
+            _context.Iconos.Update(icono);
+            var filas = await _context.SaveChangesAsync();
+            return filas > 0;
         }
 
-        public Task<bool> CrearAsync(Icono icono)
+        public async Task<bool> CrearAsync(Entidades.Icono icono)
         {
-            throw new NotImplementedException();
+            _context.Iconos.Add(icono);
+            var filas = await _context.SaveChangesAsync();
+            return filas > 0;
         }
 
-        public Task<Icono?> GetPorIdAsync(int id)
+        public async Task<Entidades.Icono?> GetPorIdAsync(int id)
         {
-            throw new NotImplementedException();
+            return await _context.Iconos
+            .FirstOrDefaultAsync(i => i.IdIcono == id);
         }
 
-        public Task<List<Icono>> GetTodosLosIconosAsync()
+        public async Task<List<Entidades.Icono>> GetTodosLosIconosAsync()
         {
-            throw new NotImplementedException();
+            return await _context.Iconos
+            .OrderBy(i => i.Nombre)
+            .ToListAsync();
         }
     }
 }

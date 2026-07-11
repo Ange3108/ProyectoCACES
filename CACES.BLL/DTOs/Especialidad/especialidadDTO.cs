@@ -16,7 +16,8 @@ namespace CACES.BLL.DTOs.Especialidad
         public string Descripcion { get; set; } = null!;
 
         [Required(ErrorMessage = "Porfavor elige un icono para identificar la especialidad")]
-        public String Icono { get; set; } = null!;
+        public int IdIcono { get; set; }
+        public string? NombreIcono { get; set; }
         public bool Estado { get; set; }
         public DateTime FechaDeRegistro { get; set; }
 

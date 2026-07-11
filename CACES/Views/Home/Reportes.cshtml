@@ -106,13 +106,25 @@
             </div>
             <div class="report-card">
                 <div class="report-card-icon">
-                    <i class="bi bi-briefcase-fill"></i>
+                    <i class="bi bi-alarm-fill"></i>
                 </div>
                 <div class="report-card-body">
                     <h5 class="report-card-title">Gestión de Horarios de doctor</h5>
                     <p class="report-card-text">Administra los horarios disponibles por día para cada médico.</p>
                 </div>
                 <a asp-action="GestionHorarios" asp-controller="Horario" class="btn-report">
+                    Ver reporte <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="report-card">
+                <div class="report-card-icon">
+                    <i class="bi bi-box2-heart"></i>
+                </div>
+                <div class="report-card-body">
+                    <h5 class="report-card-title">Gestión de Iconos del sistema</h5>
+                    <p class="report-card-text">Administra los Icono para el sistema</p>
+                </div>
+                <a asp-action="ListadoIcono" asp-controller="Icono" class="btn-report">
                     Ver reporte <i class="bi bi-arrow-right"></i>
                 </a>
             </div>

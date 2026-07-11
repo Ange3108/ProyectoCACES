@@ -34,6 +34,8 @@ namespace CACES.DAL.DBContext
         public DbSet<ConfiguracionQuirofano> ConfiguracionQuirofano { get; set; }
         public DbSet<Soporte> Soportes { get; set; }
 
+        public DbSet<Icono> Iconos { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -234,7 +236,16 @@ namespace CACES.DAL.DBContext
                 entity.ToTable("AspNetRoles");
             });
 
-          
+
+
+            //configuración de la entidad Icono
+            modelBuilder.Entity<Icono>(entity =>
+            {
+                entity.HasKey(e => e.IdIcono);
+                entity.Property(e => e.IdIcono).HasColumnName("Id_Icono");
+                entity.Property(e => e.Codigo).HasColumnName("Codigo").IsRequired().HasMaxLength(50);
+                entity.Property(e => e.Nombre).HasColumnName("Nombre").IsRequired().HasMaxLength(100);
+            });
 
             //configuración de la entidad Especialidad
             modelBuilder.Entity<Especialidad>(entity =>
@@ -244,9 +255,14 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Nombre).HasColumnName("Nombre").IsRequired().HasMaxLength(100);
                 entity.HasIndex(e => e.Nombre).IsUnique();
                 entity.Property(e => e.Descripcion).HasColumnName("Descripcion").IsRequired().HasMaxLength(200);
-                entity.Property(e => e.Icono).HasColumnName("Icono").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.IdIcono).HasColumnName("Id_Icono").IsRequired();
                 entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro").IsRequired();
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+
+                entity.HasOne(d => d.Icono)
+                      .WithMany(p => p.Especialidades)
+                      .HasForeignKey(d => d.IdIcono)
+                      .OnDelete(DeleteBehavior.ClientSetNull);
             });
 
             //configuración de la entidad Paquete

@@ -17,8 +17,10 @@ namespace CACES.DAL.Entidades
         [Column("Descripcion")]
         public string Descripcion { get; set; } = null!;
 
-        [Column("Icono")]
-        public string Icono { get; set; } = null!;
+
+
+        public int IdIcono { get; set; } 
+
 
         [Column("FechaDeRegistro")]
         public DateTime FechaDeRegistro { get; set; }
@@ -30,6 +32,11 @@ namespace CACES.DAL.Entidades
 
         public virtual ICollection<Procedimiento> Procedimientos { get; set; } = new List<Procedimiento>();
 
+
         public virtual ICollection<Cita> Citas { get; set; } = new List<Cita>();
+
+        public virtual Icono Icono { get; set; } = null!;
+
+
     }
 }

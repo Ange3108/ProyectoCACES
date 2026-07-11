@@ -56,7 +56,7 @@ namespace CACES.BLL.Servicios.Especialidad
                     // Mapear el DTO a la entidad de base de datos
                     var nuevoEspecialidad = _mapper.Map<DAL.Entidades.Especialidad>(especialidadDto);
                     nuevoEspecialidad.FechaDeRegistro = DateTime.Now;
-                    nuevoEspecialidad.Estado = true;
+                    nuevoEspecialidad.Estado = especialidadDto.Estado;
 
                     // Guardar en la base de datos
                     bool resultado = await _especialidadRepositorio.CreateEspecialidadAsync(nuevoEspecialidad);
@@ -107,7 +107,7 @@ namespace CACES.BLL.Servicios.Especialidad
                     // Actualizar únicamente los campos editables
                     respuesta.Nombre = especialidadDto.Nombre;
                     respuesta.Descripcion = especialidadDto.Descripcion;
-                    respuesta.Icono = especialidadDto.Icono;
+                    respuesta.IdIcono = especialidadDto.IdIcono;
                     respuesta.Estado = especialidadDto.Estado;
 
                     bool resultado =
@@ -245,7 +245,7 @@ namespace CACES.BLL.Servicios.Especialidad
                     IdEspecialidad = especialidad.IdEspecialidad,
                     Nombre = especialidad.Nombre,
                     Descripcion = especialidad.Descripcion,
-                    Icono = especialidad.Icono ?? "bi bi-heart-pulse",
+                    IdIcono = especialidad.IdIcono,
 
                     Procedimientos = especialidad.Procedimientos != null
             ? especialidad.Procedimientos.Select(p => new MostrarProcedimientosDTO
