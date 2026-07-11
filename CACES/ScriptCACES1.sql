@@ -6,13 +6,23 @@ GO
 
 USE CACES;
 GO
+
+
+CREATE TABLE Icono(
+    Id_Icono INT PRIMARY KEY IDENTITY(1,1),
+    Codigo VARCHAR(100) NOT NULL,   
+    Nombre VARCHAR(100) NOT NULL,   -- 'Cardiología' (nombre visible en el selector)
+);
+GO
+
 CREATE TABLE Especialidad(
     Id_Especialidad INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(30) NOT NULL,
     Descripcion VARCHAR(200) NOT NULL,
-    Icono VARCHAR(100) NOT NULL,
+    Id_Icono INT NOT NULL,
     FechaDeRegistro DATETIME NOT NULL,
-	Estado BIT NOT NULL
+    Estado BIT NOT NULL,
+    CONSTRAINT FK_Especialidad_Icono FOREIGN KEY (Id_Icono) REFERENCES Icono(Id_Icono)
 );
 GO
 CREATE TABLE Usuarios(
@@ -189,7 +199,6 @@ create table ConfiguracionQuirofano(
 
 
 
-
 /****** Object:  Table [dbo].[AspNetRoles]    Script Date: 12/11/2024 13:29:30 ******/
 SET ANSI_NULLS ON
 GO
@@ -292,16 +301,50 @@ INSERT INTO [dbo].[AspNetRoles] ([Id], [Name]) VALUES
 ('3', 'Paciente');
 GO
 
--- ESPECIALIDADES
+-- Catálogo general de íconos médicos (Bootstrap Icons)
+INSERT INTO Icono (Codigo, Nombre) VALUES
+('bi bi-heart-pulse', 'Corazón'),
+('bi bi-clipboard2-pulse', 'Signos vitales'),
+('bi bi-eye', 'Ojo'),
+('bi bi-emoji-smile', 'Sonrisa'),
+('bi bi-gender-female', 'Mujer'),
+('bi bi-gender-male', 'Hombre'),
+('bi bi-bandaid', 'Vendaje'),
+('bi bi-ear', 'Oído'),
+('bi bi-lungs', 'Pulmones'),
+('bi bi-droplet-half', 'Gota'),
+('bi bi-thermometer-half', 'Termómetro'),
+('bi bi-capsule', 'Cápsula'),
+('bi bi-clipboard2-plus', 'Historial Médico'),
+('bi bi-person-arms-up', 'Rehabilitación'),
+('bi bi-magic', 'Estética'),
+('bi bi-ribbon', 'Lazo'),
+('bi bi-brain', 'Cerebro'),
+('bi bi-clipboard2-heart', 'Cuidados generales'),
+('bi bi-activity', 'Actividad'),
+('bi bi-hospital', 'Hospital');
+GO
+
 INSERT INTO Especialidad
-(Nombre, Descripcion, Icono, FechaDeRegistro, Estado)
+(Nombre, Descripcion, Id_Icono, FechaDeRegistro, Estado)
 VALUES
-('Cirugía General','Procedimientos quirúrgicos generales laparoscópicos y convencionales.','cirugia_general.jpg', GETDATE(),1),
-('Ginecología','Procedimientos quirúrgicos relacionados con el sistema reproductor femenino.','ginecologia.jpg',GETDATE(),1),
-('Cirugía Oncológica Mamaria','Procedimientos quirúrgicos relacionados con patologías mamarias.','mastologia.jpg',GETDATE(),1),
-('Cirugía Plástica','Procedimientos estéticos y reconstructivos.','cirugia_plastica.jpg',GETDATE(),1),
-('Ortopedia y Traumatología','Tratamiento quirúrgico de fracturas y lesiones articulares.','ortopedia.jpg',GETDATE(),1),
-('Otorrinolaringología','Procedimientos quirúrgicos de oído, nariz y garganta.','otorrinolaringologia.jpg',GETDATE(),1);
+('Cirugía General','Procedimientos quirúrgicos generales laparoscópicos y convencionales.',
+    1, GETDATE(), 1),
+
+('Ginecología','Procedimientos quirúrgicos relacionados con el sistema reproductor femenino.',
+    5, GETDATE(), 1),
+
+('Cirugía Oncológica Mamaria','Procedimientos quirúrgicos relacionados con patologías mamarias.',
+    16, GETDATE(), 1),
+
+('Cirugía Plástica','Procedimientos estéticos y reconstructivos.',
+    15, GETDATE(), 1),
+
+('Ortopedia y Traumatología','Tratamiento quirúrgico de fracturas y lesiones articulares.',
+    14, GETDATE(), 1),
+
+('Otorrinolaringología','Procedimientos quirúrgicos de oído, nariz y garganta.',
+    8, GETDATE(), 1);
 GO
 
 
@@ -316,6 +359,7 @@ VALUES
 ('Juan', 'García', 'López', 'juan.admin@caces.com', '12345678', 'juan.jpg',
  GETDATE(), NULL, 1, 'San José', 30, '8888-1111',
  '1994-05-10', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
 
 ('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg',
  GETDATE(), NULL, 1, 'Cartago', 35, '8888-2222',

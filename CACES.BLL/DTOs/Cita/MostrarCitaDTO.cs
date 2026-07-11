@@ -11,7 +11,6 @@ namespace CACES.BLL.DTOs.Cita
         public int IdPaciente { get; set; }
 
         public int IdMedico { get; set; }
-
         public int IdEspecialidad { get; set; }
   
 
