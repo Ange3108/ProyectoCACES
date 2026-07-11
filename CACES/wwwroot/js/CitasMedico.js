@@ -1,111 +1,454 @@
-﻿(() => {
+﻿const CitasMedico = {
 
-    const CitasMedico = {
+    tabla: null,
 
-        init() {
-            this.cargarCitas();
-            this.registrarEventos();
-        },
+    init() {
+        this.inicializarTabla();
+        this.registrarEventos();
+        this.configurarFechaMinima();
+    },
 
-        cargarCitas() {
-            $.ajax({
+    inicializarTabla() {
+
+        this.tabla = $('#tbCitasMedico').DataTable({
+
+            ajax: {
                 url: '/Cita/ObtenerCitasMedico',
                 type: 'GET',
-                success: function (respuesta) {
+
+                dataSrc: function (respuesta) {
+
+                    CitasMedico.ocultarMensajes();
+
+                    if (!respuesta || !respuesta.esCorrecto) {
+
+                        CitasMedico.mostrarError(
+                            respuesta?.mensaje ||
+                            'No se pudieron obtener las citas.'
+                        );
+
+                        $('#contenedorTablaCitasMedico').addClass('d-none');
+
+                        return [];
+                    }
+
+                    const citas = respuesta.dato || [];
+
+                    if (citas.length === 0) {
+
+                        $('#sinCitasMedico').removeClass('d-none');
+                        $('#contenedorTablaCitasMedico').addClass('d-none');
+
+                        return [];
+                    }
+
+                    $('#contenedorTablaCitasMedico').removeClass('d-none');
+
+                    return citas;
+                },
+
+                error: function (xhr) {
+
+                    CitasMedico.mostrarError(
+                        'Ocurrió un error al consultar las citas médicas.'
+                    );
+
+                    $('#contenedorTablaCitasMedico').addClass('d-none');
+
+                    console.error(xhr.responseText);
+                }
+            },
+
+            columns: [
+
+                {
+                    data: 'idCita',
+                    className: 'fw-semibold'
+                },
+
+                {
+                    data: 'fechaCita',
+                    render: function (fecha) {
+                        return CitasMedico.formatearFecha(fecha);
+                    }
+                },
+
+                {
+                    data: 'hora',
+                    render: function (hora) {
+                        return CitasMedico.formatearHora(hora);
+                    }
+                },
+
+                {
+                    data: 'nombrePaciente',
+                    defaultContent: 'No disponible'
+                },
+
+                {
+                    data: 'nombreEspecialidad',
+                    defaultContent: 'No disponible'
+                },
+
+                {
+                    data: 'motivo',
+                    defaultContent: ''
+                },
+
+                {
+                    data: 'estado',
+                    render: function (estado) {
+
+                        if (estado === 1) {
+                            return `
+                                <span class="badge bg-success">
+                                    Pendiente
+                                </span>
+                            `;
+                        }
+
+                        return `
+                            <span class="badge bg-secondary">
+                                Cancelada
+                            </span>
+                        `;
+                    }
+                },
+
+                {
+                    data: null,
+                    orderable: false,
+                    searchable: false,
+
+                    render: function (data) {
+
+                        let botones = `
+                            <a href="/Cita/Ticket/${data.idCita}"
+                               class="btn btn-sm btn-outline-info me-1"
+                               title="Ver ticket">
+
+                                <i class="bi bi-receipt"></i>
+
+                            </a>
+                        `;
+
+                        if (data.estado === 1) {
+
+                            botones += `
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-primary me-1"
+                                        title="Reprogramar"
+                                        onclick="CitasMedico.abrirModalReprogramar(
+                                            ${data.idCita},
+                                            '${data.fechaCita}'
+                                        )">
+
+                                    <i class="bi bi-pencil"></i>
+
+                                </button>
+
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-danger"
+                                        title="Cancelar"
+                                        onclick="CitasMedico.cancelarCita(
+                                            ${data.idCita}
+                                        )">
+
+                                    <i class="bi bi-x-circle"></i>
+
+                                </button>
+                            `;
+                        }
+
+                        return `
+                            <div class="d-flex align-items-center">
+                                ${botones}
+                            </div>
+                        `;
+                    }
+                }
+            ],
+
+            order: [[1, 'asc'], [2, 'asc']],
+
+            pageLength: 10,
+
+            responsive: true,
+
+            language: {
+                url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json',
+                emptyTable: 'No hay citas médicas registradas.'
+            }
+        });
+    },
+
+    registrarEventos() {
+
+        $('#btnRecargarCitas').on('click', function () {
+            CitasMedico.recargarTabla();
+        });
+
+        $('#btnGuardarReprogramacion').on('click', function () {
+            CitasMedico.reprogramarCita();
+        });
+
+        $('#modalReprogramarCita').on('hidden.bs.modal', function () {
+
+            $('#reprogramarIdCita').val('');
+            $('#reprogramarFecha').val('');
+
+        });
+    },
+
+    abrirModalReprogramar(idCita, fechaActual) {
+
+        const fecha = fechaActual
+            ? fechaActual.substring(0, 10)
+            : '';
+
+        $('#reprogramarIdCita').val(idCita);
+        $('#reprogramarFecha').val(fecha);
+
+        const modal = new bootstrap.Modal(
+            document.getElementById('modalReprogramarCita')
+        );
+
+        modal.show();
+    },
+
+    reprogramarCita() {
+
+        const idCita = parseInt(
+            $('#reprogramarIdCita').val()
+        );
+
+        const nuevaFecha = $('#reprogramarFecha').val();
+
+        if (!idCita || !nuevaFecha) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Datos incompletos',
+                text: 'Seleccione una nueva fecha.'
+            });
+
+            return;
+        }
+
+        const parametros = new URLSearchParams();
+
+        parametros.append('idCita', idCita);
+        parametros.append('nuevaFecha', nuevaFecha);
+
+        fetch('/Cita/ActualizarFechaCita', {
+            method: 'POST',
+            headers: {
+                'Content-Type':
+                    'application/x-www-form-urlencoded; charset=UTF-8'
+            },
+            body: parametros.toString()
+        })
+            .then(response => {
+
+                if (!response.ok) {
+                    throw new Error(
+                        'No se pudo reprogramar la cita.'
+                    );
+                }
+
+                return response.json();
+            })
+            .then(respuesta => {
+
+                if (!respuesta.esCorrecto) {
+
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: respuesta.mensaje
+                    });
+
+                    return;
+                }
+
+                const elementoModal =
+                    document.getElementById('modalReprogramarCita');
+
+                const modal =
+                    bootstrap.Modal.getInstance(elementoModal);
+
+                modal?.hide();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Cita reprogramada',
+                    text: respuesta.mensaje,
+                    confirmButtonText: 'Aceptar'
+                });
+
+                CitasMedico.recargarTabla();
+            })
+            .catch(error => {
+
+                console.error(error);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message
+                });
+            });
+    },
+
+    cancelarCita(idCita) {
+
+        Swal.fire({
+
+            icon: 'warning',
+            title: '¿Cancelar cita?',
+            text: 'La cita quedará registrada como cancelada.',
+
+            showCancelButton: true,
+
+            confirmButtonText: 'Sí, cancelar',
+            cancelButtonText: 'Volver',
+
+            confirmButtonColor: '#dc3545'
+
+        }).then(resultado => {
+
+            if (!resultado.isConfirmed) {
+                return;
+            }
+
+            const parametros = new URLSearchParams();
+
+            parametros.append('idCita', idCita);
+
+            fetch('/Cita/CancelarCita', {
+
+                method: 'POST',
+
+                headers: {
+                    'Content-Type':
+                        'application/x-www-form-urlencoded; charset=UTF-8'
+                },
+
+                body: parametros.toString()
+
+            })
+                .then(response => {
+
+                    if (!response.ok) {
+                        throw new Error(
+                            'No se pudo cancelar la cita.'
+                        );
+                    }
+
+                    return response.json();
+                })
+                .then(respuesta => {
 
                     if (!respuesta.esCorrecto) {
-                        Swal.fire({ title: 'Error', text: respuesta.mensaje, icon: 'error' });
+
+                        Swal.fire({
+                            icon: 'error',
+                            title: 'Error',
+                            text: respuesta.mensaje
+                        });
+
                         return;
                     }
 
-                    let html = '';
-                    respuesta.dato.forEach(c => {
-                        const estadoBadge = c.estadoTexto === 'Pendiente'
-                            ? '<span class="badge rounded-pill px-3 py-2" style="background:#DDF7F8;color:#0B6F73;">Activa</span>'
-                            : '<span class="badge rounded-pill bg-secondary px-3 py-2">Cancelada</span>';
-
-                        const accion = c.estadoTexto === 'Pendiente'
-                            ? `<button class="btn btn-sm text-white rounded-3 cancelarCita" style="background:#B42318;border:none;" data-id="${c.idCita}"><i class="bi bi-x-circle-fill me-1"></i>Cancelar</button>`
-                            : '';
-
-                        html += `
-                            <tr>
-                                <td class="fw-semibold">${c.idCita}</td>
-                                <td>${c.hora}</td>
-                                <td>${c.motivo}</td>
-                                <td>${estadoBadge}</td>
-                                <td>
-                                    <button class="btn btn-sm btn-outline-primary btnVerDetalle"
-                                            type="button"
-                                            data-bs-toggle="collapse"
-                                            data-bs-target="#detalle-${c.idCita}">
-                                        Ver detalles
-                                    </button>
-                                </td>
-                                <td>${accion}</td>
-                            </tr>
-                            <tr class="collapse" id="detalle-${c.idCita}">
-                                <td colspan="6" class="bg-light">
-                                    <div class="p-3">
-                                        <strong>Paciente:</strong> ${c.nombrePaciente}<br>
-                                        <strong>Especialidad:</strong> ${c.nombreEspecialidad}
-                                    </div>
-                                </td>
-                            </tr>
-                        `;
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Cita cancelada',
+                        text: respuesta.mensaje,
+                        confirmButtonText: 'Aceptar'
                     });
 
-                    $('#tbCitasMedico tbody').html(html);
-                    $('#sinCitasMedico').toggle(respuesta.dato.length === 0);
-                },
+                    CitasMedico.recargarTabla();
+                })
+                .catch(error => {
 
-                error: function () {
-                    Swal.fire({ title: 'Error', text: 'No fue posible cargar las citas.', icon: 'error' });
-                }
-            });
-        },
+                    console.error(error);
 
-        registrarEventos() {
-            $(document).on('click', '.cancelarCita', function () {
-                const idCita = $(this).data('id');
-
-                Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: 'Esta acción cancelará la cita.',
-                    icon: 'warning',
-                    showCancelButton: true,
-                    confirmButtonText: 'Sí, cancelar',
-                    cancelButtonText: 'Volver'
-                }).then((result) => {
-                    if (!result.isConfirmed) return;
-
-                    $.ajax({
-                        url: '/Cita/CancelarCita',
-                        type: 'POST',
-                        data: { idCita: idCita },
-
-                        success: function (respuesta) {
-                            Swal.fire({
-                                title: respuesta.esCorrecto ? 'Correcto' : 'Error',
-                                text: respuesta.mensaje,
-                                icon: respuesta.esCorrecto ? 'success' : 'error'
-                            });
-                            CitasMedico.cargarCitas();
-                        },
-
-                        error: function () {
-                            Swal.fire({ title: 'Error', text: 'No fue posible cancelar la cita.', icon: 'error' });
-                        }
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: error.message
                     });
                 });
-            });
+        });
+    },
+
+    recargarTabla() {
+
+        this.ocultarMensajes();
+
+        $('#contenedorTablaCitasMedico').removeClass('d-none');
+
+        if (this.tabla) {
+            this.tabla.ajax.reload(null, false);
         }
-    };
+    },
 
-    window.CitasMedico = CitasMedico;
+    configurarFechaMinima() {
 
-    $(function () {
-        CitasMedico.init();
-    });
+        const hoy = new Date();
 
-})();
+        const fechaMinima =
+            hoy.getFullYear() +
+            '-' +
+            String(hoy.getMonth() + 1).padStart(2, '0') +
+            '-' +
+            String(hoy.getDate()).padStart(2, '0');
+
+        $('#reprogramarFecha').attr('min', fechaMinima);
+    },
+
+    mostrarError(mensaje) {
+
+        $('#alertaCitasMedico')
+            .text(mensaje)
+            .removeClass('d-none');
+    },
+
+    ocultarMensajes() {
+
+        $('#alertaCitasMedico')
+            .addClass('d-none')
+            .text('');
+
+        $('#sinCitasMedico')
+            .addClass('d-none');
+    },
+
+    formatearFecha(fecha) {
+
+        if (!fecha) {
+            return '';
+        }
+
+        const partes = fecha.substring(0, 10).split('-');
+
+        if (partes.length !== 3) {
+            return fecha;
+        }
+
+        return `${partes[2]}/${partes[1]}/${partes[0]}`;
+    },
+
+    formatearHora(hora) {
+
+        if (!hora) {
+            return '';
+        }
+
+        return hora.substring(0, 5);
+    }
+};
+
+$(document).ready(function () {
+    CitasMedico.init();
+});

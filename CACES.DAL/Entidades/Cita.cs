@@ -40,9 +40,14 @@ namespace CACES.DAL.Entidades
         [Column("Estado")]
         public byte Estado { get; set; }
 
-        [NotMapped]
-        public virtual Receta? Receta { get; set; }
+        public virtual Paciente Paciente { get; set; } = null!;
 
-      
+        public virtual Medico Medico { get; set; } = null!;
+
+        public virtual Especialidad Especialidad { get; set; } = null!;
+
+        public virtual HorariosDisponibles Horario { get; set; } = null!;
+
+        public virtual Receta? Receta { get; set; }
     }
 }

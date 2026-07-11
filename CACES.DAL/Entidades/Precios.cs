@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Text;
 
 namespace CACES.DAL.Entidades
 {
@@ -11,7 +8,6 @@ namespace CACES.DAL.Entidades
     {
         [Key]
         [Column("Id_Precio")]
-        [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
         public int Id_Precio { get; set; }
 
         [Column("Id_Medico")]
@@ -24,10 +20,10 @@ namespace CACES.DAL.Entidades
         public decimal Costo { get; set; }
 
         [Column("Detalles")]
-        public string Detalles { get; set; }
+        public string Detalles { get; set; } = null!;
 
-        // Propiedades de navegación (siguiendo tu estilo)
-        public Medico? Medico { get; set; }
-        public Procedimiento? Procedimiento { get; set; }
+        public virtual Medico Medico { get; set; } = null!;
+
+        public virtual Procedimiento Procedimiento { get; set; } = null!;
     }
 }

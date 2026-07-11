@@ -85,6 +85,7 @@ builder.Services.AddScoped<IHorarioServicio, HorarioServicio>();
 builder.Services.AddScoped<ISoporteRepositorio, SoporteRepositorio>();
 builder.Services.AddScoped<ISoporteServicio, SoporteServicio>();
 
+
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
