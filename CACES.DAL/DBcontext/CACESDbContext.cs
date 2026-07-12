@@ -287,7 +287,7 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Nombre).HasColumnName("Nombre").IsRequired().HasMaxLength(100);
                 entity.Property(e => e.Descripcion).HasColumnName("Descripcion").HasMaxLength(200);
                 entity.Property(e => e.PrecioBase).HasColumnName("PrecioBase");
-                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired().HasDefaultValue(true);
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.HasOne(d => d.Especialidad)
                   .WithMany(p => p.Procedimientos)
                   .HasForeignKey(d => d.Id_Especialidad)

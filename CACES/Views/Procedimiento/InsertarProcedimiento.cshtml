@@ -1,0 +1,127 @@
+﻿@using CACES.BLL.DTOs.Especialidad
+@using CACES.BLL.DTOs.Procedimientos
+@model InsertarProcedimientosDto
+
+@{
+    ViewData["Title"] = "Nuevo Procedimiento";
+    // Recuperamos la lista de especialidades del ViewBag
+    var especialidades = ViewBag.Especialidades as IEnumerable<mostrarEspecialidadDTO>;
+}
+
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+
+            <!-- Enlace de regreso al listado global -->
+            <a asp-action="Index" class="text-decoration-none mb-4 d-inline-block fw-semibold" style="color: #163B73;">
+                <i class="bi bi-arrow-left me-1"></i> Volver al listado
+            </a>
+
+            <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+                <!-- Encabezado con el mismo azul corporativo -->
+                <div class="card-header border-0 py-4" style="background:#163B73;">
+                    <h2 class="text-white fw-bold mb-1">
+                        <i class="bi bi-plus-circle me-2"></i>
+                        Registrar Nuevo Procedimiento
+                    </h2>
+                    <p class="text-white-50 mb-0">
+                        Complete el formulario para incorporar una nueva intervención quirúrgica o médica al sistema.
+                    </p>
+                </div>
+
+                <div class="card-body p-5">
+                    <form asp-action="Crear" asp-controller="Procedimientos" method="post" class="needs-validation">
+                        @Html.AntiForgeryToken()
+
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-4 small fw-bold"></div>
+
+                        <!-- DROPDOWN: Selección de Especialidad -->
+                        <div class="mb-4">
+                            <label asp-for="Id_Especialidad" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-tags me-1"></i> Especialidad Médica Asignada
+                            </label>
+                            <select asp-for="Id_Especialidad" class="form-select form-select-lg rounded-3 border-secondary-subtle shadow-sm" style="font-size: 1rem;">
+                                <option value="" disabled selected>-- Seleccione la especialidad correspondiente --</option>
+
+                                @if (especialidades != null)
+                                {
+                                    foreach (var esp in especialidades)
+                                    {
+                                        <option value="@esp.IdEspecialidad">@esp.Nombre</option>
+                                    }
+                                }
+                            </select>
+                            <span asp-validation-for="Id_Especialidad" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- INPUT: Nombre del Procedimiento -->
+                        <div class="mb-4">
+                            <label asp-for="Nombre" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-activity me-1"></i> Nombre del Procedimiento
+                            </label>
+                            <input asp-for="Nombre" class="form-control form-control-lg rounded-3 border-secondary-subtle shadow-sm" style="font-size: 1rem;"
+                                   placeholder="Ej. Colecistectomía Laparoscópica, Apendicectomía..." />
+                            <span asp-validation-for="Nombre" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <!-- TEXTAREA: Descripción -->
+                        <div class="mb-4">
+                            <label asp-for="Descripcion" class="form-label fw-bold text-secondary">
+                                <i class="bi bi-justify-left me-1"></i> Descripción de la Intervención
+                            </label>
+                            <textarea asp-for="Descripcion" class="form-control rounded-3 border-secondary-subtle shadow-sm" rows="4"
+                                      placeholder="Detalle de forma breve en qué consiste el procedimiento, requerimientos previos o equipamiento necesario (Opcional)..."></textarea>
+                            <span asp-validation-for="Descripcion" class="text-danger small mt-1 d-block"></span>
+                        </div>
+
+                        <div class="row">
+                            <!-- INPUT: Precio Base -->
+                            <div class="col-md-6 mb-4">
+                                <label asp-for="PrecioBase" class="form-label fw-bold text-secondary">
+                                    <i class="bi bi-cash-coin me-1"></i> Precio Base ($)
+                                </label>
+                                <div class="input-group input-group-lg shadow-sm">
+                                    <span class="input-group-text border-secondary-subtle bg-light text-muted">$</span>
+                                    <input asp-for="PrecioBase" class="form-control rounded-end-3 border-secondary-subtle" style="font-size: 1rem;"
+                                           type="number" step="0.01" min="0" placeholder="0.00" />
+                                </div>
+                                <span asp-validation-for="PrecioBase" class="text-danger small mt-1 d-block"></span>
+                            </div>
+
+                            <div class="col-md-6 mb-4 d-flex align-items-center">
+                                <div class="form-check form-switch p-3 bg-light border rounded-3 w-100 shadow-sm d-flex align-items-center justify-content-between">
+                                    <div class="ms-2">
+                                        <label asp-for="Estado" class="form-check-label fw-bold text-secondary mb-0" style="cursor: pointer;">Habilitar de inmediato</label>
+                                        <small class="text-muted d-block" style="font-size: 0.75rem;">Estará visible en los directorios al guardarse</small>
+                                    </div>
+                                    <input asp-for="Estado" class="form-check-input me-1" type="checkbox" role="switch" style="width: 2.5em; height: 1.25em; cursor: pointer;" />
+                                </div>
+                            </div>
+                        </div>
+
+                        <hr class="my-4 text-muted" />
+
+                        <!-- BOTONES DE ACCIÓN: Mismo esquema corporativo -->
+                        <div class="d-flex justify-content-end gap-3 flex-wrap">
+                            <a asp-action="Index" class="btn btn-outline-secondary px-4 py-2 rounded-3 fw-semibold">
+                                Cancelar
+                            </a>
+                            <button type="submit" class="btn text-white px-5 py-2 rounded-3 fw-semibold shadow" style="background:#163B73; border:none;">
+                                <i class="bi bi-save me-2"></i>Guardar Procedimiento
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

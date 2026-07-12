@@ -127,6 +127,12 @@ namespace CACES.BLL
                 .ReverseMap();
             CreateMap<Procedimiento, RegistrarProcedimientosDto>()
                 .ReverseMap();
+            CreateMap<Procedimiento, InsertarProcedimientosDto>()
+                .ForMember(dest => dest.NombreEspecialidad,
+                           opt => opt.MapFrom(src => src.Especialidad != null ? src.Especialidad.Nombre : "Sin Especialidad"));
+            CreateMap<InsertarProcedimientosDto, Procedimiento>()
+                .ForMember(dest => dest.Especialidad, opt => opt.Ignore());
+
 
             // Mapeo para el Reporte PDF de Pacientes
             CreateMap<Cirugias, ReporteProcedimientosPaciente>()

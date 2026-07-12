@@ -1,4 +1,6 @@
-﻿using CACES.BLL.DTOs.Procedimientos;
+﻿using CACES.BLL.DTOs.Especialidad;
+using CACES.BLL.DTOs.Procedimientos;
+using CACES.BLL.Servicios.Especialidad;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Procedimientos;
@@ -16,11 +18,13 @@ namespace CACES.Controllers
         private readonly IProcedimientosServicio _procedimientosServicio;
         private readonly IMedicoServicio _medicoServicio;
         private readonly IPacienteServicio _pacienteServicio;
-        public ProcedimientosController(IProcedimientosServicio procedimientosServicio, IMedicoServicio medicoServicio, IPacienteServicio pacienteServicio)
+        private readonly IEspecialidadServicio _especialidadServicio;
+        public ProcedimientosController(IProcedimientosServicio procedimientosServicio, IMedicoServicio medicoServicio, IPacienteServicio pacienteServicio, IEspecialidadServicio especialidadServicio)
         {
             _procedimientosServicio = procedimientosServicio;
             _medicoServicio = medicoServicio;
             _pacienteServicio = pacienteServicio;
+            _especialidadServicio = especialidadServicio;
         }
 
 
@@ -249,6 +253,115 @@ namespace CACES.Controllers
             // Retorna el archivo para descarga nativa e inmediata en el navegador
             string nombreArchivo = $"Reporte_Cirugia_{id}_ {cirugia.NombrePaciente}_{DateTime.Now:yyyyMMdd}.pdf";
             return File(pdfBytes, "application/pdf", nombreArchivo);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObtenerProcedimientosQuirur()
+        {
+            var procedimientos = await _procedimientosServicio.ListarProcedimientosAsync();
+            return View("~/Views/Procedimiento/ListarProcedimientos.cshtml", procedimientos);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Crear()
+        {
+            var resultadoEspecialidades = await _especialidadServicio.GetEspecialidadesActivasAsync();
+
+            if (resultadoEspecialidades != null && resultadoEspecialidades.EsCorrecto)
+            {
+                ViewBag.Especialidades = resultadoEspecialidades.Dato;
+            }
+            else
+            {
+                ViewBag.Especialidades = new List<mostrarEspecialidadDTO>();
+                TempData["Error"] = "No se pudieron cargar las especialidades.";
+            }
+
+            return View("~/Views/Procedimiento/InsertarProcedimiento.cshtml");
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Crear(InsertarProcedimientosDto modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                var resultadoEspecialidades = await _especialidadServicio.GetEspecialidadesActivasAsync();
+                ViewBag.Especialidades = resultadoEspecialidades?.Dato;
+                return View(modelo);
+            }
+
+            var exito = await _procedimientosServicio.GuardarProcedimientoAsync(modelo);
+
+            if (exito)
+            {
+                TempData["Mensaje"] = "Procedimiento registrado exitosamente.";
+                return RedirectToAction(nameof(ObtenerProcedimientosQuirur));
+            }
+            TempData["Error"] = "No se pudo registrar. Ya existe un procedimiento con ese mismo nombre en la especialidad seleccionada.";
+
+            var resEsp = await _especialidadServicio.GetEspecialidadesActivasAsync();
+            ViewBag.Especialidades = resEsp?.Dato;
+            return View("~/Views/Procedimiento/InsertarProcedimiento.cshtml", modelo);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> EditarProcEnReportes(int id)
+        {
+            var modelo = await _procedimientosServicio.ObtenerPorIdAsync(id);
+            if (modelo == null)
+            {
+                TempData["Error"] = "El procedimiento solicitado no existe.";
+                return RedirectToAction(nameof(ObtenerProcedimientosQuirur));
+            }
+
+            var resultadoEspecialidades = await _especialidadServicio.GetEspecialidadesActivasAsync();
+            ViewBag.Especialidades = resultadoEspecialidades?.Dato;
+
+            return View("~/Views/Procedimiento/EditarProcedimiento.cshtml", modelo);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarProcEnReportes(InsertarProcedimientosDto modelo)
+        {
+            if (!ModelState.IsValid)
+            {
+                var resultadoEspecialidades = await _especialidadServicio.GetEspecialidadesActivasAsync();
+                ViewBag.Especialidades = resultadoEspecialidades?.Dato;
+                return View(modelo);
+            }
+
+            var exito = await _procedimientosServicio.EditarProcedimientoAdminAsync(modelo);
+
+            if (exito)
+            {
+                TempData["Mensaje"] = "El procedimiento fue actualizado exitosamente.";
+                return RedirectToAction(nameof(ObtenerProcedimientosQuirur));
+            }
+
+            TempData["Error"] = "No se pudo actualizar. Ya existe otro procedimiento con ese mismo nombre en la especialidad seleccionada.";
+
+            var resEsp = await _especialidadServicio.GetEspecialidadesActivasAsync();
+            ViewBag.Especialidades = resEsp?.Dato;
+            return View("~/Views/Procedimiento/EditarProcedimiento.cshtml", modelo);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CambiarEstado(int id)
+        {
+            var exito = await _procedimientosServicio.CambiarEstadoProcedimientoAsync(id);
+
+            if (exito)
+            {
+                TempData["Mensaje"] = "El estado del procedimiento se actualizó correctamente.";
+            }
+            else
+            {
+                TempData["Error"] = "No se pudo modificar el estado del procedimiento.";
+            }
+
+            return RedirectToAction(nameof(ObtenerProcedimientosQuirur));
         }
     }
 }

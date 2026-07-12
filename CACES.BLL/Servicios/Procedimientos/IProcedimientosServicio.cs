@@ -17,5 +17,10 @@ namespace CACES.BLL.Servicios.Procedimientos
         Task<List<MostrarProcedimientosDTO>> ObtenerCirugiasPorMedicoAsync(int idMedico);
         Task<List<MostrarProcedimientosDTO>> ObtenerTodasLasCirugiasAsync();
         Task<respuestaErrores<MostrarProcedimientosDTO>> ObtenerDatosReporteAsync(int idCirugia);
+        Task<List<InsertarProcedimientosDto>> ListarProcedimientosAsync();
+        Task<bool> GuardarProcedimientoAsync(InsertarProcedimientosDto dto);
+        Task<InsertarProcedimientosDto> ObtenerPorIdAsync(int id);
+        Task<bool> EditarProcedimientoAdminAsync(InsertarProcedimientosDto dto);
+        Task<bool> CambiarEstadoProcedimientoAsync(int id);
     }
 }
