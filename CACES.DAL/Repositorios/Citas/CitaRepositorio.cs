@@ -24,7 +24,7 @@ namespace CACES.DAL.Repositorios.Citas
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
                 .OrderByDescending(c => c.Fecha)
-                .ThenBy(c => c.Hora)
+                .ThenBy(c => c.IdHorario)
                 .ToListAsync();
         }
 
@@ -40,7 +40,7 @@ namespace CACES.DAL.Repositorios.Citas
                 .Include(c => c.Horario)
                 .Where(c => c.IdPaciente == idPaciente)
                 .OrderByDescending(c => c.Fecha)
-                .ThenBy(c => c.Hora)
+                .ThenBy(c => c.IdHorario)
                 .ToListAsync();
         }
 
@@ -56,7 +56,7 @@ namespace CACES.DAL.Repositorios.Citas
                 .Include(c => c.Horario)
                 .Where(c => c.IdMedico == idMedico)
                 .OrderByDescending(c => c.Fecha)
-                .ThenBy(c => c.Hora)
+                .ThenBy(c => c.IdHorario)
                 .ToListAsync();
         }
 
@@ -97,7 +97,7 @@ namespace CACES.DAL.Repositorios.Citas
         public async Task<bool> ExisteCitaAsync(
             int idMedico,
             DateTime fecha,
-            TimeSpan hora,
+            int idHorario,
             int? excluir = null)
         {
             var consulta = _context.Citas
@@ -105,7 +105,7 @@ namespace CACES.DAL.Repositorios.Citas
                 .Where(c =>
                     c.IdMedico == idMedico &&
                     c.Fecha.Date == fecha.Date &&
-                    c.Hora == hora &&
+                    c.IdHorario == idHorario &&
                     c.Estado == 1);
 
             if (excluir.HasValue)

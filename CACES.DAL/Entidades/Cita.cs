@@ -25,9 +25,6 @@ namespace CACES.DAL.Entidades
         [Column("Fecha")]
         public DateTime Fecha { get; set; }
 
-        [Column("Hora")]
-        public TimeSpan Hora { get; set; }
-
         [Column("Motivo")]
         public string Motivo { get; set; } = null!;
 

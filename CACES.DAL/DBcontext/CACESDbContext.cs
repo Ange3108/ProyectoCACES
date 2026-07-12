@@ -91,7 +91,6 @@ namespace CACES.DAL.DBContext
     entity.Property(e => e.IdEspecialidad).HasColumnName("Id_Especialidad");
     entity.Property(e => e.IdHorario).HasColumnName("Id_Horario");
     entity.Property(e => e.Fecha).HasColumnName("Fecha");
-    entity.Property(e => e.Hora).HasColumnName("Hora");
     entity.Property(e => e.Motivo)
           .HasColumnName("Motivo")
           .HasMaxLength(100)
@@ -364,7 +363,7 @@ namespace CACES.DAL.DBContext
     entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico");
     entity.Property(e => e.DiaSemana).HasColumnName("DiaSemana");
     entity.Property(e => e.HoraInicio).HasColumnName("HoraInicio");
-    entity.Property(e => e.HoraFin).HasColumnName("HoraFin");
+
     entity.Property(e => e.Activo).HasColumnName("Activo");
 
     entity.HasOne(h => h.Medico)
