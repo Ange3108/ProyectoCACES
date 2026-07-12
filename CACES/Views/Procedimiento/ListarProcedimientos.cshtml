@@ -1,0 +1,128 @@
+﻿@using CACES.BLL.DTOs.Procedimientos
+@model List<InsertarProcedimientosDto>
+
+@{
+    ViewData["Title"] = "Gestión de Procedimientos";
+}
+
+<div class="container py-5">
+
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+        <div class="card-header border-0 py-4" style="background:#163B73;">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h2 class="text-white fw-bold mb-1">
+                        <i class="bi bi-hospital me-2"></i>
+                        Gestión de Procedimientos Quirúrgicos
+                    </h2>
+                    <p class="text-white-50 mb-0">
+                        Administre el catálogo global de procedimientos y sus precios base en el sistema.
+                    </p>
+                </div>
+
+                <div>
+                    <a asp-controller="Procedimientos" asp-action="Crear" class="btn text-white px-4 py-2 rounded-3 fw-semibold shadow-sm" style="background:#20C4D8; border:none;">
+                        <i class="bi bi-plus-lg me-2"></i>Agregar Procedimiento
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+
+            @if (TempData["Mensaje"] != null)
+            {
+                <div class="alert alert-success rounded-3 shadow-sm">
+                    <i class="bi bi-check-circle-fill me-2"></i>
+                    @TempData["Mensaje"]
+                </div>
+            }
+
+            @if (TempData["Error"] != null)
+            {
+                <div class="alert alert-danger rounded-3 shadow-sm">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                    @TempData["Error"]
+                </div>
+            }
+
+            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+                <table class="table table-hover align-middle mb-0">
+                    <thead style="background:#163B73;color:white;">
+                        <tr>
+                            <th>Procedimiento</th>
+                            <th>Descripción</th>
+                            <th>Especialidad</th>
+                            <th>Precio Base</th>
+                            <th>Estado</th>
+                            <th style="width:240px;" class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td class="fw-semibold">
+                                        @item.Nombre
+                                    </td>
+                                    <td class="text-muted small">
+                                        @(string.IsNullOrWhiteSpace(item.Descripcion) ? "Sin descripción" : item.Descripcion)
+                                    </td>
+                                    <td>
+                                        <span class="badge rounded-pill px-3 py-2" style="background:#DDF7F8;color:#0B6F73;">
+                                            @item.NombreEspecialidad
+                                        </span>
+                                    </td>
+                                    <td class="fw-bold text-secondary">
+                                        @item.PrecioBase.ToString("C")
+                                    </td>
+                                    <td>
+                                        @if (item.Estado)
+                                        {
+                                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1.5">Activo</span>
+                                        }
+                                        else
+                                        {
+                                            <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3 py-1.5">Inactivo</span>
+                                        }
+                                    </td>
+                                    <td>
+                                        <div class="d-flex justify-content-center gap-2">
+                                            <a asp-controller="Procedimientos" asp-action="EditarProcEnReportes" asp-route-id="@item.Id_Procedimiento" class="btn btn-sm btn-outline-primary rounded-3">
+                                                <i class="bi bi-pencil-square me-1"></i> Editar
+                                            </a>
+
+                                            <form asp-action="CambiarEstado" asp-route-id="@item.Id_Procedimiento" method="post" class="form-toggle d-inline">
+                                                @Html.AntiForgeryToken()
+
+                                                <button type="submit"
+                                                        class="btn btn-sm @(item.Estado ? "btn-outline-danger" : "btn-outline-success") rounded-2"
+                                                        data-estado="@item.Estado.ToString().ToLower()"
+                                                        title="@(item.Estado ? "Desactivar" : "Activar")">
+                                                    <i class="bi @(item.Estado ? "bi-shield-slash" : "bi-shield-check")"></i>
+                                                    @(item.Estado ? "Desactivar" : "Activar")
+                                                </button>
+                                            </form>
+                                        </div>
+                                    </td>
+                                </tr>
+                            }
+                        }
+                        else
+                        {
+                            <tr>
+                                <td colspan="6" class="text-center py-4 text-muted">
+                                    No hay procedimientos quirúrgicos registrados en el sistema.
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
