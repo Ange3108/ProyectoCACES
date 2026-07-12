@@ -1,5 +1,7 @@
-﻿using CACES.BLL.DTOs;
+﻿using AutoMapper;
+using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Cita;
+using CACES.BLL.DTOs.Especialidad;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Citas;
 
@@ -9,10 +11,12 @@ namespace CACES.BLL.Servicios.Citas
     public class CitaServicio : ICitaServicio
     {
         private readonly ICitaRepositorio _citaRepositorio;
+        private readonly IMapper _mapper;
 
-        public CitaServicio(ICitaRepositorio citaRepositorio)
+        public CitaServicio(ICitaRepositorio citaRepositorio, IMapper mapper)
         {
             _citaRepositorio = citaRepositorio;
+            _mapper = mapper;
         }
 
         public async Task<respuestaErrores<List<MostrarCitaDTO>>> GetCitasAsync()
@@ -56,9 +60,6 @@ namespace CACES.BLL.Servicios.Citas
 
                 if (dto.IdEspecialidad <= 0)
                     return CrearError("Debe seleccionar una especialidad.", 400);
-
-                if (dto.IdHorario <= 0)
-                    return CrearError("Debe seleccionar un horario.", 400);
 
                 if (dto.FechaCita == default)
                     return CrearError("Debe seleccionar la fecha de la cita.", 400);
@@ -108,8 +109,7 @@ namespace CACES.BLL.Servicios.Citas
                     );
                 }
 
-                if (dto.Hora < horarioSeleccionado.HoraInicio ||
-                    dto.Hora >= horarioSeleccionado.HoraFin)
+                if (dto.Hora < horarioSeleccionado.HoraInicio )
                 {
                     return CrearError(
                         "La hora seleccionada está fuera del horario disponible del médico.",
@@ -120,7 +120,7 @@ namespace CACES.BLL.Servicios.Citas
                 var existeCita = await _citaRepositorio.ExisteCitaAsync(
                     dto.IdMedico,
                     dto.FechaCita.Date,
-                    dto.Hora
+                    dto.IdHorario
                 );
 
                 if (existeCita)
@@ -131,19 +131,18 @@ namespace CACES.BLL.Servicios.Citas
                     );
                 }
 
-                var cita = new Cita
-                {
-                    IdPaciente = idPaciente,
-                    IdMedico = dto.IdMedico,
-                    IdEspecialidad = dto.IdEspecialidad,
-                    IdHorario = dto.IdHorario,
-                    Fecha = dto.FechaCita.Date,
-                    Hora = dto.Hora,
-                    Motivo = dto.Motivo.Trim(),
-                    FechaDeRegistro = DateTime.Now,
-                    FechaDeModificacion = null,
-                    Estado = 1
-                };
+                var cita  =_mapper.Map<Cita>(dto);
+               cita.IdPaciente= dto.IdPaciente;
+                cita.IdMedico = dto.IdMedico;
+                cita.IdEspecialidad = dto.IdEspecialidad;
+                cita.Fecha = dto.FechaCita.Date;
+                cita.Horario = horarioSeleccionado;
+                cita.Motivo = dto.Motivo;
+                cita.FechaDeRegistro = DateTime.Now;
+                cita.Estado = 1; // Activa
+
+
+
 
                 var citaCreada = await _citaRepositorio.RegistrarAsync(cita);
 
@@ -450,9 +449,8 @@ namespace CACES.BLL.Servicios.Citas
                 IdHorario = h.Id_Horario,
                 DiaSemana = h.DiaSemana,
                 HoraInicio = h.HoraInicio,
-                HoraFin = h.HoraFin,
                 DiaTexto = ObtenerNombreDia(h.DiaSemana),
-                HorarioTexto = $"{ObtenerNombreDia(h.DiaSemana)} {h.HoraInicio:hh\\:mm}-{h.HoraFin:hh\\:mm}"
+                HorarioTexto = $"{ObtenerNombreDia(h.DiaSemana)} {h.HoraInicio:hh\\:mm}"
             }).ToList();
 
             return respuesta;
@@ -469,7 +467,7 @@ namespace CACES.BLL.Servicios.Citas
                 IdHorario = cita.IdHorario,
 
                 FechaCita = cita.Fecha,
-                Hora = cita.Hora,
+                Hora = cita.Horario.HoraInicio,
                 Motivo = cita.Motivo,
                 Estado = cita.Estado,
 

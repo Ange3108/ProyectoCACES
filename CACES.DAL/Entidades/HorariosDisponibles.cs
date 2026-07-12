@@ -20,9 +20,6 @@ namespace CACES.DAL.Entidades
         [Column("HoraInicio")]
         public TimeSpan HoraInicio { get; set; }
 
-        [Column("HoraFin")]
-        public TimeSpan HoraFin { get; set; }
-
         [Column("Activo")]
         public bool Activo { get; set; }
 

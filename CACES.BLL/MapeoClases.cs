@@ -174,6 +174,16 @@ namespace CACES.BLL
                 .ForMember(dest => dest.Estado,
                            opt => opt.MapFrom(src => src.Estado == 1 ? "Activa" : "Cancelada"));
 
+
+            CreateMap<Cita, RegistrarCitaDTO>()
+                .ForMember(dest => dest.IdPaciente, opt => opt.MapFrom(src => src.Paciente.IdPaciente))
+                .ForMember(dest => dest.IdMedico, opt => opt.MapFrom(src => src.Medico.IdMedico))
+                .ForMember(dest => dest.IdEspecialidad, opt => opt.MapFrom(src => src.Especialidad.IdEspecialidad))
+                .ForMember(dest => dest.IdHorario, opt => opt.MapFrom(src => src.Horario.Id_Horario))
+                .ForMember(dest => dest.FechaCita, opt => opt.MapFrom(src => src.Fecha))
+                .ForMember(dest => dest.Hora, opt => opt.MapFrom(src => src.Horario.HoraInicio))
+                .ReverseMap();
+
             //mapeo de los dto de iconos
             CreateMap<Icono, IconoDTO>()
                 .ReverseMap();
