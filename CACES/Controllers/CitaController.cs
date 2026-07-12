@@ -23,6 +23,13 @@ namespace CACES.Controllers
             _pacienteServicio = pacienteServicio;
         }
 
+        [Authorize(Roles = "Paciente,Medico")]
+        [HttpGet]
+        public IActionResult Calendario()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "Paciente")]
         [HttpGet]
         public IActionResult RegistrarCita()
