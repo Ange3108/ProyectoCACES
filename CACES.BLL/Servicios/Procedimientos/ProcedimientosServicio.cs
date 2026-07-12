@@ -1,8 +1,11 @@
 ﻿using AutoMapper;
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Procedimientos;
+using CACES.BLL.Servicios.Especialidad;
 using CACES.DAL.Entidades;
+using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.Procedimientos;
+using Microsoft.EntityFrameworkCore;
 using System.Reflection.Metadata.Ecma335;
 
 namespace CACES.BLL.Servicios.Procedimientos
@@ -195,6 +198,53 @@ namespace CACES.BLL.Servicios.Procedimientos
             return respuesta;
         }
 
+        public async Task<List<InsertarProcedimientosDto>> ListarProcedimientosAsync()
+        {
+            var entidades = await _procedimientosRepositorio.ObtenerTodosLosProcedimientosAsync();
+            return _mapper.Map<List<InsertarProcedimientosDto>>(entidades);
+        }
+
+        public async Task<bool> GuardarProcedimientoAsync(InsertarProcedimientosDto dto)
+        {
+            var entidad = _mapper.Map<Procedimiento>(dto);
+
+            entidad.Estado = dto.Estado;
+
+            return await _procedimientosRepositorio.InsertarProcedimientoAsync(entidad);
+        }
+
+        public async Task<InsertarProcedimientosDto> ObtenerPorIdAsync(int id)
+        {
+            var entidad = await _procedimientosRepositorio.ObtenerProcedimientoPorIdAsync(id);
+            return _mapper.Map<InsertarProcedimientosDto>(entidad);
+        }
+        public async Task<bool> EditarProcedimientoAdminAsync(InsertarProcedimientosDto dto)
+        {
+            try
+            {
+                var entidad = _mapper.Map<Procedimiento>(dto);
+
+                entidad.Estado = dto.Estado;
+
+                return await _procedimientosRepositorio.ActualizarProcedimientoAdminAsync(entidad);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> CambiarEstadoProcedimientoAsync(int id)
+        {
+            try
+            {
+                return await _procedimientosRepositorio.CambiarEstadoProcedimientoAsync(id);
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
 
     }
 }
