@@ -196,6 +196,74 @@
             font-size: 1rem;
             margin: 0;
         }
+
+    /* ESTILOS PARA LA SECCIÓN DE CONVENIOS DE DIAGNÓSTICO */
+    .seccion-diagnosticos {
+        background-color: #f4f7fc;
+        border-radius: 20px;
+        padding: 3.5rem 2rem;
+        margin-top: 5rem;
+    }
+
+    .diag-titulo {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #1a2d6b;
+        margin-bottom: 0.5rem;
+    }
+
+    .diag-subtitulo {
+        color: #6c757d;
+        font-size: 0.95rem;
+        margin-bottom: 3rem;
+    }
+
+    .diag-card {
+        background: white;
+        border: none;
+        border-radius: 16px;
+        padding: 1.8rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        height: 100%;
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .diag-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(39,65,140,0.08);
+        }
+
+    .diag-icono {
+        width: 50px;
+        height: 50px;
+        background-color: #e8f7fd;
+        color: #27418C;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+        margin-bottom: 1.25rem;
+    }
+
+    .subseccion-titulo {
+        font-size: 1.2rem;
+        font-weight: 700;
+        color: #27418C;
+        position: relative;
+        padding-left: 1rem;
+    }
+
+        .subseccion-titulo::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 15%;
+            height: 70%;
+            width: 4px;
+            background-color: #72CEF2;
+            border-radius: 2px;
+        }
 </style>
 
 <main class="container py-5">
@@ -279,5 +347,117 @@
             }
         </div>
 
+    </section>
+
+    <!-- SECCIÓN DE APOYO DIAGNÓSTICO (LABORATORIO E IMAGENOLOGÍA) -->
+    <section class="seccion-diagnosticos">
+        <div class="text-center mb-5">
+            <h2 class="diag-titulo">
+                <i class="bi bi-shield-plus me-2" style="color: #72CEF2;"></i>Convenios de Apoyo Diagnóstico
+            </h2>
+            <p class="diag-subtitulo max-width-600 mx-auto">
+                Facilitamos tu proceso clínico integrando servicios prioritarios de análisis y diagnóstico por imagen con la red médica más avanzada.
+            </p>
+        </div>
+
+        <!-- 1. BLOQUE: LABORATORIOS CLÍNICOS -->
+        <div class="mb-5">
+            <h4 class="subseccion-titulo mb-4">Convenio de Laboratorio Clínico</h4>
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <div class="diag-card">
+                        <div class="diag-icono">
+                            <i class="bi bi-speedometer2"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2" style="font-size: 1.1rem;">Resultados Prioritarios</h5>
+                        <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            Tu procesamiento de análisis clínicos cuenta con prioridad VIP en la línea de análisis para agilizar tu diagnóstico médico.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="diag-card">
+                        <div class="diag-icono">
+                            <i class="bi bi-tags"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2" style="font-size: 1.1rem;">Tarifas Preferenciales</h5>
+                        <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            El convenio te asegura tarifas corporativas exclusivas en perfiles hormonales, químicos e inmunológicos generales.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="diag-card">
+                        <div class="diag-icono">
+                            <i class="bi bi-cloud-arrow-up"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2" style="font-size: 1.1rem;">Expediente Sincronizado</h5>
+                        <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            Los resultados se envían automáticamente al sistema interno de CACES para que tu especialista los revise de inmediato.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- 2. BLOQUE: IMÁGENES RADIOLÓGICAS (NUEVO) -->
+        <div class="mb-4">
+            <h4 class="subseccion-titulo mb-4">Convenio de Imagenología Radiológica</h4>
+            <div class="row g-4">
+                <div class="col-12 col-md-4">
+                    <div class="diag-card">
+                        <div class="diag-icono">
+                            <i class="bi bi-optical-audio"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2" style="font-size: 1.1rem;">Tecnología Avanzada</h5>
+                        <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            Acceso preferencial a estudios de Resonancia Magnética (RMN), Tomografía Computarizada (TAC), Ultrasonidos y Rayos X de última generación.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="diag-card">
+                        <div class="diag-icono">
+                            <i class="bi bi-journal-medical"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2" style="font-size: 1.1rem;">Lectura de Alta Especialidad</h5>
+                        <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            Interpretación garantizada por radiólogos certificados internacionalmente, asegurando informes con precisión diagnóstica de estándar global.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="col-12 col-md-4">
+                    <div class="diag-card">
+                        <div class="diag-icono">
+                            <i class="bi bi-hdd-network"></i>
+                        </div>
+                        <h5 class="fw-bold text-dark mb-2" style="font-size: 1.1rem;">Portabilidad Digital DICOM</h5>
+                        <p class="text-muted mb-0" style="font-size: 0.85rem; line-height: 1.6;">
+                            Recibe tus imágenes en formato digital compatible para que puedas descargarlas, llevarlas contigo o compartirlas con tus médicos en tu país de origen.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- CTA ACCIÓN FINAL -->
+        <div class="mt-5 text-center">
+            <div class="p-4 bg-white rounded-4 shadow-sm border d-inline-flex flex-column flex-md-row align-items-center gap-3">
+                <div class="text-start">
+                    <h6 class="fw-bold mb-1 text-dark">¿Necesitas coordinar exámenes o imágenes médicas previas?</h6>
+                    <p class="text-muted mb-0 small">Nuestros asesores de Turismo Médico te ayudan a agendar tus citas en los laboratorios y centros de imágenes aliados.</p>
+                </div>
+                <a href="https://wa.me"
+                   target="_blank"
+                   class="btn-reservar px-4"
+                   style="height: fit-content; text-decoration: none;">
+                    <i class="bi bi-whatsapp me-2"></i> Coordinar Citas Diagnósticas
+                </a>
+            </div>
+        </div>
     </section>
 </main>
