@@ -97,21 +97,23 @@
 
                 {
                     data: 'estado',
+                    className: 'text-center',
+
                     render: function (estado) {
 
                         if (estado === 1) {
                             return `
-                                <span class="badge bg-success">
-                                    Pendiente
-                                </span>
-                            `;
+                            <span class="badge bg-success-subtle text-success border border-success-subtle rounded-pill px-3 py-1">
+                                Pendiente
+                            </span>
+                        `;
                         }
 
                         return `
-                            <span class="badge bg-secondary">
-                                Cancelada
-                            </span>
-                        `;
+                        <span class="badge bg-danger-subtle text-danger border border-danger-subtle rounded-pill px-3 py-1">
+                            Cancelada
+                        </span>
+                    `;
                     }
                 },
 
@@ -119,54 +121,64 @@
                     data: null,
                     orderable: false,
                     searchable: false,
+                    className: 'text-center',
 
                     render: function (data) {
 
                         let botones = `
-                            <a href="/Cita/Ticket/${data.idCita}"
-                               class="btn btn-sm btn-outline-info me-1"
-                               title="Ver ticket">
+                        <a href="/Cita/Ticket/${data.idCita}"
+                           class="btn btn-sm btn-outline-primary rounded-3">
 
-                                <i class="bi bi-receipt"></i>
+                            <i class="bi bi-receipt me-1"></i>
+                            Ticket
 
-                            </a>
-                        `;
+                        </a>
+                    `;
 
                         if (data.estado === 1) {
 
                             botones += `
-                                <button type="button"
-                                        class="btn btn-sm btn-outline-primary me-1"
-                                        title="Reprogramar"
-                                        onclick="CitasMedico.abrirModalReprogramar(
-                                            ${data.idCita},
-                                            '${data.fechaCita}'
-                                        )">
 
-                                    <i class="bi bi-pencil"></i>
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-primary rounded-3"
+                                    onclick="CitasMedico.abrirModalReprogramar(
+                                        ${data.idCita},
+                                        '${data.fechaCita}'
+                                    )">
 
-                                </button>
+                                <i class="bi bi-pencil-square me-1"></i>
+                                Reprogramar
 
-                                <button type="button"
-                                        class="btn btn-sm btn-outline-danger"
-                                        title="Cancelar"
-                                        onclick="CitasMedico.cancelarCita(
-                                            ${data.idCita}
-                                        )">
+                            </button>
 
-                                    <i class="bi bi-x-circle"></i>
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-success rounded-3"
+                                    onclick="CitasMedico.abrirModalReceta(${data.idCita})">
 
-                                </button>
-                            `;
+                                <i class="bi bi-capsule-pill me-1"></i>
+                                Recetar
+
+                            </button>
+
+                            <button type="button"
+                                    class="btn btn-sm btn-outline-danger rounded-3"
+                                    onclick="CitasMedico.cancelarCita(${data.idCita})">
+
+                                <i class="bi bi-x-circle me-1"></i>
+                                Cancelar
+
+                            </button>
+                        `;
                         }
 
                         return `
-                            <div class="d-flex align-items-center">
-                                ${botones}
-                            </div>
-                        `;
+                        <div class="d-flex justify-content-center gap-2 flex-wrap">
+                            ${botones}
+                        </div>
+                    `;
                     }
                 }
+
             ],
 
             order: [[1, 'asc'], [2, 'asc']],
@@ -192,14 +204,181 @@
             CitasMedico.reprogramarCita();
         });
 
+        $('#btnGuardarReceta').on('click', function () {
+            CitasMedico.guardarReceta();
+        });
+
         $('#modalReprogramarCita').on('hidden.bs.modal', function () {
 
             $('#reprogramarIdCita').val('');
             $('#reprogramarFecha').val('');
 
         });
+
+        $('#modalReceta').on('hidden.bs.modal', function () {
+
+            $('#idCitaReceta').val('');
+            $('#medicamentos').val('');
+            $('#instrucciones').val('');
+            $('#fechaVencimiento').val('');
+
+            $('#btnGuardarReceta')
+                .prop('disabled', false)
+                .html(`
+                <i class="bi bi-check-circle me-1"></i>
+                Guardar receta
+            `);
+        });
     },
 
+    abrirModalReceta(idCita) {
+
+        $('#idCitaReceta').val(idCita);
+        $('#medicamentos').val('');
+        $('#instrucciones').val('');
+        $('#fechaVencimiento').val('');
+
+        const modal = new bootstrap.Modal(
+            document.getElementById('modalReceta')
+        );
+
+        modal.show();
+    },
+
+    guardarReceta() {
+
+        const idCita = parseInt(
+            $('#idCitaReceta').val()
+        );
+
+        const medicamentos =
+            $('#medicamentos').val().trim();
+
+        const instrucciones =
+            $('#instrucciones').val().trim();
+
+        const fechaDeVencimiento =
+            $('#fechaVencimiento').val();
+
+        if (!idCita) {
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: 'No se pudo identificar la cita.'
+            });
+
+            return;
+        }
+
+        if (!medicamentos) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Medicamentos requeridos',
+                text: 'Debe indicar los medicamentos de la receta.'
+            });
+
+            return;
+        }
+
+        if (!fechaDeVencimiento) {
+
+            Swal.fire({
+                icon: 'warning',
+                title: 'Fecha requerida',
+                text: 'Seleccione la fecha de vencimiento.'
+            });
+
+            return;
+        }
+
+        const dto = {
+            idCita: idCita,
+            medicamentos: medicamentos,
+            instrucciones: instrucciones || null,
+            fechaDeVencimiento: fechaDeVencimiento
+        };
+
+        const boton = $('#btnGuardarReceta');
+
+        boton
+            .prop('disabled', true)
+            .html(`
+            <span class="spinner-border spinner-border-sm me-2"></span>
+            Guardando...
+        `);
+
+        fetch('/Receta/RegistrarJson', {
+
+            method: 'POST',
+
+            headers: {
+                'Content-Type': 'application/json'
+            },
+
+            body: JSON.stringify(dto)
+
+        })
+            .then(async response => {
+
+                const respuesta = await response.json();
+
+                if (!response.ok) {
+                    throw new Error(
+                        respuesta.mensaje ||
+                        'No se pudo registrar la receta.'
+                    );
+                }
+
+                return respuesta;
+            })
+            .then(respuesta => {
+
+                if (!respuesta.esCorrecto) {
+                    throw new Error(
+                        respuesta.mensaje ||
+                        'No se pudo registrar la receta.'
+                    );
+                }
+
+                const elementoModal =
+                    document.getElementById('modalReceta');
+
+                const modal =
+                    bootstrap.Modal.getInstance(elementoModal);
+
+                modal?.hide();
+
+                Swal.fire({
+                    icon: 'success',
+                    title: 'Receta registrada',
+                    text: respuesta.mensaje,
+                    confirmButtonText: 'Aceptar'
+                });
+
+                CitasMedico.recargarTabla();
+            })
+            .catch(error => {
+
+                console.error(error);
+
+                Swal.fire({
+                    icon: 'error',
+                    title: 'Error',
+                    text: error.message
+                });
+            })
+            .finally(() => {
+
+                boton
+                    .prop('disabled', false)
+                    .html(`
+                    <i class="bi bi-check-circle me-1"></i>
+                    Guardar receta
+                `);
+            });
+    },
     abrirModalReprogramar(idCita, fechaActual) {
 
         const fecha = fechaActual
@@ -393,7 +572,7 @@
         }
     },
 
-    configurarFechaMinima() {
+    configurarFechasMinimas() {
 
         const hoy = new Date();
 
@@ -405,11 +584,22 @@
             String(hoy.getDate()).padStart(2, '0');
 
         $('#reprogramarFecha').attr('min', fechaMinima);
+        $('#fechaVencimiento').attr('min', fechaMinima);
     },
 
     mostrarError(mensaje) {
 
-        $('#alertaCitasMedico')
+        const alerta = $('#alertaCitasMedico');
+        const texto = $('#textoAlertaCitasMedico');
+
+        if (texto.length) {
+
+            texto.text(mensaje);
+            alerta.removeClass('d-none');
+            return;
+        }
+
+        alerta
             .text(mensaje)
             .removeClass('d-none');
     },
@@ -417,8 +607,9 @@
     ocultarMensajes() {
 
         $('#alertaCitasMedico')
-            .addClass('d-none')
-            .text('');
+            .addClass('d-none');
+
+        $('#textoAlertaCitasMedico').text('');
 
         $('#sinCitasMedico')
             .addClass('d-none');

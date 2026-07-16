@@ -7,6 +7,7 @@ using CACES.BLL.DTOs.Medico;
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Perfil;
 using CACES.BLL.DTOs.Procedimientos;
+using CACES.BLL.DTOs.Receta;
 using CACES.BLL.DTOs.Usuario;
 using CACES.DAL.Entidades;
 using System;
@@ -99,6 +100,7 @@ namespace CACES.BLL
 
 
             //mapeo de los dto de especialidad
+                   
 
             CreateMap<Especialidad, mostrarEspecialidadDTO>()
      .ForMember(dest => dest.NombreIcono, opt => opt.MapFrom(src => src.Icono.Codigo));
@@ -133,6 +135,21 @@ namespace CACES.BLL
             CreateMap<InsertarProcedimientosDto, Procedimiento>()
                 .ForMember(dest => dest.Especialidad, opt => opt.Ignore());
 
+            // Mapeo de recetas
+            CreateMap<Receta, MostrarRecetaDTO>()
+                .ForMember(dest => dest.NombrePaciente,
+                    opt => opt.MapFrom(src =>
+                        src.Cita.Paciente.Usuario.Nombres + " " +
+                        src.Cita.Paciente.Usuario.PrimerApellido))
+
+                .ForMember(dest => dest.NombreMedico,
+                    opt => opt.MapFrom(src =>
+                        src.Cita.Medico.Usuario.Nombres + " " +
+                        src.Cita.Medico.Usuario.PrimerApellido))
+
+                .ForMember(dest => dest.NombreEspecialidad,
+                    opt => opt.MapFrom(src =>
+                        src.Cita.Especialidad.Nombre));
 
             // Mapeo para el Reporte PDF de Pacientes
             CreateMap<Cirugias, ReporteProcedimientosPaciente>()

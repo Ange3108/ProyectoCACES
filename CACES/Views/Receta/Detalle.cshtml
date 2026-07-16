@@ -1,0 +1,174 @@
+﻿@model CACES.BLL.DTOs.Receta.MostrarRecetaDTO
+
+@{
+    ViewData["Title"] = "Detalle de Receta";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden mx-auto"
+         style="max-width: 850px;">
+
+        <div class="card-header border-0 py-4"
+             style="background:#163B73;">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                <div>
+                    <h2 class="text-white fw-bold mb-1">
+                        <i class="bi bi-capsule-pill me-2"></i>
+                        Receta Médica
+                    </h2>
+
+                    <p class="text-white-50 mb-0">
+                        Información de la receta emitida por el médico.
+                    </p>
+                </div>
+
+                <span class="badge bg-light text-dark px-3 py-2 rounded-3">
+                    N.º @Model.IdReceta.ToString("D6")
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body p-4 p-md-5">
+
+            <div class="row g-4 mb-4">
+
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <div class="text-muted small mb-1">
+                            <i class="bi bi-person me-1"></i>
+                            Paciente
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.NombrePaciente
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <div class="text-muted small mb-1">
+                            <i class="bi bi-person-badge me-1"></i>
+                            Médico
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.NombreMedico
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <div class="text-muted small mb-1">
+                            <i class="bi bi-heart-pulse me-1"></i>
+                            Especialidad
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.NombreEspecialidad
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="border rounded-3 p-3 h-100">
+                        <div class="text-muted small mb-1">
+                            <i class="bi bi-calendar-check me-1"></i>
+                            Fecha de emisión
+                        </div>
+
+                        <div class="fw-semibold">
+                            @Model.FechaDeRegistro.ToString("dd/MM/yyyy")
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div class="mb-4">
+
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-capsule me-2"></i>
+                    Medicamentos
+                </h5>
+
+                <div class="border rounded-3 p-4"
+                     style="background:#F8FAFC; white-space:pre-line;">
+
+                    @Model.Medicamentos
+
+                </div>
+
+            </div>
+
+            <div class="mb-4">
+
+                <h5 class="fw-bold mb-3">
+                    <i class="bi bi-clipboard2-pulse me-2"></i>
+                    Instrucciones
+                </h5>
+
+                <div class="border rounded-3 p-4"
+                     style="background:#F8FAFC; white-space:pre-line;">
+
+                    @(string.IsNullOrWhiteSpace(Model.Instrucciones)
+                        ? "No se registraron instrucciones adicionales."
+                        : Model.Instrucciones)
+
+                </div>
+
+            </div>
+
+            <div class="alert rounded-3"
+                 style="background:#EAF9FC;color:#163B73;">
+
+                <div class="d-flex justify-content-between align-items-center flex-wrap gap-2">
+
+                    <div>
+                        <i class="bi bi-calendar-event me-2"></i>
+                        <strong>Fecha de vencimiento:</strong>
+                        @Model.FechaDeVencimiento.ToString("dd/MM/yyyy")
+                    </div>
+
+                    @if (Model.Vencida)
+                    {
+                        <span class="badge bg-danger rounded-pill px-3 py-2">
+                            Vencida
+                        </span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-success rounded-pill px-3 py-2">
+                            Vigente
+                        </span>
+                    }
+
+                </div>
+
+            </div>
+
+            <div class="d-flex justify-content-end gap-2 mt-4 flex-wrap">
+
+                <button type="button"
+                        class="btn btn-outline-secondary rounded-3"
+                        onclick="history.back()">
+
+                    <i class="bi bi-arrow-left me-1"></i>
+                    Volver
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

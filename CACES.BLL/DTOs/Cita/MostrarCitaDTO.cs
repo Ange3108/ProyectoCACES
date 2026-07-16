@@ -26,5 +26,9 @@ namespace CACES.BLL.DTOs.Cita
         public string EstadoTexto => Estado == 1
             ? "Pendiente"
             : "Cancelada";
+
+        public int? IdReceta { get; set; }
+
+        public bool TieneReceta => IdReceta.HasValue;
     }
 }

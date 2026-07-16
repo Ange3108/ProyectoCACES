@@ -187,35 +187,52 @@
                     data: null,
                     orderable: false,
                     searchable: false,
-                    className: 'text-nowrap',
+                    className: 'text-center',
 
                     render: function (data) {
+
+                        let botones = `
+            <a href="/Cita/Ticket/${data.idCita}"
+               class="btn btn-sm btn-outline-info rounded-3"
+               title="Ver ticket">
+
+                <i class="bi bi-receipt"></i>
+
+            </a>
+        `;
+
+                        if (data.tieneReceta === true && data.idReceta) {
+
+                            botones += `
+                <a href="/Receta/Detalle/${data.idReceta}"
+                   class="btn btn-sm btn-outline-success rounded-3"
+                   title="Ver receta">
+
+                    <i class="bi bi-capsule-pill"></i>
+
+                </a>
+            `;
+                        }
+
+                        if (data.estado === 1) {
+
+                            botones += `
+                <button type="button"
+                        class="btn btn-sm btn-outline-danger rounded-3"
+                        title="Cancelar cita"
+                        onclick="Citas.cancelarCita(${data.idCita})">
+
+                    <i class="bi bi-x-circle"></i>
+
+                </button>
+            `;
+                        }
+
                         return `
-                        <div class="d-inline-flex align-items-center gap-1">
-
-                            <a href="/Cita/Ticket/${data.idCita}"
-                               class="btn btn-sm btn-outline-info"
-                               title="Ver ticket"
-                               aria-label="Ver ticket">
-
-                                <i class="bi bi-receipt"></i>
-
-                            </a>
-
-                            ${data.estado === 1 ? `
-                                <button type="button"
-                                        class="btn btn-sm btn-outline-danger"
-                                        title="Cancelar cita"
-                                        aria-label="Cancelar cita"
-                                        onclick="Citas.cancelarCita(${data.idCita})">
-
-                                    <i class="bi bi-x-circle"></i>
-
-                                </button>
-                            ` : ''}
-
-                        </div>
-                    `;
+            <div class="d-flex justify-content-center gap-2">
+                ${botones}
+            </div>
+        `;
                     }
                 }
             ],
@@ -284,35 +301,52 @@
                     data: null,
                     orderable: false,
                     searchable: false,
-                    className: 'text-nowrap',
+                    className: 'text-center',
 
                     render: function (data) {
+
+                        let botones = `
+            <a href="/Cita/Ticket/${data.idCita}"
+               class="btn btn-sm btn-outline-info rounded-3"
+               title="Ver ticket">
+
+                <i class="bi bi-receipt"></i>
+
+            </a>
+        `;
+
+                        if (data.idReceta) {
+
+                            botones += `
+                <a href="/Receta/Detalle/${data.idReceta}"
+                   class="btn btn-sm btn-outline-success rounded-3"
+                   title="Ver receta">
+
+                    <i class="bi bi-capsule-pill"></i>
+
+                </a>
+            `;
+                        }
+
+                        if (data.estado === 1) {
+
+                            botones += `
+                <button type="button"
+                        class="btn btn-sm btn-outline-danger rounded-3"
+                        title="Cancelar cita"
+                        onclick="Citas.cancelarCita(${data.idCita})">
+
+                    <i class="bi bi-x-circle"></i>
+
+                </button>
+            `;
+                        }
+
                         return `
-                        <div class="d-inline-flex align-items-center gap-1">
-
-                            <a href="/Cita/Ticket/${data.idCita}"
-                               class="btn btn-sm btn-outline-info"
-                               title="Ver ticket"
-                               aria-label="Ver ticket">
-
-                                <i class="bi bi-receipt"></i>
-
-                            </a>
-
-                            ${data.estado === 1 ? `
-                                <button type="button"
-                                        class="btn btn-sm btn-outline-danger"
-                                        title="Cancelar cita"
-                                        aria-label="Cancelar cita"
-                                        onclick="Citas.cancelarCita(${data.idCita})">
-
-                                    <i class="bi bi-x-circle"></i>
-
-                                </button>
-                            ` : ''}
-
-                        </div>
-                    `;
+            <div class="d-flex justify-content-center gap-2">
+                ${botones}
+            </div>
+        `;
                     }
                 }
             ],

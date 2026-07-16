@@ -23,6 +23,7 @@ namespace CACES.DAL.Repositorios.Citas
                     .ThenInclude(m => m.Usuario)
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
+                .Include(c => c.Receta)
                 .OrderByDescending(c => c.Fecha)
                 .ThenBy(c => c.IdHorario)
                 .ToListAsync();
@@ -38,6 +39,7 @@ namespace CACES.DAL.Repositorios.Citas
                     .ThenInclude(m => m.Usuario)
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
+                .Include(c => c.Receta)
                 .Where(c => c.IdPaciente == idPaciente)
                 .OrderByDescending(c => c.Fecha)
                 .ThenBy(c => c.IdHorario)
@@ -54,6 +56,7 @@ namespace CACES.DAL.Repositorios.Citas
                     .ThenInclude(m => m.Usuario)
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
+                .Include(c => c.Receta)
                 .Where(c => c.IdMedico == idMedico)
                 .OrderByDescending(c => c.Fecha)
                 .ThenBy(c => c.IdHorario)
@@ -69,6 +72,7 @@ namespace CACES.DAL.Repositorios.Citas
                     .ThenInclude(m => m.Usuario)
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
+                .Include(c => c.Receta)
                 .FirstOrDefaultAsync(c => c.IdCita == idCita);
         }
 

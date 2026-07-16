@@ -131,17 +131,21 @@ namespace CACES.BLL.Servicios.Citas
                     );
                 }
 
-                var cita  =_mapper.Map<Cita>(dto);
-               cita.IdPaciente= dto.IdPaciente;
-                cita.IdMedico = dto.IdMedico;
-                cita.IdEspecialidad = dto.IdEspecialidad;
-                cita.Fecha = dto.FechaCita.Date;
-                cita.Horario = horarioSeleccionado;
-                cita.Motivo = dto.Motivo;
-                cita.FechaDeRegistro = DateTime.Now;
-                cita.Estado = 1; // Activa
+                var cita = new Cita
+                {
+                    IdPaciente = idPaciente,
+                    IdMedico = dto.IdMedico,
+                    IdEspecialidad = dto.IdEspecialidad,
+                    IdHorario = dto.IdHorario,
 
+                    Fecha = dto.FechaCita.Date,
 
+                    Motivo = dto.Motivo.Trim(),
+
+                    FechaDeRegistro = DateTime.Now,
+                    FechaDeModificacion = null,
+                    Estado = 1
+                };
 
 
                 var citaCreada = await _citaRepositorio.RegistrarAsync(cita);
@@ -466,20 +470,26 @@ namespace CACES.BLL.Servicios.Citas
                 IdEspecialidad = cita.IdEspecialidad,
                 IdHorario = cita.IdHorario,
 
+                IdReceta = cita.Receta?.IdReceta,
+
                 FechaCita = cita.Fecha,
-                Hora = cita.Horario.HoraInicio,
+
+                Hora = cita.Horario != null
+                    ? cita.Horario.HoraInicio
+                    : TimeSpan.Zero,
+
                 Motivo = cita.Motivo,
                 Estado = cita.Estado,
 
-                NombrePaciente = cita.Paciente != null
+                NombrePaciente = cita.Paciente?.Usuario != null
                     ? $"{cita.Paciente.Usuario.Nombres} {cita.Paciente.Usuario.PrimerApellido}"
-                    : "",
+                    : string.Empty,
 
-                NombreMedico = cita.Medico != null
+                NombreMedico = cita.Medico?.Usuario != null
                     ? $"{cita.Medico.Usuario.Nombres} {cita.Medico.Usuario.PrimerApellido}"
-                    : "",
+                    : string.Empty,
 
-                NombreEspecialidad = cita.Especialidad?.Nombre ?? ""
+                NombreEspecialidad = cita.Especialidad?.Nombre ?? string.Empty
             };
         }
 
