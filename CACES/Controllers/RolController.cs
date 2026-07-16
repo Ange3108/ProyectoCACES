@@ -37,30 +37,32 @@ namespace CACES.Controllers
             return RedirectToAction("GestionRoles");
         }
 
+       
         [HttpPost]
-        public async Task<IActionResult> DesactivarMedico(string userId)
-        {
-            var resultado = await _rolServicio.DesactivarUsuarioPorRolAsync(userId, "Medico");
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CambiarEstadoUsuario(
+            string userId,
+            bool estadoActual)
+                {
+                    var resultado = await _rolServicio.CambiarEstadoUsuarioAsync(
+                        userId,
+                        !estadoActual
+                    );
 
-            if (resultado)
-                TempData["Mensaje"] = "El usuario médico fue desactivado correctamente.";
-            else
-                TempData["Error"] = "No se pudo desactivar el usuario médico.";
+                    if (resultado)
+                    {
+                        TempData["Mensaje"] = estadoActual
+                            ? "El usuario fue desactivado correctamente."
+                            : "El usuario fue activado correctamente.";
+                    }
+                    else
+                    {
+                        TempData["Error"] = estadoActual
+                            ? "No se pudo desactivar el usuario."
+                            : "No se pudo activar el usuario.";
+                    }
 
-            return RedirectToAction("GestionRoles");
-        }
-
-        [HttpPost]
-        public async Task<IActionResult> DesactivarAdministrador(string userId)
-        {
-            var resultado = await _rolServicio.DesactivarUsuarioPorRolAsync(userId, "Administrador");
-
-            if (resultado)
-                TempData["Mensaje"] = "El usuario administrador fue desactivado correctamente.";
-            else
-                TempData["Error"] = "No se pudo desactivar el usuario administrador.";
-
-            return RedirectToAction("GestionRoles");
-        }
+                    return RedirectToAction(nameof(GestionRoles));
+                }
     }
 }

@@ -12,5 +12,6 @@ namespace CACES.BLL.Servicios.Roles
         Task<List<AspNetRole>> GetRolesAsync();
         Task<bool> CambiarRolAsync(string userId, string roleId);
         Task<bool> DesactivarUsuarioPorRolAsync(string userId, string nombreRol);
+        Task<bool> CambiarEstadoUsuarioAsync(string userId,bool nuevoEstado);
     }
 }

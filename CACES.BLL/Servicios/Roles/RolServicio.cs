@@ -34,5 +34,10 @@ namespace CACES.BLL.Servicios.Roles
         {
             return await _rolRepositorio.DesactivarUsuarioPorRolAsync(userId, nombreRol);
         }
+
+        public async Task<bool> CambiarEstadoUsuarioAsync(string userId, bool nuevoEstado)
+        {
+            return await _rolRepositorio.CambiarEstadoUsuarioAsync(userId, nuevoEstado);
+        }
     }
 }

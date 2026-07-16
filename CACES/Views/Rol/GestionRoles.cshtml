@@ -5,29 +5,50 @@
     var roles = ViewBag.Roles as List<CACES.DAL.Entidades.Roles.AspNetRole>;
 }
 
-<div class="container py-5">
+<div class="container-fluid py-4">
 
     <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
 
-        <div class="card-header border-0 py-4"
+        <!-- ENCABEZADO -->
+        <div class="card-header border-0 p-4"
              style="background:#163B73;">
 
-            <h2 class="text-white fw-bold mb-1">
-                <i class="bi bi-person-gear me-2"></i>
-                Gestión de Roles
-            </h2>
+            <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-md-center gap-3">
 
-            <p class="text-white-50 mb-0">
-                Administre los permisos y roles de los usuarios registrados.
-            </p>
+                <div>
+                    <h2 class="text-white fw-bold mb-1">
+                        <i class="bi bi-person-gear me-2"></i>
+                        Gestión de Roles
+                    </h2>
+
+                    <p class="text-white-50 mb-0">
+                        Administre los roles y el estado de los usuarios registrados.
+                    </p>
+                </div>
+
+                <div class="text-white">
+                    <span class="badge rounded-pill px-3 py-2"
+                          style="background:rgba(255,255,255,.15);
+                        color:white;">
+
+                        <i class="bi bi-people-fill me-1"></i>
+                        @Model.Count usuarios
+
+                    </span>
+                </div>
+
+            </div>
 
         </div>
 
         <div class="card-body p-4">
 
+            <!-- MENSAJES -->
             @if (TempData["Mensaje"] != null)
             {
-                <div class="alert alert-success rounded-3 shadow-sm">
+                <div class="alert alert-success border-0 rounded-3 shadow-sm">
                     <i class="bi bi-check-circle-fill me-2"></i>
                     @TempData["Mensaje"]
                 </div>
@@ -35,150 +56,269 @@
 
             @if (TempData["Error"] != null)
             {
-                <div class="alert alert-danger rounded-3 shadow-sm">
+                <div class="alert alert-danger border-0 rounded-3 shadow-sm">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     @TempData["Error"]
                 </div>
             }
 
-            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+            @if (Model == null || !Model.Any())
+            {
+                <div class="alert alert-info border-0 rounded-3 shadow-sm mb-0">
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    No hay usuarios registrados.
+                </div>
+            }
+            else
+            {
+                <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
 
-                <table class="table table-hover align-middle mb-0">
+                    <table class="table table-hover align-middle mb-0">
 
-                    <thead style="background:#163B73;color:white;">
-
-                        <tr>
-                            <th>Nombre</th>
-                            <th>Correo</th>
-                            <th>Rol Actual</th>
-                            <th style="width:320px;">Cambiar Rol</th>
-                            <th style="width:180px;">Acciones</th>
-                        </tr>
-
-                    </thead>
-
-                    <tbody>
-
-                        @foreach (var usuario in Model)
-                        {
+                        <thead style="background:#163B73;color:white;">
                             <tr>
+                                <th class="py-3 ps-4">Usuario</th>
+                                <th class="py-3">Correo</th>
+                                <th class="py-3">Rol actual</th>
+                                <th class="py-3">Estado</th>
+                                <th class="py-3" style="min-width:340px;">
+                                    Cambiar rol
+                                </th>
+                                <th class="py-3 text-center pe-4">
+                                    Acciones
+                                </th>
+                            </tr>
+                        </thead>
 
-                                <td class="fw-semibold">
-                                    @usuario.NombreCompleto
-                                </td>
+                        <tbody>
 
-                                <td>
-                                    @usuario.CorreoElectronico
-                                </td>
+                            @foreach (var usuario in Model)
+                            {
+                                <tr class="@(!usuario.Estado ? "fila-inactiva" : "")">
 
-                                <td>
+                                    <!-- USUARIO -->
+                                    <td class="ps-4">
 
-                                    <span class="badge rounded-pill px-3 py-2"
-                                          style="background:#DDF7F8;color:#0B6F73;">
+                                        <div class="d-flex align-items-center gap-3">
 
-                                        @usuario.NombreRol
+                                            <div class="d-flex align-items-center
+                                                justify-content-center
+                                                rounded-circle flex-shrink-0"
+                                                 style="width:44px;
+                                                height:44px;
+                                                background:#E6F7F9;
+                                                color:#0B6F73;">
 
-                                    </span>
+                                                <i class="bi bi-person-fill fs-5"></i>
 
-                                </td>
+                                            </div>
 
-                                <td>
+                                            <div>
+                                                <div class="fw-semibold text-dark">
+                                                    @usuario.NombreCompleto
+                                                </div>
 
-                                    <form asp-action="CambiarRol"
-                                          asp-controller="Rol"
-                                          method="post"
-                                          class="d-flex gap-2">
+                                                <small class="text-muted">
+                                                    Usuario #@usuario.IdUsuario
+                                                </small>
+                                            </div>
 
-                                        <input type="hidden"
-                                               name="userId"
-                                               value="@usuario.UserId" />
+                                        </div>
 
-                                        <select name="roleId"
-                                                class="form-select form-select-sm rounded-3 shadow-sm">
+                                    </td>
 
-                                            @foreach (var rol in roles)
+                                    <!-- CORREO -->
+                                    <td>
+
+                                        <span class="text-secondary">
+                                            <i class="bi bi-envelope-fill me-1"></i>
+                                            @usuario.CorreoElectronico
+                                        </span>
+
+                                    </td>
+
+                                    <!-- ROL -->
+                                    <td>
+
+                                        @{
+                                            var iconoRol = "bi-person";
+                                            var fondoRol = "#E0F2FE";
+                                            var textoRol = "#0369A1";
+
+                                            if (usuario.NombreRol == "Administrador")
                                             {
-                                                <option value="@rol.Id"
-                                                        selected="@(rol.Id == usuario.RoleId)">
-                                                    @rol.Name
-                                                </option>
+                                                iconoRol = "bi-shield-lock-fill";
+                                                fondoRol = "#F3E8FF";
+                                                textoRol = "#7E22CE";
+                                            }
+                                            else if (usuario.NombreRol == "Medico")
+                                            {
+                                                iconoRol = "bi-heart-pulse-fill";
+                                                fondoRol = "#DDF7F8";
+                                                textoRol = "#0B6F73";
+                                            }
+                                            else if (usuario.NombreRol == "Paciente")
+                                            {
+                                                iconoRol = "bi-person-heart";
+                                                fondoRol = "#FEF3C7";
+                                                textoRol = "#92400E";
+                                            }
+                                        }
+
+                                        <span class="badge rounded-pill px-3 py-2"
+                                              style="background:@fondoRol;
+                                            color:@textoRol;">
+
+                                            <i class="bi @iconoRol me-1"></i>
+                                            @usuario.NombreRol
+
+                                        </span>
+
+                                    </td>
+
+                                    <!-- ESTADO -->
+                                    <td>
+
+                                        @if (usuario.Estado)
+                                        {
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-danger rounded-2 px-2 py-1 btn-estado"
+                                                    onclick="return confirm('¿Desea desactivar a este usuario?');">
+
+                                                <i class="bi bi-shield-slash me-1"></i>
+                                                Desactivar
+
+                                            </button>
+                                        }
+                                        else
+                                        {
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-success rounded-2 px-2 py-1 btn-estado"
+                                                    onclick="return confirm('¿Desea activar a este usuario?');">
+
+                                                <i class="bi bi-shield-check me-1"></i>
+                                                Activar
+
+                                            </button>
+                                        }
+
+                                    </td>
+
+                                    <!-- CAMBIAR ROL -->
+                                    <td>
+
+                                        <form asp-controller="Rol"
+                                              asp-action="CambiarRol"
+                                              method="post"
+                                              class="d-flex align-items-center gap-2">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="userId"
+                                                   value="@usuario.UserId" />
+
+                                            <select name="roleId"
+                                                    class="form-select form-select-sm rounded-2"
+                                                    style="width:180px;"
+                                                    required>
+
+                                                @if (roles != null)
+                                                {
+                                                    @foreach (var rol in roles)
+                                                    {
+                                                        if (rol.Id == usuario.RoleId)
+                                                        {
+                                                            <option value="@rol.Id" selected>
+                                                                @rol.Name
+                                                            </option>
+                                                        }
+                                                        else
+                                                        {
+                                                            <option value="@rol.Id">
+                                                                @rol.Name
+                                                            </option>
+                                                        }
+                                                    }
+                                                }
+
+                                            </select>
+
+                                            <button type="submit"
+                                                    class="btn btn-sm btn-outline-info rounded-2 px-2 py-1 btn-cambiar-rol">
+
+                                                <i class="bi bi-arrow-repeat me-1"></i>
+                                                Cambiar rol
+
+                                            </button>
+
+                                        </form>
+
+                                    </td>
+
+                                    <!-- ACCIONES -->
+                                    <td class="text-center pe-4">
+
+                                        <form asp-controller="Rol"
+                                              asp-action="CambiarEstadoUsuario"
+                                              method="post">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <input type="hidden"
+                                                   name="userId"
+                                                   value="@usuario.UserId" />
+
+                                            <input type="hidden"
+                                                   name="estadoActual"
+                                                   value="@usuario.Estado.ToString().ToLower()" />
+
+                                            @if (usuario.Estado)
+                                            {
+                                                <button type="submit"
+                                                        class="btn btn-sm
+                                                    btn-outline-danger
+                                                    rounded-3 px-3
+                                                    accion-estado"
+                                                        onclick="return confirm('¿Desea desactivar a este usuario?');">
+
+                                                    <i class="bi bi-person-x-fill me-1"></i>
+                                                    Desactivar
+
+                                                </button>
+                                            }
+                                            else
+                                            {
+                                                <button type="submit"
+                                                        class="btn btn-sm
+                                                    btn-outline-success
+                                                    rounded-3 px-3
+                                                    accion-estado"
+                                                        onclick="return confirm('¿Desea activar a este usuario?');">
+
+                                                    <i class="bi bi-person-check-fill me-1"></i>
+                                                    Activar
+
+                                                </button>
                                             }
 
-                                        </select>
-
-                                        <button type="submit"
-                                                class="btn btn-sm text-white"
-                                                style="background:#20C4D8;border:none;">
-
-                                            <i class="bi bi-check-lg"></i>
-
-                                        </button>
-
-                                    </form>
-
-                                </td>
-
-                                <td>
-
-                                    @if (usuario.NombreRol == "Medico")
-                                    {
-                                        <form asp-action="DesactivarMedico"
-                                              asp-controller="Rol"
-                                              method="post">
-
-                                            <input type="hidden"
-                                                   name="userId"
-                                                   value="@usuario.UserId" />
-
-                                            <button type="submit"
-                                                    class="btn btn-danger btn-sm rounded-3"
-                                                    onclick="return confirm('¿Desea desactivar este médico?');">
-
-                                                <i class="bi bi-person-x-fill me-1"></i>
-
-                                                Desactivar
-
-                                            </button>
-
                                         </form>
-                                    }
 
-                                    @if (usuario.NombreRol == "Administrador")
-                                    {
-                                        <form asp-action="DesactivarAdministrador"
-                                              asp-controller="Rol"
-                                              method="post">
+                                    </td>
 
-                                            <input type="hidden"
-                                                   name="userId"
-                                                   value="@usuario.UserId" />
+                                </tr>
+                            }
 
-                                            <button type="submit"
-                                                    class="btn btn-danger btn-sm rounded-3"
-                                                    onclick="return confirm('¿Desea desactivar este administrador?');">
+                        </tbody>
 
-                                                <i class="bi bi-person-x-fill me-1"></i>
+                    </table>
 
-                                                Desactivar
-
-                                            </button>
-
-                                        </form>
-                                    }
-
-                                </td>
-
-                            </tr>
-                        }
-
-                    </tbody>
-
-                </table>
-
-            </div>
+                </div>
+            }
 
         </div>
 
     </div>
 
 </div>
+

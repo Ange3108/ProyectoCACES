@@ -29,11 +29,31 @@ namespace CACES.DAL.Repositorios.Roles
                     NombreCompleto = u.Nombres + " " + u.PrimerApellido + " " + u.SegundoApellido,
                     CorreoElectronico = u.CorreoElectronico,
                     RoleId = r.Id,
-                    NombreRol = r.Name
+                    NombreRol = r.Name,
+                    Estado = u.Estado
                 }
             ).ToListAsync();
 
             return usuarios;
+        }
+
+        public async Task<bool> CambiarEstadoUsuarioAsync(string userId, bool nuevoEstado)
+        {
+            if (!int.TryParse(userId, out int idUsuario))
+                return false;
+
+            var usuario = await _context.Usuarios
+                .FirstOrDefaultAsync(x => x.IdUsuario == idUsuario);
+
+            if (usuario == null)
+                return false;
+
+            usuario.Estado = nuevoEstado;
+            usuario.FechaDeModificacion = DateTime.Now;
+
+            _context.Usuarios.Update(usuario);
+
+            return await _context.SaveChangesAsync() > 0;
         }
 
         public async Task<List<AspNetRole>> GetRolesAsync()

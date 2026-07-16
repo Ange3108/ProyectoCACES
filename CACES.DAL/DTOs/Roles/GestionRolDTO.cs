@@ -17,5 +17,7 @@ namespace CACES.DAL.DTOs.Roles
         public string RoleId { get; set; } = null!;
 
         public string NombreRol { get; set; } = null!;
+
+        public bool Estado { get; set; }
     }
 }

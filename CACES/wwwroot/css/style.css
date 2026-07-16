@@ -1331,3 +1331,38 @@ body {
     #tbMisCitas td:last-child .btn {
         margin-right: 0.25rem;
     }
+
+.btn-cambiar-rol,
+.btn-estado {
+    min-width: auto;
+    height: auto;
+    font-size: .82rem;
+    font-weight: 500;
+    display: inline-flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 2px;
+    line-height: 1.2;
+    white-space: nowrap;
+    transition: all .15s ease;
+}
+
+.btn-cambiar-rol {
+    color: #20C4D8;
+    border-color: #20C4D8;
+    background: transparent;
+}
+
+    .btn-cambiar-rol:hover,
+    .btn-cambiar-rol:focus {
+        color: #ffffff;
+        background: #20C4D8;
+        border-color: #20C4D8;
+        box-shadow: none;
+    }
+
+.btn-estado:hover,
+.btn-estado:focus {
+    box-shadow: none;
+}
