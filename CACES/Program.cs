@@ -7,13 +7,16 @@ using CACES.BLL.Servicios.Especialidad;
 using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
 using CACES.BLL.Servicios.HistorialMedicos;
 using CACES.BLL.Servicios.Horario;
+using CACES.BLL.Servicios.Icono;
 using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;
 using CACES.BLL.Servicios.Perfil;
 using CACES.BLL.Servicios.Procedimientos;
 using CACES.BLL.Servicios.Quirofano;
+using CACES.BLL.Servicios.Recetas;
 using CACES.BLL.Servicios.Roles;
+using CACES.BLL.Servicios.Soportes;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.ArchivosHistorial;
@@ -21,19 +24,18 @@ using CACES.DAL.Repositorios.Citas;
 using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Horarios;
+using CACES.DAL.Repositorios.Icono;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Paquetes;
 using CACES.DAL.Repositorios.Procedimientos;
 using CACES.DAL.Repositorios.Quirofano;
+using CACES.DAL.Repositorios.Recetas;
 using CACES.DAL.Repositorios.Roles;
+using CACES.DAL.Repositorios.Soportes;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
-using CACES.BLL.Servicios.Soportes;
-using CACES.DAL.Repositorios.Soportes;
-using CACES.DAL.Repositorios.Icono;
-using CACES.BLL.Servicios.Icono;
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -61,7 +63,7 @@ builder.Services.AddScoped<IArchivoHistorialRepositorio, ArchivoHistorialReposit
 builder.Services.AddScoped<IQuirofanoRepositorio, QuirofanoRepositorio>();
 builder.Services.AddScoped<IHorariosRepositorio, HorariosRepositorio>();
 builder.Services.AddScoped<IIconoRepositorio, IconoRepositorio>();
-
+builder.Services.AddScoped<IRecetaRepositorio, RecetaRepositorio>();
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
@@ -84,6 +86,8 @@ builder.Services.AddScoped<IHorarioServicio, HorarioServicio>();
 builder.Services.AddScoped<ISoporteRepositorio, SoporteRepositorio>();
 builder.Services.AddScoped<ISoporteServicio, SoporteServicio>();
 builder.Services.AddScoped<IIconoServicio, IconoServicio>();
+
+builder.Services.AddScoped<IRecetaServicio, RecetaServicio>();
 
 
 builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación

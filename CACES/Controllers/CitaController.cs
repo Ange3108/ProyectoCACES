@@ -44,6 +44,13 @@ namespace CACES.Controllers
             return View();
         }
 
+        [Authorize(Roles = "Medico")]
+        [HttpGet]
+        public IActionResult CitasMedico()
+        {
+            return View();
+        }
+
         [Authorize(Roles = "Medico,Administrador")]
         [HttpGet]
         public IActionResult GestionCitas()
@@ -340,9 +347,6 @@ namespace CACES.Controllers
                             .Italic()
                             .FontColor(Colors.Grey.Darken1);
 
-                        col.Item()
-                            .PaddingTop(35)
-                            .Text("Firma del paciente: ______________________________");
                     });
 
                     page.Footer().Column(footer =>

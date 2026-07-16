@@ -4,30 +4,36 @@
 }
 
 <div class="container py-5">
-    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
 
-        <div class="card-header banner-header p-4">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+        <div class="card-header border-0 py-4"
+             style="background:#163B73;">
+
             <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
                 <div>
-                    <h3 class="mb-1 fw-bold">
-                        <i class="bi bi-calendar-week me-2"></i>
+                    <h2 class="text-white fw-bold mb-1">
+                        <i class="bi bi-calendar-week-fill me-2"></i>
                         Agenda de Citas Médicas
-                    </h3>
+                    </h2>
 
-                    <p class="mb-0 opacity-75">
+                    <p class="text-white-50 mb-0">
                         Visualice y administre las citas asignadas a su agenda médica.
                     </p>
                 </div>
 
-                <button type="button"
-                        class="btn btn-light fw-semibold"
-                        id="btnRecargarCitas">
+                <div>
+                    <button type="button"
+                            class="btn text-white px-4 py-2 rounded-3 fw-semibold shadow-sm"
+                            style="background:#20C4D8; border:none;"
+                            id="btnRecargarCitas">
 
-                    <i class="bi bi-arrow-clockwise me-1"></i>
-                    Actualizar
+                        <i class="bi bi-arrow-clockwise me-2"></i>
+                        Actualizar
 
-                </button>
+                    </button>
+                </div>
 
             </div>
         </div>
@@ -35,26 +41,30 @@
         <div class="card-body p-4">
 
             <div id="alertaCitasMedico"
-                 class="alert alert-danger rounded-3 d-none">
+                 class="alert alert-danger rounded-3 shadow-sm d-none">
+
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <span id="textoAlertaCitasMedico"></span>
+
             </div>
 
             <div id="sinCitasMedico"
-                 class="alert alert-info text-center rounded-3 py-4 d-none">
+                 class="alert rounded-3 shadow-sm text-center py-4 d-none"
+                 style="background:#EAF9FC;color:#163B73;">
 
-                <i class="bi bi-info-circle fs-2 d-block mb-2 text-muted"></i>
-
+                <i class="bi bi-info-circle-fill fs-3 d-block mb-2"></i>
                 No existen citas asignadas.
 
             </div>
 
             <div id="contenedorTablaCitasMedico"
-                 class="table-responsive">
+                 class="table-responsive border rounded-4 shadow-sm overflow-hidden">
 
                 <table id="tbCitasMedico"
                        class="table table-hover align-middle mb-0"
                        style="width:100%;">
 
-                    <thead class="table-light">
+                    <thead style="background:#163B73;color:white;">
                         <tr>
                             <th>#</th>
                             <th>Fecha</th>
@@ -63,7 +73,9 @@
                             <th>Especialidad</th>
                             <th>Motivo</th>
                             <th>Estado</th>
-                            <th>Acciones</th>
+                            <th style="width:180px;" class="text-center">
+                                Acciones
+                            </th>
                         </tr>
                     </thead>
 
@@ -77,6 +89,7 @@
     </div>
 </div>
 
+<!-- MODAL REPROGRAMAR CITA -->
 <div class="modal fade"
      id="modalReprogramarCita"
      tabindex="-1"
@@ -85,11 +98,12 @@
 
     <div class="modal-dialog modal-dialog-centered">
 
-        <div class="modal-content">
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
 
-            <div class="modal-header">
+            <div class="modal-header border-0 py-3"
+                 style="background:#163B73;">
 
-                <h5 class="modal-title fw-bold"
+                <h5 class="modal-title text-white fw-bold"
                     id="tituloModalReprogramar">
 
                     <i class="bi bi-calendar-event me-2"></i>
@@ -98,14 +112,14 @@
                 </h5>
 
                 <button type="button"
-                        class="btn-close"
+                        class="btn-close btn-close-white"
                         data-bs-dismiss="modal"
                         aria-label="Cerrar">
                 </button>
 
             </div>
 
-            <div class="modal-body">
+            <div class="modal-body p-4">
 
                 <input type="hidden"
                        id="reprogramarIdCita" />
@@ -121,16 +135,16 @@
 
                     <input type="date"
                            id="reprogramarFecha"
-                           class="form-control" />
+                           class="form-control rounded-3" />
 
                 </div>
 
             </div>
 
-            <div class="modal-footer">
+            <div class="modal-footer border-0 bg-light px-4 py-3">
 
                 <button type="button"
-                        class="btn btn-secondary"
+                        class="btn btn-outline-secondary rounded-3"
                         data-bs-dismiss="modal">
 
                     Cancelar
@@ -138,9 +152,11 @@
                 </button>
 
                 <button type="button"
-                        class="btn btn-primary"
+                        class="btn text-white rounded-3 fw-semibold"
+                        style="background:#163B73;"
                         id="btnGuardarReprogramacion">
 
+                    <i class="bi bi-check-circle me-1"></i>
                     Guardar cambios
 
                 </button>
@@ -151,8 +167,136 @@
     </div>
 </div>
 
+<!-- MODAL REGISTRAR RECETA -->
+<div class="modal fade"
+     id="modalReceta"
+     tabindex="-1"
+     aria-labelledby="tituloModalReceta"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <div class="modal-header border-0 py-3"
+                 style="background:#163B73;">
+
+                <h5 class="modal-title text-white fw-bold"
+                    id="tituloModalReceta">
+
+                    <i class="bi bi-capsule-pill me-2"></i>
+                    Emitir receta médica
+
+                </h5>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar">
+                </button>
+
+            </div>
+
+            <div class="modal-body p-4">
+
+                <input type="hidden"
+                       id="idCitaReceta" />
+
+                <div class="alert rounded-3 mb-4"
+                     style="background:#EAF9FC;color:#163B73;">
+
+                    <i class="bi bi-info-circle-fill me-2"></i>
+                    Complete la información médica antes de guardar la receta.
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label for="medicamentos"
+                           class="form-label fw-semibold">
+
+                        Medicamentos
+
+                    </label>
+
+                    <textarea id="medicamentos"
+                              class="form-control rounded-3"
+                              rows="4"
+                              placeholder="Ejemplo: Paracetamol 500 mg cada 8 horas..."
+                              required></textarea>
+
+                </div>
+
+                <div class="mb-4">
+
+                    <label for="instrucciones"
+                           class="form-label fw-semibold">
+
+                        Instrucciones
+
+                    </label>
+
+                    <textarea id="instrucciones"
+                              class="form-control rounded-3"
+                              rows="3"
+                              maxlength="500"
+                              placeholder="Indique las recomendaciones para el paciente..."></textarea>
+
+                    <div class="form-text">
+                        Máximo 500 caracteres.
+                    </div>
+
+                </div>
+
+                <div class="row">
+
+                    <div class="col-md-6">
+
+                        <label for="fechaVencimiento"
+                               class="form-label fw-semibold">
+
+                            Fecha de vencimiento
+
+                        </label>
+
+                        <input type="date"
+                               id="fechaVencimiento"
+                               class="form-control rounded-3"
+                               required />
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer border-0 bg-light px-4 py-3">
+
+                <button type="button"
+                        class="btn btn-outline-secondary rounded-3"
+                        data-bs-dismiss="modal">
+
+                    Cancelar
+
+                </button>
+
+                <button type="button"
+                        class="btn text-white rounded-3 fw-semibold px-4"
+                        style="background:#20C4D8; border:none;"
+                        id="btnGuardarReceta">
+
+                    <i class="bi bi-check-circle me-1"></i>
+                    Guardar receta
+
+                </button>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
 @section Scripts {
-    <script src="~/js/Cita/CitasMedico.js"
-            asp-append-version="true">
-    </script>
+    <script src="~/js/CitasMedico.js"
+            asp-append-version="true"></script>
 }

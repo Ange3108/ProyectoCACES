@@ -415,13 +415,49 @@
 
             @* Accesos comunes a todos los autenticados *@
             <div class="col">
-                <a href="@Url.Action("MisCitas", "Cita")" class="acceso-card">
-                    <div class="acceso-icon" style="background:#e0f2fe;">
-                        <i class="bi bi-calendar-check" style="color:#0284c7;"></i>
-                    </div>
-                    <h6>Mis Citas</h6>
-                    <small>Gestionar citas</small>
-                </a>
+
+                @if (User.IsInRole("Administrador"))
+                {
+                    <a href="@Url.Action("GestionCitas", "Cita")"
+                       class="acceso-card">
+
+                        <div class="acceso-icon" style="background:#e0f2fe;">
+                            <i class="bi bi-calendar-check" style="color:#0284c7;"></i>
+                        </div>
+
+                        <h6>Mis Citas</h6>
+                        <small>Gestionar citas</small>
+
+                    </a>
+                }
+                else if (User.IsInRole("Medico"))
+                {
+                    <a href="@Url.Action("CitasMedico", "Cita")"
+                       class="acceso-card">
+
+                        <div class="acceso-icon" style="background:#e0f2fe;">
+                            <i class="bi bi-calendar-check" style="color:#0284c7;"></i>
+                        </div>
+
+                        <h6>Mis Citas</h6>
+                        <small>Agenda médica</small>
+
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("MisCitas", "Cita")"
+                       class="acceso-card">
+
+                        <div class="acceso-icon" style="background:#e0f2fe;">
+                            <i class="bi bi-calendar-check" style="color:#0284c7;"></i>
+                        </div>
+
+                        <h6>Mis Citas</h6>
+                        <small>Gestionar citas</small>
+
+                    </a>
+                }
             </div>
 
             <div class="col">
@@ -445,26 +481,56 @@
             </div>
 
             <div class="col">
-                <a href="@Url.Action("ObtenerProcedimientos", "Procedimientos")" class="acceso-card">
-                    <div class="acceso-icon" style="background:#f0fdf4;">
-                        <i class="bi bi-bandaid-fill" style="color:#16a34a;"></i>
-                    </div>
-                    <h6>Procedimientos</h6>
-                    <small>Quirúrgicos</small>
-                </a>
+
+                @if (User.IsInRole("Medico") || User.IsInRole("Administrador"))
+                {
+                    <a href="@Url.Action("ObtenerProcedimientosQuirur", "Procedimientos")"
+                       class="acceso-card">
+
+                        <div class="acceso-icon" style="background:#f0fdf4;">
+                            <i class="bi bi-bandaid-fill" style="color:#16a34a;"></i>
+                        </div>
+
+                        <h6>Procedimientos</h6>
+                        <small>Quirúrgicos</small>
+
+                    </a>
+                }
+                else
+                {
+                    <a href="@Url.Action("ObtenerProcedimientos", "Procedimientos")"
+                       class="acceso-card">
+
+                        <div class="acceso-icon" style="background:#f0fdf4;">
+                            <i class="bi bi-bandaid-fill" style="color:#16a34a;"></i>
+                        </div>
+
+                        <h6>Procedimientos</h6>
+                        <small>Quirúrgicos</small>
+
+                    </a>
+                }
+
             </div>
 
             @* Accesos del médico *@
             @if (User.IsInRole("Medico"))
             {
                 <div class="col">
-                    <a href="@Url.Action("AgendaMedica", "AgendaMedica")" class="acceso-card">
+
+                    <a href="@Url.Action("CitasMedico", "Cita")"
+                       class="acceso-card">
+
                         <div class="acceso-icon" style="background:#fffbeb;">
-                            <i class="bi bi-journal-medical" style="color:#d97706;"></i>
+                            <i class="bi bi-journal-medical"
+                               style="color:#d97706;"></i>
                         </div>
+
                         <h6>Agenda</h6>
                         <small>Médica</small>
+
                     </a>
+
                 </div>
             }
 
