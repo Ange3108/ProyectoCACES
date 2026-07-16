@@ -306,14 +306,14 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Id_Cita).HasColumnName("Id_Cita").IsRequired();
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.HasOne(d => d.Paciente)
-                      .WithMany()
-                      .HasForeignKey(d => d.Id_Paciente)
-                      .OnDelete(DeleteBehavior.ClientSetNull);
+          .WithMany(p => p.Cirugias) // <-- Apuntamos explícitamente a la colección en Paciente
+          .HasForeignKey(d => d.Id_Paciente)
+          .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(d => d.Medico)
-                      .WithMany()
-                      .HasForeignKey(d => d.Id_Medico)
-                      .OnDelete(DeleteBehavior.ClientSetNull);
+          .WithMany(m => m.Cirugias) // <-- Apuntamos explícitamente a la colección en Medico
+          .HasForeignKey(d => d.Id_Medico)
+          .OnDelete(DeleteBehavior.ClientSetNull);
 
                 entity.HasOne(d => d.Procedimiento)
                       .WithMany(p => p.Cirugias)
