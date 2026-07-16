@@ -531,6 +531,8 @@
 
                     </a>
 
+
+
                 </div>
             }
 
@@ -576,6 +578,27 @@
                         <small>Sistema</small>
                     </a>
                 </div>
+
+                <div class="col">
+
+                    <a href="@Url.Action("GestionCotizaciones", "Cotizacion")"
+                       class="acceso-card">
+
+                        <div class="acceso-icon"
+                             style="background:#FEF3C7;">
+
+                            <i class="bi bi-cash-coin"
+                               style="color:#D97706;"></i>
+
+                        </div>
+
+                        <h6>Cotizaciones</h6>
+
+                        <small>Gestionar solicitudes</small>
+
+                    </a>
+
+                </div>
             }
 
             @* Accesos del paciente *@
@@ -589,6 +612,50 @@
                         <h6>Turismo Médico</h6>
                         <small>Paquetes</small>
                     </a>
+
+
+                </div>
+
+                <div class="col">
+
+                    <a href="@Url.Action("SolicitarCotizacion", "Cotizacion")"
+                       class="acceso-card">
+
+                        <div class="acceso-icon"
+                             style="background:#E0F2FE;">
+
+                            <i class="bi bi-file-earmark-plus-fill"
+                               style="color:#0284C7;"></i>
+
+                        </div>
+
+                        <h6>Solicitar Cotización</h6>
+
+                        <small>Nueva solicitud</small>
+
+                    </a>
+
+                </div>
+
+                <div class="col">
+
+                    <a href="@Url.Action("MisCotizaciones", "Cotizacion")"
+                       class="acceso-card">
+
+                        <div class="acceso-icon"
+                             style="background:#F0FDF4;">
+
+                            <i class="bi bi-file-earmark-medical-fill"
+                               style="color:#16A34A;"></i>
+
+                        </div>
+
+                        <h6>Mis Cotizaciones</h6>
+
+                        <small>Consultar estado</small>
+
+                    </a>
+
                 </div>
             }
         </div>

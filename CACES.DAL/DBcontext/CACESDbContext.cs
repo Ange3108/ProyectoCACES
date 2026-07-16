@@ -33,7 +33,7 @@ namespace CACES.DAL.DBContext
         public DbSet<Noticia> Noticias { get; set; }
         public DbSet<ConfiguracionQuirofano> ConfiguracionQuirofano { get; set; }
         public DbSet<Soporte> Soportes { get; set; }
-
+        public DbSet<Cotizacion> Cotizaciones { get; set; }
         public DbSet<Icono> Iconos { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -140,6 +140,38 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.FechaDeModificacion);
             });
 
+            //Configuracion de la entidad Cotizacion
+            modelBuilder.Entity<Cotizacion>(entity =>
+            {
+                entity.HasKey(c => c.IdCotizacion);
+
+                entity.Property(c => c.PrecioBase)
+                    .HasColumnType("decimal(10,2)");
+
+                entity.Property(c => c.Descuento)
+                    .HasColumnType("decimal(10,2)");
+
+                entity.Property(c => c.Impuesto)
+                    .HasColumnType("decimal(10,2)");
+
+                entity.Property(c => c.Total)
+                    .HasColumnType("decimal(10,2)");
+
+                entity.HasOne(c => c.Paciente)
+                    .WithMany()
+                    .HasForeignKey(c => c.IdPaciente)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(c => c.Medico)
+                    .WithMany()
+                    .HasForeignKey(c => c.IdMedico)
+                    .OnDelete(DeleteBehavior.Restrict);
+
+                entity.HasOne(c => c.Procedimiento)
+                    .WithMany()
+                    .HasForeignKey(c => c.IdProcedimiento)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
 
             // Configuración de la entidad Paciente
             modelBuilder.Entity<Paciente>(entity =>

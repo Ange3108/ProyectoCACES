@@ -24,88 +24,168 @@
                     {
                         data: null,
                         render: function (data) {
-                            return `${data.nombres} ${data.primerApellido} ${data.segundoApellido}`;
+
+                            const nombreCompleto = `
+                                ${data.nombres ?? ''}
+                                ${data.primerApellido ?? ''}
+                                ${data.segundoApellido ?? ''}
+                            `.replace(/\s+/g, ' ').trim();
+
+                            const foto = data.foto && data.foto.trim() !== ''
+                                ? data.foto
+                                : '/img/default.jpg';
+
+                            return `
+                                <div class="d-flex align-items-center gap-2">
+                                    <img src="${foto}"
+                                         alt="${nombreCompleto}"
+                                         class="rounded-circle border"
+                                         style="width:38px;height:38px;object-fit:cover;"
+                                         onerror="this.onerror=null;this.src='/img/default.jpg';" />
+
+                                    <span class="fw-semibold">
+                                        ${nombreCompleto}
+                                    </span>
+                                </div>
+                            `;
                         }
                     },
 
-                    { data: 'correoElectronico' },
-                    { data: 'dui' },
-                    { data: 'telefono' },
-                    { data: 'direccion' },
+                    {
+                        data: 'correoElectronico',
+                        render: function (data) {
+                            return `
+                                <span class="text-secondary">
+                                    <i class="bi bi-envelope me-1"></i>
+                                    ${data ?? ''}
+                                </span>
+                            `;
+                        }
+                    },
+
+                    {
+                        data: 'dui',
+                        defaultContent: ''
+                    },
+
+                    {
+                        data: 'telefono',
+                        defaultContent: ''
+                    },
+
+                    {
+                        data: 'direccion',
+                        defaultContent: ''
+                    },
 
                     {
                         data: 'nacimiento',
                         render: function (data) {
 
-                            if (!data)
-                                return '';
+                            if (!data) {
+                                return '<span class="text-muted">No registrada</span>';
+                            }
 
-                            return data.substring(0, 10);
+                            const fecha = new Date(data);
+
+                            return fecha.toLocaleDateString('es-CR');
                         }
                     },
 
                     {
                         data: 'estado',
-                        render: function (data) {
+                        className: 'text-center',
 
-                            return data
-                                ? '<span class="badge bg-success">Activo</span>'
-                                : '<span class="badge bg-danger">Inactivo</span>';
+                        render: function (estado) {
+
+                            return estado
+                                ? `
+                                    <span class="badge rounded-pill px-3 py-1"
+                                          style="background:#DDF7F8;color:#0B6F73;">
+                                        <i class="bi bi-check-circle-fill me-1"></i>
+                                        Activo
+                                    </span>
+                                `
+                                : `
+                                    <span class="badge rounded-pill px-3 py-1"
+                                          style="background:#FEE2E2;color:#991B1B;">
+                                        <i class="bi bi-x-circle-fill me-1"></i>
+                                        Inactivo
+                                    </span>
+                                `;
                         }
                     },
 
-
                     {
                         data: null,
-                       
                         orderable: false,
+                        searchable: false,
+                        className: 'text-center',
+
                         render: function (data, type, row) {
 
                             let botones = `
-                                <button
-                                    type="button"
-                                    class="btn btn-sm btn-warning btnEditar"
-                                    data-id="${row.idUsuario}"
-                                    data-nombre="${row.nombres}"
-                                    data-primerapellido="${row.primerApellido}"
-                                    data-segundoapellido="${row.segundoApellido}"
-                                    data-correo="${row.correoElectronico}"
-                                    data-telefono="${row.telefono}"
-                                    data-direccion="${row.direccion}"
-                                    data-nacimiento="${row.nacimiento}"
-                                    data-estado="${row.estado}">
-                                    <i class="bi bi-pencil"></i>
+                                <button type="button"
+                                        class="btn btn-sm btn-outline-primary rounded-2 btnEditar"
+                                        data-id="${row.idUsuario}"
+                                        data-foto="${row.foto ?? ''}"
+                                        data-nombre="${row.nombres ?? ''}"
+                                        data-primerapellido="${row.primerApellido ?? ''}"
+                                        data-segundoapellido="${row.segundoApellido ?? ''}"
+                                        data-correo="${row.correoElectronico ?? ''}"
+                                        data-telefono="${row.telefono ?? ''}"
+                                        data-direccion="${row.direccion ?? ''}"
+                                        data-nacimiento="${row.nacimiento ?? ''}"
+                                        data-estado="${row.estado}">
+
+                                    <i class="bi bi-pencil-square me-1"></i>
+                                    Editar
+
                                 </button>
                             `;
 
                             if (row.estado === true) {
+
                                 botones += `
-                                    <button
-                                        type="button"
-                                        class="btn btn-sm btn-danger desactivar"
-                                        data-id="${row.idUsuario}">
-                                        <i class="bi bi-person-x-fill"></i>
+                                    <button type="button"
+                                            class="btn btn-sm btn-outline-danger rounded-2 desactivar"
+                                            data-id="${row.idUsuario}">
+
+                                        <i class="bi bi-person-dash me-1"></i>
+                                        Desactivar
+
                                     </button>
                                 `;
                             }
 
-                            return botones;
+                            return `
+                                <div class="d-flex justify-content-center gap-2 flex-wrap">
+                                    ${botones}
+                                </div>
+                            `;
                         }
                     }
                 ],
 
+                order: [[0, 'asc']],
+
+                pageLength: 10,
+
+                responsive: true,
+
                 language: {
-                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json',
+                    emptyTable: 'No hay usuarios registrados.'
                 }
             });
         },
 
         registrarEventos() {
 
-            // Abrir modal editar
             $(document).on('click', '.btnEditar', function () {
 
                 $('#IdUsuario').val($(this).data('id'));
+                $('#Foto').val($(this).data('foto'));
                 $('#Nombres').val($(this).data('nombre'));
                 $('#PrimerApellido').val($(this).data('primerapellido'));
                 $('#SegundoApellido').val($(this).data('segundoapellido'));
@@ -116,19 +196,20 @@
                 const nacimiento = $(this).data('nacimiento');
 
                 if (nacimiento) {
-                    $('#Nacimiento').val(nacimiento.substring(0, 10));
+                    $('#Nacimiento').val(
+                        nacimiento.toString().substring(0, 10)
+                    );
+                } else {
+                    $('#Nacimiento').val('');
                 }
 
-                $('#Estado').val($(this).data('estado'));
-
-                const modal = new bootstrap.Modal(
-                    document.getElementById('editarUsuarioModal')
+                $('#Estado').val(
+                    $(this).data('estado').toString()
                 );
 
-                modal.show();
-     
-
-               
+                new bootstrap.Modal(
+                    document.getElementById('editarUsuarioModal')
+                ).show();
             });
 
             $('#formEditarUsuario').on('submit', function (e) {
@@ -136,88 +217,115 @@
                 e.preventDefault();
 
                 $.ajax({
+
                     url: $(this).attr('action'),
+
                     type: 'POST',
+
                     data: $(this).serialize(),
 
                     success: function (respuesta) {
 
-                        if (respuesta.esCorrecto) {
-
-                            Swal.fire({
-                                title: 'Correcto',
-                                text: respuesta.mensaje,
-                                icon: 'success'
-                            });
-
-                            bootstrap.Modal.getInstance(
-                                document.getElementById('editarUsuarioModal')
-                            ).hide();
-
-                            $('#tbUsuarios').DataTable().ajax.reload();
-                        }
-                        else {
+                        if (!respuesta.esCorrecto) {
 
                             Swal.fire({
                                 title: 'Error',
                                 text: respuesta.mensaje,
                                 icon: 'error'
                             });
+
+                            return;
                         }
+
+                        bootstrap.Modal.getInstance(
+                            document.getElementById('editarUsuarioModal')
+                        )?.hide();
+
+                        Swal.fire({
+                            title: 'Usuario actualizado',
+                            text: respuesta.mensaje,
+                            icon: 'success',
+                            confirmButtonText: 'Aceptar'
+                        });
+
+                        Usuario.tabla.ajax.reload(null, false);
                     },
 
                     error: function () {
 
                         Swal.fire({
                             title: 'Error',
-                            text: 'Ocurrió un error al actualizar.',
+                            text: 'No fue posible actualizar el usuario.',
                             icon: 'error'
                         });
                     }
                 });
             });
 
-            // Desactivar usuario
             $(document).on('click', '.desactivar', function () {
 
                 const id = $(this).data('id');
 
                 Swal.fire({
-                    title: '¿Estás seguro?',
-                    text: 'Se desactivará el usuario',
+
+                    title: '¿Desactivar usuario?',
+
+                    text: 'El usuario no podrá acceder al sistema.',
+
                     icon: 'warning',
+
                     showCancelButton: true,
+
                     confirmButtonText: 'Sí, desactivar',
-                    cancelButtonText: 'Cancelar'
-                }).then((result) => {
 
-                    if (result.isConfirmed) {
+                    cancelButtonText: 'Cancelar',
 
-                        $.ajax({
-                            url: `/Usuario/DesactivarUsuario/${id}`,
-                            type: 'POST',
+                    confirmButtonColor: '#dc3545'
 
-                            success: function (respuestaErrores) {
+                }).then(resultado => {
 
-                                Swal.fire({
-                                    title: 'Usuario eliminado correctamente',
-                                    text: respuestaErrores.mensaje,
-                                    icon: 'success'
-                                });
+                    if (!resultado.isConfirmed) {
+                        return;
+                    }
 
-                                $('#tbUsuarios').DataTable().ajax.reload();
-                            },
+                    $.ajax({
 
-                            error: function () {
+                        url: `/Usuario/DesactivarUsuario/${id}`,
+
+                        type: 'POST',
+
+                        success: function (respuesta) {
+
+                            if (!respuesta.esCorrecto) {
 
                                 Swal.fire({
                                     title: 'Error',
-                                    text: 'No fue posible desactivar el usuario.',
+                                    text: respuesta.mensaje,
                                     icon: 'error'
                                 });
+
+                                return;
                             }
-                        });
-                    }
+
+                            Swal.fire({
+                                title: 'Usuario desactivado',
+                                text: respuesta.mensaje,
+                                icon: 'success',
+                                confirmButtonText: 'Aceptar'
+                            });
+
+                            Usuario.tabla.ajax.reload(null, false);
+                        },
+
+                        error: function () {
+
+                            Swal.fire({
+                                title: 'Error',
+                                text: 'No fue posible desactivar el usuario.',
+                                icon: 'error'
+                            });
+                        }
+                    });
                 });
             });
         }

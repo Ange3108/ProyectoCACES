@@ -1,33 +1,39 @@
 ﻿@model List<CACES.DAL.Entidades.Paciente>
 
 @{
-    ViewData["Title"] = "Pacientes";
+    ViewData["Title"] = "Gestión de Pacientes";
 }
 
 <div class="container py-5">
-    <div class="card shadow border-0 rounded-4 overflow-hidden">
 
-        <div class="card-header text-white p-4"
-             style="background:#0B2E59;">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
 
-            <div class="d-flex justify-content-between align-items-center">
+        <!-- ENCABEZADO -->
+        <div class="card-header border-0 py-4"
+             style="background:#163B73;">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
 
                 <div>
-                    <h3 class="mb-1 fw-bold">
-                        <i class="bi bi-person-badge-fill me-2"></i>Gestión de Pacientes
-                    </h3>
 
-                    <p class="mb-0 text-light">
-                        Consulta, registro y desactivación de pacientes del sistema.
+                    <h2 class="text-white fw-bold mb-1">
+                        <i class="bi bi-people-fill me-2"></i>
+                        Gestión de Pacientes
+                    </h2>
+
+                    <p class="text-white-50 mb-0">
+                        Consulte, registre y administre los pacientes del sistema.
                     </p>
+
                 </div>
 
-                <a asp-action="RegistrarPaciente"
-                   asp-controller="Paciente"
-                   class="btn fw-semibold text-white"
-                   style="background:#1AA6A6;border:none;">
+                <a asp-controller="Paciente"
+                   asp-action="RegistrarPaciente"
+                   class="btn text-white px-4 py-2 rounded-3 fw-semibold shadow-sm"
+                   style="background:#20C4D8;border:none;">
 
-                    + Registrar Paciente
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Agregar Paciente
 
                 </a>
 
@@ -35,11 +41,11 @@
 
         </div>
 
-        <div class="card-body p-4" style="background:#F8FBFD;">
+        <div class="card-body p-4">
 
             @if (TempData["Mensaje"] != null)
             {
-                <div class="alert alert-success rounded-3">
+                <div class="alert alert-success rounded-3 shadow-sm">
                     <i class="bi bi-check-circle-fill me-2"></i>
                     @TempData["Mensaje"]
                 </div>
@@ -47,7 +53,7 @@
 
             @if (TempData["Error"] != null)
             {
-                <div class="alert alert-danger rounded-3">
+                <div class="alert alert-danger rounded-3 shadow-sm">
                     <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     @TempData["Error"]
                 </div>
@@ -55,21 +61,23 @@
 
             @if (Model != null && Model.Any())
             {
-                <div class="table-responsive">
+                <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
 
-                    <table class="table table-hover align-middle">
+                    <table class="table table-hover align-middle mb-0">
 
-                        <thead style="background:#EAF4F8;">
+                        <thead style="background:#163B73;color:white;">
 
                             <tr>
 
-                                <th class="fw-semibold">Nombre</th>
-                                <th class="fw-semibold">DUI</th>
-                                <th class="fw-semibold">Correo</th>
-                                <th class="fw-semibold">Teléfono</th>
-                                <th class="fw-semibold">Dirección</th>
-                                <th class="fw-semibold">Estado</th>
-                                <th class="fw-semibold" style="width:220px;">Acciones</th>
+                                <th>Paciente</th>
+                                <th>DUI</th>
+                                <th>Correo</th>
+                                <th>Teléfono</th>
+                                <th>Dirección</th>
+                                <th>Estado</th>
+                                <th style="width:320px;" class="text-center">
+                                    Acciones
+                                </th>
 
                             </tr>
 
@@ -82,9 +90,32 @@
                                 <tr>
 
                                     <td>
-                                        @paciente.Usuario.Nombres
-                                        @paciente.Usuario.PrimerApellido
-                                        @paciente.Usuario.SegundoApellido
+
+                                        <div class="d-flex align-items-center gap-3">
+
+                                            <img src="@(string.IsNullOrWhiteSpace(paciente.Usuario.Foto) ? "/img/default.jpg" : paciente.Usuario.Foto)"
+                                                 class="rounded-circle border"
+                                                 style="width:45px;height:45px;object-fit:cover;"
+                                                 onerror="this.src='/img/default.jpg';" />
+
+                                            <div>
+
+                                                <div class="fw-semibold">
+
+                                                    @paciente.Usuario.Nombres
+                                                    @paciente.Usuario.PrimerApellido
+                                                    @paciente.Usuario.SegundoApellido
+
+                                                </div>
+
+                                                <small class="text-muted">
+                                                    Paciente #@paciente.IdPaciente
+                                                </small>
+
+                                            </div>
+
+                                        </div>
+
                                     </td>
 
                                     <td>@paciente.Usuario.DUI</td>
@@ -99,16 +130,22 @@
 
                                         @if (paciente.Usuario.Estado)
                                         {
-                                            <span class="badge"
-                                                  style="background:#2E8B57;">
+                                            <span class="badge rounded-pill px-3 py-2"
+                                                  style="background:#DCFCE7;color:#166534;">
+
+                                                <i class="bi bi-check-circle-fill me-1"></i>
                                                 Activo
+
                                             </span>
                                         }
                                         else
                                         {
-                                            <span class="badge"
-                                                  style="background:#6B7280;">
-                                                Desactivado
+                                            <span class="badge rounded-pill px-3 py-2"
+                                                  style="background:#FEE2E2;color:#991B1B;">
+
+                                                <i class="bi bi-x-circle-fill me-1"></i>
+                                                Inactivo
+
                                             </span>
                                         }
 
@@ -116,51 +153,73 @@
 
                                     <td>
 
-                                        <div class="d-flex gap-2">
+                                        <div class="d-flex justify-content-center gap-2 flex-wrap">
 
                                             <a asp-controller="HistorialMedico"
                                                asp-action="Detalle"
                                                asp-route-id="@paciente.IdHistorial"
-                                               class="btn btn-sm text-white"
-                                               style="background:#0B2E59;"
-                                               title="Ver historial médico">
+                                               class="btn btn-sm btn-outline-primary rounded-2">
 
-                                                <i class="bi bi-eye-fill"></i>
+                                                <i class="bi bi-eye-fill me-1"></i>
+                                                Historial
 
                                             </a>
 
                                             <a asp-controller="Perfil"
                                                asp-action="ActualizarPerfil"
                                                asp-route-id="@paciente.IdPaciente"
-                                               class="btn btn-sm text-white"
-                                               style="background:#1AA6A6;"
-                                               title="Editar paciente">
+                                               class="btn btn-sm btn-outline-info rounded-2">
 
-                                                <i class="bi bi-pencil"></i>
+                                                <i class="bi bi-pencil-square me-1"></i>
+                                                Editar
 
                                             </a>
 
-                                            @if (User.IsInRole("Administrador") && paciente.Usuario.Estado)
+                                            @if (User.IsInRole("Administrador"))
                                             {
-                                                <form asp-controller="Paciente"
-                                                      asp-action="DesactivarPaciente"
-                                                      method="post"
-                                                      class="d-inline">
+                                                @if (paciente.Usuario.Estado)
+                                                {
+                                                    <form asp-controller="Paciente"
+                                                          asp-action="DesactivarPaciente"
+                                                          method="post"
+                                                          class="d-inline">
 
-                                                    <input type="hidden"
-                                                           name="id"
-                                                           value="@paciente.IdPaciente" />
+                                                        <input type="hidden"
+                                                               name="id"
+                                                               value="@paciente.IdPaciente" />
 
-                                                    <button type="submit"
-                                                            class="btn btn-danger btn-sm"
-                                                            title="Desactivar paciente"
-                                                            onclick="return confirm('¿Desea desactivar este paciente?');">
+                                                        <button type="submit"
+                                                                class="btn btn-sm btn-outline-danger rounded-2"
+                                                                onclick="return confirm('¿Desea desactivar este paciente?');">
 
-                                                        <i class="bi bi-person-x-fill"></i>
+                                                            <i class="bi bi-person-dash me-1"></i>
+                                                            Desactivar
 
-                                                    </button>
+                                                        </button>
 
-                                                </form>
+                                                    </form>
+                                                }
+                                                else
+                                                {
+                                                    <form asp-controller="Paciente"
+                                                          asp-action="ActivarPaciente"
+                                                          method="post"
+                                                          class="d-inline">
+
+                                                        <input type="hidden"
+                                                               name="id"
+                                                               value="@paciente.IdPaciente" />
+
+                                                        <button type="submit"
+                                                                class="btn btn-sm btn-outline-success rounded-2">
+
+                                                            <i class="bi bi-person-check me-1"></i>
+                                                            Activar
+
+                                                        </button>
+
+                                                    </form>
+                                                }
                                             }
 
                                         </div>
@@ -178,8 +237,9 @@
             }
             else
             {
-                <div class="alert alert-info rounded-3"
-                     style="background:#EAF8F8;border-color:#1AA6A6;color:#0B2E59;">
+                <div class="alert alert-info rounded-3 shadow-sm">
+
+                    <i class="bi bi-info-circle-fill me-2"></i>
 
                     No hay pacientes registrados.
 
@@ -189,4 +249,5 @@
         </div>
 
     </div>
+
 </div>

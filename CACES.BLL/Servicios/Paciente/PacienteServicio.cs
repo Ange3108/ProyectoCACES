@@ -168,5 +168,21 @@ namespace CACES.BLL.Servicios.Paciente
         {
             return await _pacienteRepositorio.ObtenerPacientesActivosAsync();
         }
+
+        public async Task<bool> ActivarPacienteAsync(int idPaciente)
+        {
+            var paciente = await _pacienteRepositorio.GetPacienteByIdAsync(idPaciente);
+
+            if (paciente == null || paciente.Usuario == null)
+                return false;
+
+            paciente.Usuario.Estado = true;
+
+            _context.Usuarios.Update(paciente.Usuario);
+
+            await _context.SaveChangesAsync();
+
+            return true;
+        }
     }
 }

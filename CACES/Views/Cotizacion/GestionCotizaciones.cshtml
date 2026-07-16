@@ -1,0 +1,475 @@
+﻿@model CACES.BLL.DTOs.Cotizacion.EditarCotizacionDTO
+
+@{
+    ViewData["Title"] = "Gestión de Cotizaciones";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <!-- ENCABEZADO -->
+        <div class="card-header border-0 p-4"
+             style="background:#163B73;">
+
+            <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-md-center gap-3">
+
+                <div>
+
+                    <h3 class="mb-1 fw-bold text-white">
+
+                        <i class="bi bi-file-earmark-text-fill me-2"></i>
+                        Gestión de Cotizaciones
+
+                    </h3>
+
+                    <p class="mb-0 text-white-50">
+
+                        Administre las solicitudes de cotización realizadas por los pacientes.
+
+                    </p>
+
+                </div>
+
+                <span class="badge rounded-pill px-3 py-2"
+                      style="background:rgba(255,255,255,.14);
+                    color:#ffffff;">
+
+                    <i class="bi bi-cash-coin me-1"></i>
+                    Cotizaciones médicas
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="card-body p-4">
+
+            <div id="alertaCotizaciones"
+                 class="alert alert-danger border-0 rounded-3 shadow-sm d-none">
+
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                <span id="textoAlertaCotizaciones">
+                    No fue posible cargar las cotizaciones.
+                </span>
+
+            </div>
+
+            <div id="sinCotizaciones"
+                 class="alert alert-info border-0 rounded-3 shadow-sm text-center py-4 d-none">
+
+                <i class="bi bi-file-earmark-x fs-2 d-block mb-2"></i>
+
+                No hay solicitudes de cotización registradas.
+
+            </div>
+
+            <div id="contenedorTablaCotizaciones"
+                 class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+
+                <table id="tbGestionCotizaciones"
+                       class="table table-hover align-middle mb-0">
+
+                    <thead>
+
+                        <tr>
+
+                            <th>#</th>
+
+                            <th>Fecha</th>
+
+                            <th>Paciente</th>
+
+                            <th>Médico</th>
+
+                            <th>Procedimiento</th>
+
+                            <th class="text-end">
+                                Total
+                            </th>
+
+                            <th class="text-center">
+                                Estado
+                            </th>
+
+                            <th class="text-center"
+                                style="min-width:230px;">
+
+                                Acciones
+
+                            </th>
+
+                        </tr>
+
+                    </thead>
+
+                    <tbody>
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<!-- MODAL EDITAR COTIZACIÓN -->
+<div class="modal fade"
+     id="editarCotizacionModal"
+     tabindex="-1"
+     aria-labelledby="editarCotizacionModalLabel"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <form id="formEditarCotizacion"
+                  asp-controller="Cotizacion"
+                  asp-action="ActualizarCotizacion"
+                  method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       id="IdCotizacion"
+                       name="IdCotizacion" />
+
+                <!-- HEADER MODAL -->
+                <div class="modal-header border-0 text-white p-4"
+                     style="background:#163B73;">
+
+                    <div>
+
+                        <h5 class="modal-title fw-bold mb-1"
+                            id="editarCotizacionModalLabel">
+
+                            <i class="bi bi-pencil-square me-2"></i>
+                            Preparar Cotización
+
+                        </h5>
+
+                        <small class="text-white-50">
+
+                            Defina los montos y envíe la cotización al paciente.
+
+                        </small>
+
+                    </div>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+                <!-- CUERPO MODAL -->
+                <div class="modal-body p-4">
+
+                    <div class="row g-4">
+
+                        <!-- PRECIO BASE -->
+                        <div class="col-md-4">
+
+                            <label for="PrecioBase"
+                                   class="form-label fw-semibold">
+
+                                Precio base
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text bg-white">
+                                    ₡
+                                </span>
+
+                                <input type="number"
+                                       id="PrecioBase"
+                                       name="PrecioBase"
+                                       class="form-control text-end"
+                                       min="0"
+                                       step="0.01"
+                                       required />
+
+                            </div>
+
+                        </div>
+
+                        <!-- DESCUENTO -->
+                        <div class="col-md-4">
+
+                            <label for="Descuento"
+                                   class="form-label fw-semibold">
+
+                                Descuento
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text bg-white">
+                                    ₡
+                                </span>
+
+                                <input type="number"
+                                       id="Descuento"
+                                       name="Descuento"
+                                       class="form-control text-end"
+                                       min="0"
+                                       step="0.01"
+                                       value="0" />
+
+                            </div>
+
+                        </div>
+
+                        <!-- IMPUESTO -->
+                        <div class="col-md-4">
+
+                            <label for="Impuesto"
+                                   class="form-label fw-semibold">
+
+                                Impuesto
+
+                            </label>
+
+                            <div class="input-group">
+
+                                <span class="input-group-text bg-white">
+                                    ₡
+                                </span>
+
+                                <input type="number"
+                                       id="Impuesto"
+                                       name="Impuesto"
+                                       class="form-control text-end"
+                                       min="0"
+                                       step="0.01"
+                                       value="0" />
+
+                            </div>
+
+                        </div>
+
+                        <!-- OBSERVACIONES -->
+                        <div class="col-12">
+
+                            <label for="Observaciones"
+                                   class="form-label fw-semibold">
+
+                                Observaciones
+
+                            </label>
+
+                            <textarea id="Observaciones"
+                                      name="Observaciones"
+                                      class="form-control"
+                                      rows="4"
+                                      maxlength="500"
+                                      placeholder="Agregue detalles, condiciones o recomendaciones de la cotización..."></textarea>
+
+                            <div class="form-text text-end">
+
+                                <span id="contadorObservaciones">
+                                    0
+                                </span>/500
+
+                            </div>
+
+                        </div>
+
+                        <!-- ESTADO -->
+                        <div class="col-md-6">
+
+                            <label for="Estado"
+                                   class="form-label fw-semibold">
+
+                                Estado
+
+                            </label>
+
+                            <select id="Estado"
+                                    name="Estado"
+                                    class="form-select"
+                                    required>
+
+                                <option value="1">
+                                    Pendiente
+                                </option>
+
+                                <option value="2">
+                                    Enviada
+                                </option>
+
+                                <option value="3">
+                                    Aceptada
+                                </option>
+
+                                <option value="4">
+                                    Rechazada
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                        <!-- TOTAL -->
+                        <div class="col-md-6">
+
+                            <div class="rounded-4 p-3 h-100"
+                                 style="background:#F0FDFA;
+                                border:1px solid #A7F3D0;">
+
+                                <small class="text-muted d-block mb-1">
+
+                                    Total calculado
+
+                                </small>
+
+                                <div class="d-flex align-items-center gap-2">
+
+                                    <i class="bi bi-cash-stack fs-4"
+                                       style="color:#0F766E;"></i>
+
+                                    <strong id="totalCotizacion"
+                                            class="fs-4"
+                                            style="color:#0F766E;">
+
+                                        ₡0,00
+
+                                    </strong>
+
+                                </div>
+
+                                <small class="text-muted">
+
+                                    Precio base − descuento + impuesto
+
+                                </small>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- PIE MODAL -->
+                <div class="modal-footer border-0 px-4 pb-4 pt-0">
+
+                    <button type="button"
+                            class="btn btn-sm btn-outline-secondary rounded-2 px-3"
+                            data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-lg me-1"></i>
+                        Cancelar
+
+                    </button>
+
+                    <button type="submit"
+                            id="btnGuardarCotizacion"
+                            class="btn btn-sm rounded-2 px-3 btn-guardar-cotizacion">
+
+                        <i class="bi bi-check-lg me-1"></i>
+                        Guardar cotización
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    #tbGestionCotizaciones thead th {
+        background: #ffffff;
+        color: #111827;
+        border-bottom: 1px solid #dee2e6;
+        padding: 14px 12px;
+        font-size: .9rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    #tbGestionCotizaciones tbody td {
+        padding: 14px 12px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    #tbGestionCotizaciones tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    #tbGestionCotizaciones tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    #tbGestionCotizaciones .badge {
+        font-weight: 500;
+    }
+
+    .btn-guardar-cotizacion {
+        color: #20C4D8;
+        background: transparent;
+        border: 1px solid #20C4D8;
+        font-weight: 500;
+    }
+
+        .btn-guardar-cotizacion:hover,
+        .btn-guardar-cotizacion:focus {
+            color: #ffffff;
+            background: #20C4D8;
+            border-color: #20C4D8;
+            box-shadow: none;
+        }
+
+    .form-control,
+    .form-select,
+    .input-group-text {
+        border-color: #D4DEE8;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #20C4D8;
+            box-shadow: 0 0 0 .2rem rgba(32, 196, 216, .15);
+        }
+
+    .input-group > .input-group-text:first-child {
+        border-radius: 8px 0 0 8px;
+    }
+
+    .input-group > .form-control:last-child {
+        border-radius: 0 8px 8px 0;
+    }
+
+</style>
+
+@section Scripts {
+
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+
+    <script src="~/js/Cotizaciones.js"
+            asp-append-version="true">
+    </script>
+
+}

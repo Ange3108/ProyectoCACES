@@ -3,6 +3,7 @@ using CACES.BLL.Servicios.ArchivosHistorial;
 using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
+using CACES.BLL.Servicios.Cotizaciones;
 using CACES.BLL.Servicios.Especialidad;
 using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
 using CACES.BLL.Servicios.HistorialMedicos;
@@ -21,6 +22,7 @@ using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.ArchivosHistorial;
 using CACES.DAL.Repositorios.Citas;
+using CACES.DAL.Repositorios.Cotizaciones;
 using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Horarios;
@@ -36,6 +38,8 @@ using CACES.DAL.Repositorios.Soportes;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+
+
 var builder = WebApplication.CreateBuilder(args);
 
 
@@ -64,10 +68,12 @@ builder.Services.AddScoped<IQuirofanoRepositorio, QuirofanoRepositorio>();
 builder.Services.AddScoped<IHorariosRepositorio, HorariosRepositorio>();
 builder.Services.AddScoped<IIconoRepositorio, IconoRepositorio>();
 builder.Services.AddScoped<IRecetaRepositorio, RecetaRepositorio>();
+builder.Services.AddScoped<ICotizacionRepositorio, CotizacionRepositorio>();
+
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
-
+builder.Services.AddScoped<ICotizacionServicio, CotizacionServicio>();
 builder.Services.AddScoped<ICitaServicio, CitaServicio>();
 builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();
 builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();

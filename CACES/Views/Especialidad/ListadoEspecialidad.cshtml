@@ -2,106 +2,365 @@
 @model IEnumerable<especialidadDTO>
 
 @{
-    ViewData["Title"] = "Registros de Especialidades";
+    ViewData["Title"] = "Gestión de Especialidades";
 }
 
 <div class="container py-5">
-    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
-        <div class="card-header banner-header p-4">
-            <div class="d-flex justify-content-between align-items-center">
-                <div>
-                    <h3 class="mb-1 fw-bold">
-                        <i class="bi bi-people-fill me-2"></i>Gestión de Especialidades
-                    </h3>
-                    <p class="mb-0 opacity-75">
-                        Consulte, registre y administre las especialidades del sistema.
-                    </p>
-                </div>
-                <a class="btn btn-light fw-semibold" asp-action="RegistroEspecialidad" asp-controller="Especialidad">
-                    + Registrar Especialidad
-                </a>
-            </div>
-        </div>
-        <div class="card-body p-4">
-            <p class="text-muted mb-3">
-                Gestión de especialidades del sistema
-            </p>
 
-            <div class="table-responsive">
-                <table id="tbEspecialidades" class="table table-hover align-middle mb-0">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <!-- ENCABEZADO -->
+        <div class="card-header border-0 p-4"
+             style="background:#163B73;">
+
+            <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-md-center gap-3">
+
+                <div>
+
+                    <h3 class="mb-1 fw-bold text-white">
+
+                        <i class="bi bi-grid-fill me-2"></i>
+                        Gestión de Especialidades
+
+                    </h3>
+
+                    <p class="mb-0 text-white-50">
+
+                        Consulte, registre y administre las especialidades del sistema.
+
+                    </p>
+
+                </div>
+
+                <a asp-controller="Especialidad"
+                   asp-action="RegistroEspecialidad"
+                   class="btn text-white px-4 py-2 rounded-3 fw-semibold"
+                   style="background:#20C4D8;border:none;">
+
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Agregar Especialidad
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="card-body p-4">
+
+            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+
+                <table id="tbEspecialidades"
+                       class="table table-hover align-middle mb-0">
+
                     <thead>
+
                         <tr>
+
                             <th>Nombre</th>
                             <th>Descripción</th>
-                            <th>Icono</th>
-                            <th>Fecha de Registro</th>
-                            <th>Estado</th>
-                            <th style="width: 180px;">Acciones</th>
+                            <th class="text-center">Ícono</th>
+                            <th>Fecha de registro</th>
+                            <th class="text-center">Estado</th>
+
+                            <th class="text-center"
+                                style="width:220px;">
+
+                                Acciones
+
+                            </th>
+
                         </tr>
+
                     </thead>
+
+                    <tbody>
+                    </tbody>
+
                 </table>
+
             </div>
+
         </div>
+
     </div>
+
 </div>
 
-<div class="modal fade" id="editarEspecialidadModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+<!-- MODAL EDITAR ESPECIALIDAD -->
+<div class="modal fade"
+     id="editarEspecialidadModal"
+     tabindex="-1"
+     aria-labelledby="editarEspecialidadModalLabel"
+     aria-hidden="true">
 
-            <form id="formEditarEspecialidad" asp-controller="Especialidad"
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <form id="formEditarEspecialidad"
+                  asp-controller="Especialidad"
                   asp-action="ActualizarEspecialidad"
                   method="post">
+
                 @Html.AntiForgeryToken()
 
-                <input type="hidden" id="IdEspecialidad" name="id" />
+                <input type="hidden"
+                       id="IdEspecialidad"
+                       name="id" />
 
-                <div class="modal-body">
+                <!-- ENCABEZADO MODAL -->
+                <div class="modal-header border-0 text-white p-4"
+                     style="background:#163B73;">
+
+                    <div>
+
+                        <h5 class="modal-title fw-bold mb-1"
+                            id="editarEspecialidadModalLabel">
+
+                            <i class="bi bi-pencil-square me-2"></i>
+                            Editar Especialidad
+
+                        </h5>
+
+                        <small class="text-white-50">
+
+                            Modifique la información de la especialidad seleccionada.
+
+                        </small>
+
+                    </div>
+
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
+
+                </div>
+
+                <!-- CUERPO -->
+                <div class="modal-body p-4">
 
                     <div class="row g-3">
+
                         <div class="col-12 col-md-6">
-                            <label for="Nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="Nombre" name="Nombre" placeholder="Ej. Endoscopia" required>
+
+                            <label for="Nombre"
+                                   class="form-label fw-semibold">
+
+                                Nombre
+
+                            </label>
+
+                            <input type="text"
+                                   class="form-control"
+                                   id="Nombre"
+                                   name="Nombre"
+                                   placeholder="Ej. Endoscopia"
+                                   required />
+
                         </div>
+
                         <div class="col-12 col-md-6">
-                            <label for="Icono" class="form-label">Ícono</label>
-                            <select class="form-control" id="Icono" name="IdIcono" required>
-                                <option value="">Seleccione un icono</option>
+
+                            <label for="Icono"
+                                   class="form-label fw-semibold">
+
+                                Ícono
+
+                            </label>
+
+                            <select class="form-select"
+                                    id="Icono"
+                                    name="IdIcono"
+                                    required>
+
+                                <option value="">
+                                    Seleccione un ícono
+                                </option>
+
                             </select>
+
                         </div>
+
                         <div class="col-12">
-                            <label for="Descripcion" class="form-label">Descripcion</label>
-                            <textarea class="form-control" id="Descripcion" name="Descripcion" rows="4" placeholder="Describe la especialidad" required></textarea>
+
+                            <label for="Descripcion"
+                                   class="form-label fw-semibold">
+
+                                Descripción
+
+                            </label>
+
+                            <textarea class="form-control"
+                                      id="Descripcion"
+                                      name="Descripcion"
+                                      rows="4"
+                                      placeholder="Describa la especialidad"
+                                      required>
+                            </textarea>
+
                         </div>
+
                         <div class="col-12 col-md-6">
-                            <label for="Estado" class="form-label">Estado</label>
-                            <select class="form-select" id="Estado" name="Estado" required>
-                                <option value="">Selecciona una opción</option>
-                                <option value="true">Activa</option>
-                                <option value="false">Inactiva</option>
+
+                            <label for="Estado"
+                                   class="form-label fw-semibold">
+
+                                Estado
+
+                            </label>
+
+                            <select class="form-select"
+                                    id="Estado"
+                                    name="Estado"
+                                    required>
+
+                                <option value="">
+                                    Seleccione una opción
+                                </option>
+
+                                <option value="true">
+                                    Activa
+                                </option>
+
+                                <option value="false">
+                                    Inactiva
+                                </option>
+
                             </select>
+
                         </div>
+
                     </div>
 
                 </div>
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        Guardar cambios
+                <!-- PIE -->
+                <div class="modal-footer border-0 px-4 pb-4 pt-0">
+
+                    <button type="button"
+                            class="btn btn-sm btn-outline-secondary rounded-2 px-3"
+                            data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-lg me-1"></i>
+                        Cancelar
+
                     </button>
+
+                    <button type="submit"
+                            class="btn btn-sm btn-outline-info rounded-2 px-3 btn-guardar-especialidad">
+
+                        <i class="bi bi-check-lg me-1"></i>
+                        Guardar cambios
+
+                    </button>
+
                 </div>
 
             </form>
 
         </div>
+
     </div>
+
 </div>
 
+<style>
+
+    #tbEspecialidades thead th {
+        background: #ffffff;
+        color: #111827;
+        border-bottom: 1px solid #dee2e6;
+        padding: 14px 12px;
+        font-size: .9rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    #tbEspecialidades tbody td {
+        padding: 14px 12px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    #tbEspecialidades tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    #tbEspecialidades tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    #tbEspecialidades .badge {
+        font-weight: 500;
+    }
+
+    .btn-guardar-especialidad {
+        color: #20C4D8;
+        border-color: #20C4D8;
+        background: transparent;
+        font-weight: 500;
+    }
+
+        .btn-guardar-especialidad:hover,
+        .btn-guardar-especialidad:focus {
+            color: #ffffff;
+            background: #20C4D8;
+            border-color: #20C4D8;
+            box-shadow: none;
+        }
+
+    .form-control,
+    .form-select {
+        border-radius: 8px;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #20C4D8;
+            box-shadow: 0 0 0 .2rem rgba(32, 196, 216, .15);
+        }
+
+    .select2-container--default .select2-selection--single {
+        height: 38px;
+        border: 1px solid #dee2e6;
+        border-radius: 8px;
+        display: flex;
+        align-items: center;
+    }
+
+        .select2-container--default
+        .select2-selection--single
+        .select2-selection__rendered {
+            line-height: 36px;
+            padding-left: 12px;
+        }
+
+        .select2-container--default
+        .select2-selection--single
+        .select2-selection__arrow {
+            height: 36px;
+        }
+
+</style>
+
 @section Scripts {
+
     <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
 
-    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" />
-    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css"
+          rel="stylesheet" />
 
-    <script src="~/js/ListadoEspecialidad.js" asp-append-version="true"></script>
+    <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js">
+    </script>
+
+    <script src="~/js/ListadoEspecialidad.js"
+            asp-append-version="true">
+    </script>
+
 }

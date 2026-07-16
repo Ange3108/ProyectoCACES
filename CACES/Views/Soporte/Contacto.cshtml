@@ -4,88 +4,370 @@
 
 <div class="container py-5">
 
-    <div class="card shadow border-0 rounded-4">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
 
-        <div class="card-header text-white py-4"
-             style="background:#0B2E59;">
+        <!-- ENCABEZADO -->
+        <div class="card-header border-0 p-4"
+             style="background:#163B73;">
 
-            <h3 class="mb-2 fw-bold">
-                <i class="bi bi-chat-left-text-fill me-2"></i>
-                Contacto y Soporte
-            </h3>
+            <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-md-center gap-3">
 
-            <small class="text-light">
-                Envíe su consulta al equipo administrativo de CACES.
-            </small>
+                <div>
+
+                    <h3 class="mb-1 fw-bold text-white">
+
+                        <i class="bi bi-headset me-2"></i>
+                        Contacto y Soporte
+
+                    </h3>
+
+                    <p class="mb-0 text-white-50">
+
+                        Envíe su consulta al equipo administrativo de CACES.
+
+                    </p>
+
+                </div>
+
+                <span class="badge rounded-pill px-3 py-2"
+                      style="background:rgba(255,255,255,.14);
+                    color:#ffffff;">
+
+                    <i class="bi bi-clock-history me-1"></i>
+                    Atención administrativa
+
+                </span>
+
+            </div>
 
         </div>
 
-        <div class="card-body p-5" style="background:#F8FBFD;">
+        <!-- CONTENIDO -->
+        <div class="card-body p-4 p-lg-5">
 
             @if (TempData["Mensaje"] != null)
             {
-                <div class="alert alert-success">
+                <div class="alert alert-success border-0 rounded-3 shadow-sm">
+
+                    <i class="bi bi-check-circle-fill me-2"></i>
                     @TempData["Mensaje"]
+
                 </div>
             }
 
             @if (TempData["Error"] != null)
             {
-                <div class="alert alert-danger">
+                <div class="alert alert-danger border-0 rounded-3 shadow-sm">
+
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>
                     @TempData["Error"]
+
                 </div>
             }
 
-            <form asp-action="Contacto"
-                  asp-controller="Soporte"
-                  method="post">
+            <div class="row g-4">
 
-                <div class="mb-4">
+                <!-- FORMULARIO -->
+                <div class="col-lg-8">
 
-                    <label class="form-label fw-semibold text-dark">
-                        Asunto
-                    </label>
+                    <div class="border rounded-4 p-4 h-100">
 
-                    <input type="text"
-                           name="asunto"
-                           class="form-control border-2"
-                           maxlength="150"
-                           required
-                           style="border-color:#D4DEE8;" />
+                        <div class="mb-4">
+
+                            <h5 class="fw-bold text-dark mb-1">
+
+                                <i class="bi bi-envelope-paper me-2"
+                                   style="color:#20C4D8;"></i>
+
+                                Enviar una consulta
+
+                            </h5>
+
+                            <p class="text-muted mb-0">
+
+                                Describa el inconveniente o la solicitud con el mayor detalle posible.
+
+                            </p>
+
+                        </div>
+
+                        <form asp-action="Contacto"
+                              asp-controller="Soporte"
+                              method="post"
+                              id="formContactoSoporte">
+
+                            @Html.AntiForgeryToken()
+
+                            <div class="mb-4">
+
+                                <label for="asunto"
+                                       class="form-label fw-semibold">
+
+                                    Asunto
+
+                                </label>
+
+                                <div class="input-group">
+
+                                    <span class="input-group-text bg-white">
+
+                                        <i class="bi bi-chat-square-text text-secondary"></i>
+
+                                    </span>
+
+                                    <input type="text"
+                                           id="asunto"
+                                           name="asunto"
+                                           class="form-control"
+                                           maxlength="150"
+                                           placeholder="Ej. Problema al registrar una cita"
+                                           required />
+
+                                </div>
+
+                                <div class="form-text">
+
+                                    Indique brevemente el motivo de su consulta.
+
+                                </div>
+
+                            </div>
+
+                            <div class="mb-4">
+
+                                <div class="d-flex justify-content-between
+                                    align-items-center gap-3">
+
+                                    <label for="mensaje"
+                                           class="form-label fw-semibold mb-0">
+
+                                        Mensaje
+
+                                    </label>
+
+                                    <small class="text-muted">
+
+                                        <span id="contadorMensaje">0</span>/1000
+
+                                    </small>
+
+                                </div>
+
+                                <textarea id="mensaje"
+                                          name="mensaje"
+                                          rows="7"
+                                          class="form-control mt-2"
+                                          maxlength="1000"
+                                          placeholder="Explique su consulta o el problema presentado..."
+                                          required></textarea>
+
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+
+                                <button type="submit"
+                                        id="btnEnviarConsulta"
+                                        class="btn btn-sm rounded-2 px-3 btn-enviar-consulta">
+
+                                    <i class="bi bi-send-fill me-1"></i>
+                                    Enviar consulta
+
+                                </button>
+
+                            </div>
+
+                        </form>
+
+                    </div>
 
                 </div>
 
-                <div class="mb-4">
+                <!-- INFORMACIÓN -->
+                <div class="col-lg-4">
 
-                    <label class="form-label fw-semibold text-dark">
-                        Mensaje
-                    </label>
+                    <div class="border rounded-4 p-4 h-100"
+                         style="background:#F8FAFC;">
 
-                    <textarea name="mensaje"
-                              rows="7"
-                              class="form-control border-2"
-                              maxlength="1000"
-                              required
-                              style="border-color:#D4DEE8;"></textarea>
+                        <h5 class="fw-bold text-dark mb-4">
+
+                            <i class="bi bi-info-circle me-2"
+                               style="color:#20C4D8;"></i>
+
+                            Información de soporte
+
+                        </h5>
+
+                        <div class="d-flex gap-3 mb-4">
+
+                            <span class="soporte-icono">
+
+                                <i class="bi bi-person-check"></i>
+
+                            </span>
+
+                            <div>
+
+                                <h6 class="fw-semibold mb-1">
+                                    Atención personalizada
+                                </h6>
+
+                                <p class="small text-muted mb-0">
+                                    El equipo administrativo revisará su consulta.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex gap-3 mb-4">
+
+                            <span class="soporte-icono">
+
+                                <i class="bi bi-shield-check"></i>
+
+                            </span>
+
+                            <div>
+
+                                <h6 class="fw-semibold mb-1">
+                                    Información segura
+                                </h6>
+
+                                <p class="small text-muted mb-0">
+                                    Evite incluir contraseñas o información bancaria.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                        <div class="d-flex gap-3">
+
+                            <span class="soporte-icono">
+
+                                <i class="bi bi-card-text"></i>
+
+                            </span>
+
+                            <div>
+
+                                <h6 class="fw-semibold mb-1">
+                                    Sea específico
+                                </h6>
+
+                                <p class="small text-muted mb-0">
+                                    Incluya el módulo y la acción donde ocurrió el problema.
+                                </p>
+
+                            </div>
+
+                        </div>
+
+                    </div>
 
                 </div>
 
-                <div class="text-end">
-
-                    <button class="btn px-4 py-2 text-white fw-semibold"
-                            style="background:#1AA6A6; border:none;">
-
-                        <i class="bi bi-send-fill me-2"></i>
-                        Enviar consulta
-
-                    </button>
-
-                </div>
-
-            </form>
+            </div>
 
         </div>
 
     </div>
 
 </div>
+
+<style>
+
+    .form-control,
+    .input-group-text {
+        border-color: #D4DEE8;
+    }
+
+    .form-control {
+        border-radius: 8px;
+    }
+
+    .input-group .input-group-text {
+        border-radius: 8px 0 0 8px;
+    }
+
+    .input-group .form-control {
+        border-radius: 0 8px 8px 0;
+    }
+
+    .form-control:focus {
+        border-color: #20C4D8;
+        box-shadow: 0 0 0 .2rem rgba(32, 196, 216, .15);
+    }
+
+    .btn-enviar-consulta {
+        color: #20C4D8;
+        background: transparent;
+        border: 1px solid #20C4D8;
+        font-weight: 500;
+        transition: all .15s ease;
+    }
+
+        .btn-enviar-consulta:hover,
+        .btn-enviar-consulta:focus {
+            color: #ffffff;
+            background: #20C4D8;
+            border-color: #20C4D8;
+            box-shadow: none;
+        }
+
+    .soporte-icono {
+        width: 40px;
+        height: 40px;
+        flex-shrink: 0;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        background: #DDF7F8;
+        color: #0B6F73;
+        font-size: 1.05rem;
+    }
+
+</style>
+
+@section Scripts {
+
+    <script>
+
+        (() => {
+
+            const mensaje = document.getElementById('mensaje');
+            const contador = document.getElementById('contadorMensaje');
+            const formulario = document.getElementById('formContactoSoporte');
+            const boton = document.getElementById('btnEnviarConsulta');
+
+            if (mensaje && contador) {
+
+                const actualizarContador = () => {
+                    contador.textContent = mensaje.value.length;
+                };
+
+                mensaje.addEventListener('input', actualizarContador);
+                actualizarContador();
+            }
+
+            if (formulario && boton) {
+
+                formulario.addEventListener('submit', function () {
+
+                    boton.disabled = true;
+
+                    boton.innerHTML = `
+                        <span class="spinner-border spinner-border-sm me-2"></span>
+                        Enviando...
+                    `;
+                });
+            }
+
+        })();
+
+    </script>
+
+}

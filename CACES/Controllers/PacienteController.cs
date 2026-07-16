@@ -115,5 +115,19 @@ namespace CACES.Controllers
                 mensaje = resultadoService.mensaje
             });
         }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public async Task<IActionResult> ActivarPaciente(int id)
+        {
+            var resultado = await _pacienteServicio.ActivarPacienteAsync(id);
+
+            TempData[resultado ? "Mensaje" : "Error"] =
+                resultado
+                    ? "La cuenta del paciente fue activada correctamente."
+                    : "No se pudo activar la cuenta del paciente.";
+
+            return RedirectToAction(nameof(Pacientes));
+        }
     }
 }

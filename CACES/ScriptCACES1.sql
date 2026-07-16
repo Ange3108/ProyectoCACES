@@ -15,6 +15,7 @@ CREATE TABLE Icono(
 );
 GO
 
+
 CREATE TABLE Especialidad(
     Id_Especialidad INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(30) NOT NULL,
@@ -86,6 +87,7 @@ CREATE TABLE HorariosDisponibles(
     Id_Medico INT NOT NULL,
     DiaSemana INT NOT NULL, -- 0=Lunes, 6=Domingo
     HoraInicio TIME NOT NULL,
+    HoraFin TIME NOT NULL,
     Activo BIT NOT NULL,
     CONSTRAINT FK_Horarios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
 );
@@ -107,6 +109,19 @@ CREATE TABLE Citas(
     CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
 );
 
+CREATE TABLE Soportes
+(
+    Id_Soporte INT IDENTITY(1,1) PRIMARY KEY,
+    Id_Usuario INT NOT NULL,
+    Asunto NVARCHAR(150) NOT NULL,
+    Mensaje NVARCHAR(1000) NOT NULL,
+    FechaConsulta DATETIME NOT NULL DEFAULT GETDATE(),
+    Estado BIT NOT NULL DEFAULT 1,
+
+    CONSTRAINT FK_Soportes_Usuarios
+        FOREIGN KEY (Id_Usuario)
+        REFERENCES Usuarios(Id_Usuario)
+);
 
 CREATE TABLE ArchivosHistorial(
     Id_Archivo INT PRIMARY KEY IDENTITY(1,1),
@@ -197,6 +212,43 @@ create table ConfiguracionQuirofano(
     CupoMaximoDiario int
 );
 
+CREATE TABLE Cotizacion
+(
+    Id_Cotizacion INT IDENTITY(1,1) PRIMARY KEY,
+
+    Id_Paciente INT NOT NULL,
+    Id_Medico INT NOT NULL,
+    Id_Procedimiento INT NOT NULL,
+
+    FechaSolicitud DATETIME NOT NULL DEFAULT(GETDATE()),
+
+    PrecioBase DECIMAL(10,2) NOT NULL,
+
+    Descuento DECIMAL(10,2) NOT NULL DEFAULT 0,
+
+    Impuesto DECIMAL(10,2) NOT NULL DEFAULT 0,
+
+    Total DECIMAL(10,2) NOT NULL,
+
+    Observaciones VARCHAR(500),
+
+    Estado TINYINT NOT NULL DEFAULT 1,
+
+    FechaDeRegistro DATETIME NOT NULL DEFAULT(GETDATE()),
+    FechaDeModificacion DATETIME NULL,
+
+    CONSTRAINT FK_Cotizacion_Paciente
+        FOREIGN KEY(Id_Paciente)
+        REFERENCES Pacientes(Id_Paciente),
+
+    CONSTRAINT FK_Cotizacion_Medico
+        FOREIGN KEY(Id_Medico)
+        REFERENCES Medicos(Id_Medico),
+
+    CONSTRAINT FK_Cotizacion_Procedimiento
+        FOREIGN KEY(Id_Procedimiento)
+        REFERENCES Procedimiento(Id_Procedimiento)
+);
 
 
 /****** Object:  Table [dbo].[AspNetRoles]    Script Date: 12/11/2024 13:29:30 ******/
@@ -358,12 +410,12 @@ INSERT INTO Usuarios
 VALUES
 ('Juan', 'García', 'López', 'juan.admin@caces.com', '12345678', 'juan.jpg',
  GETDATE(), NULL, 1, 'San José', 30, '8888-1111',
- '1994-05-10', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+ '1994-05-10', 'vk9oxOJiD5aPcsdU83YBvVgNVjLrvgij3NO2UQAh88I=', NEWID(), 0, NULL, 0, 0, 1),
 
 
 ('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg',
  GETDATE(), NULL, 1, 'Cartago', 35, '8888-2222',
- '1989-08-20', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+ '1989-08-20', '2nunQfIEgqm5rAd6Tj+JdJYsQbcdUyS3w/5F9oxe/Gk=', NEWID(), 0, NULL, 0, 0, 1),
 
 ('María', 'Hernández', 'Gómez', 'maria.paciente@caces.com', '11223344', 'maria.jpg',
  GETDATE(), NULL, 1, 'Heredia', 28, '8888-3333',
@@ -408,10 +460,22 @@ INSERT INTO Pacientes (Id_Usuario, Id_Historial) VALUES
 GO
 
 -- HORARIOS DISPONIBLES
-INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, Activo) VALUES
-(1, 0, '08:00', 1),
-(2, 1, '09:00', 1),
-(3, 2, '07:00', 1);
+INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Activo) VALUES
+(1, 0, '08:00', '12:00', 1),
+(1, 1, '13:00', '17:00', 1),
+(1, 2, '08:00', '12:00', 1),
+(1, 3, '13:00', '17:00', 1),
+(1, 4, '08:00', '12:00', 1),
+(1, 5, '13:00', '17:00', 1),
+(2, 1, '09:00', '13:00', 1),
+(2, 2, '14:00', '18:00', 1),
+(2, 3, '09:00', '13:00', 1),
+(2, 4, '14:00', '18:00', 1),
+(2, 5, '09:00', '13:00', 1),
+(3, 2, '07:00', '11:00', 1),
+(3, 3, '12:00', '16:00', 1),
+(3, 4, '07:00', '11:00', 1),
+(3, 5, '12:00', '16:00', 1);
 GO
 
 -- CITAS
@@ -508,17 +572,22 @@ VALUES
 (5, '2'); -- Paciente
 GO
 
+INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Activo)
+VALUES
+(1, 1, '13:00', '17:00', 1),
+(1, 2, '08:00', '12:00', 1),
+(1, 3, '13:00', '17:00', 1),
+(1, 4, '08:00', '12:00', 1),
+(1, 5, '13:00', '17:00', 1),
 
+(2, 2, '14:00', '18:00', 1),
+(2, 3, '09:00', '13:00', 1),
+(2, 4, '14:00', '18:00', 1),
+(2, 5, '09:00', '13:00', 1),
 
-SELECT DATA_TYPE
-FROM INFORMATION_SCHEMA.COLUMNS
-WHERE TABLE_NAME = 'Usuarios'
-AND COLUMN_NAME = 'Estado';
-
-UPDATE Usuarios
-SET PasswordHash = 'vk9oxOJiD5aPcsdU83YBvVgNVjLrvgij3NO2UQAh88I=',
-    Estado = 1
-WHERE CorreoElectronico = 'juan.admin@caces.com';
+(3, 3, '12:00', '16:00', 1),
+(3, 4, '07:00', '11:00', 1),
+(3, 5, '12:00', '16:00', 1);
 
 --Cupo del quirofano
 
@@ -526,3 +595,12 @@ insert into ConfiguracionQuirofano(CupoMaximoDiario)
 values 
 ( 5)
 GO
+
+UPDATE Usuarios
+SET PasswordHash = 'R6GvfeUKq9IZPWHh9hvY0+1D2ywQMANwAYxuux6bYIE=' --Maria123+
+WHERE CorreoElectronico = 'maria.paciente@caces.com';
+
+SELECT *
+FROM Recetas
+ORDER BY Id_Receta DESC;
+

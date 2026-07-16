@@ -1,0 +1,181 @@
+﻿@model CACES.BLL.DTOs.Cotizacion.RegistrarCotizacionDTO
+
+@{
+    ViewData["Title"] = "Solicitar Cotización";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <div class="card-header border-0 p-4"
+             style="background:#163B73;">
+
+            <div>
+                <h3 class="fw-bold text-white mb-1">
+
+                    <i class="bi bi-file-earmark-medical me-2"></i>
+                    Solicitar Cotización
+
+                </h3>
+
+                <p class="text-white-50 mb-0">
+
+                    Complete la información para solicitar una cotización médica.
+
+                </p>
+            </div>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            <form id="formCotizacion">
+
+                @Html.AntiForgeryToken()
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label asp-for="IdProcedimiento"
+                               class="form-label fw-semibold">
+
+                            Procedimiento
+
+                        </label>
+
+                        <select asp-for="IdProcedimiento"
+                                id="idProcedimiento"
+                                class="form-select"
+                                required>
+
+                            <option value="">
+                                Seleccione un procedimiento
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="IdProcedimiento"
+                              class="text-danger small">
+                        </span>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label asp-for="IdMedico"
+                               class="form-label fw-semibold">
+
+                            Médico
+
+                        </label>
+
+                        <select asp-for="IdMedico"
+                                id="idMedico"
+                                class="form-select"
+                                required>
+
+                            <option value="">
+                                Seleccione un médico
+                            </option>
+
+                        </select>
+
+                        <span asp-validation-for="IdMedico"
+                              class="text-danger small">
+                        </span>
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <div class="d-flex justify-content-between align-items-center">
+
+                            <label asp-for="Observaciones"
+                                   class="form-label fw-semibold">
+
+                                Observaciones
+
+                            </label>
+
+                            <small class="text-muted">
+
+                                <span id="contadorObservacionesSolicitud">0</span>/500
+
+                            </small>
+
+                        </div>
+
+                        <textarea asp-for="Observaciones"
+                                  id="ObservacionesSolicitud"
+                                  rows="5"
+                                  maxlength="500"
+                                  class="form-control"
+                                  placeholder="Escriba aquí cualquier detalle adicional..."></textarea>
+
+                        <span asp-validation-for="Observaciones"
+                              class="text-danger small">
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <hr class="my-4" />
+
+                <div class="d-flex justify-content-end gap-2">
+
+                    <a asp-controller="Cotizacion"
+                       asp-action="MisCotizaciones"
+                       class="btn btn-sm btn-outline-secondary rounded-2 px-3">
+
+                        <i class="bi bi-x-lg me-1"></i>
+                        Cancelar
+
+                    </a>
+
+                    <button type="submit"
+                            class="btn btn-sm rounded-2 px-3 text-white"
+                            style="background:#20C4D8;border-color:#20C4D8;">
+
+                        <i class="bi bi-send me-1"></i>
+                        Solicitar Cotización
+
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    .form-control,
+    .form-select {
+        border-color: #D4DEE8;
+        border-radius: 8px;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #20C4D8;
+            box-shadow: 0 0 0 .2rem rgba(32, 196, 216, .15);
+        }
+
+</style>
+
+@section Scripts {
+
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+
+    <script src="~/js/Cotizaciones.js"
+            asp-append-version="true">
+    </script>
+
+}

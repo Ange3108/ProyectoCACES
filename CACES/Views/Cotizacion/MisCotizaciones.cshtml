@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Gestión de Médicos";
+    ViewData["Title"] = "Mis Cotizaciones";
 }
 
 <div class="container py-5">
@@ -15,23 +15,29 @@
                 align-items-md-center gap-3">
 
                 <div>
+
                     <h3 class="mb-1 fw-bold text-white">
-                        <i class="bi bi-person-badge-fill me-2"></i>
-                        Gestión de Médicos
+
+                        <i class="bi bi-file-earmark-medical-fill me-2"></i>
+                        Mis Cotizaciones
+
                     </h3>
 
                     <p class="mb-0 text-white-50">
-                        Consulte y administre la información de los médicos del sistema.
+
+                        Consulte el estado y los montos de sus solicitudes de cotización.
+
                     </p>
+
                 </div>
 
-                <a asp-controller="Medico"
-                   asp-action="RegistrarEspecialista"
+                <a asp-controller="Cotizacion"
+                   asp-action="SolicitarCotizacion"
                    class="btn text-white px-4 py-2 rounded-3 fw-semibold"
                    style="background:#20C4D8;border:none;">
 
                     <i class="bi bi-plus-lg me-2"></i>
-                    Agregar Médico
+                    Solicitar Cotización
 
                 </a>
 
@@ -42,23 +48,59 @@
         <!-- CONTENIDO -->
         <div class="card-body p-4">
 
-            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+            <div id="alertaMisCotizaciones"
+                 class="alert alert-danger border-0 rounded-3 shadow-sm d-none">
 
-                <table id="tbMedicos"
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                <span id="textoAlertaMisCotizaciones">
+                    No fue posible cargar sus cotizaciones.
+                </span>
+
+            </div>
+
+            <div id="sinMisCotizaciones"
+                 class="alert alert-info border-0 rounded-3 shadow-sm text-center py-4 d-none">
+
+                <i class="bi bi-file-earmark-x fs-2 d-block mb-2"></i>
+
+                Todavía no tiene solicitudes de cotización registradas.
+
+            </div>
+
+            <div id="contenedorMisCotizaciones"
+                 class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+
+                <table id="tbMisCotizaciones"
                        class="table table-hover align-middle mb-0">
 
                     <thead>
+
                         <tr>
+
+                            <th>Fecha</th>
+
+                            <th>Procedimiento</th>
+
                             <th>Médico</th>
-                            <th>Especialidad</th>
-                            <th>Experiencia</th>
-                            <th>Certificaciones</th>
-                            <th class="text-center">Estado</th>
-                            <th class="text-center"
-                                style="width:220px;">
-                                Acciones
+
+                            <th class="text-end">
+                                Total
                             </th>
+
+                            <th class="text-center">
+                                Estado
+                            </th>
+
+                            <th class="text-center"
+                                style="min-width:220px;">
+
+                                Acciones
+
+                            </th>
+
                         </tr>
+
                     </thead>
 
                     <tbody>
@@ -74,11 +116,9 @@
 
 </div>
 
-@Html.AntiForgeryToken()
-
 <style>
 
-    #tbMedicos thead th {
+    #tbMisCotizaciones thead th {
         background: #ffffff;
         color: #111827;
         border-bottom: 1px solid #dee2e6;
@@ -88,21 +128,21 @@
         white-space: nowrap;
     }
 
-    #tbMedicos tbody td {
+    #tbMisCotizaciones tbody td {
         padding: 14px 12px;
         vertical-align: middle;
         border-bottom: 1px solid #e5e7eb;
     }
 
-    #tbMedicos tbody tr:last-child td {
+    #tbMisCotizaciones tbody tr:last-child td {
         border-bottom: none;
     }
 
-    #tbMedicos tbody tr:hover {
+    #tbMisCotizaciones tbody tr:hover {
         background: #f8fafc;
     }
 
-    #tbMedicos .badge {
+    #tbMisCotizaciones .badge {
         font-weight: 500;
     }
 
@@ -110,7 +150,7 @@
 
 @section Scripts {
 
-    <script src="~/js/ListadoMedico.js"
+    <script src="~/js/Cotizaciones.js"
             asp-append-version="true">
     </script>
 

@@ -1,3 +1,10 @@
+USE master;
+GO
+
+ALTER DATABASE CACES
+SET SINGLE_USER
+WITH ROLLBACK IMMEDIATE;
+GO
 
 DROP DATABASE CACES;
 GO
@@ -476,17 +483,7 @@ SET PasswordHash = '2nunQfIEgqm5rAd6Tj+JdJYsQbcdUyS3w/5F9oxe/Gk='
 WHERE CorreoElectronico = 'oscar.medico@caces.com';
 
 
-UPDATE Noticias
-SET Imagen = 'noticia1.png'
-WHERE Id_Noticia = 1;
 
-UPDATE Noticias
-SET Imagen = 'noticia2.png'
-WHERE Id_Noticia = 2;
-
-UPDATE Noticias
-SET Imagen = 'noticia3.png'
-WHERE Id_Noticia = 3;
 
 CREATE TABLE Soportes
 (

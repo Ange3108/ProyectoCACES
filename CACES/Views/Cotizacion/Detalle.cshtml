@@ -1,0 +1,220 @@
+﻿@model CACES.BLL.DTOs.Cotizacion.MostrarCotizacionDTO
+
+@{
+    ViewData["Title"] = "Detalle de Cotización";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <div class="card-header banner-header p-4">
+
+            <div class="d-flex justify-content-between align-items-center">
+
+                <div>
+
+                    <h3 class="fw-bold mb-1">
+                        <i class="bi bi-file-earmark-medical me-2"></i>
+                        Detalle de Cotización
+                    </h3>
+
+                    <p class="mb-0 opacity-75">
+                        Información completa de la cotización médica.
+                    </p>
+
+                </div>
+
+                <span class="badge rounded-pill px-4 py-2 fs-6
+                    @(Model.Estado == 0 ? "bg-warning text-dark" :
+                        Model.Estado == 1 ? "bg-success" :
+                        "bg-danger")">
+
+                    @Model.EstadoTexto
+
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body p-5">
+
+            <div class="row g-4">
+
+                <div class="col-md-6">
+
+                    <div class="border rounded-4 p-4 h-100">
+
+                        <h5 class="fw-bold mb-4 text-primary">
+
+                            <i class="bi bi-person-fill me-2"></i>
+
+                            Información del Paciente
+
+                        </h5>
+
+                        <p>
+                            <strong>Paciente:</strong><br />
+                            @Model.NombrePaciente
+                        </p>
+
+                        <p>
+                            <strong>Médico:</strong><br />
+                            @Model.NombreMedico
+                        </p>
+
+                        <p class="mb-0">
+                            <strong>Fecha de solicitud:</strong><br />
+                            @Model.FechaSolicitud.ToString("dd/MM/yyyy HH:mm")
+                        </p>
+
+                    </div>
+
+                </div>
+
+                <div class="col-md-6">
+
+                    <div class="border rounded-4 p-4 h-100">
+
+                        <h5 class="fw-bold mb-4 text-primary">
+
+                            <i class="bi bi-hospital me-2"></i>
+
+                            Procedimiento
+
+                        </h5>
+
+                        <h4 class="fw-bold text-dark">
+
+                            @Model.NombreProcedimiento
+
+                        </h4>
+
+                        <p class="text-muted mt-3">
+
+                            @if (string.IsNullOrWhiteSpace(Model.Observaciones))
+                            {
+                                <span>No se agregaron observaciones.</span>
+                            }
+                            else
+                            {
+                                @Model.Observaciones
+                            }
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr class="my-5" />
+
+            <div class="row">
+
+                <div class="col-lg-5 ms-auto">
+
+                    <div class="card border-0 shadow-sm rounded-4">
+
+                        <div class="card-header bg-light fw-bold">
+
+                            Resumen Económico
+
+                        </div>
+
+                        <div class="card-body">
+
+                            <div class="d-flex justify-content-between mb-3">
+
+                                <span>Precio Base</span>
+
+                                <strong>
+
+                                    ₡ @Model.PrecioBase.ToString("N2")
+
+                                </strong>
+
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-3">
+
+                                <span>Descuento</span>
+
+                                <strong class="text-success">
+
+                                    - ₡ @Model.Descuento.ToString("N2")
+
+                                </strong>
+
+                            </div>
+
+                            <div class="d-flex justify-content-between mb-3">
+
+                                <span>Impuesto</span>
+
+                                <strong>
+
+                                    ₡ @Model.Impuesto.ToString("N2")
+
+                                </strong>
+
+                            </div>
+
+                            <hr />
+
+                            <div class="d-flex justify-content-between">
+
+                                <h4 class="fw-bold">
+
+                                    Total
+
+                                </h4>
+
+                                <h3 class="fw-bold text-primary">
+
+                                    ₡ @Model.Total.ToString("N2")
+
+                                </h3>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <hr class="my-5" />
+
+            <div class="text-end">
+
+                <a asp-action="MisCotizaciones"
+                   class="btn btn-secondary px-4">
+
+                    <i class="bi bi-arrow-left me-2"></i>
+
+                    Volver
+
+                </a>
+
+                <button class="btn text-white px-4 ms-2"
+                        onclick="window.print();"
+                        style="background:#20C4D8;">
+
+                    <i class="bi bi-printer me-2"></i>
+
+                    Imprimir
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

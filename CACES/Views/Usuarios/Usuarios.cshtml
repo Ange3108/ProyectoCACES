@@ -2,129 +2,335 @@
 @model IEnumerable<MostrarUsuarioDTO>
 
 @{
-    ViewData["Title"] = "Registros de Usuarios";
+    ViewData["Title"] = "Gestión de Usuarios";
 }
 
 <div class="container py-5">
+
     <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
-        <div class="card-header banner-header p-4">
-            <div class="d-flex justify-content-between align-items-center">
+
+        <!-- ENCABEZADO -->
+        <div class="card-header banner-header border-0 p-4"
+             style="background:#163B73;">
+
+            <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-md-center gap-3">
+
                 <div>
-                    <h3 class="mb-1 fw-bold">
-                        <i class="bi bi-people-fill me-2"></i>Gestión de Usuarios
+                    <h3 class="mb-1 fw-bold text-white">
+                        <i class="bi bi-people-fill me-2"></i>
+                        Gestión de Usuarios
                     </h3>
-                    <p class="mb-0 opacity-75">
+
+                    <p class="mb-0 text-white-50">
                         Consulte, registre y administre los usuarios del sistema.
                     </p>
                 </div>
-                <a class="btn btn-light fw-semibold" asp-action="RegistroUsuario" asp-controller="Usuario">
-                    + Registrar Usuario
-                </a>
-            </div>
-        </div>
-        <div class="card-body p-4">
-            <p class="text-muted mb-3">
-                Gestión de usuarios del sistema
-            </p>
 
-            <div class="table-responsive">
-                <table id="tbUsuarios" class="table table-hover align-middle mb-0">
+                <a asp-controller="Usuario"
+                   asp-action="RegistroUsuario"
+                   class="btn text-white px-4 py-2 rounded-3 fw-semibold"
+                   style="background:#20C4D8;border:none;">
+
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Agregar Usuario
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="card-body p-4">
+
+            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+
+                <table id="tbUsuarios"
+                       class="table table-hover align-middle mb-0">
+
                     <thead>
                         <tr>
                             <th>Nombre completo</th>
-                            <th>Correo Electrónico</th>
+                            <th>Correo electrónico</th>
                             <th>DUI</th>
                             <th>Teléfono</th>
                             <th>Dirección</th>
-                            <th>Fecha de Nacimiento</th>
+                            <th>Fecha de nacimiento</th>
                             <th>Estado</th>
-   
-                            <th style="width: 180px;">Acciones</th>
+                            <th class="text-center" style="width:220px;">
+                                Acciones
+                            </th>
                         </tr>
                     </thead>
-                   
+
+                    <tbody>
+                    </tbody>
+
                 </table>
+
             </div>
+
         </div>
+
     </div>
+
 </div>
 
+<!-- MODAL EDITAR -->
+<div class="modal fade"
+     id="editarUsuarioModal"
+     tabindex="-1"
+     aria-labelledby="editarUsuarioModalLabel"
+     aria-hidden="true">
 
-<div class="modal fade" id="editarUsuarioModal">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content">
+    <div class="modal-dialog modal-lg modal-dialog-centered">
 
-            <form id="formEditarUsuario" asp-controller="Usuario"
+        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+
+            <form id="formEditarUsuario"
+                  asp-controller="Usuario"
                   asp-action="ActualizarUsuario"
                   method="post">
+
                 @Html.AntiForgeryToken()
 
-                <input type="hidden" id="IdUsuario" name="id" />
+                <input type="hidden"
+                       id="IdUsuario"
+                       name="id" />
 
-                <div class="modal-body">
+                <!-- ENCABEZADO MODAL -->
+                <div class="modal-header border-0 text-white p-4"
+                     style="background:#163B73;">
 
-                     <div class="mb-3">
-                        <label for="foto" class="form-label">Foto de perfil</label>
-                    <input type="url" id="Foto" name="Foto" class="form-control" />
+                    <div>
+                        <h5 class="modal-title fw-bold mb-1"
+                            id="editarUsuarioModalLabel">
+
+                            <i class="bi bi-pencil-square me-2"></i>
+                            Editar Usuario
+
+                        </h5>
+
+                        <small class="text-white-50">
+                            Modifique la información del usuario seleccionado.
+                        </small>
                     </div>
-                    <div class="mb-3">
-                        <label for="nombre" class="form-label">Nombres</label>
-                    <input type="text" id="Nombres" name="Nombres" class="form-control" />
-                    </div>
 
-                    <div class=" mb-3">
-                        <label for="primerApellido" class="form-label">Primer Apellido</label>
-                        <input type="text" id="PrimerApellido" name="PrimerApellido" class="form-control" />
-                    </div>
-                            <div class=" mb-3">
-                                <label for="segundoApellido" class="form-label">Segundo Apellido</label>
-                    <input type="text" id="SegundoApellido" name="SegundoApellido" class="form-control" />
-
-                            </div>
-                                <div class="mb-3">
-                                <label for="correoElectronico" class="form-label">Correo Electronico</label>
-                                    <input type="email" id="CorreoElectronico" name="CorreoElectronico" class="form-control" />
-
-                                </div>
-                                    <div class="mb-3">
-                                <label for="telefono" class="form-label">Telefono</label>
-                    <input type="text" id="Telefono" name="Telefono" class="form-control" />
-
-                                    </div>
-                                        <div class="mb-3">
-                                <label for="direccion" class="form-label">Direccion</label>
-                    <input type="text" id="Direccion" name="Direccion" class="form-control" />
-
-                                        </div>
-                                            <div class="mb-3">
-                                <label for="nacimiento" class="form-label">Fecha de Nacimiento</label>
-                    <input type="date" id="Nacimiento" name="Nacimiento" class="form-control" />
-
-                                            </div>
-                                                <div class="mb-3">
-                                <label for="estado" class="form-label">Estado</label>
-                    <select id="Estado" name="Estado" class="form-control">
-                        <option value="true">Activo</option>
-                        <option value="false">Inactivo</option>
-                    </select>
-
-                                                </div>
+                    <button type="button"
+                            class="btn-close btn-close-white"
+                            data-bs-dismiss="modal"
+                            aria-label="Cerrar">
+                    </button>
 
                 </div>
 
-                <div class="modal-footer">
-                    <button type="submit" class="btn btn-primary">
-                        Guardar cambios
+                <!-- CUERPO MODAL -->
+                <div class="modal-body p-4">
+
+                    <div class="row g-3">
+
+                        <div class="col-12">
+
+                            <label for="Foto"
+                                   class="form-label fw-semibold">
+
+                                <i class="bi bi-image me-1 text-secondary"></i>
+                                Foto de perfil
+
+                            </label>
+
+                            <input type="url"
+                                   id="Foto"
+                                   name="Foto"
+                                   class="form-control"
+                                   placeholder="https://ejemplo.com/foto.jpg" />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="Nombres"
+                                   class="form-label fw-semibold">
+
+                                Nombres
+
+                            </label>
+
+                            <input type="text"
+                                   id="Nombres"
+                                   name="Nombres"
+                                   class="form-control"
+                                   required />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="PrimerApellido"
+                                   class="form-label fw-semibold">
+
+                                Primer apellido
+
+                            </label>
+
+                            <input type="text"
+                                   id="PrimerApellido"
+                                   name="PrimerApellido"
+                                   class="form-control"
+                                   required />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="SegundoApellido"
+                                   class="form-label fw-semibold">
+
+                                Segundo apellido
+
+                            </label>
+
+                            <input type="text"
+                                   id="SegundoApellido"
+                                   name="SegundoApellido"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="CorreoElectronico"
+                                   class="form-label fw-semibold">
+
+                                Correo electrónico
+
+                            </label>
+
+                            <input type="email"
+                                   id="CorreoElectronico"
+                                   name="CorreoElectronico"
+                                   class="form-control"
+                                   required />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="Telefono"
+                                   class="form-label fw-semibold">
+
+                                Teléfono
+
+                            </label>
+
+                            <input type="text"
+                                   id="Telefono"
+                                   name="Telefono"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="Nacimiento"
+                                   class="form-label fw-semibold">
+
+                                Fecha de nacimiento
+
+                            </label>
+
+                            <input type="date"
+                                   id="Nacimiento"
+                                   name="Nacimiento"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <label for="Direccion"
+                                   class="form-label fw-semibold">
+
+                                Dirección
+
+                            </label>
+
+                            <input type="text"
+                                   id="Direccion"
+                                   name="Direccion"
+                                   class="form-control" />
+
+                        </div>
+
+                        <div class="col-md-6">
+
+                            <label for="Estado"
+                                   class="form-label fw-semibold">
+
+                                Estado
+
+                            </label>
+
+                            <select id="Estado"
+                                    name="Estado"
+                                    class="form-select">
+
+                                <option value="true">
+                                    Activo
+                                </option>
+
+                                <option value="false">
+                                    Inactivo
+                                </option>
+
+                            </select>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- PIE MODAL -->
+                <div class="modal-footer border-0 px-4 pb-4 pt-0">
+
+                    <button type="button"
+                            class="btn btn-outline-secondary btn-sm rounded-2 px-3"
+                            data-bs-dismiss="modal">
+
+                        <i class="bi bi-x-lg me-1"></i>
+                        Cancelar
+
                     </button>
+
+                    <button type="submit"
+                            class="btn btn-sm rounded-2 px-3 btn-guardar">
+
+                        <i class="bi bi-check-lg me-1"></i>
+                        Guardar cambios
+
+                    </button>
+
                 </div>
 
             </form>
 
         </div>
+
     </div>
+
 </div>
 
-@section Scripts{
+
+
+@section Scripts {
+
     <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
-    <script src="~/js/Usuario.js" asp-append-version="true"></script>
+
+    <script src="~/js/Usuario.js"
+            asp-append-version="true">
+    </script>
+
 }
