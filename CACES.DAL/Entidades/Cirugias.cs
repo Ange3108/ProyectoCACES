@@ -28,14 +28,19 @@ namespace CACES.DAL.Entidades
         [Column("Estado")]
         public bool Estado { get; set; }
 
+        [ForeignKey("Id_Cita")]
         public virtual Cita? Cita { get; set; }
-
+        
+        [ForeignKey("Id_Paciente")]
         public virtual Paciente Paciente { get; set; } = null!;
 
+        [ForeignKey("Id_Medico")]
         public virtual Medico Medico { get; set; } = null!;
 
+        [ForeignKey("Id_Procedimiento")]
         public virtual Procedimiento Procedimiento { get; set; } = null!;
 
+        [ForeignKey("Id_Horario")]
         public virtual HorariosDisponibles Horario { get; set; } = null!;
     }
 }
