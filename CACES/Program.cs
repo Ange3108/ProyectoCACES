@@ -96,7 +96,7 @@ builder.Services.AddScoped<IIconoServicio, IconoServicio>();
 builder.Services.AddScoped<IRecetaServicio, RecetaServicio>();
 
 
-builder.Services.AddAutoMapper(cfg => { }, typeof(MapeoClases)); // Directamente desde la documentación
+
 builder.Services.AddControllersWithViews();
 builder.Services.AddSession();
 

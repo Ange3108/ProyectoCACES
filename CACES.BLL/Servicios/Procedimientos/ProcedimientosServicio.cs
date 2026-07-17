@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Procedimientos;
+using CACES.BLL.Mappers;
 using CACES.BLL.Servicios.Especialidad;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Especialidades;
@@ -13,11 +14,11 @@ namespace CACES.BLL.Servicios.Procedimientos
     public class ProcedimientosServicio : IProcedimientosServicio
     {
         private readonly IProcedimientosRepositorio _procedimientosRepositorio;
-        private readonly IMapper _mapper;
-        public ProcedimientosServicio(IProcedimientosRepositorio procedimientosRepositorio, IMapper mapper)
+ 
+        public ProcedimientosServicio(IProcedimientosRepositorio procedimientosRepositorio)
         {
             _procedimientosRepositorio = procedimientosRepositorio;
-            _mapper = mapper;
+
         }
 
         public async Task<List<MostrarProcedimientosDTO>> ObtenerDetalleCirugiaAsync(int idPaciente)
@@ -78,15 +79,15 @@ namespace CACES.BLL.Servicios.Procedimientos
             };
         }
 
-        public async Task<bool> RegistrarProcedimientoAsync(RegistrarProcedimientosDto registrarProcedimientosDto)
+       /* public async Task<bool> RegistrarProcedimientoAsync(RegistrarProcedimientosDto registrarProcedimientosDto)
         {
-            int diaSemanaNet = (int)registrarProcedimientosDto.FechaProgramada.DayOfWeek;
+            int diaSemanaNet = (int)registrarProcedimientosDto.CitaFechaHora.DayOfWeek;
             int diaSemanaSql = diaSemanaNet == 0 ? 6 : diaSemanaNet - 1;
 
-            TimeSpan horaElegida = registrarProcedimientosDto.FechaProgramada.TimeOfDay;
+            TimeSpan horaElegida = registrarProcedimientosDto.CitaFechaHora.TimeOfDay;
 
             var horarioDisponible = await _procedimientosRepositorio.ObtenerHorarioPorRangoAsync(
-                registrarProcedimientosDto.Id_Medico,
+                registrarProcedimientosDto.IdMedico,
                 diaSemanaSql,
                 horaElegida
             );
@@ -98,15 +99,15 @@ namespace CACES.BLL.Servicios.Procedimientos
 
             var nuevaCirugia = new Cirugias
             {
-                Id_Paciente = registrarProcedimientosDto.Id_Paciente,
-                Id_Medico = registrarProcedimientosDto.Id_Medico,
-                Id_Procedimiento = registrarProcedimientosDto.Id_Procedimiento,
+                Id_Paciente = registrarProcedimientosDto.IdPaciente,
+                Id_Medico = registrarProcedimientosDto.IdMedico,
+                Id_Cirugia = registrarProcedimientosDto.IdCirugia,
                 Id_Horario = horarioDisponible.Id_Horario, 
                 Estado = true
             };
 
             return await _procedimientosRepositorio.RegistrarProcedimientosAsync(nuevaCirugia);
-        }
+        }}*/
 
         public async Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync()
         {
@@ -201,12 +202,12 @@ namespace CACES.BLL.Servicios.Procedimientos
         public async Task<List<InsertarProcedimientosDto>> ListarProcedimientosAsync()
         {
             var entidades = await _procedimientosRepositorio.ObtenerTodosLosProcedimientosAsync();
-            return _mapper.Map<List<InsertarProcedimientosDto>>(entidades);
+            return entidades.Select(e => e.ToInsertarProcedimientosDto()).ToList();
         }
 
         public async Task<bool> GuardarProcedimientoAsync(InsertarProcedimientosDto dto)
         {
-            var entidad = _mapper.Map<Procedimiento>(dto);
+            var entidad = dto.ToProcedimiento();
 
             entidad.Estado = dto.Estado;
 
@@ -216,13 +217,13 @@ namespace CACES.BLL.Servicios.Procedimientos
         public async Task<InsertarProcedimientosDto> ObtenerPorIdAsync(int id)
         {
             var entidad = await _procedimientosRepositorio.ObtenerProcedimientoPorIdAsync(id);
-            return _mapper.Map<InsertarProcedimientosDto>(entidad);
+            return entidad?.ToInsertarProcedimientosDto();
         }
         public async Task<bool> EditarProcedimientoAdminAsync(InsertarProcedimientosDto dto)
         {
             try
             {
-                var entidad = _mapper.Map<Procedimiento>(dto);
+                var entidad = dto.ToProcedimiento();
 
                 entidad.Estado = dto.Estado;
 

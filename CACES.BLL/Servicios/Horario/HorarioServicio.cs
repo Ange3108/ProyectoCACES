@@ -3,6 +3,7 @@ using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Especialidad;
 using CACES.BLL.DTOs.Horario;
 using CACES.BLL.DTOs.Medico;
+using CACES.BLL.Mappers;
 using CACES.BLL.Servicios.Medicos;
 using CACES.DAL.Repositorios.Horarios;
 using CACES.DAL.Repositorios.Medicos;
@@ -15,13 +16,13 @@ namespace CACES.BLL.Servicios.Horario
     public class HorarioServicio : IHorarioServicio
     {
         private readonly IHorariosRepositorio _horariosRepositorio;
-        private readonly IMapper _mapper;
+
         private readonly IMedicoServicio _medicoServicio;
 
-        public HorarioServicio(IHorariosRepositorio horariosRepositorio, IMapper mapper, IMedicoServicio medicoServicio)
+        public HorarioServicio(IHorariosRepositorio horariosRepositorio, IMedicoServicio medicoServicio)
         {
             _horariosRepositorio = horariosRepositorio;
-            _mapper = mapper;
+
             _medicoServicio = medicoServicio;
         }
 
@@ -69,7 +70,7 @@ namespace CACES.BLL.Servicios.Horario
                 {
                     EsCorrecto = true,
                     mensaje = "Horario actualizado exitosamente",
-                    Dato = _mapper.Map<MostrarHorarioDTO>(respuesta)
+                    Dato = respuesta.ToMostrarHorarioDTO(),
                 };
             }
 
@@ -100,7 +101,7 @@ namespace CACES.BLL.Servicios.Horario
                 respuesta.codigo = 400;
                 return respuesta;
             }
-             var nuevoHorario = _mapper.Map<DAL.Entidades.HorariosDisponibles>(horario);
+             var nuevoHorario = horario.ToHorariosDisponibles();
              nuevoHorario.Activo = true;
 
             bool resultado = await _horariosRepositorio.CrearHorarioDisponibleAsync(nuevoHorario);
@@ -111,7 +112,7 @@ namespace CACES.BLL.Servicios.Horario
                     EsCorrecto = true,
                     mensaje = "Horario creado exitosamente.",
                     codigo = 200,
-                    Dato = _mapper.Map<MostrarHorarioDTO>(nuevoHorario)
+                    Dato = nuevoHorario.ToMostrarHorarioDTO()
                 };
             }
 
@@ -157,7 +158,7 @@ namespace CACES.BLL.Servicios.Horario
 
             respuesta.EsCorrecto = true;
             respuesta.mensaje = "Horarios obtenidos exitosamente.";
-            respuesta.Dato = _mapper.Map<List<MostrarHorarioDTO>>(medico);
+            respuesta.Dato = medico.Select(h => h.ToMostrarHorarioDTO()).ToList();
             return respuesta;
         }
     }

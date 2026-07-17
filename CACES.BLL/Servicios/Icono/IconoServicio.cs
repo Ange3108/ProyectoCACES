@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Icono;
+using CACES.BLL.Mappers;
 using CACES.DAL.Repositorios.Icono;
 
 
@@ -10,12 +11,12 @@ namespace CACES.BLL.Servicios.Icono
     {
 
         private readonly IIconoRepositorio _iconoRepositorio;
-        private readonly IMapper _mapper;
 
-        public IconoServicio(IIconoRepositorio iconoRepositorio, IMapper mapper)
+
+        public IconoServicio(IIconoRepositorio iconoRepositorio)
         {
             _iconoRepositorio = iconoRepositorio;
-            _mapper = mapper;
+      
         }
         public async Task<respuestaErrores<IconoDTO>> ActualizarIconoAsync(int id, IconoDTO iconoDTO)
         {
@@ -35,7 +36,7 @@ namespace CACES.BLL.Servicios.Icono
            respuesta.EsCorrecto = actualizado;
             respuesta.mensaje = "Icono actualizado correctamente." ;
             respuesta.codigo = 200;
-            respuesta.Dato = _mapper.Map<IconoDTO>(iconoExistente);
+            respuesta.Dato = iconoExistente.ToIconoDTO();
             return respuesta;
         }
 
@@ -51,7 +52,7 @@ namespace CACES.BLL.Servicios.Icono
             respuesta.mensaje = "Icono creado correctamente.";
             respuesta.EsCorrecto = true;
             respuesta.codigo = 200;
-            respuesta.Dato = _mapper.Map<IconoDTO>(nuevoIcono);
+            respuesta.Dato = nuevoIcono.ToIconoDTO();
 
             return respuesta;
         }

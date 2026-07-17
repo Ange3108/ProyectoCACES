@@ -11,15 +11,16 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
+using CACES.BLL.DTOs.Medico;
+using CACES.BLL.DTOs.Procedimientos;
+using CACES.BLL.Mappers;
+using Microsoft.EntityFrameworkCore;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
+
 namespace CACES.BLL.Servicios.Especialidad
 {
-    using AutoMapper;
-    using CACES.BLL.DTOs.Medico;
-    using CACES.BLL.DTOs.Procedimientos;
-    using Microsoft.EntityFrameworkCore;
-    using System;
-    using System.Collections.Generic;
-    using System.Threading.Tasks;
 
     namespace ProyectoCACES.CACES.BLL.Servicios
     {
@@ -30,12 +31,12 @@ namespace CACES.BLL.Servicios.Especialidad
             // - Validar que el nombre no esté ya registrado
 
             private readonly IEspecialidadRepositorio _especialidadRepositorio;
-            private readonly IMapper _mapper;
 
-            public EspecialidadServicio(IEspecialidadRepositorio especialidadRepositorio, IMapper mapper)
+
+            public EspecialidadServicio(IEspecialidadRepositorio especialidadRepositorio)
             {
                 _especialidadRepositorio = especialidadRepositorio;
-                _mapper = mapper;
+ 
             }
 
             public async Task<respuestaErrores<mostrarEspecialidadDTO>> CrearEspecialidadAsync(especialidadDTO especialidadDto)
@@ -54,7 +55,7 @@ namespace CACES.BLL.Servicios.Especialidad
                     }
 
                     // Mapear el DTO a la entidad de base de datos
-                    var nuevoEspecialidad = _mapper.Map<DAL.Entidades.Especialidad>(especialidadDto);
+                    var nuevoEspecialidad = especialidadDto.ToEspecialidad();
                     nuevoEspecialidad.FechaDeRegistro = DateTime.Now;
                     nuevoEspecialidad.Estado = especialidadDto.Estado;
 
@@ -67,7 +68,7 @@ namespace CACES.BLL.Servicios.Especialidad
                         {
                             EsCorrecto = true,
                             mensaje = "Especialidad registrada exitosamente",
-                            Dato = _mapper.Map<mostrarEspecialidadDTO>(nuevoEspecialidad)
+                            Dato = nuevoEspecialidad.ToMostrarEspecialidadDTO()
                         };
                     }
 
@@ -119,7 +120,7 @@ namespace CACES.BLL.Servicios.Especialidad
                         {
                             EsCorrecto = true,
                             mensaje = "Especialidad actualizada exitosamente",
-                            Dato = _mapper.Map<mostrarEspecialidadDTO>(respuesta)
+                            Dato = respuesta.ToMostrarEspecialidadDTO()
                         };
                     }
 
@@ -153,7 +154,7 @@ namespace CACES.BLL.Servicios.Especialidad
                 }
 
                 respuesta.EsCorrecto = true;
-                respuesta.Dato = _mapper.Map<mostrarEspecialidadDTO>(especialidad);
+                respuesta.Dato = especialidad.ToMostrarEspecialidadDTO();
                 return respuesta;
             }
 
@@ -170,7 +171,7 @@ namespace CACES.BLL.Servicios.Especialidad
                 }
 
                 respuesta.EsCorrecto = true;
-                respuesta.Dato = _mapper.Map<mostrarEspecialidadDTO>(especialidad);
+                respuesta.Dato = especialidad.ToMostrarEspecialidadDTO();
                 return respuesta;
             }
 
@@ -180,7 +181,7 @@ namespace CACES.BLL.Servicios.Especialidad
                 var listaEspecialidades = await _especialidadRepositorio.GetEspecialidadesAsync();
 
                 respuesta.EsCorrecto = true;
-                respuesta.Dato = _mapper.Map<List<mostrarEspecialidadDTO>>(listaEspecialidades);
+                respuesta.Dato = listaEspecialidades.Select(e => e.ToMostrarEspecialidadDTO()).ToList();
                 return respuesta;
             }
 
@@ -208,7 +209,7 @@ namespace CACES.BLL.Servicios.Especialidad
                 var listaEspecialidades = await _especialidadRepositorio.GetEspecialidadesAsync();
 
                 respuesta.EsCorrecto = true;
-                respuesta.Dato = _mapper.Map<List<especialidadDTO>>(listaEspecialidades);
+                respuesta.Dato = listaEspecialidades.Select(e => e.ToEspecialidadDTO()).ToList();
                 return respuesta;
             }
 
@@ -222,7 +223,7 @@ namespace CACES.BLL.Servicios.Especialidad
                 respuesta.EsCorrecto = true;
                 respuesta.mensaje = "Especialidades activas obtenidas exitosamente";
                 respuesta.codigo = 200;
-                respuesta.Dato = _mapper.Map<List<mostrarEspecialidadDTO>>(especialidades);
+                respuesta.Dato = especialidades.Select(e => e.ToMostrarEspecialidadDTO()).ToList();
 
                 return respuesta;
             }
@@ -270,7 +271,7 @@ namespace CACES.BLL.Servicios.Especialidad
 
 
                 respuesta.EsCorrecto = true;
-                respuesta.Dato = _mapper.Map<mostrarDetalleEspecialidadDTO>(especialidad);
+                respuesta.Dato = especialidad.ToMostrarDetalleEspecialidadDTO();
                 return respuesta;
 
             }

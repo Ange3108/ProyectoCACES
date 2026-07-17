@@ -120,7 +120,7 @@ namespace CACES.Controllers
 
             var dto = new RegistrarProcedimientosDto
             {
-                Id_Paciente = idPaciente ?? 0
+                IdPaciente = idPaciente ?? 0
             };
 
             var medicos = await _medicoServicio.GetEspecialistasActivosAsync();
@@ -132,41 +132,42 @@ namespace CACES.Controllers
             return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        [Authorize(Roles = "Administrador")]
-        public async Task<IActionResult> Registrar(RegistrarProcedimientosDto dto)
-        {
-            if (!ModelState.IsValid)
-            {
-                var medicos = await _medicoServicio.GetEspecialistasActivosAsync();
+        /*  [HttpPost]
+          [ValidateAntiForgeryToken]
+          [Authorize(Roles = "Administrador")]
+          public async Task<IActionResult> Registrar(RegistrarProcedimientosDto dto)
+          {
+              if (!ModelState.IsValid)
+              {
+                  var medicos = await _medicoServicio.GetEspecialistasActivosAsync();
 
-                ViewBag.Medicos = medicos.Dato;
+                  ViewBag.Medicos = medicos.Dato;
 
-                ViewBag.Procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
+                  ViewBag.Procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
 
-                ViewBag.Pacientes = await _pacienteServicio.ObtenerPacientesActivosAsync(); 
+                  ViewBag.Pacientes = await _pacienteServicio.ObtenerPacientesActivosAsync(); 
 
-                return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
-            }
+                  return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
+              }
 
-            bool guardadoExitoso = await _procedimientosServicio.RegistrarProcedimientoAsync(dto);
+              bool guardadoExitoso = await _procedimientosServicio.RegistrarProcedimientoAsync(dto);
 
-            if (guardadoExitoso)
-            {
-                return RedirectToAction("ObtenerProcedimientos", new { idPaciente = dto.Id_Paciente });
-            }
+              if (guardadoExitoso)
+              {
+                  return RedirectToAction("ObtenerProcedimientos", new { idPaciente = dto.IdPaciente });
+              }
 
-            ModelState.AddModelError("", "No se pudo agendar el procedimiento quirúrgico. Verifique la disponibilidad del médico.");
+              ModelState.AddModelError("", "No se pudo agendar el procedimiento quirúrgico. Verifique la disponibilidad del médico.");
 
-            var medicosFallo = await _medicoServicio.GetEspecialistasActivosAsync();
+              var medicosFallo = await _medicoServicio.GetEspecialistasActivosAsync();
 
-            ViewBag.Medicos = medicosFallo.Dato;
-            ViewBag.Procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
-            ViewBag.Pacientes = await _pacienteServicio.ObtenerPacientesActivosAsync();
+              ViewBag.Medicos = medicosFallo.Dato;
+              ViewBag.Procedimientos = await _procedimientosServicio.ObtenerProcedimientosFijosAsync();
+              ViewBag.Pacientes = await _pacienteServicio.ObtenerPacientesActivosAsync();
 
-            return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
-        }
+              return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
+          }
+        */
 
         [HttpGet]
         public async Task<IActionResult> DescargarReporteProcedimiento(int id)

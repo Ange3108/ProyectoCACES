@@ -1,6 +1,7 @@
 using AutoMapper;
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Usuario;
+using CACES.BLL.Mappers;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Usuario;
@@ -21,16 +22,16 @@ namespace CACES.BLL.Servicios.Usuario
     public class UsuarioServicio : IUsuarioService
     {
         private readonly IUsuarioRepositorio _usuarioRepository;
-        private readonly IMapper _mapper;
+
         private readonly IEmailServicio _emailServicio;
  
         private readonly ILogger<UsuarioServicio> _logger;
 
         public object BCrypt { get; private set; }
 
-        public UsuarioServicio(IUsuarioRepositorio usuarioRepository,IMapper mapper,IEmailServicio emailServicio,ILogger<UsuarioServicio> logger){
+        public UsuarioServicio(IUsuarioRepositorio usuarioRepository,IEmailServicio emailServicio,ILogger<UsuarioServicio> logger){
             _usuarioRepository = usuarioRepository;
-            _mapper = mapper;
+
             _emailServicio = emailServicio;
             _logger = logger;
         }
@@ -70,8 +71,8 @@ namespace CACES.BLL.Servicios.Usuario
                 if (usuarioDui != null)
                     return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "El DUI ya está registrado" };
 
-                // Mapear con AutoMapper
-                var nuevoUsuario = _mapper.Map<DAL.Entidades.Usuario>(usuarioDto);
+
+                var nuevoUsuario = usuarioDto.ToUsuario();
 
                 // Agregar lógica específica de negocio
                 nuevoUsuario.PasswordHash = HashContraseña(usuarioDto.passwordHash);
@@ -102,7 +103,7 @@ namespace CACES.BLL.Servicios.Usuario
                         
                         _logger.LogError("Fallo al enviar correo de bienvenida a {Email}: {ErrorMessage}", nuevoUsuario.CorreoElectronico, ex);
                     }
-                    var usuarioRetorno = _mapper.Map<MostrarUsuarioDTO>(nuevoUsuario);
+                    var usuarioRetorno = nuevoUsuario.ToMostrarUsuarioDTO();
                     return new respuestaErrores<MostrarUsuarioDTO>
                     {
                         EsCorrecto = true,
@@ -146,7 +147,7 @@ namespace CACES.BLL.Servicios.Usuario
             if (usuario == null)
                 return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Usuario no encontrado", codigo = 404 };
             
-            _mapper.Map(usuarioDto, usuario);
+            usuario.ToMostrarUsuarioDTO();
             usuario.FechaDeModificacion = DateTime.Now;
 
             bool resultado = await _usuarioRepository.UpdateUsuarioAsync(usuario);
@@ -156,7 +157,7 @@ namespace CACES.BLL.Servicios.Usuario
                 {
                     EsCorrecto = true,
                     mensaje = "Usuario actualizado exitosamente",
-                    Dato = _mapper.Map<MostrarUsuarioDTO>(usuario)
+                    Dato = usuario.ToMostrarUsuarioDTO()
                 };
 
             return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Error al actualizar" };
@@ -189,7 +190,7 @@ namespace CACES.BLL.Servicios.Usuario
                 respuesta.codigo = 404;
                 return respuesta;
             }
-            respuesta.Dato = _mapper.Map<MostrarUsuarioDTO>(usuario);
+            respuesta.Dato = usuario.ToMostrarUsuarioDTO();
             return respuesta;
         }
 
@@ -205,7 +206,7 @@ namespace CACES.BLL.Servicios.Usuario
                 return respuesta;
             }
 
-            respuesta.Dato = _mapper.Map<MostrarUsuarioDTO>(usuario);
+            respuesta.Dato = usuario.ToMostrarUsuarioDTO();
             return respuesta;
         }
 
@@ -213,7 +214,7 @@ namespace CACES.BLL.Servicios.Usuario
         {
             var respuesta = new respuestaErrores<List<MostrarUsuarioDTO>>();
             var listaUsuarios = await _usuarioRepository.GetUsuariosAsync();
-            respuesta.Dato = _mapper.Map<List<MostrarUsuarioDTO>>(listaUsuarios);
+            respuesta.Dato = listaUsuarios.Select(u => u.ToMostrarUsuarioDTO()).ToList();
 
             return respuesta;
         }

@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Medico;
+using CACES.BLL.Mappers;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Usuario;
@@ -14,14 +15,13 @@ namespace CACES.BLL.Servicios.Medicos
     {
         private readonly IMedicoRepositorio _medicoRepositorio;
         private readonly IUsuarioRepositorio _usuarioRepositorio;
-        private readonly IMapper _mapper;
         private readonly ILogger<MedicoServicio> _logger;
 
-        public MedicoServicio(IMedicoRepositorio medicoRepositorio, IUsuarioRepositorio usuarioRepositorio, IMapper mapper, ILogger<MedicoServicio> logger)
+        public MedicoServicio(IMedicoRepositorio medicoRepositorio, IUsuarioRepositorio usuarioRepositorio,  ILogger<MedicoServicio> logger)
         {
             _medicoRepositorio = medicoRepositorio;
             _usuarioRepositorio = usuarioRepositorio;
-            _mapper = mapper;
+
             _logger = logger;
 
         }
@@ -29,7 +29,7 @@ namespace CACES.BLL.Servicios.Medicos
         public async Task<respuestaErrores<List<MedicoDTO>>> GetMedicosAsync()
         {
             var medicos = await _medicoRepositorio.GetMedicosAsync();
-            var medicosDTO = _mapper.Map<List<MedicoDTO>>(medicos);
+            var medicosDTO = medicos.Select(m => m.ToMedicoDTO()).ToList();
 
             return new respuestaErrores<List<MedicoDTO>>
             {
@@ -54,7 +54,7 @@ namespace CACES.BLL.Servicios.Medicos
             {
                 EsCorrecto = true,
                 mensaje = "Médico obtenido exitosamente.",
-                Dato = _mapper.Map<MedicoDTO>(medico),
+                Dato = medico.ToMedicoDTO(),
                 codigo = 200
             };
         }
@@ -141,7 +141,7 @@ namespace CACES.BLL.Servicios.Medicos
                 {
                     EsCorrecto = true,
                     mensaje = "Médico actualizado exitosamente.",
-                    Dato = _mapper.Map<MedicoDTO>(medico),
+                    Dato = medico.ToMedicoDTO(),
                     codigo = 200
                 };
             }
@@ -273,7 +273,7 @@ namespace CACES.BLL.Servicios.Medicos
         public async Task<respuestaErrores<List<MedicoDTO>>> GetEspecialistasActivosAsync()
         {
             var medicos = await _medicoRepositorio.GetEspecialistasActivosAsync();
-            var medicosDTO = _mapper.Map<List<MedicoDTO>>(medicos);
+            var medicosDTO = medicos.Select(m => m.ToMedicoDTO()).ToList();
             return new respuestaErrores<List<MedicoDTO>>
             {
                 EsCorrecto = true,

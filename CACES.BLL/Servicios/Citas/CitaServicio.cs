@@ -11,12 +11,12 @@ namespace CACES.BLL.Servicios.Citas
     public class CitaServicio : ICitaServicio
     {
         private readonly ICitaRepositorio _citaRepositorio;
-        private readonly IMapper _mapper;
+        
 
-        public CitaServicio(ICitaRepositorio citaRepositorio, IMapper mapper)
+        public CitaServicio(ICitaRepositorio citaRepositorio)
         {
             _citaRepositorio = citaRepositorio;
-            _mapper = mapper;
+      
         }
 
         public async Task<respuestaErrores<List<MostrarCitaDTO>>> GetCitasAsync()

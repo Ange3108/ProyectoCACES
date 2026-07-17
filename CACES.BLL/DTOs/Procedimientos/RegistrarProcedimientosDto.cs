@@ -3,19 +3,24 @@
 namespace CACES.BLL.DTOs.Procedimientos
 {
     public class RegistrarProcedimientosDto
+
     {
+
         [Required(ErrorMessage = "Debe seleccionar un paciente.")]
-        public int Id_Paciente { get; set; }
-
+        public int IdPaciente { get; set; }
+        public string NombrePaciente { get; set; } = null!;
         [Required(ErrorMessage = "Debe seleccionar el médico especialista.")]
-        public int Id_Medico { get; set; }
+        public int IdMedico { get; set; }
 
+        public string NombreMedico { get; set; } = null!;
         [Required(ErrorMessage = "Debe seleccionar el procedimiento quirúrgico.")]
-        public int Id_Procedimiento { get; set; }
+        public int IdCirugia { get; set; }
+
+        public string NombreCirugia { get; set; } = null!;
+        public int IdCita { get; set; }
 
         [Required(ErrorMessage = "La fecha y hora de la cirugía es obligatoria.")]
-        [DataType(DataType.DateTime)]
-        public DateTime FechaProgramada { get; set; }
+        public string CitaFechaHora { get; set; } = null!;
 
     }
 }

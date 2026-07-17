@@ -49,6 +49,10 @@ namespace CACES.BLL.DTOs.Perfil
             public string? ConfirmarContraseña { get; set; }
 
             public bool Activar2FA { get; set; }
-        }
+
+        // --- INFORMACIÓN DE UBICACIÓN OPCIONAL  ---
+        // Aquí puedes agregar propiedades relacionadas con la ubicación si es necesario, por ejemplo:
+        //También falta poder actualizar la foto del usuario
     }
+}
 

@@ -4,6 +4,7 @@ namespace CACES.BLL.DTOs.Historial
 {
     public class HistorialDTO
     {
+        public int IdHistorial { get; set; }
         [Required]
         public string TipoSangre { get; set; } = null!;
 

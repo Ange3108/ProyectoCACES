@@ -17,8 +17,6 @@ namespace CACES.DAL.Entidades
         [Column("Descripcion")]
         public string Descripcion { get; set; } = null!;
 
-
-
         public int IdIcono { get; set; } 
 
 

@@ -2,6 +2,7 @@
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Historial;
 using CACES.BLL.DTOs.Perfil;
+using CACES.BLL.Mappers;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Usuario;
 
@@ -11,13 +12,13 @@ namespace CACES.BLL.Servicios.Perfil
     public class PerfilServicio : IPerfilServicio
     {
         private readonly IUsuarioRepositorio _usuarioRepository;
-        private readonly IMapper _mapper;
+
         private readonly IPacienteRepositorio _pacienteRepositorio;
 
-        public PerfilServicio(IUsuarioRepositorio usuarioRepository, IMapper mapper, IPacienteRepositorio pacienteRepositorio)
+        public PerfilServicio(IUsuarioRepositorio usuarioRepository,  IPacienteRepositorio pacienteRepositorio)
         {
             _usuarioRepository = usuarioRepository;
-            _mapper = mapper;
+
             _pacienteRepositorio = pacienteRepositorio;
         }
 
@@ -35,7 +36,7 @@ namespace CACES.BLL.Servicios.Perfil
                 return respuesta;
             }
 
-            respuesta.Dato = _mapper.Map<PerfilUsuarioDTO>(usuarioConInfoMedica);
+            respuesta.Dato = usuarioConInfoMedica.ToPerfilUsuarioDTO();
             respuesta.EsCorrecto = true;
 
             return respuesta;
@@ -57,7 +58,7 @@ namespace CACES.BLL.Servicios.Perfil
                 }
 
 
-                _mapper.Map(perfilDto, usuario);
+                usuario.UpdateFromActualizarPerfilDTO(perfilDto);
 
                 usuario.FechaDeModificacion = DateTime.Now;
 
@@ -67,7 +68,7 @@ namespace CACES.BLL.Servicios.Perfil
                 {
                     respuesta.EsCorrecto = true;
                     respuesta.mensaje = "Perfil actualizado exitosamente";
-                    respuesta.Dato = _mapper.Map<ActualizarPerfilDTO>(usuario); 
+                    respuesta.Dato = usuario.ToActualizarPerfilDTO(); 
                 }
                 else
                 {
@@ -99,7 +100,7 @@ namespace CACES.BLL.Servicios.Perfil
             }
 
             // Mapeamos directamente la entidad Usuario a ActualizarPerfilDTO
-            respuesta.Dato = _mapper.Map<ActualizarPerfilDTO>(usuario);
+            respuesta.Dato = usuario.ToActualizarPerfilDTO();
             respuesta.EsCorrecto = true;
 
             return respuesta;

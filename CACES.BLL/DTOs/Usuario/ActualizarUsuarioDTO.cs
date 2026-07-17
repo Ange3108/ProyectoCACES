@@ -39,6 +39,8 @@ namespace CACES.BLL.DTOs.Usuario
         [Required(ErrorMessage = "La fecha de nacimiento es requerida")]
         public DateTime Nacimiento { get; set; }
 
+        public string Foto { get; set; } = null!;
+
 
 
 

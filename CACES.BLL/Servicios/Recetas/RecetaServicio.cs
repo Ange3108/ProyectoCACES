@@ -4,6 +4,7 @@ using System.Text;
 using AutoMapper;
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Receta;
+using CACES.BLL.Mappers;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Recetas;
 
@@ -12,13 +13,13 @@ namespace CACES.BLL.Servicios.Recetas
     public class RecetaServicio : IRecetaServicio
     {
         private readonly IRecetaRepositorio _repositorio;
-        private readonly IMapper _mapper;
 
-        public RecetaServicio(IRecetaRepositorio repositorio,
-                              IMapper mapper)
+
+        public RecetaServicio(IRecetaRepositorio repositorio
+                             )
         {
             _repositorio = repositorio;
-            _mapper = mapper;
+
         }
 
         public async Task<respuestaErrores<MostrarRecetaDTO>> RegistrarAsync(RegistrarRecetaDTO dto)
@@ -49,7 +50,7 @@ namespace CACES.BLL.Servicios.Recetas
 
                 respuesta.EsCorrecto = true;
                 respuesta.mensaje = "Receta registrada correctamente.";
-                respuesta.Dato = _mapper.Map<MostrarRecetaDTO>(recetaCompleta);
+                respuesta.Dato = recetaCompleta.ToMostrarRecetaDTO();
 
                 return respuesta;
             }
@@ -75,7 +76,7 @@ namespace CACES.BLL.Servicios.Recetas
             }
 
             respuesta.EsCorrecto = true;
-            respuesta.Dato = _mapper.Map<MostrarRecetaDTO>(receta);
+            respuesta.Dato = receta.ToMostrarRecetaDTO();
 
             return respuesta;
         }
@@ -94,7 +95,7 @@ namespace CACES.BLL.Servicios.Recetas
             }
 
             respuesta.EsCorrecto = true;
-            respuesta.Dato = _mapper.Map<MostrarRecetaDTO>(receta);
+            respuesta.Dato = receta.ToMostrarRecetaDTO();
 
             return respuesta;
         }
@@ -106,7 +107,7 @@ namespace CACES.BLL.Servicios.Recetas
             var lista = await _repositorio.ObtenerPorPacienteAsync(idPaciente);
 
             respuesta.EsCorrecto = true;
-            respuesta.Dato = _mapper.Map<List<MostrarRecetaDTO>>(lista);
+            respuesta.Dato = lista.Select(l => l.ToMostrarRecetaDTO()).ToList();
 
             return respuesta;
         }
@@ -118,7 +119,7 @@ namespace CACES.BLL.Servicios.Recetas
             var lista = await _repositorio.ObtenerPorMedicoAsync(idMedico);
 
             respuesta.EsCorrecto = true;
-            respuesta.Dato = _mapper.Map<List<MostrarRecetaDTO>>(lista);
+            respuesta.Dato = lista.Select(l => l.ToMostrarRecetaDTO()).ToList();
 
             return respuesta;
         }
@@ -144,7 +145,7 @@ namespace CACES.BLL.Servicios.Recetas
 
             respuesta.EsCorrecto = true;
             respuesta.mensaje = "Receta actualizada.";
-            respuesta.Dato = _mapper.Map<MostrarRecetaDTO>(receta);
+            respuesta.Dato = receta.ToMostrarRecetaDTO();
 
             return respuesta;
         }

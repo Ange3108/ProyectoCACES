@@ -1,6 +1,7 @@
 ﻿using AutoMapper;
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Paquete;
+using CACES.BLL.Mappers;
 using CACES.DAL.Repositorios.Paquetes;
 
 namespace CACES.BLL.Servicios.Paquete
@@ -8,12 +9,12 @@ namespace CACES.BLL.Servicios.Paquete
     public class PaqueteServicio : IPaqueteServicio
     {
         private readonly IPaqueteRepositorio _paqueteRepositorio;
-        private readonly IMapper _mapper;
+       
 
-        public PaqueteServicio(IPaqueteRepositorio paqueteRepositorio, IMapper mapper)
+        public PaqueteServicio(IPaqueteRepositorio paqueteRepositorio)
         {
             _paqueteRepositorio = paqueteRepositorio;
-            _mapper = mapper;
+
         }
 
         public async Task<respuestaErrores<PaqueteDTO>> CreatePaqueteAsync(PaqueteDTO registrarPaqueteDto)
@@ -22,7 +23,7 @@ namespace CACES.BLL.Servicios.Paquete
 
             try
             {
-                var paquete = _mapper.Map<DAL.Entidades.Paquete>(registrarPaqueteDto);
+                var paquete = registrarPaqueteDto.ToPaquete();
                 paquete.FechaDeRegistro = DateTime.Now;
                 paquete.Estado = true;
 
@@ -32,7 +33,7 @@ namespace CACES.BLL.Servicios.Paquete
                 {
                     respuesta.EsCorrecto = true;
                     respuesta.mensaje = "Paquete registrado exitosamente.";
-                    respuesta.Dato = _mapper.Map<PaqueteDTO>(paquete);
+                    respuesta.Dato = paquete.ToPaqueteDTO();
                 }
                 else
                 {
@@ -54,13 +55,13 @@ namespace CACES.BLL.Servicios.Paquete
         public async Task<List<PaqueteDTO>> GetPaquetesAsync()
         {
             var entidades = await _paqueteRepositorio.GetPaquetesAsync();
-            return _mapper.Map<List<PaqueteDTO>>(entidades);
+            return entidades.Select(e => e.ToPaqueteDTO()).ToList();
         }
 
         public async Task<List<PaqueteDTO>> GetPaquetesSoloActivosAsync()
         {
             var entidades = await _paqueteRepositorio.GetPaquetesSoloActivosAsync();
-            return _mapper.Map<List<PaqueteDTO>>(entidades);
+            return entidades.Select(e => e.ToPaqueteDTO()).ToList();
         }
 
         public async Task<respuestaErrores<PaqueteDTO>> UpdatePaqueteAsync(int id, PaqueteDTO registrarPaqueteDTO)
@@ -79,7 +80,7 @@ namespace CACES.BLL.Servicios.Paquete
                     };
                 }
 
-                _mapper.Map(registrarPaqueteDTO, paquete);
+                paquete.UpdateFromPaqueteDTO(registrarPaqueteDTO);
 
                 bool resultado = await _paqueteRepositorio.UpdatePaqueteAsync(paquete);
 
@@ -89,7 +90,7 @@ namespace CACES.BLL.Servicios.Paquete
                     {
                         EsCorrecto = true,
                         mensaje = "Paquete actualizado exitosamente",
-                        Dato = _mapper.Map<PaqueteDTO>(paquete)
+                        Dato = paquete.ToPaqueteDTO()
                     };
                 }
 
@@ -123,7 +124,7 @@ namespace CACES.BLL.Servicios.Paquete
             }
 
             respuesta.EsCorrecto = true;
-            respuesta.Dato = _mapper.Map<PaqueteDTO>(paquete);
+            respuesta.Dato = paquete.ToPaqueteDTO();
             return respuesta;
         }
     }

@@ -28,7 +28,7 @@ namespace CACES.BLL.Servicios.Paciente
             IUsuarioRepositorio usuarioRepositorio,
             IHistorialMedicoRepositorio historialRepositorio,
             IEmailServicio emailServicio,
-            IMapper mapper,
+
             CACESDbContext context)
         {
             _pacienteRepositorio = pacienteRepositorio;
