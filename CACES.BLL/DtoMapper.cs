@@ -263,8 +263,8 @@ namespace CACES.BLL.Mappers
                 SegundoApellido = src.SegundoApellido,
                 CorreoElectronico = src.CorreoElectronico,
                 Telefono = src.Telefono,
-              //  Direccion = src.Direccion,
-               // Nacimiento = src.Nacimiento,
+                Direccion = src.Direccion,
+                Nacimiento = src.Nacimiento,
                 Estado = src.Estado,
                 DUI = src.DUI,
                 Foto = src.Foto,
@@ -285,9 +285,9 @@ namespace CACES.BLL.Mappers
             SegundoApellido = src.SegundoApellido,
             CorreoElectronico = src.CorreoElectronico,
             Telefono = src.Telefono,
-           // Direccion = src.Direccion,
-          //  Nacimiento = src.Nacimiento,
-           // Foto = src.Foto
+            DUI = src.DUI,
+            Direccion = src.Direccion,
+            Foto = src.Foto
         };
 
         public static void UpdateFromActualizarPerfilDTO(this Usuario dest, ActualizarPerfilDTO src)
@@ -301,6 +301,8 @@ namespace CACES.BLL.Mappers
             dest.Telefono = src.Telefono ?? dest.Telefono;
             dest.DUI = src.DUI ?? dest.DUI;
             dest.Estado = src.Estado;
+            dest.Direccion = src.Direccion ?? dest.Direccion;
+            dest.Foto = src.Foto ?? dest.Foto;
         }
 
         // ===== Paquete =====

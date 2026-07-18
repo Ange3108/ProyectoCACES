@@ -11,17 +11,20 @@
         Actualizar Perfil del Usuario
     </h1>
 
-    <form asp-action="ActualizarPerfil"
-          asp-controller="Perfil"
-          method="post"
-          class="card border-0 shadow p-4"
-          style="background:#F8FBFD;">
 
         <div asp-validation-summary="ModelOnly"
              class="alert alert-danger"
              role="alert"></div>
 
+        <form asp-action="ActualizarPerfil"
+              asp-controller="Perfil"
+              method="post"
+              enctype="multipart/form-data"
+              class="card border-0 shadow p-4"
+              style="background:#F8FBFD;">
+
         <input type="hidden" asp-for="IdUsuario" />
+        <input type="hidden" asp-for="Foto" />
 
         <section class="text-center mb-5">
 
@@ -106,6 +109,15 @@
                            style="border-color:#D7E3EC;">
                     <span asp-validation-for="DUI" class="text-danger"></span>
                 </div>
+                <div class="col-md-6 mb-3">
+                    <label asp-for="Direccion" class="form-label fw-semibold">Dirección</label>
+                    <input type="text"
+                           asp-for="Direccion"
+                           class="form-control"
+                           style="border-color:#D7E3EC;">
+                    <span asp-validation-for="Direccion" class="text-danger"></span>
+                </div>
+                
 
             </div>
 
@@ -120,30 +132,32 @@
             </h3>
 
             <div class="row">
-
                 <div class="col-md-6 mb-3">
-                    <label class="form-label fw-semibold">Nueva Contraseña</label>
+                    <label asp-for="NuevaContraseña" class="form-label fw-semibold">Nueva Contraseña</label>
                     <input type="password"
+                           asp-for="NuevaContraseña"
                            class="form-control"
                            placeholder="Dejar en blanco para mantener actual"
                            style="border-color:#D7E3EC;">
+                    <span asp-validation-for="NuevaContraseña" class="text-danger"></span>
                 </div>
 
                 <div class="col-md-6 mb-3">
-                    <label class="form-label fw-semibold">Confirmar Nueva Contraseña</label>
+                    <label asp-for="ConfirmarContraseña" class="form-label fw-semibold">Confirmar Nueva Contraseña</label>
                     <input type="password"
+                           asp-for="ConfirmarContraseña"
                            class="form-control"
                            placeholder="Dejar en blanco para mantener actual"
                            style="border-color:#D7E3EC;">
+                    <span asp-validation-for="ConfirmarContraseña" class="text-danger"></span>
                 </div>
-
             </div>
 
             <div class="form-check">
                 <input class="form-check-input"
                        type="checkbox"
-                       id="2fa">
-                <label class="form-check-label" for="2fa">
+                       asp-for="Activar2FA">
+                <label class="form-check-label" asp-for="Activar2FA">
                     Activar autenticación en dos pasos (2FA)
                 </label>
             </div>
