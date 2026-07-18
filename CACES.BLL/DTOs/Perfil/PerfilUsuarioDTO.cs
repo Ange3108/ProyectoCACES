@@ -10,6 +10,8 @@
         public string DUI { get; set; } = null!;
         public string Telefono { get; set; } = null!;
         public bool Estado { get; set; }
+        public DateTime Nacimiento { get; set; }
+        public string Direccion { get; set; } = null!;
         public string TipoSangre { get; set; } = null!;
         public string Alergias { get; set; } = null!;
         public string EnfermedadesCronicas { get; set; } = null!;
