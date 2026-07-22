@@ -86,7 +86,7 @@ namespace CACES.BLL.Servicios.Citas
                 if (!tieneHorario)
                 {
                     return CrearError(
-                        "El médico no tiene un horario activo para el día seleccionado.",
+                        "El médico no tiene un horario estado para el día seleccionado.",
                         400
                     );
                 }
@@ -95,7 +95,7 @@ namespace CACES.BLL.Servicios.Citas
 
                 var horarioSeleccionado = horarios.FirstOrDefault(h =>
                     h.Id_Horario == dto.IdHorario &&
-                    h.Activo
+                    h.Estado
                 );
 
                 if (horarioSeleccionado == null)

@@ -1,7 +1,8 @@
-using CACES.BLL;
+
 using CACES.BLL.Servicios.ArchivosHistorial;
 using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
+using CACES.BLL.Servicios.ConfiguracionCheckPoints;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Cotizaciones;
 using CACES.BLL.Servicios.Especialidad;
@@ -13,6 +14,7 @@ using CACES.BLL.Servicios.Medicos;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;
 using CACES.BLL.Servicios.Perfil;
+using CACES.BLL.Servicios.PreguntasPOp;
 using CACES.BLL.Servicios.Procedimientos;
 using CACES.BLL.Servicios.Quirofano;
 using CACES.BLL.Servicios.Recetas;
@@ -94,6 +96,8 @@ builder.Services.AddScoped<ISoporteServicio, SoporteServicio>();
 builder.Services.AddScoped<IIconoServicio, IconoServicio>();
 
 builder.Services.AddScoped<IRecetaServicio, RecetaServicio>();
+builder.Services.AddScoped<IConfiguracionCheckPointsServicio, ConfiguracionCheckPointServicio>();
+builder.Services.AddScoped<IPreguntasPOpServicio, PreguntasPOpServicio>();
 
 
 

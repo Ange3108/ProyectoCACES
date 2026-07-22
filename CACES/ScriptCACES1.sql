@@ -1,5 +1,5 @@
---DROP DATABASE [CACES];
---GO
+DROP DATABASE [CACES];
+GO
 
 CREATE DATABASE CACES;
 GO
@@ -88,7 +88,7 @@ CREATE TABLE HorariosDisponibles(
     DiaSemana INT NOT NULL, -- 0=Lunes, 6=Domingo
     HoraInicio TIME NOT NULL,
     HoraFin TIME NOT NULL,
-    Activo BIT NOT NULL,
+    Estado BIT NOT NULL,
     CONSTRAINT FK_Horarios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
 );
 
@@ -248,6 +248,76 @@ CREATE TABLE Cotizacion
     CONSTRAINT FK_Cotizacion_Procedimiento
         FOREIGN KEY(Id_Procedimiento)
         REFERENCES Procedimiento(Id_Procedimiento)
+);
+
+
+--Tablas para el seguimiento PostOperatorio
+
+CREATE TABLE ConfiguracionCheckpoints (
+    Id_CheckPoint INT IDENTITY(1,1) PRIMARY KEY,
+    DiaCheckpoint INT NOT NULL,
+    Estado BIT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE PreguntaSeguimiento (
+    Id_Pregunta INT IDENTITY(1,1) PRIMARY KEY,
+    Texto VARCHAR(500) NOT NULL,
+    ValorMinimo INT NOT NULL,
+    ValorMaximo INT NOT NULL,
+    UmbralAlerta INT NOT NULL,
+    DireccionAlerta INT NOT NULL, -- enum: 0=MayorIgual, 1=MenorIgual
+    Estado BIT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE SeguimientoPaciente (
+    Id_Seguimiento INT IDENTITY(1,1) PRIMARY KEY,
+    Id_Cirugia INT NOT NULL,
+    DiaCheckpoint INT NOT NULL,
+    FechaProgramada DATETIME NOT NULL,
+    Estado INT NOT NULL, -- enum: 0=Pendiente, 1=Completado, 2=Vencido, 3=RequiereAtencion
+    FechaRegistro DATETIME NULL,
+    CONSTRAINT FK_SeguimientoPaciente_Cirugia FOREIGN KEY (Id_Cirugia) REFERENCES Cirugias(Id_Cirugia)
+);
+
+CREATE TABLE RespuestaSeguimiento (
+    Id_Respuesta INT IDENTITY(1,1) PRIMARY KEY,
+    Id_Seguimiento INT NOT NULL,
+    Id_Pregunta INT NOT NULL,
+    ValorRespuesta INT NOT NULL,
+    GeneroAlerta BIT NOT NULL,
+    CONSTRAINT FK_RespuestaSeguimiento_Seguimiento FOREIGN KEY (Id_Seguimiento) REFERENCES SeguimientoPaciente(Id_Seguimiento),
+    CONSTRAINT FK_RespuestaSeguimiento_Pregunta FOREIGN KEY (Id_Pregunta) REFERENCES PreguntaSeguimiento(Id_Pregunta)
+);
+
+CREATE TABLE AlertaStaff (
+    Id_Alerta INT IDENTITY(1,1) PRIMARY KEY,
+    Id_Seguimiento INT NOT NULL,
+    FechaGenerada DATETIME NOT NULL,
+    Estado INT NOT NULL, -- enum: 0=Pendiente, 1=Contactado, 2=Resuelto
+    Id_Usuario_Atendio INT NULL,
+    Observaciones VARCHAR(1000) NULL,
+    FechaAtencion DATETIME NULL,
+    CONSTRAINT FK_AlertaStaff_Seguimiento FOREIGN KEY (Id_Seguimiento) REFERENCES SeguimientoPaciente(Id_Seguimiento),
+    CONSTRAINT FK_AlertaStaff_Usuario FOREIGN KEY (Id_Usuario_Atendio) REFERENCES Usuarios(Id_Usuario)
+);
+
+--Tablas para configuración
+
+CREATE TABLE Notificaciones (
+    Id_Notificacion INT IDENTITY(1,1) PRIMARY KEY,
+    Evento VARCHAR(100) NOT NULL, -- "RecordatorioCheckpoint", "AlertaRespuestaNegativa"
+    CanalPlataforma BIT NOT NULL DEFAULT 1,
+    CanalEmail BIT NOT NULL DEFAULT 1,
+    Estado BIT NOT NULL DEFAULT 1
+);
+
+CREATE TABLE ConfiguracionSistema (
+    Id_Configuracion INT IDENTITY(1,1) PRIMARY KEY,
+    Clave VARCHAR(100) NOT NULL UNIQUE,
+    Valor VARCHAR(500) NOT NULL,
+    Tipo VARCHAR(20) NOT NULL, -- "int", "bool", "string"
+    Categoria VARCHAR(100) NOT NULL, -- "Notificaciones", "Calendario", "Seguimiento"
+    Descripcion VARCHAR(500) NULL
 );
 
 
@@ -460,7 +530,7 @@ INSERT INTO Pacientes (Id_Usuario, Id_Historial) VALUES
 GO
 
 -- HORARIOS DISPONIBLES
-INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Activo) VALUES
+INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Estado) VALUES
 (1, 0, '08:00', '12:00', 1),
 (1, 1, '13:00', '17:00', 1),
 (1, 2, '08:00', '12:00', 1),
@@ -572,7 +642,7 @@ VALUES
 (5, '2'); -- Paciente
 GO
 
-INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Activo)
+INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Estado)
 VALUES
 (1, 1, '13:00', '17:00', 1),
 (1, 2, '08:00', '12:00', 1),

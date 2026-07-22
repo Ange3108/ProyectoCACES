@@ -10,7 +10,7 @@ namespace CACES.BLL.DTOs.Horario
         public int DiaSemana { get; set; }
         public TimeSpan HoraInicio { get; set; }
 
-        public bool Activo { get; set; }
+        public bool Estado { get; set; }
 
 
     }

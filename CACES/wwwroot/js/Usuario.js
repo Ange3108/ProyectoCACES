@@ -103,7 +103,7 @@
                                     <span class="badge rounded-pill px-3 py-1"
                                           style="background:#DDF7F8;color:#0B6F73;">
                                         <i class="bi bi-check-circle-fill me-1"></i>
-                                        Activo
+                                        Estado
                                     </span>
                                 `
                                 : `

@@ -71,8 +71,8 @@
                     respuesta.dato.forEach(h => {
                         const dia = diasSemana[h.diaSemana] ?? h.diaSemana;
                         const hora = (h.horaInicio ?? '').toString().substring(0, 5);
-                        const estado = h.activo
-                            ? '<span class="badge bg-success">Activo</span>'
+                        const estado = h.estado
+                            ? '<span class="badge bg-success">Estado</span>'
                             : '<span class="badge bg-secondary">Inactivo</span>';
 
                         filas += `
@@ -85,10 +85,10 @@
                                         data-id="${h.id_Horario}"
                                         data-dia="${h.diaSemana}"
                                         data-hora="${hora}"
-                                        data-activo="${h.activo}">
+                                        data-estado="${h.estado}">
                                         <i class="bi bi-pencil"></i>
                                     </button>
-                                    ${h.activo ? `
+                                    ${h.estado ? `
                                     <button class="btn btn-sm btn-outline-danger btn-desactivar-horario"
                                         data-id="${h.id_Horario}">
                                         <i class="bi bi-slash-circle"></i>
@@ -129,7 +129,7 @@
                 id_Medico: idMedicoSeleccionado,
                 diaSemana: parseInt($('#nuevoDia').val()),
                 horaInicio: horaSeleccionada,
-                activo: true
+                estado: true
             };
 
             if (!idMedicoSeleccionado) {
@@ -171,7 +171,7 @@
             $('#editarIdHorario').val(id);
             $('#editarDia').val(btn.data('dia'));
             $('#editarHora').val(btn.data('hora'));
-            $('#editarActivo').prop('checked', btn.data('activo') === true || btn.data('activo') === 'true');
+            $('#editarActivo').prop('checked', btn.data('estado') === true || btn.data('estado') === 'true');
             $('#modalEditarHorario').modal('show');
         },
 
@@ -188,7 +188,7 @@
                 id_Medico: Horario.idMedicoActual,
                 diaSemana: parseInt($('#editarDia').val()),
                 horaInicio: horaSeleccionada,
-                activo: $('#editarActivo').is(':checked')
+                estado: $('#editarActivo').is(':checked')
             };
 
             $.ajax({

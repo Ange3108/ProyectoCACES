@@ -24,7 +24,7 @@ namespace CACES.DAL.Repositorios.Horarios
             horarioExistente.DiaSemana = horario.DiaSemana;
             horarioExistente.HoraInicio = horario.HoraInicio;
  
-            horarioExistente.Activo = horario.Activo;
+            horarioExistente.Estado = horario.Estado;
             horarioExistente.Id_Medico = horario.Id_Medico;
 
             return await _context.SaveChangesAsync() > 0;
@@ -42,7 +42,7 @@ namespace CACES.DAL.Repositorios.Horarios
         {
             var horario = await _context.HorariosDisponibles.FindAsync(idHorario);
             if (horario == null) return false;
-            horario.Activo = false;
+            horario.Estado = false;
             return await _context.SaveChangesAsync() > 0;
         }
 
@@ -61,7 +61,7 @@ namespace CACES.DAL.Repositorios.Horarios
             return await _context.HorariosDisponibles.AnyAsync(h =>
                 h.Id_Medico == idMedico &&
                 h.DiaSemana == diaSemana &&
-                h.Activo == true &&
+                h.Estado == true &&
                 h.Id_Horario != idExcluir);
         }
     }

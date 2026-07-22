@@ -145,7 +145,7 @@ namespace CACES.DAL.Repositorios.Citas
         {
             return await _context.HorariosDisponibles
                 .AsNoTracking()
-                .Where(h => h.Id_Medico == idMedico && h.Activo)
+                .Where(h => h.Id_Medico == idMedico && h.Estado)
                 .OrderBy(h => h.DiaSemana)
                 .ThenBy(h => h.HoraInicio)
                 .ToListAsync();
@@ -169,7 +169,8 @@ namespace CACES.DAL.Repositorios.Citas
                 .AnyAsync(h =>
                     h.Id_Medico == idMedico &&
                     h.DiaSemana == diaSemana &&
-                    h.Activo);
+                    h.Estado);
+
         }
     }
 }

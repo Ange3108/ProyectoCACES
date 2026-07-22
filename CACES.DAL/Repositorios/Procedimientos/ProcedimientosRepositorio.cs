@@ -49,7 +49,7 @@ namespace CACES.DAL.Repositorios.Procedimientos
             return await _context.HorariosDisponibles
                 .FirstOrDefaultAsync(h => h.Id_Medico == idMedico
                                        && h.DiaSemana == diaSemana
-                                       && h.Activo
+                                       && h.Estado
                                        && h.HoraInicio <= hora);
         }
 

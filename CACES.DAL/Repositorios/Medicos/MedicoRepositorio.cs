@@ -121,7 +121,7 @@ namespace CACES.DAL.Repositorios.Medicos
                    // "UPDATE Precios SET Estado = 0 WHERE Id_Medico = {0}", id);
 
                 await _context.Database.ExecuteSqlRawAsync(
-                    "UPDATE HorariosDisponibles SET Activo = 0 WHERE Id_Medico = {0}", id);
+                    "UPDATE HorariosDisponibles SET Estado = 0 WHERE Id_Medico = {0}", id);
 
                 medico.Usuario.Estado = false;
                 medico.Usuario.FechaDeModificacion = DateTime.Now;

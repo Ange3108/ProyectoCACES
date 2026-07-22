@@ -14,7 +14,7 @@ namespace CACES.BLL.DTOs.Horario
         [Required(ErrorMessage = "Establezca una hora de inicio")]
         public TimeSpan HoraInicio { get; set; }
         [Required(ErrorMessage = "Seleccione un estado")]
-        public bool Activo { get; set; } = true;
+        public bool Estado { get; set; } = true;
 
     }
 }

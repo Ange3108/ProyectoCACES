@@ -29,7 +29,7 @@ namespace CACES.BLL.Servicios.Horario
 
         //Validaciones de negocio generales
         //Revisar si el medico tiene un horario disponible
-        //Revisar si ya eciste un horario activo para ese medico en ese dia de la semana
+        //Revisar si ya eciste un horario estado para ese medico en ese dia de la semana
 
         public async Task<respuestaErrores<MostrarHorarioDTO>> ActualizarHorarioAsync(int id, EditarHorarioDTO horario)
         {
@@ -50,7 +50,7 @@ namespace CACES.BLL.Servicios.Horario
                 return new respuestaErrores<MostrarHorarioDTO>
                 {
                     EsCorrecto = false,
-                    mensaje = "El médico ya tiene un horario activo para ese día de la semana.",
+                    mensaje = "El médico ya tiene un horario estado para ese día de la semana.",
                     codigo = 400
                 };
                 
@@ -58,7 +58,7 @@ namespace CACES.BLL.Servicios.Horario
             // Actualizar únicamente los campos editables
             respuesta.DiaSemana = horario.DiaSemana;
             respuesta.HoraInicio = horario.HoraInicio;
-            respuesta.Activo = horario.Activo;
+            respuesta.Estado = horario.Estado;
 
 
             bool resultado =
@@ -97,12 +97,12 @@ namespace CACES.BLL.Servicios.Horario
             if (horarioExistente )
             {
                 respuesta.EsCorrecto = false;
-                respuesta.mensaje = "El médico ya tiene un horario activo para ese día de la semana.";
+                respuesta.mensaje = "El médico ya tiene un horario estado para ese día de la semana.";
                 respuesta.codigo = 400;
                 return respuesta;
             }
              var nuevoHorario = horario.ToHorariosDisponibles();
-             nuevoHorario.Activo = true;
+             nuevoHorario.Estado = true;
 
             bool resultado = await _horariosRepositorio.CrearHorarioDisponibleAsync(nuevoHorario);
             if(resultado )

@@ -35,6 +35,7 @@ namespace CACES.DAL.DBContext
         public DbSet<Soporte> Soportes { get; set; }
         public DbSet<Cotizacion> Cotizaciones { get; set; }
         public DbSet<Icono> Iconos { get; set; }
+        public DbSet<ConfiguracionCheckpoints> ConfiguracionCheckpoints { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -396,7 +397,7 @@ namespace CACES.DAL.DBContext
     entity.Property(e => e.DiaSemana).HasColumnName("DiaSemana");
     entity.Property(e => e.HoraInicio).HasColumnName("HoraInicio");
 
-    entity.Property(e => e.Activo).HasColumnName("Activo");
+    entity.Property(e => e.Estado).HasColumnName("Estado");
 
     entity.HasOne(h => h.Medico)
           .WithMany(m => m.HorariosDisponibles)
@@ -437,6 +438,14 @@ namespace CACES.DAL.DBContext
                     .WithMany()
                     .HasForeignKey(e => e.IdHistorial)
                     .OnDelete(DeleteBehavior.Cascade);
+            });
+
+            modelBuilder.Entity<ConfiguracionCheckpoints>(entity =>
+            {
+                entity.HasKey(e => e.IdCheckPoint);
+                entity.Property(e => e.IdCheckPoint).HasColumnName("Id_CheckPoint");
+                entity.Property(e => e.DiaCheckPoint).HasColumnName("DiaCheckpoint").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
             });
         }
     }

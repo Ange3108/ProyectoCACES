@@ -1,14 +1,16 @@
-﻿using CACES.BLL.DTOs.Cita;
+﻿using CACES.BLL.DTOs.CheckPoint;
+using CACES.BLL.DTOs.Cita;
 using CACES.BLL.DTOs.Especialidad;
 using CACES.BLL.DTOs.Horario;
 using CACES.BLL.DTOs.Icono;
 using CACES.BLL.DTOs.Medico;
 using CACES.BLL.DTOs.Paciente;
+using CACES.BLL.DTOs.Paquete;
 using CACES.BLL.DTOs.Perfil;
+using CACES.BLL.DTOs.Preguntas;
 using CACES.BLL.DTOs.Procedimientos;
 using CACES.BLL.DTOs.Receta;
 using CACES.BLL.DTOs.Usuario;
-using CACES.BLL.DTOs.Paquete;
 using CACES.DAL.Entidades;
 using System;
 using System.Linq;
@@ -87,7 +89,7 @@ namespace CACES.BLL.Mappers
             FechaCita = src.Fecha,
             Hora = src.Horario?.HoraInicio ?? TimeSpan.Zero,
             Motivo = src.Motivo
-           
+
         };
 
         public static Cita? ToCita(this RegistrarCitaDTO src) => src == null ? null : new Cita
@@ -100,7 +102,7 @@ namespace CACES.BLL.Mappers
             Motivo = src.Motivo,
             Estado = 1,
             FechaDeRegistro = DateTime.Now,
-            
+
         };
 
         // ===== Especialidad =====
@@ -158,7 +160,7 @@ namespace CACES.BLL.Mappers
                 SegundoApellido = src.Usuario?.SegundoApellido,
                 Telefono = src.Usuario?.Telefono,
                 Foto = src.Usuario?.Foto
-                
+
             };
 
         public static MedicoDTO? ToMedicoDTO(this Medico src) => src == null ? null : new MedicoDTO
@@ -395,8 +397,8 @@ namespace CACES.BLL.Mappers
                 Id_Procedimiento = src.Id_Procedimiento,
                 Nombre = src.Nombre,
                 Descripcion = src.Descripcion,
-               // PrecioBase = src.PrecioBase,
- 
+                // PrecioBase = src.PrecioBase,
+
             };
 
 
@@ -411,7 +413,7 @@ namespace CACES.BLL.Mappers
                 Fecha = src.Cirugias?.FirstOrDefault()?.Cita?.Fecha ?? DateTime.MinValue,
                 Descripcion = src.Descripcion,
                 //PrecioBase = src.PrecioBase,
-           
+
                 Estado = src.Estado
             };
         // ===== Receta =====
@@ -435,7 +437,7 @@ namespace CACES.BLL.Mappers
                 Id_Horario = src.Id_Horario,
                 DiaSemana = src.DiaSemana,
                 HoraInicio = src.HoraInicio,
-                Activo = src.Activo
+                Estado = src.Estado
 
             };
 
@@ -444,8 +446,8 @@ namespace CACES.BLL.Mappers
             {
                 HoraInicio = src.HoraInicio,
                 DiaSemana = src.DiaSemana,
-                Activo = src.Activo,
-       
+                Estado = src.Estado,
+
             };
 
         public static HorariosDisponibles? ToHorariosDisponibles(this EditarHorarioDTO src) => src == null ? null :
@@ -454,7 +456,7 @@ namespace CACES.BLL.Mappers
                 Id_Medico = src.Id_Medico,
                 HoraInicio = src.HoraInicio,
                 DiaSemana = src.DiaSemana,
-                Activo = src.Activo
+                Estado = src.Estado
             };
 
         // ===== Icono =====
@@ -471,5 +473,61 @@ namespace CACES.BLL.Mappers
             Codigo = src.Codigo,
             Nombre = src.Nombre
         };
+
+        public static ConfiguracionCheckPointDTO? ToConfiguracionCheckpointDTO(this ConfiguracionCheckpoints src) => src == null ? null : new ConfiguracionCheckPointDTO
+        {
+            IdCheckPoint = src.IdCheckPoint,
+            DiaCheckPoint = src.DiaCheckPoint,
+            Estado = src.Estado
+        };
+
+        public static ConfiguracionCheckpoints? ToConfiguracionCheckpoints(this RegistrarConfiguracionCheckpointDTO src) => src == null ? null : new ConfiguracionCheckpoints
+        {
+            DiaCheckPoint = src.DiaCheckpoint,
+            Estado = true
+        };
+        public static ConfiguracionCheckpoints? ToConfiguracionCheckpoints(this ConfiguracionCheckPointDTO src) => src == null ? null : new ConfiguracionCheckpoints
+        {
+            IdCheckPoint = src.IdCheckPoint,
+            DiaCheckPoint = src.DiaCheckPoint,
+            Estado = src.Estado
+
+        };
+
+
+
+
+        public static PreguntasPOpDTO? ToPreguntaSeguimientoDTO(this PreguntaSeguimiento src) => src == null ? null : new PreguntasPOpDTO
+        {
+            idPregunta = src.IdPregunta,
+            Texto = src.Texto,
+            ValorMinimo = src.ValorMinimo,
+            ValorMaximo = src.ValorMaximo,
+            UmbralAlerta = src.UmbralAlerta,
+            DireccionAlerta = src.DireccionAlerta.ToString(),
+            Estado = src.Estado
+        };
+
+        public static PreguntaSeguimiento? ToPreguntaSeguimiento(this RegistrarPreguntasPOpDTO src) => src == null ? null : new PreguntaSeguimiento
+        {
+            Texto = src.Texto,
+            ValorMinimo = src.ValorMinimo,
+            ValorMaximo = src.ValorMaximo,
+            UmbralAlerta = src.UmbralAlerta,
+            DireccionAlerta = src.DireccionAlerta,
+            Estado = true
+        };
+
+        public static PreguntaSeguimiento? ToPreguntaSeguimiento(this PreguntasPOpDTO src) => src == null ? null : new PreguntaSeguimiento
+        {
+            IdPregunta = src.idPregunta,
+            Texto = src.Texto,
+            ValorMinimo = src.ValorMinimo,
+            ValorMaximo = src.ValorMaximo,
+            UmbralAlerta = src.UmbralAlerta,
+            DireccionAlerta =  Enum.Parse<DireccionAlerta>(src.DireccionAlerta),
+            Estado = src.Estado
+        };
     }
 }
+
