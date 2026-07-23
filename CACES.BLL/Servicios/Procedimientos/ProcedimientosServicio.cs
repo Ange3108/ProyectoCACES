@@ -79,12 +79,16 @@ namespace CACES.BLL.Servicios.Procedimientos
             };
         }
 
-       /* public async Task<bool> RegistrarProcedimientoAsync(RegistrarProcedimientosDto registrarProcedimientosDto)
+       public async Task<bool> RegistrarProcedimientoAsync(RegistrarProcedimientosDto registrarProcedimientosDto)
         {
-            int diaSemanaNet = (int)registrarProcedimientosDto.CitaFechaHora.DayOfWeek;
+            if (!DateTime.TryParse(registrarProcedimientosDto.CitaFechaHora, out DateTime fechaHora))
+            {
+                return false; // Retornar false o lanzar excepción si la fecha no es válida
+            }
+            int diaSemanaNet = (int)fechaHora.DayOfWeek;
             int diaSemanaSql = diaSemanaNet == 0 ? 6 : diaSemanaNet - 1;
 
-            TimeSpan horaElegida = registrarProcedimientosDto.CitaFechaHora.TimeOfDay;
+            TimeSpan horaElegida = fechaHora.TimeOfDay;
 
             var horarioDisponible = await _procedimientosRepositorio.ObtenerHorarioPorRangoAsync(
                 registrarProcedimientosDto.IdMedico,
@@ -107,7 +111,7 @@ namespace CACES.BLL.Servicios.Procedimientos
             };
 
             return await _procedimientosRepositorio.RegistrarProcedimientosAsync(nuevaCirugia);
-        }}*/
+       }
 
         public async Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync()
         {

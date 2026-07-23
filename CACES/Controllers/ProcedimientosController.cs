@@ -132,7 +132,7 @@ namespace CACES.Controllers
             return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
         }
 
-        /*  [HttpPost]
+        [HttpPost]
           [ValidateAntiForgeryToken]
           [Authorize(Roles = "Administrador")]
           public async Task<IActionResult> Registrar(RegistrarProcedimientosDto dto)
@@ -167,7 +167,7 @@ namespace CACES.Controllers
 
               return View("~/Views/Procedimiento/RegistrarProcedimiento.cshtml", dto);
           }
-        */
+        
 
         [HttpGet]
         public async Task<IActionResult> DescargarReporteProcedimiento(int id)
