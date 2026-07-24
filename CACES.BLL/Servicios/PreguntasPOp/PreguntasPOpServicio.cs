@@ -1,7 +1,7 @@
 ﻿using CACES.BLL.DTOs;
-using CACES.BLL.DTOs.CheckPoint;
-using CACES.BLL.DTOs.Preguntas;
+using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 using CACES.BLL.Mappers;
+using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using CACES.DAL.Repositorios.Base;
 using System;
 using System.Collections.Generic;
@@ -12,9 +12,9 @@ namespace CACES.BLL.Servicios.PreguntasPOp
 {
     public class PreguntasPOpServicio : IPreguntasPOpServicio
     {
-        private readonly IRepositorioGenerico<DAL.Entidades.PreguntaSeguimiento> _repositorioGenerico;
+        private readonly IRepositorioGenerico<PreguntaSeguimiento> _repositorioGenerico;
 
-        public PreguntasPOpServicio(IRepositorioGenerico<DAL.Entidades.PreguntaSeguimiento> repositorioGenerico)
+        public PreguntasPOpServicio(IRepositorioGenerico<PreguntaSeguimiento> repositorioGenerico)
         {
             _repositorioGenerico = repositorioGenerico;
         }

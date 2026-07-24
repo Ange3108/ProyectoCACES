@@ -23,7 +23,7 @@ namespace CACES.BLL.Servicios.Citas
 
         Task<respuestaErrores<MostrarCitaDTO>> CancelarCitasPorMedicoYFechaAsync(int idMedico, DateTime fechaCita);
 
-        Task<respuestaErrores<List<CitaComboDTO>>> ObtenerMedicosAsync();
+        Task<respuestaErrores<List<CitaComboDTO>>> ObtenerMedicosAsync(int? idEspecialidad);
 
         Task<respuestaErrores<List<CitaComboDTO>>> ObtenerEspecialidadesActivasAsync();
 

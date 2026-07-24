@@ -1,4 +1,4 @@
-﻿using CACES.BLL.DTOs.CheckPoint;
+﻿using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 using CACES.BLL.Servicios.ConfiguracionCheckPoints;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;

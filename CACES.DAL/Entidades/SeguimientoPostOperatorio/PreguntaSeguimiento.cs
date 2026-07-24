@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Text;
 
-namespace CACES.DAL.Entidades
+namespace CACES.DAL.Entidades.SeguimientoPostOperatorio
 {
     [Table("PreguntaSeguimiento")]
     public class PreguntaSeguimiento

@@ -105,7 +105,7 @@
                     },
 
                     {
-                        data: 'icono',
+                        data: 'nombreIcono',
                         orderable: false,
                         searchable: false,
                         className: 'text-center',

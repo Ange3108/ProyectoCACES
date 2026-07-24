@@ -19,6 +19,7 @@ using CACES.BLL.Servicios.Procedimientos;
 using CACES.BLL.Servicios.Quirofano;
 using CACES.BLL.Servicios.Recetas;
 using CACES.BLL.Servicios.Roles;
+using CACES.BLL.Servicios.SeguimientoPaciente;
 using CACES.BLL.Servicios.Soportes;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
@@ -36,6 +37,7 @@ using CACES.DAL.Repositorios.Procedimientos;
 using CACES.DAL.Repositorios.Quirofano;
 using CACES.DAL.Repositorios.Recetas;
 using CACES.DAL.Repositorios.Roles;
+using CACES.DAL.Repositorios.SeguimientoPaciente;
 using CACES.DAL.Repositorios.Soportes;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
@@ -71,6 +73,8 @@ builder.Services.AddScoped<IHorariosRepositorio, HorariosRepositorio>();
 builder.Services.AddScoped<IIconoRepositorio, IconoRepositorio>();
 builder.Services.AddScoped<IRecetaRepositorio, RecetaRepositorio>();
 builder.Services.AddScoped<ICotizacionRepositorio, CotizacionRepositorio>();
+builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
+builder.Services.AddScoped<ISeguimientoPacienteRepositorio, SeguimientoPacienteRepositorio>();
 
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
@@ -82,7 +86,6 @@ builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();
 
 builder.Services.AddScoped<IAuthServicio, AuthServicio>();
 builder.Services.AddScoped<IPerfilServicio, PerfilServicio>();
-builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<IRolServicio, RolServicio>();
 builder.Services.AddScoped<IEspecialidadServicio, EspecialidadServicio>();
 builder.Services.AddScoped<IPaqueteServicio, PaqueteServicio>();
@@ -98,6 +101,7 @@ builder.Services.AddScoped<IIconoServicio, IconoServicio>();
 builder.Services.AddScoped<IRecetaServicio, RecetaServicio>();
 builder.Services.AddScoped<IConfiguracionCheckPointsServicio, ConfiguracionCheckPointServicio>();
 builder.Services.AddScoped<IPreguntasPOpServicio, PreguntasPOpServicio>();
+builder.Services.AddScoped<ISeguimientoPacienteServicio, SeguimientoPacienteServicio>();
 
 
 

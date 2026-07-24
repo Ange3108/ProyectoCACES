@@ -1,9 +1,9 @@
-﻿using CACES.DAL.Entidades;
+﻿using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CACES.BLL.DTOs.Preguntas
+namespace CACES.BLL.DTOs.SeguimientoPostOperatorio
 {
     public class RegistrarPreguntasPOpDTO
     {

@@ -5,7 +5,6 @@
 
     init() {
         this.cargarEspecialidades();
-        this.cargarMedicos();
         this.registrarEventos();
 
         if ($('#tbMisCitas').length) {
@@ -19,9 +18,20 @@
 
     registrarEventos() {
 
+        $('#idEspecialidad').on('change', function () {
+            const idEspecialidad = $(this).val();
+            Citas.cargarMedicos(idEspecialidad);
+            $('#idHorario').empty().append('<option value="">Seleccione un médico primero</option>');
+        });
+
         $('#idMedico').on('change', function () {
             const idMedico = $(this).val();
             Citas.cargarHorarios(idMedico);
+        });
+
+        $('#idHorario').on('change', function () {
+            const horaInicio = $(this).find('option:selected').data('hora');
+            $('#hora').val(horaInicio ? horaInicio.substring(0, 5) : '');
         });
 
         $('#formRegistrarCita').on('submit', function (e) {
@@ -49,12 +59,21 @@
             });
     },
 
-    cargarMedicos() {
+    cargarMedicos(idEspecialidad) {
         const select = $('#idMedico');
 
         if (!select.length) return;
 
-        fetch('/Cita/ObtenerMedicos')
+        select.empty();
+
+        if (!idEspecialidad) {
+            select.append('<option value="">Seleccione una especialidad primero</option>');
+            return;
+        }
+
+        select.append('<option value="">Seleccione un médico</option>');
+
+        fetch(`/Cita/ObtenerMedicos?idEspecialidad=${idEspecialidad}`)
             .then(r => r.json())
             .then(res => {
                 select.empty();

@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using CACES.DAL.Entidades.SeguimientoPostOperatorio;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace CACES.DAL.Entidades
@@ -42,5 +43,7 @@ namespace CACES.DAL.Entidades
 
         [ForeignKey("Id_Horario")]
         public virtual HorariosDisponibles Horario { get; set; } = null!;
+
+        public virtual SeguimientoPaciente Seguimientos { get; set; } = null!;
     }
 }

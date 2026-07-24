@@ -1,16 +1,17 @@
 ﻿using CACES.BLL.DTOs;
-using CACES.BLL.DTOs.CheckPoint;
 using CACES.DAL.Repositorios.Base;
 using CACES.BLL.Mappers;
+using CACES.DAL.Entidades.SeguimientoPostOperatorio;
+using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 
 namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
 {
     public class ConfiguracionCheckPointServicio : IConfiguracionCheckPointsServicio
     {
-        private readonly IRepositorioGenerico<DAL.Entidades.ConfiguracionCheckpoints> _repositorioGenerico;
+        private readonly IRepositorioGenerico<ConfiguracionCheckpoints> _repositorioGenerico;
 
 
-        public ConfiguracionCheckPointServicio(IRepositorioGenerico<DAL.Entidades.ConfiguracionCheckpoints> repositorioGenerico)
+        public ConfiguracionCheckPointServicio(IRepositorioGenerico<ConfiguracionCheckpoints> repositorioGenerico)
         {
             _repositorioGenerico = repositorioGenerico;
         }

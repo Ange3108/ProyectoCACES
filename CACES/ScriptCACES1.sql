@@ -87,7 +87,7 @@ CREATE TABLE HorariosDisponibles(
     Id_Medico INT NOT NULL,
     DiaSemana INT NOT NULL, -- 0=Lunes, 6=Domingo
     HoraInicio TIME NOT NULL,
-    HoraFin TIME NOT NULL,
+
     Estado BIT NOT NULL,
     CONSTRAINT FK_Horarios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
 );
@@ -530,22 +530,22 @@ INSERT INTO Pacientes (Id_Usuario, Id_Historial) VALUES
 GO
 
 -- HORARIOS DISPONIBLES
-INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Estado) VALUES
-(1, 0, '08:00', '12:00', 1),
-(1, 1, '13:00', '17:00', 1),
-(1, 2, '08:00', '12:00', 1),
-(1, 3, '13:00', '17:00', 1),
-(1, 4, '08:00', '12:00', 1),
-(1, 5, '13:00', '17:00', 1),
-(2, 1, '09:00', '13:00', 1),
-(2, 2, '14:00', '18:00', 1),
-(2, 3, '09:00', '13:00', 1),
-(2, 4, '14:00', '18:00', 1),
-(2, 5, '09:00', '13:00', 1),
-(3, 2, '07:00', '11:00', 1),
-(3, 3, '12:00', '16:00', 1),
-(3, 4, '07:00', '11:00', 1),
-(3, 5, '12:00', '16:00', 1);
+INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio,  Estado) VALUES
+(1, 0, '08:00',  1),
+(1, 1, '13:00', 1),
+(1, 2, '08:00',  1),
+(1, 3, '13:00',  1),
+(1, 4, '08:00',  1),
+(1, 5, '13:00',  1),
+(2, 1, '09:00',  1),
+(2, 2, '14:00',  1),
+(2, 3, '09:00',  1),
+(2, 4, '14:00',  1),
+(2, 5, '09:00',  1),
+(3, 2, '07:00', 1),
+(3, 3, '12:00',  1),
+(3, 4, '07:00',  1),
+(3, 5, '12:00',  1);
 GO
 
 -- CITAS
@@ -642,22 +642,6 @@ VALUES
 (5, '2'); -- Paciente
 GO
 
-INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio, HoraFin, Estado)
-VALUES
-(1, 1, '13:00', '17:00', 1),
-(1, 2, '08:00', '12:00', 1),
-(1, 3, '13:00', '17:00', 1),
-(1, 4, '08:00', '12:00', 1),
-(1, 5, '13:00', '17:00', 1),
-
-(2, 2, '14:00', '18:00', 1),
-(2, 3, '09:00', '13:00', 1),
-(2, 4, '14:00', '18:00', 1),
-(2, 5, '09:00', '13:00', 1),
-
-(3, 3, '12:00', '16:00', 1),
-(3, 4, '07:00', '11:00', 1),
-(3, 5, '12:00', '16:00', 1);
 
 --Cupo del quirofano
 

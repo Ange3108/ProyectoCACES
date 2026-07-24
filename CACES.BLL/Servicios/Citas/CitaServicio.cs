@@ -11,12 +11,12 @@ namespace CACES.BLL.Servicios.Citas
     public class CitaServicio : ICitaServicio
     {
         private readonly ICitaRepositorio _citaRepositorio;
-        
+
 
         public CitaServicio(ICitaRepositorio citaRepositorio)
         {
             _citaRepositorio = citaRepositorio;
-      
+
         }
 
         public async Task<respuestaErrores<List<MostrarCitaDTO>>> GetCitasAsync()
@@ -109,7 +109,7 @@ namespace CACES.BLL.Servicios.Citas
                     );
                 }
 
-                if (dto.Hora < horarioSeleccionado.HoraInicio )
+                if (dto.Hora < horarioSeleccionado.HoraInicio)
                 {
                     return CrearError(
                         "La hora seleccionada está fuera del horario disponible del médico.",
@@ -174,7 +174,7 @@ namespace CACES.BLL.Servicios.Citas
                 );
             }
         }
-        
+
 
         public async Task<respuestaErrores<List<MostrarCitaDTO>>>
             ObtenerCitasPorPacienteAsync(int idPaciente)
@@ -412,12 +412,13 @@ namespace CACES.BLL.Servicios.Citas
             return respuesta;
         }
 
-        public async Task<respuestaErrores<List<CitaComboDTO>>> ObtenerMedicosAsync()
+        public async Task<respuestaErrores<List<CitaComboDTO>>> ObtenerMedicosAsync(int? idEspecialidad)
         {
             var respuesta = new respuestaErrores<List<CitaComboDTO>>();
 
-            var medicos = await _citaRepositorio.ObtenerMedicosAsync();
+            var medicos = await _citaRepositorio.ObtenerMedicosAsync(idEspecialidad);
 
+            respuesta.EsCorrecto = true;
             respuesta.Dato = medicos.Select(x => new CitaComboDTO
             {
                 Id = x.IdMedico,

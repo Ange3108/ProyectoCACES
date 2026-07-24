@@ -1,5 +1,4 @@
-﻿
-using CACES.BLL.DTOs.Preguntas;
+﻿using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 using CACES.BLL.Servicios.PreguntasPOp;
 using Microsoft.AspNetCore.Mvc;
 

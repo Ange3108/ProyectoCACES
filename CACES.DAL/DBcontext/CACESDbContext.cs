@@ -1,5 +1,6 @@
 using CACES.DAL.Entidades;
 using CACES.DAL.Entidades.Roles;
+using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using System.Runtime.ConstrainedExecution;
@@ -36,6 +37,9 @@ namespace CACES.DAL.DBContext
         public DbSet<Cotizacion> Cotizaciones { get; set; }
         public DbSet<Icono> Iconos { get; set; }
         public DbSet<ConfiguracionCheckpoints> ConfiguracionCheckpoints { get; set; }
+
+        public DbSet<SeguimientoPaciente> SeguimientoPacientes { get; set; }
+        public DbSet<PreguntaSeguimiento> PreguntasSeguimiento { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -446,6 +450,33 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.IdCheckPoint).HasColumnName("Id_CheckPoint");
                 entity.Property(e => e.DiaCheckPoint).HasColumnName("DiaCheckpoint").IsRequired();
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+            });
+
+            modelBuilder.Entity<PreguntaSeguimiento>(entity =>
+            {
+                entity.HasKey(e => e.IdPregunta);
+                entity.Property(e => e.IdPregunta).HasColumnName("Id_Pregunta");
+                entity.Property(e => e.Texto).HasColumnName("Texto").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.ValorMinimo).HasColumnName("ValorMinimo").IsRequired();
+                entity.Property(e => e.ValorMaximo).HasColumnName("ValorMaximo").IsRequired();
+                entity.Property(e => e.UmbralAlerta).HasColumnName("UmbralAlerta").IsRequired();
+                entity.Property(e => e.DireccionAlerta).HasColumnName("DireccionAlerta").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+            });
+
+            modelBuilder.Entity<SeguimientoPaciente>(entity =>
+            {
+                entity.HasKey(e => e.Id_Seguimiento);
+                entity.Property(e => e.Id_Seguimiento).HasColumnName("Id_Seguimiento");
+                entity.Property(e => e.Id_Cirugia).HasColumnName("Id_Cirugia").IsRequired();
+                entity.Property(e => e.DiaCheckpoint).HasColumnName("DiaCheckpoint").IsRequired();
+                entity.Property(e => e.FechaProgramada).HasColumnName("FechaProgramada").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+                entity.Property(e => e.FechaRegistro).HasColumnName("FechaRegistro");
+                entity.HasOne(s => s.Cirugia)
+                      .WithOne(c => c.Seguimientos)
+                      .HasForeignKey<Cirugias>(s => s.Id_Cirugia)
+                      .OnDelete(DeleteBehavior.Restrict);
             });
         }
     }

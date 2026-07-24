@@ -18,7 +18,9 @@ namespace CACES.DAL.Repositorios.Especialidades
 
         public async Task<List<Especialidad>> GetEspecialidadesAsync()
         {
-            return await _context.Especialidades.ToListAsync();
+            return await _context.Especialidades
+                .Include(e => e.Icono)
+                .ToListAsync();
         }
         public async Task<List<Especialidad>> GetEspecialidadesActivasAsync()
         {
@@ -40,7 +42,7 @@ namespace CACES.DAL.Repositorios.Especialidades
             return await _context.Especialidades.FirstOrDefaultAsync(e => e.IdEspecialidad == id);
         }
 
-       
+
         public async Task<bool> CreateEspecialidadAsync(Especialidad Especialidad)
         {
             if (Especialidad == null) return false;
@@ -81,7 +83,7 @@ namespace CACES.DAL.Repositorios.Especialidades
                 .Include(e => e.Medicos)
                 .ThenInclude(m => m.Usuario)
                 .FirstOrDefaultAsync(e => e.IdEspecialidad == id);
-           
+
         }
     }
 }

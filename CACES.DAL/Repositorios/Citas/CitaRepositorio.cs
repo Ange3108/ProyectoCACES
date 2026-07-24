@@ -120,13 +120,20 @@ namespace CACES.DAL.Repositorios.Citas
             return await consulta.AnyAsync();
         }
 
-        public async Task<List<Medico>> ObtenerMedicosAsync()
+        public async Task<List<Medico>> ObtenerMedicosAsync(int? idEspecialidad = null)
         {
-            return await _context.Medicos
+            var query = _context.Medicos
                 .AsNoTracking()
                 .Include(m => m.Usuario)
                 .Include(m => m.Especialidad)
-                .Where(m => m.Usuario.Estado)
+                .Where(m => m.Usuario.Estado);
+
+            if (idEspecialidad.HasValue)
+            {
+                query = query.Where(m => m.IdEspecialidad == idEspecialidad.Value);
+            }
+
+            return await query
                 .OrderBy(m => m.Usuario.Nombres)
                 .ThenBy(m => m.Usuario.PrimerApellido)
                 .ToListAsync();
@@ -170,7 +177,6 @@ namespace CACES.DAL.Repositorios.Citas
                     h.Id_Medico == idMedico &&
                     h.DiaSemana == diaSemana &&
                     h.Estado);
-
         }
     }
 }

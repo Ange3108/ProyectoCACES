@@ -20,10 +20,10 @@ namespace CACES.DAL.Repositorios.Horarios
             if (horario == null) return false;
             var horarioExistente = await _context.HorariosDisponibles.FindAsync(horario.Id_Horario);
             if (horarioExistente == null) return false;
-            
+
             horarioExistente.DiaSemana = horario.DiaSemana;
             horarioExistente.HoraInicio = horario.HoraInicio;
- 
+
             horarioExistente.Estado = horario.Estado;
             horarioExistente.Id_Medico = horario.Id_Medico;
 

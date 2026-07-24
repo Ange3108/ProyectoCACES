@@ -1,5 +1,4 @@
-﻿using CACES.BLL.DTOs.CheckPoint;
-using CACES.BLL.DTOs.Cita;
+﻿using CACES.BLL.DTOs.Cita;
 using CACES.BLL.DTOs.Especialidad;
 using CACES.BLL.DTOs.Horario;
 using CACES.BLL.DTOs.Icono;
@@ -7,11 +6,12 @@ using CACES.BLL.DTOs.Medico;
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Paquete;
 using CACES.BLL.DTOs.Perfil;
-using CACES.BLL.DTOs.Preguntas;
 using CACES.BLL.DTOs.Procedimientos;
 using CACES.BLL.DTOs.Receta;
+using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 using CACES.BLL.DTOs.Usuario;
 using CACES.DAL.Entidades;
+using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using System;
 using System.Linq;
 
@@ -431,6 +431,7 @@ namespace CACES.BLL.Mappers
         };
 
         // ===== Horario =====
+
         public static MostrarHorarioDTO? ToMostrarHorarioDTO(this HorariosDisponibles src) => src == null ? null :
             new MostrarHorarioDTO
             {
@@ -442,14 +443,13 @@ namespace CACES.BLL.Mappers
             };
 
         public static HorariosDisponibles? ToHorariosDisponibles(this RegistrarHorarioDTO src) => src == null ? null :
-            new HorariosDisponibles
-            {
-                HoraInicio = src.HoraInicio,
-                DiaSemana = src.DiaSemana,
-                Estado = src.Estado,
-
-            };
-
+     new HorariosDisponibles
+     {
+         Id_Medico = src.Id_Medico,
+         HoraInicio = src.HoraInicio,
+         DiaSemana = src.DiaSemana,
+         Estado = src.Estado,
+     };
         public static HorariosDisponibles? ToHorariosDisponibles(this EditarHorarioDTO src) => src == null ? null :
             new HorariosDisponibles
             {
@@ -458,6 +458,7 @@ namespace CACES.BLL.Mappers
                 DiaSemana = src.DiaSemana,
                 Estado = src.Estado
             };
+
 
         // ===== Icono =====
         public static IconoDTO? ToIconoDTO(this Icono src) => src == null ? null : new IconoDTO
@@ -527,6 +528,16 @@ namespace CACES.BLL.Mappers
             UmbralAlerta = src.UmbralAlerta,
             DireccionAlerta =  Enum.Parse<DireccionAlerta>(src.DireccionAlerta),
             Estado = src.Estado
+        };
+
+        public static MostrarSeguimientoPacienteDTO? ToMostrarSeguimientoPacienteDTO(this SeguimientoPaciente src) => src == null ? null : new MostrarSeguimientoPacienteDTO
+        {
+            IdSeguimiento = src.Id_Seguimiento,
+            IdCirugia = src.Id_Cirugia,
+            DiaCheckpoint = src.DiaCheckpoint,
+            FechaProgramada = src.FechaProgramada,
+            Estado = src.Estado.ToString(),
+            FechaRegistro = src.FechaRegistro
         };
     }
 }

@@ -95,10 +95,10 @@ namespace CACES.DAL.Repositorios.Base
 
 
 
-        public async Task<T> Crear(T entity)
+        public async Task Crear(T entity)
         {
             _dbSet.Add(entity);
-            return entity;
+          
         }
 
         /// <summary>
@@ -169,5 +169,7 @@ namespace CACES.DAL.Repositorios.Base
                 propertyInfo.SetValue(entity, false);
             }   
         }
+
+       
     }
 }

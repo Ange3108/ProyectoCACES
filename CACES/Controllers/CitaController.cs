@@ -184,11 +184,9 @@ namespace CACES.Controllers
 
         [Authorize(Roles = "Paciente,Administrador")]
         [HttpGet]
-        public async Task<IActionResult> ObtenerMedicos()
+        public async Task<IActionResult> ObtenerMedicos(int? idEspecialidad)
         {
-            return Json(
-                await _citaServicio.ObtenerMedicosAsync()
-            );
+            return Json(await _citaServicio.ObtenerMedicosAsync(idEspecialidad));
         }
 
         [Authorize(Roles = "Paciente,Administrador")]

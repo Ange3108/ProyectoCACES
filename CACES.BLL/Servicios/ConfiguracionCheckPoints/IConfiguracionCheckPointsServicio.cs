@@ -1,5 +1,5 @@
 ﻿using CACES.BLL.DTOs;
-using CACES.BLL.DTOs.CheckPoint;
+using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 using System;
 using System.Collections.Generic;
 using System.Text;

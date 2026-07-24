@@ -12,9 +12,9 @@ namespace CACES.DAL.Repositorios.Citas
         Task<Cita> RegistrarAsync(Cita cita);
         Task<Cita> ActualizarAsync(Cita cita);
 
-        Task<bool> ExisteCitaAsync(int idMedico, DateTime fecha, int  idHorario, int? excluir = null);
+        Task<bool> ExisteCitaAsync(int idMedico, DateTime fecha, int idHorario, int? excluir = null);
 
-        Task<List<Medico>> ObtenerMedicosAsync();
+        Task<List<Medico>> ObtenerMedicosAsync(int? idEspecialidad = null);
         Task<List<Especialidad>> ObtenerEspecialidadesAsync();
         Task<List<HorariosDisponibles>> ObtenerHorariosAsync(int idMedico);
 

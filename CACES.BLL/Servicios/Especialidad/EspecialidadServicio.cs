@@ -36,7 +36,7 @@ namespace CACES.BLL.Servicios.Especialidad
             public EspecialidadServicio(IEspecialidadRepositorio especialidadRepositorio)
             {
                 _especialidadRepositorio = especialidadRepositorio;
- 
+
             }
 
             public async Task<respuestaErrores<mostrarEspecialidadDTO>> CrearEspecialidadAsync(especialidadDTO especialidadDto)
