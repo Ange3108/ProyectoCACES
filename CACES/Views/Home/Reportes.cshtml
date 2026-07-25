@@ -118,7 +118,7 @@
             </div>
             <div class="report-card">
                 <div class="report-card-icon">
-                    <i class="bi bi-box2-heart"></i>
+                    <i class="bi bi-box2-heart-fill"></i>
                 </div>
                 <div class="report-card-body">
                     <h5 class="report-card-title">Gestión de Iconos del sistema</h5>
@@ -130,13 +130,25 @@
             </div>
             <div class="report-card">
                 <div class="report-card-icon">
-                    <i class="bi-hospital"></i>
+                    <i class="bi-hospital-fill"></i>
                 </div>
                 <div class="report-card-body">
                     <h5 class="report-card-title">Gestión de Procedimientos quirúrgicos</h5>
                     <p class="report-card-text">Administra los procedimientos quirúrgicos disponibles en el sistema.</p>
                 </div>
                 <a asp-action="ObtenerProcedimientosQuirur" asp-controller="Procedimientos" class="btn-report">
+                    Ver reporte <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="report-card">
+                <div class="report-card-icon">
+                    <i class="bi-clipboard2-pulse-fill"></i>
+                </div>
+                <div class="report-card-body">
+                    <h5 class="report-card-title">Gestión de Seguimiento Post Operatorio</h5>
+                    <p class="report-card-text">Administra el seguimiento del estado de los pacientes después de la cirugía.</p>
+                </div>
+                <a asp-action="GestionSeguimientoPostOperatorio" asp-controller="GestionSeguimiento" class="btn-report">
                     Ver reporte <i class="bi bi-arrow-right"></i>
                 </a>
             </div>

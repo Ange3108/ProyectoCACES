@@ -44,6 +44,6 @@ namespace CACES.DAL.Entidades
         [ForeignKey("Id_Horario")]
         public virtual HorariosDisponibles Horario { get; set; } = null!;
 
-        public virtual SeguimientoPaciente Seguimientos { get; set; } = null!;
+        public ICollection<SeguimientoPaciente> Seguimientos { get; set; } = new List<SeguimientoPaciente>();
     }
 }

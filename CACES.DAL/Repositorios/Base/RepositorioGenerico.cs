@@ -47,26 +47,40 @@ namespace CACES.DAL.Repositorios.Base
         /// Obtiene una entidad por su ID de forma asíncrona
         /// </summary>
         public async Task<T?> ObtenerPorIdAsync(
-            int id,
-            bool asNoTracking = true,
-            params Expression<Func<T, object>>[] includes)
+    int id,
+    bool asNoTracking = true,
+    params Expression<Func<T, object>>[] includes)
         {
             IQueryable<T> query = _dbSet;
 
-            // Aplicar includes
             foreach (var include in includes)
             {
                 query = query.Include(include);
             }
 
-            // Aplicar asNoTracking si es requerido
             if (asNoTracking)
             {
                 query = query.AsNoTracking();
             }
 
-            // Buscar por ID usando FirstOrDefault (más eficiente que FindAsync en este contexto)
-            return await query.FirstOrDefaultAsync(e => EF.Property<int>(e, "Id") == id);
+            // Obtener el nombre real de la PK desde los metadatos de EF Core
+            var entityType = _context.Model.FindEntityType(typeof(T));
+            var pkName = entityType?.FindPrimaryKey()?.Properties
+                .Select(p => p.Name)
+                .FirstOrDefault();
+
+            if (pkName == null)
+            {
+                throw new InvalidOperationException($"No se pudo determinar la clave primaria de {typeof(T).Name}.");
+            }
+
+            var parametro = Expression.Parameter(typeof(T), "e");
+            var propiedad = Expression.Property(parametro, pkName);
+            var valorId = Expression.Constant(id);
+            var igualdad = Expression.Equal(propiedad, Expression.Convert(valorId, propiedad.Type));
+            var lambda = Expression.Lambda<Func<T, bool>>(igualdad, parametro);
+
+            return await query.FirstOrDefaultAsync(lambda);
         }
 
         /// <summary>
@@ -93,7 +107,25 @@ namespace CACES.DAL.Repositorios.Base
         }
 
 
+        public async Task<List<T>> BuscarTodos(
+             Expression<Func<T, bool>> predicate,
+             bool asNoTracking = true,
+             params Expression<Func<T, object>>[] includes)
+        {
+            IQueryable<T> query = _dbSet;
 
+            foreach (var include in includes)
+            {
+                query = query.Include(include);
+            }
+
+            if (asNoTracking)
+            {
+                query = query.AsNoTracking();
+            }
+
+            return await query.Where(predicate).ToListAsync();
+        }
 
         public async Task Crear(T entity)
         {

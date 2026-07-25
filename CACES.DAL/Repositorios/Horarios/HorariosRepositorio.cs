@@ -46,6 +46,15 @@ namespace CACES.DAL.Repositorios.Horarios
             return await _context.SaveChangesAsync() > 0;
         }
 
+        public async Task<bool> ELiminarHorarioDisponibleAsync(int idHorario)
+        {
+            var entity = await _context.HorariosDisponibles.FindAsync(idHorario);
+            if (entity == null) return false;
+
+            _context.HorariosDisponibles.Remove(entity);
+            return await _context.SaveChangesAsync() > 0;
+        }
+
         public async Task<HorariosDisponibles?> GetHorarioDisponiblePorIdAsync(int idHorario)
         {
             return await _context.HorariosDisponibles.FindAsync(idHorario);

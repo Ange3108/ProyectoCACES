@@ -52,6 +52,7 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
             }
             var entidad = configuracionCheckPoint.ToConfiguracionCheckpoints();
             await _repositorioGenerico.Crear(entidad);
+            await _repositorioGenerico.GuardarCambiosAsync();
             var dto = entidad.ToConfiguracionCheckpointDTO();
            
             respuesta.Dato = dto;
@@ -61,7 +62,7 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
             return respuesta;
         }
 
-        public async  Task<respuestaErrores<ConfiguracionCheckPointDTO>> DesactivarConfiguracionCheckPoint(int id)
+        public async Task<respuestaErrores<ConfiguracionCheckPointDTO>> DesactivarConfiguracionCheckPoint(int id)
         {
             var respuesta = new respuestaErrores<ConfiguracionCheckPointDTO>();
             var existenteCheckPoint = await _repositorioGenerico.ObtenerPorIdAsync(id);
@@ -73,7 +74,8 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
 
                 return respuesta;
             }
-            await _repositorioGenerico.DesactivarEstado(existenteCheckPoint);
+            await _repositorioGenerico.DesactivarEstado(existenteCheckPoint); 
+            await _repositorioGenerico.GuardarCambiosAsync();
             respuesta.Dato = existenteCheckPoint.ToConfiguracionCheckpointDTO();
             respuesta.EsCorrecto = true;
             respuesta.mensaje = "Checkpoint desactivado correctamente.";
@@ -92,6 +94,7 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
                 return respuesta;
             }
             await _repositorioGenerico.Eliminar(id);
+            await _repositorioGenerico.GuardarCambiosAsync();
             respuesta.Dato = existenteCheckPoint.ToConfiguracionCheckpointDTO();
             respuesta.EsCorrecto = true;
             respuesta.mensaje = "Checkpoint eliminado correctamente.";
@@ -102,7 +105,8 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
         public async Task<respuestaErrores<ConfiguracionCheckPointDTO>> ObtenerConfiguracionCheckPointPorId(int id)
         {
             var respuesta = new respuestaErrores<ConfiguracionCheckPointDTO>();
-            var existenteCheckPoint = _repositorioGenerico.ObtenerPorIdAsync(id);
+            var existenteCheckPoint = await _repositorioGenerico.ObtenerPorIdAsync(id);
+
             if (existenteCheckPoint == null)
             {
                 respuesta.mensaje = "No se encontró la configuración del checkpoint.";
@@ -110,9 +114,9 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
                 respuesta.codigo = 404;
                 return respuesta;
             }
-            await _repositorioGenerico.ObtenerPorIdAsync(id);
+
             respuesta.EsCorrecto = true;
-            respuesta.Dato = existenteCheckPoint.Result.ToConfiguracionCheckpointDTO();
+            respuesta.Dato = existenteCheckPoint.ToConfiguracionCheckpointDTO();
             respuesta.mensaje = "Checkpoint obtenido correctamente.";
             respuesta.codigo = 200;
             return respuesta;

@@ -19,6 +19,13 @@ namespace CACES.DAL.Repositorios.SeguimientoPaciente
             _context = context;
         }
 
+        public async Task<List<Entidades.SeguimientoPostOperatorio.SeguimientoPaciente>> ObtenerTodos()
+        {
+            return await _context.SeguimientoPacientes
+                .OrderByDescending(s => s.FechaProgramada)
+                .ToListAsync();
+        }
+
         public async Task AgregarRango(List<Entidades.SeguimientoPostOperatorio.SeguimientoPaciente> entidades)
         {
             _context.SeguimientoPacientes.AddRange(entidades);

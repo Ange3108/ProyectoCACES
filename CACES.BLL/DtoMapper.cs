@@ -539,6 +539,36 @@ namespace CACES.BLL.Mappers
             Estado = src.Estado.ToString(),
             FechaRegistro = src.FechaRegistro
         };
+
+        public static AlertaStaffDTO? ToMostrarAlertaStaffDTO(this AlertaStaff src) => src == null ? null : new AlertaStaffDTO
+        {
+            idAlerta = src.IdAlerta,
+            IdSeguimiento = src.IdSeguimiento,
+            IdCirugia = src.SeguimientoPaciente?.Id_Cirugia ?? 0,
+            FechaGenerada = src.FechaGenerada,
+            Estado = src.Estado.ToString(),
+            NombreUsuarioAtendio = src.UsuarioAtendio?.Nombres,
+            Observaciones = src.Observaciones,
+            FechaAtencion = src.FechaAtencion
+        };
+        public static MostrarRespuestaSeguimientoDTO? ToMostrarRespuestaSeguimientoDTO(this RespuestaSeguimiento src) => src == null ? null : new MostrarRespuestaSeguimientoDTO
+        {
+            idRespuesta = src.IdRespuesta,
+            IdSeguimiento = src.IdSeguimiento,
+            IdPregunta = src.IdPregunta,
+            TextoPregunta = src.PreguntaSeguimiento?.Texto ?? string.Empty,
+            ValorRespuesta = src.ValorRespuesta,
+            GeneroAlerta = src.GeneroAlerta
+        };
+
+        public static RespuestaSeguimiento? ToRespuestaSeguimiento(this RegistrarRespuestaSeguimientoDTO src) => src == null ? null : new RespuestaSeguimiento
+        {
+            IdSeguimiento = src.IdSeguimiento,
+            IdPregunta = src.IdPregunta,
+            ValorRespuesta = src.ValorRespuesta,
+            GeneroAlerta = false
+        };
+
     }
 }
 

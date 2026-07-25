@@ -27,7 +27,10 @@ namespace CACES.DAL.Repositorios.Base
 
 
 
-
+        Task<List<T>> BuscarTodos(
+            Expression<Func<T, bool>> predicate,
+             bool asNoTracking = true,
+             params Expression<Func<T, object>>[] includes);
         Task<T>? BuscarAsync(
             Expression<Func<T, bool>> predicate,
             bool asNoTracking = true,

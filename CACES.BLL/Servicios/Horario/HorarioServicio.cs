@@ -5,6 +5,7 @@ using CACES.BLL.DTOs.Horario;
 using CACES.BLL.DTOs.Medico;
 using CACES.BLL.Mappers;
 using CACES.BLL.Servicios.Medicos;
+using CACES.DAL.Repositorios.Citas;
 using CACES.DAL.Repositorios.Horarios;
 using CACES.DAL.Repositorios.Medicos;
 using System;
@@ -16,13 +17,14 @@ namespace CACES.BLL.Servicios.Horario
     public class HorarioServicio : IHorarioServicio
     {
         private readonly IHorariosRepositorio _horariosRepositorio;
+        private readonly ICitaRepositorio _citaRepositorio;
 
         private readonly IMedicoServicio _medicoServicio;
 
-        public HorarioServicio(IHorariosRepositorio horariosRepositorio, IMedicoServicio medicoServicio)
+        public HorarioServicio(IHorariosRepositorio horariosRepositorio, IMedicoServicio medicoServicio, ICitaRepositorio citaRepositorio)
         {
             _horariosRepositorio = horariosRepositorio;
-
+            _citaRepositorio = citaRepositorio;
             _medicoServicio = medicoServicio;
         }
 
@@ -143,6 +145,36 @@ namespace CACES.BLL.Servicios.Horario
             return respuesta;
         }
 
+        public async Task<respuestaErrores<MostrarHorarioDTO>> EliminarHorariosAsync(int id)
+        {
+            var respuesta = new respuestaErrores<MostrarHorarioDTO>();
+
+            var horario = await _horariosRepositorio.GetHorarioDisponiblePorIdAsync(id);
+            if (horario == null)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "Horario no encontrado.";
+                respuesta.codigo = 404;
+                return respuesta;
+            }
+
+            // Regla de negocio: no se puede eliminar un horario que ya tiene citas asociadas
+            var tieneCitas = await _citaRepositorio.ExisteCitaConHorario(id);
+            if (tieneCitas)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "No se puede eliminar el horario porque tiene citas asociadas.";
+                respuesta.codigo = 400;
+                return respuesta;
+            }
+
+            await _horariosRepositorio.ELiminarHorarioDisponibleAsync(id);
+
+            respuesta.EsCorrecto = true;
+            respuesta.mensaje = "Horario eliminado exitosamente.";
+            respuesta.codigo = 200;
+            return respuesta;
+        }
 
         public async Task<respuestaErrores<List<MostrarHorarioDTO>>> ObtenerHorarioPorMedicoIdAsync(int idMedico)
         {

@@ -1,4 +1,5 @@
 
+using CACES.BLL.Servicios.AlertaStaff;
 using CACES.BLL.Servicios.ArchivosHistorial;
 using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
@@ -18,18 +19,20 @@ using CACES.BLL.Servicios.PreguntasPOp;
 using CACES.BLL.Servicios.Procedimientos;
 using CACES.BLL.Servicios.Quirofano;
 using CACES.BLL.Servicios.Recetas;
+using CACES.BLL.Servicios.RespuestaSeguimiento;
 using CACES.BLL.Servicios.Roles;
 using CACES.BLL.Servicios.SeguimientoPaciente;
 using CACES.BLL.Servicios.Soportes;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.ArchivosHistorial;
+using CACES.DAL.Repositorios.Base;
 using CACES.DAL.Repositorios.Citas;
 using CACES.DAL.Repositorios.Cotizaciones;
 using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Horarios;
-using CACES.DAL.Repositorios.Icono;
+
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Paquetes;
@@ -70,12 +73,12 @@ builder.Services.AddScoped<IProcedimientosRepositorio, ProcedimientosRepositorio
 builder.Services.AddScoped<IArchivoHistorialRepositorio, ArchivoHistorialRepositorio>();
 builder.Services.AddScoped<IQuirofanoRepositorio, QuirofanoRepositorio>();
 builder.Services.AddScoped<IHorariosRepositorio, HorariosRepositorio>();
-builder.Services.AddScoped<IIconoRepositorio, IconoRepositorio>();
+
 builder.Services.AddScoped<IRecetaRepositorio, RecetaRepositorio>();
 builder.Services.AddScoped<ICotizacionRepositorio, CotizacionRepositorio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<ISeguimientoPacienteRepositorio, SeguimientoPacienteRepositorio>();
-
+builder.Services.AddScoped(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
@@ -102,6 +105,10 @@ builder.Services.AddScoped<IRecetaServicio, RecetaServicio>();
 builder.Services.AddScoped<IConfiguracionCheckPointsServicio, ConfiguracionCheckPointServicio>();
 builder.Services.AddScoped<IPreguntasPOpServicio, PreguntasPOpServicio>();
 builder.Services.AddScoped<ISeguimientoPacienteServicio, SeguimientoPacienteServicio>();
+builder.Services.AddScoped<IRespuestaSeguimientoServicio, RespuestaSeguimientoServicio>();
+builder.Services.AddScoped<IAlertaStaffServicio, AlertaStaffServicio>();
+
+
 
 
 

@@ -10,5 +10,6 @@ namespace CACES.BLL.Servicios.SeguimientoPaciente
     {
         Task<respuestaErrores<List<MostrarSeguimientoPacienteDTO>>> ObtenerPorCirugia(int idCirugia);
         Task<respuestaErrores<bool>> GenerarCheckpoints(int idCirugia);
+        Task<respuestaErrores<List<MostrarSeguimientoPacienteDTO>>> ObtenerTodos();
     }
 }

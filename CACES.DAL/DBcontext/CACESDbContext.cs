@@ -37,9 +37,11 @@ namespace CACES.DAL.DBContext
         public DbSet<Cotizacion> Cotizaciones { get; set; }
         public DbSet<Icono> Iconos { get; set; }
         public DbSet<ConfiguracionCheckpoints> ConfiguracionCheckpoints { get; set; }
-
         public DbSet<SeguimientoPaciente> SeguimientoPacientes { get; set; }
         public DbSet<PreguntaSeguimiento> PreguntasSeguimiento { get; set; }
+        public DbSet<AlertaStaff> AlertasStaff { get; set; } 
+
+        public DbSet<RespuestaSeguimiento> RespuestasSeguimiento { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -474,10 +476,48 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.Property(e => e.FechaRegistro).HasColumnName("FechaRegistro");
                 entity.HasOne(s => s.Cirugia)
-                      .WithOne(c => c.Seguimientos)
-                      .HasForeignKey<Cirugias>(s => s.Id_Cirugia)
+                    .WithMany(c => c.Seguimientos)
+                    .HasForeignKey(s => s.Id_Cirugia)
+                    .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<AlertaStaff>(entity =>
+            {
+                entity.HasKey(e => e.IdAlerta);
+                entity.Property(e => e.IdAlerta).HasColumnName("Id_Alerta");
+                entity.Property(e => e.IdSeguimiento).HasColumnName("Id_Seguimiento").IsRequired();
+                entity.Property(e => e.FechaGenerada).HasColumnName("FechaGenerada").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+                entity.Property(e => e.IdUsuarioAtendio).HasColumnName("Id_Usuario_Atendio");
+                entity.Property(e => e.Observaciones).HasColumnName("Observaciones").HasMaxLength(500);
+                entity.Property(e => e.FechaAtencion).HasColumnName("FechaAtencion");
+                entity.HasOne(a => a.SeguimientoPaciente)
+                      .WithMany(s => s.AlertasStaff)
+                      .HasForeignKey(a => a.IdSeguimiento)
+                      .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(a => a.UsuarioAtendio)
+                      .WithMany()
+                      .HasForeignKey(a => a.IdUsuarioAtendio)
                       .OnDelete(DeleteBehavior.Restrict);
             });
+            modelBuilder.Entity<RespuestaSeguimiento>(entity =>
+            {
+                entity.HasKey(e => e.IdRespuesta);
+                entity.Property(e => e.IdRespuesta).HasColumnName("Id_Respuesta");
+                entity.Property(e => e.IdSeguimiento).HasColumnName("Id_Seguimiento").IsRequired();
+                entity.Property(e => e.IdPregunta).HasColumnName("Id_Pregunta").IsRequired();
+                entity.Property(e => e.ValorRespuesta).HasColumnName("ValorRespuesta").IsRequired();
+                entity.Property(e => e.GeneroAlerta).HasColumnName("GeneroAlerta").IsRequired();
+                entity.HasOne(r => r.SeguimientoPaciente)
+                      .WithMany(s => s.RespuestasSeguimiento)
+                      .HasForeignKey(r => r.IdSeguimiento)
+                      .OnDelete(DeleteBehavior.Restrict);
+                entity.HasOne(r => r.PreguntaSeguimiento)
+                      .WithMany()
+                      .HasForeignKey(r => r.IdPregunta)
+                      .OnDelete(DeleteBehavior.Restrict);
+            });
+
         }
     }
 }

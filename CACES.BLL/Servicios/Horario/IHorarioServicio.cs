@@ -14,8 +14,8 @@ namespace CACES.BLL.Servicios.Horario
         Task<respuestaErrores<MostrarHorarioDTO>> ActualizarHorarioAsync(int id, EditarHorarioDTO horario);
         Task<respuestaErrores<MostrarHorarioDTO>> DesactivarHorarioAsync(int id);
 
+        Task<respuestaErrores<MostrarHorarioDTO>> EliminarHorariosAsync(int id);
 
 
-       
     }
 }

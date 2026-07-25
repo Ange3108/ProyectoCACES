@@ -19,6 +19,8 @@ namespace CACES.DAL.Entidades.SeguimientoPostOperatorio
 
         // Navegación
         public Cirugias? Cirugia { get; set; }
+        public ICollection<AlertaStaff> AlertasStaff { get; set; } = new List<AlertaStaff>();
+        public ICollection<RespuestaSeguimiento> RespuestasSeguimiento { get; set; } = new List<RespuestaSeguimiento>();
     }
 
     public enum  EstadoSeguimiento

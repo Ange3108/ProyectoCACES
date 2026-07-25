@@ -13,6 +13,7 @@ namespace CACES.DAL.Repositorios.Horarios
         Task<bool> CrearHorarioDisponibleAsync(HorariosDisponibles horario);
         Task<bool> ActualizarHorarioDisponibleAsync(HorariosDisponibles horario);
         Task<bool> DesactivarHorarioDisponibleAsync(int idHorario);
+        Task<bool> ELiminarHorarioDisponibleAsync(int idHorario);
         Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana, int idExcluir = 0);
     }
 }

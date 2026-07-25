@@ -178,5 +178,9 @@ namespace CACES.DAL.Repositorios.Citas
                     h.DiaSemana == diaSemana &&
                     h.Estado);
         }
+        public async Task<bool> ExisteCitaConHorario(int idHorario)
+        {
+            return await _context.Citas.AnyAsync(c => c.IdHorario == idHorario && c.Estado==1);
+        }
     }
 }

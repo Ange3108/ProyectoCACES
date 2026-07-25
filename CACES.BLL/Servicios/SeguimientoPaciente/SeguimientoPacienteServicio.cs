@@ -4,9 +4,7 @@ using CACES.BLL.Mappers;
 using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using CACES.DAL.Repositorios.Base;
 using CACES.DAL.Repositorios.SeguimientoPaciente;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace CACES.BLL.Servicios.SeguimientoPaciente
 {
@@ -16,6 +14,24 @@ namespace CACES.BLL.Servicios.SeguimientoPaciente
 
         private readonly IRepositorioGenerico<ConfiguracionCheckpoints> _repositorioCheckpoints;
         private readonly ISeguimientoPacienteRepositorio _seguimientoPacienteRepositorio;
+
+        public SeguimientoPacienteServicio(IRepositorioGenerico<ConfiguracionCheckpoints> repositorioCheckpoints, ISeguimientoPacienteRepositorio seguimientoPacienteRepositorio)
+        {
+            _repositorioCheckpoints = repositorioCheckpoints;
+            _seguimientoPacienteRepositorio = seguimientoPacienteRepositorio;
+        }
+        public async Task<respuestaErrores<List<MostrarSeguimientoPacienteDTO>>> ObtenerTodos()
+        {
+            var respuesta = new respuestaErrores<List<MostrarSeguimientoPacienteDTO>>();
+            var lista = await _seguimientoPacienteRepositorio.ObtenerTodos();
+            var dtos = lista.Select(s => s.ToMostrarSeguimientoPacienteDTO()!).ToList();
+
+            respuesta.EsCorrecto = true;
+            respuesta.Dato = dtos;
+            respuesta.codigo = 200;
+            respuesta.mensaje = "Seguimientos obtenidos correctamente";
+            return respuesta;
+        }
         public async Task<respuestaErrores<bool>> GenerarCheckpoints(int idCirugia)
         {
             var respuesta = new respuestaErrores<bool>();

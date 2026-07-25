@@ -78,5 +78,18 @@ namespace CACES.Controllers
             }
             return Json(resultado);
         }
+
+        [HttpPost]
+        [HttpPost]
+        public async Task<ActionResult> EliminarHorario(int id)
+        {
+            var resultado = await _horarioServicio.EliminarHorariosAsync(id);
+            if (!resultado.EsCorrecto)
+            {
+                ModelState.AddModelError(string.Empty, resultado.mensaje ?? "No se pudo eliminar el horario.");
+                return BadRequest(resultado);
+            }
+            return Json(resultado);
+        }
     }
 }

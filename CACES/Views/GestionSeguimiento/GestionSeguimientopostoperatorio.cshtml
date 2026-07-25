@@ -1,0 +1,418 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Seguimiento Post-Operatorio";
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header banner-header p-4">
+            <div class="d-flex justify-content-between align-items-center">
+                <div>
+                    <h3 class="mb-1 fw-bold">
+                        <i class="bi bi-clipboard2-pulse me-2"></i>Gestión de Seguimiento Post-Operatorio
+                    </h3>
+                    <p class="mb-0 opacity-75">
+                        Checkpoints, preguntas, seguimientos, respuestas y alertas del staff, todo en un solo lugar.
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+            <ul class="nav nav-tabs mb-4" id="tabsGestion" role="tablist">
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link active" id="tab-checkpoints-btn" data-bs-toggle="tab" data-bs-target="#tab-checkpoints" type="button" role="tab">
+                        <i class="bi bi-flag me-1"></i>Checkpoints
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-preguntas-btn" data-bs-toggle="tab" data-bs-target="#tab-preguntas" type="button" role="tab">
+                        <i class="bi bi-patch-question me-1"></i>Preguntas
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-seguimientos-btn" data-bs-toggle="tab" data-bs-target="#tab-seguimientos" type="button" role="tab">
+                        <i class="bi bi-calendar2-check me-1"></i>Seguimientos
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-respuestas-btn" data-bs-toggle="tab" data-bs-target="#tab-respuestas" type="button" role="tab">
+                        <i class="bi bi-chat-left-text me-1"></i>Respuestas
+                    </button>
+                </li>
+                <li class="nav-item" role="presentation">
+                    <button class="nav-link" id="tab-alertas-btn" data-bs-toggle="tab" data-bs-target="#tab-alertas" type="button" role="tab">
+                        <i class="bi bi-bell me-1"></i>Alertas
+                        <span id="badgeAlertasPendientes" class="badge rounded-pill bg-danger ms-1 d-none">0</span>
+                    </button>
+                </li>
+            </ul>
+
+            <div class="tab-content" id="tabsGestionContent">
+
+                <!-- ===================== CHECKPOINTS ===================== -->
+                <div class="tab-pane fade show active" id="tab-checkpoints" role="tabpanel">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearCheckpointModal">
+                            <i class="bi bi-plus-lg me-1"></i>Nuevo checkpoint
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tbCheckpoints" class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Día del checkpoint</th>
+                                    <th>Estado</th>
+                                    <th style="width:160px;">Acciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ===================== PREGUNTAS ===================== -->
+                <div class="tab-pane fade" id="tab-preguntas" role="tabpanel">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#crearPreguntaModal">
+                            <i class="bi bi-plus-lg me-1"></i>Nueva pregunta
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tbPreguntas" class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Texto</th>
+                                    <th>Rango</th>
+                                    <th>Umbral</th>
+                                    <th>Dirección alerta</th>
+                                    <th>Estado</th>
+                                    <th style="width:160px;">Acciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ===================== SEGUIMIENTOS ===================== -->
+                <div class="tab-pane fade" id="tab-seguimientos" role="tabpanel">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" class="btn btn-outline-secondary" id="btnRecargarSeguimientos">
+                            <i class="bi bi-arrow-clockwise me-1"></i>Recargar
+                        </button>
+                        <button type="button" class="btn btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#generarCheckpointsModal">
+                            <i class="bi bi-lightning-charge me-1"></i>Generar checkpoints
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tbSeguimientos" class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Cirugía</th>
+                                    <th>Día checkpoint</th>
+                                    <th>Fecha programada</th>
+                                    <th>Estado</th>
+                                    <th>Fecha registro</th>
+                                    <th style="width:120px;">Acciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ===================== RESPUESTAS ===================== -->
+                <div class="tab-pane fade" id="tab-respuestas" role="tabpanel">
+                    <div class="d-flex justify-content-end mb-3">
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#registrarRespuestasModal">
+                            <i class="bi bi-plus-lg me-1"></i>Registrar respuestas
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tbRespuestas" class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Seguimiento</th>
+                                    <th>Pregunta</th>
+                                    <th>Valor</th>
+                                    <th>¿Generó alerta?</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+                <!-- ===================== ALERTAS ===================== -->
+                <div class="tab-pane fade" id="tab-alertas" role="tabpanel">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <div class="form-check form-switch">
+                            <input class="form-check-input" type="checkbox" id="chkSoloPendientes" checked>
+                            <label class="form-check-label" for="chkSoloPendientes">Mostrar solo pendientes</label>
+                        </div>
+                        <button type="button" class="btn btn-outline-secondary" id="btnRecargarAlertas">
+                            <i class="bi bi-arrow-clockwise me-1"></i>Recargar
+                        </button>
+                    </div>
+                    <div class="table-responsive">
+                        <table id="tbAlertas" class="table table-hover align-middle mb-0">
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Seguimiento</th>
+                                    <th>Cirugía</th>
+                                    <th>Generada</th>
+                                    <th>Estado</th>
+                                    <th>Atendió</th>
+                                    <th>Observaciones</th>
+                                    <th style="width:120px;">Acciones</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL: Crear Checkpoint ===================== -->
+<div class="modal fade" id="crearCheckpointModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formCrearCheckpoint">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Nuevo checkpoint</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Día del checkpoint (posterior a la cirugía)</label>
+                        <input type="number" class="form-control" name="DiaCheckpoint" min="0" required>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL: Editar Checkpoint ===================== -->
+<div class="modal fade" id="editarCheckpointModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formEditarCheckpoint">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="IdCheckPoint" id="editCheckpointId">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar checkpoint</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Día del checkpoint</label>
+                        <input type="number" class="form-control" name="DiaCheckPoint" id="editCheckpointDia" min="0" required>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="Estado" id="editCheckpointEstado">
+                        <label class="form-check-label" for="editCheckpointEstado">Activo</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL: Crear Pregunta ===================== -->
+<div class="modal fade" id="crearPreguntaModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="formCrearPregunta">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Nueva pregunta de seguimiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Texto de la pregunta</label>
+                        <textarea class="form-control" name="Texto" rows="2" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Valor mínimo</label>
+                            <input type="number" class="form-control" name="ValorMinimo" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Valor máximo</label>
+                            <input type="number" class="form-control" name="ValorMaximo" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Umbral de alerta</label>
+                            <input type="number" class="form-control" name="UmbralAlerta" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dirección de la alerta</label>
+                        <select class="form-select" name="DireccionAlerta" required>
+                            <option value="0">Se alerta si la respuesta es mayor o igual al umbral</option>
+                            <option value="1">Se alerta si la respuesta es menor o igual al umbral</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar pregunta</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL: Editar Pregunta ===================== -->
+<div class="modal fade" id="editarPreguntaModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="formEditarPregunta">
+                @Html.AntiForgeryToken()
+                <input type="hidden" name="idPregunta" id="editPreguntaId">
+                <div class="modal-header">
+                    <h5 class="modal-title">Editar pregunta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Texto de la pregunta</label>
+                        <textarea class="form-control" name="Texto" id="editPreguntaTexto" rows="2" required></textarea>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Valor mínimo</label>
+                            <input type="number" class="form-control" name="ValorMinimo" id="editPreguntaMin" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Valor máximo</label>
+                            <input type="number" class="form-control" name="ValorMaximo" id="editPreguntaMax" required>
+                        </div>
+                        <div class="col-md-4 mb-3">
+                            <label class="form-label">Umbral de alerta</label>
+                            <input type="number" class="form-control" name="UmbralAlerta" id="editPreguntaUmbral" required>
+                        </div>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Dirección de la alerta</label>
+                        <select class="form-select" name="DireccionAlerta" id="editPreguntaDireccion" required>
+                            <option value="MayorIgual">Se alerta si la respuesta es mayor o igual al umbral</option>
+                            <option value="MenorIgual">Se alerta si la respuesta es menor o igual al umbral</option>
+                        </select>
+                    </div>
+                    <div class="form-check form-switch">
+                        <input class="form-check-input" type="checkbox" name="Estado" id="editPreguntaEstado">
+                        <label class="form-check-label" for="editPreguntaEstado">Activa</label>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL: Generar Checkpoints ===================== -->
+<div class="modal fade" id="generarCheckpointsModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formGenerarCheckpoints">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Generar checkpoints para una cirugía</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Id de la cirugía</label>
+                        <input type="number" class="form-control" name="IdCirugia" required>
+                    </div>
+                    <div class="form-text">
+                        Genera un seguimiento por cada checkpoint activo, con fecha programada relativa a la fecha de la cirugía.
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Generar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL: Registrar Respuestas ===================== -->
+<div class="modal fade" id="registrarRespuestasModal">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <form id="formRegistrarRespuestas">
+                @Html.AntiForgeryToken()
+                <div class="modal-header">
+                    <h5 class="modal-title">Registrar respuestas de seguimiento</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Id del seguimiento</label>
+                        <input type="number" class="form-control" id="respIdSeguimiento" required>
+                    </div>
+                    <div id="filasRespuestas"></div>
+                    <button type="button" class="btn btn-sm btn-outline-primary" id="btnAgregarRespuesta">
+                        <i class="bi bi-plus-lg me-1"></i>Agregar otra respuesta
+                    </button>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Registrar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL: Atender Alerta ===================== -->
+<div class="modal fade" id="atenderAlertaModal">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <form id="formAtenderAlerta">
+                @Html.AntiForgeryToken()
+                <input type="hidden" id="atenderIdAlerta">
+                <div class="modal-header">
+                    <h5 class="modal-title">Atender alerta</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <div class="mb-3">
+                        <label class="form-label">Nuevo estado</label>
+                        <select class="form-select" id="atenderEstado" required>
+                            <option value="1">Contactado</option>
+                            <option value="2">Resuelto</option>
+                        </select>
+                    </div>
+                    <div class="mb-3">
+                        <label class="form-label">Observaciones</label>
+                        <textarea class="form-control" id="atenderObservaciones" rows="3"></textarea>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+    <script src="~/js/GestionSeguimientoPostOperatorio.js" asp-append-version="true"></script>
+}

@@ -48,5 +48,10 @@ namespace CACES.Controllers
             var resultado = await _iconoServicio.ActualizarIconoAsync(id, iconoDTO);
             return Json(resultado);
         }
+        public async Task<IActionResult> EliminarIcono(int id)
+        {
+            var resultado = await _iconoServicio.EliminarIconoAsync(id);
+            return Json(resultado);
+        }
     }
 }

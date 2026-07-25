@@ -50,6 +50,11 @@
                 const id = $(this).data('id');
                 Horario.desactivarHorario(id);
             });
+            //Eliminar el horario
+            $(document).on('click', '.btn-eliminar-horario', function () {
+                const id = $(this).data('id');
+                Horario.eliminarHorario(id);
+            });
         },
 
         cargarHorarios(idMedico) {
@@ -93,6 +98,11 @@
                                         data-id="${h.id_Horario}">
                                         <i class="bi bi-slash-circle"></i>
                                     </button>` : ''}
+                                    <button class="btn btn-sm btn-outline-danger btn-eliminar-horario ms-1"
+                                        data-id="${h.id_Horario}">
+                                        <i class="bi bi-trash"></i>
+                                    </button>
+
                                 </td>
                             </tr>`;
                     });
@@ -239,11 +249,49 @@
                     }
                 });
             });
+        }, 
+
+        eliminarHorario(id) {
+            Swal.fire({
+                title: '¿Eliminar horario?',
+                text: 'El médico dejará de recibir citas ese día.',
+                icon: 'warning',
+                showCancelButton: true,
+                confirmButtonText: 'Sí, eliminar',
+                cancelButtonText: 'Cancelar'
+            }).then(result => {
+                if (!result.isConfirmed) return;
+
+                $.ajax({
+                    url: `/Horario/EliminarHorario?id=${id}`,
+                    type: 'POST',
+                    success: function (respuesta) {
+                        if (respuesta.esCorrecto) {
+                            Swal.fire({ title: 'Eliminado', text: respuesta.mensaje, icon: 'success', timer: 1800, showConfirmButton: false });
+                            Horario.cargarHorarios(Horario.idMedicoActual);
+                        } else {
+                            Swal.fire({ title: 'Error', text: respuesta.mensaje, icon: 'error' });
+                        }
+                    },
+                    error: function (xhr) {
+                 
+                        const mensaje = xhr.responseJSON?.mensaje
+                            ?? 'No fue posible eliminar el horario.';
+
+                        Swal.fire({
+                            title: 'No se puede eliminar',
+                            text: mensaje,
+                            icon: 'warning'
+                        });
+                    }
+                });
+            });
         }
-    };
+
+    }; 
 
     $(function () {
         Horario.init();
     });
 
-})();
+}) ();

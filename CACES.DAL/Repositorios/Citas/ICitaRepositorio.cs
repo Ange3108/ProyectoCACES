@@ -20,5 +20,8 @@ namespace CACES.DAL.Repositorios.Citas
 
         Task<int> ContarCitasPorFechaAsync(DateTime fecha);
         Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana);
+        Task<bool> ExisteCitaConHorario(int idHorario);
+
+
     }
 }

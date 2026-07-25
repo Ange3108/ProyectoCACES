@@ -11,5 +11,7 @@ namespace CACES.BLL.Servicios.Icono
         Task<respuestaErrores<List<IconoDTO>>> GetListadoIconosAsync();
         Task<respuestaErrores<IconoDTO>> CrearIconoAsync(IconoDTO iconoDTO);
         Task<respuestaErrores<IconoDTO>> ActualizarIconoAsync(int id, IconoDTO iconoDTO);
+
+        Task<respuestaErrores<bool>> EliminarIconoAsync(int id);
     }
 }

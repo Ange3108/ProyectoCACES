@@ -11,15 +11,20 @@ namespace CACES.Controllers
         {
             _servicio = servicio;
         }
-
-        [HttpGet("cirugia/{idCirugia}")]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerTodos()
+        {
+            var respuesta = await _servicio.ObtenerTodos();
+            return Ok(respuesta);
+        }
+        [HttpGet]
         public async Task<IActionResult> ObtenerPorCirugia(int idCirugia)
         {
             var respuesta = await _servicio.ObtenerPorCirugia(idCirugia);
             return Ok(respuesta);
         }
 
-        [HttpPost("generar/{idCirugia}")]
+        [HttpPost]
         public async Task<IActionResult> GenerarCheckpoints(int idCirugia)
         {
             var respuesta = await _servicio.GenerarCheckpoints(idCirugia);

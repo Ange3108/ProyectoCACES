@@ -143,6 +143,17 @@
                                     Editar
 
                                 </button>
+                                <button type="button"
+                                        class="btn btn-sm
+                                               btn-outline-danger
+                                               rounded-2
+                                               px-2 py-1
+                                               btnEliminar"
+                                        data-id="${row.idIcono}">
+
+                                    <i class="bi bi-trash me-1"></i>
+
+                                </button>
                             `;
                         }
                     }
@@ -188,6 +199,8 @@
                         codigo || 'bi bi-question-circle'
                     );
             });
+
+
 
             // Abrir modal de edición
             $(document).on('click', '.btnEditar', function () {
@@ -391,6 +404,68 @@
                     }
                 });
             });
+            //eliminar ícono
+            // Eliminar ícono
+            $(document).on('click', '.btnEliminar', function () {
+
+                const id = $(this).data('id');
+                const nombre = $(this).data('nombre') ?? '';
+
+                Swal.fire({
+                    icon: 'warning',
+                    title: '¿Estás seguro?',
+                    text: `Se eliminará el ícono "${nombre}". Esta acción no se puede deshacer.`,
+                    showCancelButton: true,
+                    confirmButtonText: 'Sí, eliminar',
+                    cancelButtonText: 'Cancelar',
+                    confirmButtonColor: '#d33'
+                }).then((resultado) => {
+
+                    if (!resultado.isConfirmed) {
+                        return;
+                    }
+
+                    $.ajax({
+                        url: `/Icono/EliminarIcono/${id}`,
+                        type: 'POST',
+
+                        success: function (respuesta) {
+
+                            if (!respuesta?.esCorrecto) {
+
+                                Swal.fire({
+                                    icon: 'error',
+                                    title: 'Error',
+                                    text: respuesta?.mensaje ?? 'No fue posible eliminar el ícono.'
+                                });
+
+                                return;
+                            }
+
+                            Swal.fire({
+                                icon: 'success',
+                                title: 'Ícono eliminado',
+                                text: respuesta.mensaje,
+                                confirmButtonText: 'Aceptar'
+                            });
+
+                            Icono.tabla?.ajax.reload(null, false);
+                        },
+
+                        error: function (xhr) {
+
+                            console.error(xhr.responseText);
+
+                            Swal.fire({
+                                icon: 'error',
+                                title: 'Error',
+                                text: xhr.responseJSON?.mensaje ?? 'No fue posible eliminar el ícono.'
+                            });
+                        }
+                    });
+                });
+            });
+
         }
     };
 
