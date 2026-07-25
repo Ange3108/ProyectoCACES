@@ -650,6 +650,32 @@ values
 ( 5)
 GO
 
+
+
+
+INSERT INTO ConfiguracionCheckpoints (DiaCheckpoint, Estado) VALUES (1, 1);
+INSERT INTO ConfiguracionCheckpoints (DiaCheckpoint, Estado) VALUES (3, 1);
+INSERT INTO ConfiguracionCheckpoints (DiaCheckpoint, Estado) VALUES (7, 1);
+INSERT INTO ConfiguracionCheckpoints (DiaCheckpoint, Estado) VALUES (15, 1);
+
+INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
+VALUES ('Del 1 al 10, ¿cómo calificaría su dolor actual?', 1, 10, 7, 0, 1);
+
+INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
+VALUES ('Del 1 al 10, ¿qué tan hinchada/inflamada ve la zona operada?', 1, 10, 7, 0, 1);
+
+INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
+VALUES ('Del 1 al 10, ¿qué tan bien está durmiendo?', 1, 10, 3, 1, 1);
+
+INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
+VALUES ('¿Ha tenido fiebre? (0 = No, 1 = Sí)', 0, 1, 1, 0, 1);
+
+INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
+VALUES ('¿Ha notado sangrado o secreción anormal? (0 = No, 1 = Sí)', 0, 1, 1, 0, 1);
+
+INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
+VALUES ('Del 1 al 10, ¿qué tan satisfecho está con su recuperación general?', 1, 10, 4, 1, 1);
+
 UPDATE Usuarios
 SET PasswordHash = 'R6GvfeUKq9IZPWHh9hvY0+1D2ywQMANwAYxuux6bYIE=' --Maria123+
 WHERE CorreoElectronico = 'maria.paciente@caces.com';
