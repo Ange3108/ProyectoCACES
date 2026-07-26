@@ -92,15 +92,19 @@
                                         data-hora="${hora}"
                                         data-estado="${h.estado}">
                                         <i class="bi bi-pencil"></i>
+                                        Editar
                                     </button>
                                     ${h.estado ? `
                                     <button class="btn btn-sm btn-outline-danger btn-desactivar-horario"
                                         data-id="${h.id_Horario}">
                                         <i class="bi bi-slash-circle"></i>
+                                        Desactivar
                                     </button>` : ''}
                                     <button class="btn btn-sm btn-outline-danger btn-eliminar-horario ms-1"
                                         data-id="${h.id_Horario}">
+                                      
                                         <i class="bi bi-trash"></i>
+                                        Eliminar
                                     </button>
 
                                 </td>

@@ -78,9 +78,11 @@
                             <button class="btn btn-sm btn-outline-primary btnEditarCheckpoint"
                                     data-id="${row.idCheckPoint}" data-dia="${row.diaCheckPoint}" data-estado="${row.estado}">
                                 <i class="bi bi-pencil-square"></i>
+                                Editar
                             </button>
                             <button class="btn btn-sm btn-outline-danger btnDesactivarCheckpoint" data-id="${row.idCheckPoint}">
                                 <i class="bi bi-slash-circle"></i>
+                                Desactivar
                             </button>`
                     }
                 ],
@@ -115,9 +117,11 @@
                         render: (data, type, row) => `
                             <button class="btn btn-sm btn-outline-primary btnEditarPregunta" data-id="${row.idPregunta}">
                                 <i class="bi bi-pencil-square"></i>
+                                Editar
                             </button>
                             <button class="btn btn-sm btn-outline-danger btnEliminarPregunta" data-id="${row.idPregunta}">
                                 <i class="bi bi-trash"></i>
+                                Eliminar
                             </button>`
                     }
                 ],

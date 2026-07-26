@@ -56,7 +56,7 @@
                             @* Menú Administrador *@
                             @if (User.IsInRole("Administrador"))
                             {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Soporte" asp-action="GestionConsultas">Gestión de Soporte</a></li>
+                                
                                 <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Reportes">Reportes</a></li>
                             }
 
@@ -99,22 +99,41 @@
     <footer class="mt-5 py-4" style="background:#72CEF2;">
         <div class="container text-center">
             <p class="mb-1 fw-semibold" style="color:#27418C;">Centro Ambulatorio de Cirugía Escalón</p>
-            <p class="mb-0">
+            <p class="mb-3">
                 <a asp-area="" asp-controller="Soporte" asp-action="Contacto" class="text-decoration-none fw-bold" style="color:#27418C;">
                     Contacto y soporte
                 </a>
             </p>
-            <div class="d-flex justify-content-center gap-3 mt-3">
-                <a href="https://www.facebook.com" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="color:#27418C; font-size:1.25rem;">
+
+            <div class="row justify-content-center g-2 mb-3" style="color:#27418C;">
+                <div class="col-6 col-md-3">
+                    <i class="bi bi-telephone-fill me-1"></i>
+                    <a href="tel:+50325031980" class="text-decoration-none" style="color:#27418C;">+503 2503 1980</a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <i class="bi bi-envelope-fill me-1"></i>
+                    <a href="mailto:cirugiacacesmoon@gmail.com" class="text-decoration-none" style="color:#27418C;">cirugiacacesmoon@gmail.com</a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <i class="bi bi-geo-alt-fill me-1"></i>
+                    <a href="https://maps.app.goo.gl/dLXaJqiDBP1pWboH9" target="_blank" rel="noopener noreferrer" class="text-decoration-none" style="color:#27418C;">
+                        Calle Circunvalación #175, San Salvador
+                    </a>
+                </div>
+                <div class="col-6 col-md-3">
+                    <i class="bi bi-clock-fill me-1"></i>
+                    Siempre abierto
+                </div>
+            </div>
+
+            <div class="d-flex justify-content-center gap-3">
+                <a href="https://www.facebook.com/caces.sv/" target="_blank" rel="noopener noreferrer" aria-label="Facebook" style="color:#27418C; font-size:1.25rem;">
                     <i class="bi bi-facebook"></i>
                 </a>
-                <a href="https://www.instagram.com" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="color:#27418C; font-size:1.25rem;">
+                <a href="https://www.instagram.com/caceshosp" target="_blank" rel="noopener noreferrer" aria-label="Instagram" style="color:#27418C; font-size:1.25rem;">
                     <i class="bi bi-instagram"></i>
                 </a>
-                <a href="https://x.com" target="_blank" rel="noopener noreferrer" aria-label="X" style="color:#27418C; font-size:1.25rem;">
-                    <i class="bi bi-twitter-x"></i>
-                </a>
-                <a href="https://wa.me/50600000000" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style="color:#27418C; font-size:1.25rem;">
+                <a href="https://wa.me/50379126456" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp" style="color:#27418C; font-size:1.25rem;">
                     <i class="bi bi-whatsapp"></i>
                 </a>
             </div>

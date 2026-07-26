@@ -941,39 +941,7 @@
             document.getElementById('resumenUpdateTime').textContent = 'Última actualización: ' + ts.toLocaleString('es-SV');
         }
 
-        async function fetchResumen(force = false) {
-            const cached = loadResumenFromCache();
-            if (!force && cached && !shouldRefresh()) {
-                renderResumen(cached);
-                return;
-            }
-
-            document.getElementById('resumenLoader').style.display = 'inline-block';
-
-            // Cuando el endpoint de resumen exista, descomentar:
-            // try {
-            //     const resp = await fetch('/Home/ResumenCentro');
-            //     if (resp.ok) {
-            //         const data = await resp.json();
-            //         data.timestamp = Date.now();
-            //         saveResumen(data);
-            //         renderResumen(data);
-            //         return;
-            //     }
-            // } catch(e) {}
-
-            // Datos simulados hasta que el endpoint esté disponible
-            const simulado = {
-                cirugias: Math.floor(Math.random()*6)+2,
-                citas: Math.floor(Math.random()*15)+5,
-                pacientes: Math.floor(Math.random()*20)+10,
-                medicos: Math.floor(Math.random()*8)+4,
-                timestamp: Date.now()
-            };
-            saveResumen(simulado);
-            renderResumen(simulado);
-            document.getElementById('resumenLoader').style.display = 'none';
-        }
+        
 
         function toggleResumen() {
             const exp = document.getElementById('resumenExpanded');
@@ -1053,18 +1021,6 @@
             btn.disabled = true;
             btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Publicando…';
 
-            // Endpoint real cuando esté disponible:
-            // fetch('/Noticias/Crear', { method:'POST', body: formData })
-            //   .then(r => r.json()).then(data => { ... })
-
-            // Por ahora simular éxito visual
-            setTimeout(() => {
-                btn.disabled = false;
-                btn.innerHTML = '<i class="bi bi-upload me-1"></i>Publicar noticia';
-                bootstrap.Modal.getInstance(document.getElementById('modalSubirNoticia'))?.hide();
-                // Mostrar toast de éxito
-                mostrarToast('Noticia publicada correctamente.', 'success');
-            }, 1200);
         }
 
         function mostrarToast(msg, tipo) {

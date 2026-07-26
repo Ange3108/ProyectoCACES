@@ -152,6 +152,7 @@
                                         data-id="${row.idIcono}">
 
                                     <i class="bi bi-trash me-1"></i>
+                                    Eliminar
 
                                 </button>
                             `;
