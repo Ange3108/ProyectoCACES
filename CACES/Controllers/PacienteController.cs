@@ -5,7 +5,6 @@ using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
-
 namespace CACES.Controllers
 {
     public class PacienteController : Controller
@@ -21,10 +20,20 @@ namespace CACES.Controllers
             _usuarioService = usuarioService;
         }
 
-        public async Task<IActionResult> Pacientes()
+        // Solo renderiza la vista vacía; la tabla se llena con ObtenerPacientes vía AJAX
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public IActionResult Pacientes()
         {
-            var pacientes = await _pacienteServicio.GetPacientesAsync();
-            return View("~/Views/Pacientes/Pacientes.cshtml", pacientes);
+            return View("~/Views/Pacientes/Pacientes.cshtml");
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerPacientes()
+        {
+            var resultado = await _pacienteServicio.GetPacientesAsync();
+            return Json(resultado);
         }
 
         [HttpGet]
@@ -38,34 +47,16 @@ namespace CACES.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
-            }
-
-            try
-            {
-                var resultado = await _pacienteServicio.RegistrarPacienteAsync(dto);
-
-                if (!resultado)
+                return Json(new
                 {
-                    TempData["Error"] = "No se pudo registrar el paciente.";
-                    return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
-                }
-
-                TempData["Mensaje"] = "Paciente registrado correctamente.";
-                return RedirectToAction("Login", "Login_Logout");
+                    EsCorrecto = false,
+                    mensaje = "Debe completar todos los campos obligatorios.",
+                    codigo = 400
+                });
             }
-            catch (Exception ex)
-            {
-                var error = ex;
 
-                while (error.InnerException != null)
-                {
-                    error = error.InnerException;
-                }
-
-                TempData["Error"] = error.Message;
-                return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
-            }
+            var resultado = await _pacienteServicio.RegistrarPacienteAsync(dto);
+            return Json(resultado);
         }
 
         [Authorize(Roles = "Administrador")]
@@ -74,12 +65,26 @@ namespace CACES.Controllers
         {
             var resultado = await _pacienteServicio.DesactivarPacienteAsync(id);
 
-            TempData[resultado ? "Mensaje" : "Error"] =
-                resultado
-                    ? "La cuenta del paciente fue desactivada correctamente."
-                    : "No se pudo desactivar la cuenta del paciente.";
+            if (!resultado.EsCorrecto)
+            {
+                return NotFound(resultado);
+            }
 
-            return RedirectToAction("Pacientes");
+            return Json(resultado);
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public async Task<IActionResult> ActivarPaciente(int id)
+        {
+            var resultado = await _pacienteServicio.ActivarPacienteAsync(id);
+
+            if (!resultado.EsCorrecto)
+            {
+                return NotFound(resultado);
+            }
+
+            return Json(resultado);
         }
 
         [HttpPost]
@@ -91,43 +96,20 @@ namespace CACES.Controllers
             {
                 return Json(new
                 {
-                    exito = false,
-                    mensaje = "No se pudo identificar tu sesión activa."
+                    EsCorrecto = false,
+                    mensaje = "No se pudo identificar tu sesión activa.",
+                    codigo = 400
                 });
             }
 
-            var resultadoService = await _usuarioService.DesactivarUsuarioAsync(idUsuario);
+            var resultado = await _usuarioService.DesactivarUsuarioAsync(idUsuario);
 
-            if (resultadoService.EsCorrecto)
+            if (resultado.EsCorrecto)
             {
                 await HttpContext.SignOutAsync();
-
-                return Json(new
-                {
-                    exito = true,
-                    mensaje = resultadoService.mensaje ?? "Tu cuenta ha sido eliminada correctamente del sistema CACES."
-                });
             }
 
-            return Json(new
-            {
-                exito = false,
-                mensaje = resultadoService.mensaje
-            });
-        }
-
-        [Authorize(Roles = "Administrador")]
-        [HttpPost]
-        public async Task<IActionResult> ActivarPaciente(int id)
-        {
-            var resultado = await _pacienteServicio.ActivarPacienteAsync(id);
-
-            TempData[resultado ? "Mensaje" : "Error"] =
-                resultado
-                    ? "La cuenta del paciente fue activada correctamente."
-                    : "No se pudo activar la cuenta del paciente.";
-
-            return RedirectToAction(nameof(Pacientes));
+            return Json(resultado);
         }
     }
 }

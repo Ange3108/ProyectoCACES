@@ -1,5 +1,31 @@
 ﻿(() => {
 
+    function resolverFoto(foto) {
+
+        if (!foto ||
+            typeof foto !== 'string' ||
+            foto.trim() === '') {
+
+            return '/img/default.jpg';
+        }
+
+        foto = foto.trim();
+
+        if (foto.startsWith('/') ||
+            foto.startsWith('http')) {
+
+            return foto;
+        }
+
+        if (foto.startsWith('img/') ||
+            foto.startsWith('uploads/')) {
+
+            return '/' + foto;
+        }
+
+        return '/img/' + foto;
+    }
+
     const Usuario = {
 
         tabla: null,
@@ -31,9 +57,7 @@
                                 ${data.segundoApellido ?? ''}
                             `.replace(/\s+/g, ' ').trim();
 
-                            const foto = data.foto && data.foto.trim() !== ''
-                                ? data.foto
-                                : '/img/default.jpg';
+                            const foto = resolverFoto(data.foto);
 
                             return `
                                 <div class="d-flex align-items-center gap-2">
@@ -185,7 +209,6 @@
             $(document).on('click', '.btnEditar', function () {
 
                 $('#IdUsuario').val($(this).data('id'));
-                $('#Foto').val($(this).data('foto'));
                 $('#Nombres').val($(this).data('nombre'));
                 $('#PrimerApellido').val($(this).data('primerapellido'));
                 $('#SegundoApellido').val($(this).data('segundoapellido'));
@@ -207,14 +230,28 @@
                     $(this).data('estado').toString()
                 );
 
+                $('#FotoArchivo').val('');
+
+                const fotoActual = resolverFoto($(this).data('foto'));
+                $('#previewFoto').attr('src', fotoActual).show();
+
                 new bootstrap.Modal(
                     document.getElementById('editarUsuarioModal')
                 ).show();
             });
 
+            $('#FotoArchivo').on('change', function () {
+                const archivo = this.files[0];
+                if (archivo) {
+                    $('#previewFoto').attr('src', URL.createObjectURL(archivo)).show();
+                }
+            });
+
             $('#formEditarUsuario').on('submit', function (e) {
 
                 e.preventDefault();
+
+                const formData = new FormData(this);
 
                 $.ajax({
 
@@ -222,7 +259,11 @@
 
                     type: 'POST',
 
-                    data: $(this).serialize(),
+                    data: formData,
+
+                    processData: false,
+
+                    contentType: false,
 
                     success: function (respuesta) {
 
@@ -251,8 +292,8 @@
                         Usuario.tabla.ajax.reload(null, false);
                     },
 
-                    error: function () {
-
+                    error: function (xhr) {
+                        console.log('Detalle del error 400:', xhr.responseJSON ?? xhr.responseText);
                         Swal.fire({
                             title: 'Error',
                             text: 'No fue posible actualizar el usuario.',

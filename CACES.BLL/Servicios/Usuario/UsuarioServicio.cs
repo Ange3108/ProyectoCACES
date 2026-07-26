@@ -142,26 +142,44 @@ namespace CACES.BLL.Servicios.Usuario
 
         public async Task<respuestaErrores<MostrarUsuarioDTO>> ActualizarUsuarioAsync(int id, ActualizarUsuarioDTO usuarioDto)
         {
-           
+            var respuesta = new respuestaErrores<MostrarUsuarioDTO>();
             var usuario = await _usuarioRepository.GetUsuarioByIdAsync(id);
             if (usuario == null)
-                return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Usuario no encontrado", codigo = 404 };
-            
-            usuario.ToMostrarUsuarioDTO();
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "El usuario no fue encontrado";
+                respuesta.codigo = 404;
+            }
+
+            usuario.Nombres = usuarioDto.Nombres;
+            usuario.PrimerApellido = usuarioDto.PrimerApellido;
+            usuario.SegundoApellido = usuarioDto.SegundoApellido;
+            usuario.CorreoElectronico = usuarioDto.CorreoElectronico;
+            usuario.Telefono = usuarioDto.Telefono;
+            usuario.Direccion = usuarioDto.Direccion;
+            usuario.Nacimiento = usuarioDto.Nacimiento;
+            usuario.Estado = usuarioDto.Estado;
+
+            if (!string.IsNullOrEmpty(usuarioDto.Foto))
+            {
+                usuario.Foto = usuarioDto.Foto;
+            }
+
             usuario.FechaDeModificacion = DateTime.Now;
 
             bool resultado = await _usuarioRepository.UpdateUsuarioAsync(usuario);
 
             if (resultado)
-                return new respuestaErrores<MostrarUsuarioDTO>
+               
                 {
-                    EsCorrecto = true,
-                    mensaje = "Usuario actualizado exitosamente",
-                    Dato = usuario.ToMostrarUsuarioDTO()
+                respuesta.EsCorrecto = true;
+                    respuesta.mensaje = "Usuario actualizado exitosamente";
+                respuesta.Dato = usuario.ToMostrarUsuarioDTO();
+                respuesta.codigo = 200;
+                return respuesta;
                 };
 
             return new respuestaErrores<MostrarUsuarioDTO> { EsCorrecto = false, mensaje = "Error al actualizar" };
-
         }
 
         public async Task<respuestaErrores<MostrarUsuarioDTO>> DesactivarUsuarioAsync(int id)

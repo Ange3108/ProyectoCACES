@@ -196,12 +196,12 @@ namespace CACES.Controllers
                 });
             }
 
-            var paciente =
+            var pacienteResultado =
                 await _pacienteServicio.GetPacienteByUsuarioIdAsync(
                     idUsuario.Value
                 );
 
-            if (paciente == null)
+            if (!pacienteResultado.EsCorrecto || pacienteResultado.Dato == null)
             {
                 return NotFound(new
                 {
@@ -212,7 +212,7 @@ namespace CACES.Controllers
 
             var resultado =
                 await _recetaServicio.ObtenerPorPacienteAsync(
-                    paciente.IdPaciente
+                    pacienteResultado.Dato.IdPaciente
                 );
 
             return Json(resultado);

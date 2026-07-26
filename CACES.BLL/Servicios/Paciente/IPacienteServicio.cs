@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Usuario;
 
@@ -8,23 +9,23 @@ namespace CACES.BLL.Servicios.Paciente
 {
     public interface IPacienteServicio
     {
-        Task<List<DAL.Entidades.Paciente>> GetPacientesAsync();
+        Task<respuestaErrores<List<MostrarPacienteDTO>>> GetPacientesAsync();
 
-        Task<DAL.Entidades.Paciente?> GetPacienteByIdAsync(int id);
+        Task<respuestaErrores<MostrarPacienteDTO?>> GetPacienteByIdAsync(int id);
 
-        Task<DAL.Entidades.Paciente?> GetPacienteByDUIAsync(string dui);
+        Task<respuestaErrores<MostrarPacienteDTO?>> GetPacienteByDUIAsync(string dui);
 
-        Task<MostrarUsuarioDTO> CreatePacienteAsync(RegistrarPacienteDTO pacienteDto);
+        Task<respuestaErrores<MostrarUsuarioDTO>> CreatePacienteAsync(RegistrarPacienteDTO pacienteDto);
 
-        Task<bool> DesactivarPacienteAsync(int idPaciente);
+        Task<respuestaErrores<bool>> DesactivarPacienteAsync(int idPaciente);
 
-        Task<bool> RegistrarPacienteAsync(RegistrarPacienteDTO pacienteDto);
+        Task<respuestaErrores<bool>> RegistrarPacienteAsync(RegistrarPacienteDTO pacienteDto);
 
-        Task<CACES.DAL.Entidades.Paciente> GetPacienteByUsuarioIdAsync(int idUsuario);
+        Task<respuestaErrores<MostrarPacienteDTO>> GetPacienteByUsuarioIdAsync(int idUsuario);
 
         Task<int> ObtenerIdPacientePorUsuarioIdAsync(int idUsuario);
 
-        Task<IEnumerable<DAL.Entidades.Paciente>> ObtenerPacientesActivosAsync();
-        Task<bool> ActivarPacienteAsync(int idPaciente);
+        Task<respuestaErrores<IEnumerable<MostrarPacienteDTO>>> ObtenerPacientesActivosAsync();
+        Task<respuestaErrores<bool>> ActivarPacienteAsync(int idPaciente);
     }
 }

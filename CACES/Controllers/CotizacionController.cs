@@ -54,7 +54,7 @@ namespace CACES.Controllers
         [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> RegistrarCotizacion(
-            [FromBody] RegistrarCotizacionDTO dto)
+     [FromBody] RegistrarCotizacionDTO dto)
         {
             if (dto == null)
             {
@@ -76,12 +76,12 @@ namespace CACES.Controllers
                 });
             }
 
-            var paciente =
+            var pacienteResultado =
                 await _pacienteServicio.GetPacienteByUsuarioIdAsync(
                     idUsuario.Value
                 );
 
-            if (paciente == null)
+            if (!pacienteResultado.EsCorrecto || pacienteResultado.Dato == null)
             {
                 return NotFound(new
                 {
@@ -90,7 +90,7 @@ namespace CACES.Controllers
                 });
             }
 
-            dto.IdPaciente = paciente.IdPaciente;
+            dto.IdPaciente = pacienteResultado.Dato.IdPaciente;
 
             ModelState.Remove(nameof(dto.IdPaciente));
 
@@ -134,10 +134,6 @@ namespace CACES.Controllers
             }
         }
 
-        // =====================================================
-        // COTIZACIONES DEL PACIENTE AUTENTICADO
-        // =====================================================
-
         [Authorize(Roles = "Paciente")]
         [HttpGet]
         public async Task<IActionResult> ObtenerMisCotizaciones()
@@ -153,12 +149,12 @@ namespace CACES.Controllers
                 });
             }
 
-            var paciente =
+            var pacienteResultado =
                 await _pacienteServicio.GetPacienteByUsuarioIdAsync(
                     idUsuario.Value
                 );
 
-            if (paciente == null)
+            if (!pacienteResultado.EsCorrecto || pacienteResultado.Dato == null)
             {
                 return NotFound(new
                 {
@@ -171,7 +167,7 @@ namespace CACES.Controllers
             {
                 var lista =
                     await _cotizacionServicio.ObtenerPorPacienteAsync(
-                        paciente.IdPaciente
+                        pacienteResultado.Dato.IdPaciente
                     );
 
                 return Json(new

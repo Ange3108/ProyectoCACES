@@ -64,16 +64,30 @@ namespace CACES.Controllers
         }
 
 
-        //Actualizar
         [HttpPost]
-        public async Task<IActionResult> ActualizarUsuario(int id, ActualizarUsuarioDTO actualizarUsuarioDTO)
+        public async Task<IActionResult> ActualizarUsuario(int id, ActualizarUsuarioDTO actualizarUsuarioDTO, IFormFile? FotoArchivo)
         {
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
+
+            if (FotoArchivo != null && FotoArchivo.Length > 0)
+            {
+                var carpeta = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", "imagenes", "usuarios");
+
+                if (!Directory.Exists(carpeta))
+                    Directory.CreateDirectory(carpeta);
+
+                var nombreArchivo = Guid.NewGuid() + Path.GetExtension(FotoArchivo.FileName);
+                var rutaCompleta = Path.Combine(carpeta, nombreArchivo);
+
+                using var stream = new FileStream(rutaCompleta, FileMode.Create);
+                await FotoArchivo.CopyToAsync(stream);
+                actualizarUsuarioDTO.Foto = "/imagenes/usuarios/" + nombreArchivo;
+            }
+
             var usuarioActualizado = await _usuarioServicio.ActualizarUsuarioAsync(id, actualizarUsuarioDTO);
 
             return Json(usuarioActualizado);
-
         }
 
         //Metodo Desactivar

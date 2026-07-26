@@ -76,12 +76,12 @@ namespace CACES.Controllers
             if (string.IsNullOrEmpty(claimId) || !int.TryParse(claimId, out int idUsuario))
                 return Unauthorized();
 
-            var paciente = await _pacienteServicio.GetPacienteByUsuarioIdAsync(idUsuario);
+            var pacienteResultado = await _pacienteServicio.GetPacienteByUsuarioIdAsync(idUsuario);
 
-            if (paciente == null)
+            if (!pacienteResultado.EsCorrecto || pacienteResultado.Dato == null)
                 return NotFound();
 
-            return RedirectToAction("Detalle", new { id = paciente.IdHistorial });
+            return RedirectToAction("Detalle", new { id = pacienteResultado.Dato.IdHistorial });
         }
 
         [HttpGet]

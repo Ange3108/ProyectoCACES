@@ -73,24 +73,24 @@ namespace CACES.Controllers
         [Authorize(Roles = "Paciente")]
         [HttpPost]
         public async Task<IActionResult> RegistrarCitaJson(
-            [FromBody] RegistrarCitaDTO dto)
+    [FromBody] RegistrarCitaDTO dto)
         {
             var idUsuario = ObtenerIdUsuarioActual();
 
             if (idUsuario == null)
                 return Unauthorized();
 
-            var paciente =
+            var pacienteResultado =
                 await _pacienteServicio.GetPacienteByUsuarioIdAsync(
                     idUsuario.Value
                 );
 
-            if (paciente == null)
-                return NotFound();
+            if (!pacienteResultado.EsCorrecto || pacienteResultado.Dato == null)
+                return NotFound(pacienteResultado);
 
             var resultado = await _citaServicio.RegistrarCitaAsync(
                 dto,
-                paciente.IdPaciente
+                pacienteResultado.Dato.IdPaciente
             );
 
             return Json(resultado);
@@ -105,21 +105,23 @@ namespace CACES.Controllers
             if (idUsuario == null)
                 return Unauthorized();
 
-            var paciente =
+            var pacienteResultado =
                 await _pacienteServicio.GetPacienteByUsuarioIdAsync(
                     idUsuario.Value
                 );
 
-            if (paciente == null)
-                return NotFound();
+            if (!pacienteResultado.EsCorrecto || pacienteResultado.Dato == null)
+                return NotFound(pacienteResultado);
 
             var resultado =
                 await _citaServicio.ObtenerCitasPorPacienteAsync(
-                    paciente.IdPaciente
+                    pacienteResultado.Dato.IdPaciente
                 );
 
             return Json(resultado);
         }
+
+       
 
         [Authorize(Roles = "Medico")]
         [HttpGet]

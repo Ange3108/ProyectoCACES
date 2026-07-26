@@ -1,6 +1,7 @@
-﻿
+﻿using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Usuario;
+using CACES.BLL.Mappers;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
@@ -28,7 +29,6 @@ namespace CACES.BLL.Servicios.Paciente
             IUsuarioRepositorio usuarioRepositorio,
             IHistorialMedicoRepositorio historialRepositorio,
             IEmailServicio emailServicio,
-
             CACESDbContext context)
         {
             _pacienteRepositorio = pacienteRepositorio;
@@ -39,32 +39,91 @@ namespace CACES.BLL.Servicios.Paciente
             _context = context;
         }
 
-        public async Task<List<DAL.Entidades.Paciente>> GetPacientesAsync()
+        public async Task<respuestaErrores<List<MostrarPacienteDTO>>> GetPacientesAsync()
         {
-            return await _pacienteRepositorio.GetPacientesAsync();
+            var pacientes = await _pacienteRepositorio.GetPacientesAsync();
+            var pacientesDTO = pacientes.Select(p => p.ToMostrarPacienteDTO()).ToList();
+
+            return new respuestaErrores<List<MostrarPacienteDTO>>
+            {
+                EsCorrecto = true,
+                mensaje = "Pacientes obtenidos exitosamente.",
+                Dato = pacientesDTO,
+                codigo = 200
+            };
         }
 
-        public async Task<DAL.Entidades.Paciente> GetPacienteByIdAsync(int id)
+        public async Task<respuestaErrores<MostrarPacienteDTO?>> GetPacienteByIdAsync(int id)
         {
-            return await _pacienteRepositorio.GetPacienteByIdAsync(id);
+            var paciente = await _pacienteRepositorio.GetPacienteByIdAsync(id);
+
+            if (paciente == null)
+            {
+                return new respuestaErrores<MostrarPacienteDTO?>
+                {
+                    EsCorrecto = false,
+                    mensaje = "Paciente no encontrado.",
+                    codigo = 404
+                };
+            }
+
+            return new respuestaErrores<MostrarPacienteDTO?>
+            {
+                EsCorrecto = true,
+                mensaje = "Paciente obtenido exitosamente.",
+                Dato = paciente.ToMostrarPacienteDTO(),
+                codigo = 200
+            };
         }
 
-        public async Task<DAL.Entidades.Paciente> GetPacienteByDUIAsync(string dui)
+        public async Task<respuestaErrores<MostrarPacienteDTO?>> GetPacienteByDUIAsync(string dui)
         {
-            return await _pacienteRepositorio.GetPacienteByDUIAsync(dui);
+            var paciente = await _pacienteRepositorio.GetPacienteByDUIAsync(dui);
+
+            if (paciente == null)
+            {
+                return new respuestaErrores<MostrarPacienteDTO?>
+                {
+                    EsCorrecto = false,
+                    mensaje = "Paciente no encontrado.",
+                    codigo = 404
+                };
+            }
+
+            return new respuestaErrores<MostrarPacienteDTO?>
+            {
+                EsCorrecto = true,
+                mensaje = "Paciente obtenido exitosamente.",
+                Dato = paciente.ToMostrarPacienteDTO(),
+                codigo = 200
+            };
         }
 
-        public async Task<bool> DesactivarPacienteAsync(int idPaciente)
+        public async Task<respuestaErrores<bool>> DesactivarPacienteAsync(int idPaciente)
         {
             var paciente = await _pacienteRepositorio.GetPacienteByIdAsync(idPaciente);
 
             if (paciente == null || paciente.Usuario == null)
-                return false;
+            {
+                return new respuestaErrores<bool>
+                {
+                    EsCorrecto = false,
+                    mensaje = "Paciente no encontrado.",
+                    codigo = 404
+                };
+            }
 
             var resultado = await _usuarioRepositorio.DesactivarUsuarioAsync(paciente.IdUsuario);
 
             if (!resultado)
-                return false;
+            {
+                return new respuestaErrores<bool>
+                {
+                    EsCorrecto = false,
+                    mensaje = "No se pudo desactivar al paciente en el sistema.",
+                    codigo = 500
+                };
+            }
 
             string asunto = "Cuenta desactivada - CACES";
 
@@ -82,15 +141,28 @@ namespace CACES.BLL.Servicios.Paciente
                 cuerpo
             );
 
-            return true;
+            return new respuestaErrores<bool>
+            {
+                EsCorrecto = true,
+                mensaje = "Paciente desactivado exitosamente.",
+                Dato = true,
+                codigo = 200
+            };
         }
 
-        public async Task<MostrarUsuarioDTO> CreatePacienteAsync(RegistrarPacienteDTO dto)
+        public async Task<respuestaErrores<MostrarUsuarioDTO>> CreatePacienteAsync(RegistrarPacienteDTO dto)
         {
             var usuario = await _usuarioServicio.CrearUsuarioAsync(dto.Usuario);
 
             if (usuario?.Dato == null)
-                throw new Exception(usuario?.mensaje ?? "No se pudo crear el usuario.");
+            {
+                return new respuestaErrores<MostrarUsuarioDTO>
+                {
+                    EsCorrecto = false,
+                    mensaje = usuario?.mensaje ?? "No se pudo crear el usuario.",
+                    codigo = 500
+                };
+            }
 
             var usuarioCreado = usuario.Dato;
 
@@ -98,13 +170,27 @@ namespace CACES.BLL.Servicios.Paciente
                 .GetUsuarioByEmailAsync(dto.Usuario.CorreoElectronico);
 
             if (usuarioEntidad == null)
-                throw new Exception("El usuario se creó, pero no se pudo recuperar desde la base de datos.");
+            {
+                return new respuestaErrores<MostrarUsuarioDTO>
+                {
+                    EsCorrecto = false,
+                    mensaje = "El usuario se creó, pero no se pudo recuperar desde la base de datos.",
+                    codigo = 500
+                };
+            }
 
             var rolPaciente = await _context.AspNetRoles
                 .FirstOrDefaultAsync(r => r.Name == "Paciente");
 
             if (rolPaciente == null)
-                throw new Exception("No existe el rol Paciente.");
+            {
+                return new respuestaErrores<MostrarUsuarioDTO>
+                {
+                    EsCorrecto = false,
+                    mensaje = "No existe el rol Paciente.",
+                    codigo = 500
+                };
+            }
 
             var yaTieneRolUsuarioRoles = await _context.UsuarioRoles
                 .AnyAsync(x => x.IdUsuario == usuarioEntidad.IdUsuario &&
@@ -142,21 +228,59 @@ namespace CACES.BLL.Servicios.Paciente
 
             bool pacienteCreado = await _pacienteRepositorio.CreatePacienteAsync(paciente);
 
-            if (pacienteCreado)
-                return usuarioCreado;
+            if (!pacienteCreado)
+            {
+                return new respuestaErrores<MostrarUsuarioDTO>
+                {
+                    EsCorrecto = false,
+                    mensaje = "No se pudo crear el paciente con su historial médico.",
+                    codigo = 500
+                };
+            }
 
-            throw new Exception("No se pudo crear el paciente con su historial médico.");
+            return new respuestaErrores<MostrarUsuarioDTO>
+            {
+                EsCorrecto = true,
+                mensaje = "Paciente registrado exitosamente.",
+                Dato = usuarioCreado,
+                codigo = 200
+            };
         }
 
-        public async Task<bool> RegistrarPacienteAsync(RegistrarPacienteDTO pacienteDto)
+        public async Task<respuestaErrores<bool>> RegistrarPacienteAsync(RegistrarPacienteDTO pacienteDto)
         {
-            var usuarioCreado = await CreatePacienteAsync(pacienteDto);
-            return usuarioCreado != null;
+            var resultado = await CreatePacienteAsync(pacienteDto);
+
+            return new respuestaErrores<bool>
+            {
+                EsCorrecto = resultado.EsCorrecto,
+                mensaje = resultado.mensaje,
+                Dato = resultado.EsCorrecto,
+                codigo = resultado.codigo
+            };
         }
 
-        public async Task<DAL.Entidades.Paciente> GetPacienteByUsuarioIdAsync(int idUsuario)
+        public async Task<respuestaErrores<MostrarPacienteDTO>> GetPacienteByUsuarioIdAsync(int idUsuario)
         {
-            return await _pacienteRepositorio.GetPacienteByUsuarioIdAsync(idUsuario);
+            var paciente = await _pacienteRepositorio.GetPacienteByUsuarioIdAsync(idUsuario);
+
+            if (paciente == null)
+            {
+                return new respuestaErrores<MostrarPacienteDTO>
+                {
+                    EsCorrecto = false,
+                    mensaje = "Paciente no encontrado.",
+                    codigo = 404
+                };
+            }
+
+            return new respuestaErrores<MostrarPacienteDTO>
+            {
+                EsCorrecto = true,
+                mensaje = "Paciente obtenido exitosamente.",
+                Dato = paciente.ToMostrarPacienteDTO(),
+                codigo = 200
+            };
         }
 
         public async Task<int> ObtenerIdPacientePorUsuarioIdAsync(int idUsuario)
@@ -164,17 +288,35 @@ namespace CACES.BLL.Servicios.Paciente
             var paciente = await _pacienteRepositorio.ObtenerPorUsuarioIdAsync(idUsuario);
             return paciente != null ? paciente.IdPaciente : 0;
         }
-        public async Task<IEnumerable<DAL.Entidades.Paciente>> ObtenerPacientesActivosAsync()
+
+        public async Task<respuestaErrores<IEnumerable<MostrarPacienteDTO>>> ObtenerPacientesActivosAsync()
         {
-            return await _pacienteRepositorio.ObtenerPacientesActivosAsync();
+            var pacientes = await _pacienteRepositorio.ObtenerPacientesActivosAsync();
+            var pacientesDTO = pacientes.Select(p => p.ToMostrarPacienteDTO());
+
+            return new respuestaErrores<IEnumerable<MostrarPacienteDTO>>
+            {
+                EsCorrecto = true,
+                mensaje = "Pacientes activos obtenidos exitosamente.",
+                Dato = pacientesDTO,
+                codigo = 200
+            };
         }
 
-        public async Task<bool> ActivarPacienteAsync(int idPaciente)
+        public async Task<respuestaErrores<bool>> ActivarPacienteAsync(int idPaciente)
         {
             var paciente = await _pacienteRepositorio.GetPacienteByIdAsync(idPaciente);
 
             if (paciente == null || paciente.Usuario == null)
-                return false;
+            {
+                return new respuestaErrores<bool>
+                {
+                    EsCorrecto = false,
+                    mensaje = "Paciente no encontrado.",
+                    Dato = false,
+                    codigo = 404
+                };
+            }
 
             paciente.Usuario.Estado = true;
 
@@ -182,7 +324,13 @@ namespace CACES.BLL.Servicios.Paciente
 
             await _context.SaveChangesAsync();
 
-            return true;
+            return new respuestaErrores<bool>
+            {
+                EsCorrecto = true,
+                mensaje = "Paciente activado exitosamente.",
+                Dato = true,
+                codigo = 200
+            };
         }
     }
 }

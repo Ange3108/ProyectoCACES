@@ -251,6 +251,17 @@ namespace CACES.BLL.Mappers
             IdHistorial = src.Historial?.IdHistorial ?? 0
         };
 
+        public static MostrarPacienteDTO? ToMostrarPacienteDTO(this Paciente paciente) => paciente == null ? null : new MostrarPacienteDTO
+        {
+
+            IdPaciente = paciente.IdPaciente,
+            IdHistorial = paciente.IdHistorial,
+            Usuario = paciente.Usuario.ToMostrarUsuarioDTO()
+
+        };
+
+       
+
         // ===== Perfil =====
         public static PerfilUsuarioDTO? ToPerfilUsuarioDTO(this Usuario src)
         {

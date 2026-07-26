@@ -133,19 +133,23 @@
 
                         <div class="col-12">
 
-                            <label for="Foto"
-                                   class="form-label fw-semibold">
-
+                            <label for="FotoArchivo" class="form-label fw-semibold">
                                 <i class="bi bi-image me-1 text-secondary"></i>
                                 Foto de perfil
-
                             </label>
 
-                            <input type="url"
-                                   id="Foto"
-                                   name="Foto"
-                                   class="form-control"
-                                   placeholder="https://ejemplo.com/foto.jpg" />
+                            <input type="file"
+                                   id="FotoArchivo"
+                                   name="FotoArchivo"
+                                   accept="image/*"
+                                   class="form-control" />
+
+                            <div class="mt-2">
+                                <img id="previewFoto"
+                                     src="/img/default.jpg"
+                                     class="rounded-circle border"
+                                     style="width:60px;height:60px;object-fit:cover;display:none;" />
+                            </div>
 
                         </div>
 
