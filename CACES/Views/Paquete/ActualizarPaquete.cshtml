@@ -17,14 +17,12 @@
                 <h1 class="section-title mb-3" style="color: #27418C;">Actualizar Paquete de Turismo Médico</h1>
                 <p class="text-muted mb-4">Modifica los detalles del paquete seleccionado.</p>
 
-                <div asp-validation-summary="ModelOnly" class="text-danger small mb-3 fw-bold"></div>
+                <div id="msjErrorGeneral" class="text-danger small mb-3 fw-bold"></div>
 
-                <form asp-action="ActualizarPaquete" asp-controller="Paquete" method="post" asp-route-id="@Model.IdPaquete">
-
+                <form id="formActualizarPaquete">
                     <input type="hidden" asp-for="IdPaquete" />
 
                     <div class="row g-3">
-
                         <div class="col-12 col-md-6">
                             <label asp-for="Nombre" class="form-label">Nombre del paquete</label>
                             <input asp-for="Nombre" type="text" class="form-control" placeholder="Ej. Evaluación Integral" />
@@ -55,12 +53,11 @@
                                 <label asp-for="Estado" class="form-check-label fw-semibold" for="switchEstado">Paquete Estado</label>
                             </div>
                         </div>
-
                     </div>
 
                     <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
                         <a asp-action="ObtenerPaquetes" class="btn btn-outline-secondary">Cancelar</a>
-                        <button type="submit" class="btn btn-add text-white" style="background-color: #27418C;">Actualizar cambios</button>
+                        <button type="submit" id="btnActualizar" class="btn btn-add text-white" style="background-color: #27418C;">Actualizar cambios</button>
                     </div>
                 </form>
             </div>
@@ -70,4 +67,5 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/actualizar-paquete.js" asp-append-version="true"></script>
 }
