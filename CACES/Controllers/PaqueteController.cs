@@ -8,39 +8,34 @@ namespace CACES.Controllers
     public class PaqueteController : Controller
     {
         public readonly IPaqueteServicio _paqueteServicio;
+
         public PaqueteController(IPaqueteServicio paqueteServicio)
         {
             _paqueteServicio = paqueteServicio;
         }
 
-
         [HttpGet]
         public IActionResult CrearPaquete()
         {
-            return View("~/Views/Paquete/CrearPaquete.cshtml", new PaqueteDTO());
+            return View(new PaqueteDTO());
         }
 
-
         [HttpPost]
-        public async Task<IActionResult> CrearPaquete(PaqueteDTO paqueteDTO)
+        public async Task<IActionResult> CrearPaquete([FromBody] PaqueteDTO paqueteDTO)
         {
             if (!ModelState.IsValid)
             {
-                // Si hay errores de validación, recarga la misma vista manteniendo los datos digitados
-                return View("~/Views/Paquete/CrearPaquete.cshtml", paqueteDTO);
+                return BadRequest(new { esCorrecto = false, mensaje = "Datos del formulario no válidos." });
             }
 
             var resultado = await _paqueteServicio.CreatePaqueteAsync(paqueteDTO);
 
             if (!resultado.EsCorrecto)
             {
-                ModelState.AddModelError(string.Empty, resultado.mensaje ?? "No se pudo crear el paquete.");
-                // Si falla la lógica de negocio, recarga la vista con el mensaje de error superior
-                return View("~/Views/Paquete/CrearPaquete.cshtml", paqueteDTO);
+                return BadRequest(resultado);
             }
 
-            TempData["Mensaje"] = resultado.mensaje ?? "Paquete creado correctamente.";
-            return RedirectToAction("ObtenerPaquetes");
+            return Json(resultado);
         }
 
         [Authorize(Roles = "Administrador")]
@@ -49,41 +44,41 @@ namespace CACES.Controllers
         {
             try
             {
-                var resultado = await _paqueteServicio.GetPaquetesAsync();
+                var resultado = await _paqueteServicio.GetPaquetesAsync() ?? new List<PaqueteDTO>();
 
-                if (resultado == null)
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    resultado = new List<PaqueteDTO>();
+                    return Json(resultado);
                 }
 
-                return View("~/Views/Paquete/Turismo.cshtml", resultado);
+                return View("Turismo", resultado);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View("Error");
             }
         }
+
         [AllowAnonymous]
         [HttpGet]
         public async Task<IActionResult> ObtenerPaquetesSoloActivos()
         {
             try
             {
-                var resultado = await _paqueteServicio.GetPaquetesSoloActivosAsync();
+                var resultado = await _paqueteServicio.GetPaquetesSoloActivosAsync() ?? new List<PaqueteDTO>();
 
-                if (resultado == null)
+                if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    resultado = new List<PaqueteDTO>();
+                    return Json(resultado);
                 }
 
-                return View("~/Views/Paquete/Turismo.cshtml", resultado);
+                return View("Turismo", resultado);
             }
-            catch (Exception ex)
+            catch (Exception)
             {
                 return View("Error");
             }
         }
-
 
         [Authorize(Roles = "Administrador")]
         [HttpGet]
@@ -91,48 +86,38 @@ namespace CACES.Controllers
         {
             var respuesta = await _paqueteServicio.GetPaquetePorIdAsync(id);
 
-            if (respuesta == null)
+            if (respuesta == null || !respuesta.EsCorrecto || respuesta.Dato == null)
             {
                 return View("Error");
             }
 
-            if (!respuesta.EsCorrecto)
+            if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
             {
-                return View("Error"); 
+                return Json(respuesta.Dato);
             }
 
-
-            PaqueteDTO paqueteDto = respuesta.Dato;
-
-            if (paqueteDto == null)
-            {
-                return NotFound();
-            }
-
-            return View("~/Views/Paquete/ActualizarPaquete.cshtml", paqueteDto);
+            return View(respuesta.Dato);
         }
 
         [Authorize(Roles = "Administrador")]
         [HttpPost]
-        public async Task<IActionResult> ActualizarPaquete(int id, PaqueteDTO paqueteDTO)
+        public async Task<IActionResult> ActualizarPaquete(int id, [FromBody] PaqueteDTO paqueteDTO)
         {
             paqueteDTO.IdPaquete = id;
 
             if (!ModelState.IsValid)
             {
-                return View("~/Views/Paquete/ActualizarPaquete.cshtml", paqueteDTO);
+                return BadRequest(new { esCorrecto = false, mensaje = "Datos no válidos." });
             }
 
             var resultado = await _paqueteServicio.UpdatePaqueteAsync(id, paqueteDTO);
 
             if (!resultado.EsCorrecto)
             {
-                ModelState.AddModelError(string.Empty, resultado.mensaje ?? "No se pudo actualizar el paquete.");
-                return View("~/Views/Paquete/ActualizarPaquete.cshtml", paqueteDTO);
+                return BadRequest(resultado);
             }
 
-            TempData["Mensaje"] = resultado.mensaje ?? "Paquete actualizado correctamente.";
-            return RedirectToAction("ObtenerPaquetes");
+            return Json(resultado);
         }
     }
 }
