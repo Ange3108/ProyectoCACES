@@ -58,6 +58,12 @@ namespace CACES.Controllers
         {
             return View();
         }
+      
+        public IActionResult Convenios() 
+        {
+            return View("~/Views/Convenios/Convenios.cshtml");
+        }
+        
 
         [Authorize(Roles = "Administrador")]
         public IActionResult Reportes()
