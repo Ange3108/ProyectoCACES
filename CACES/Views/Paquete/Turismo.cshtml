@@ -210,12 +210,6 @@
                     todo en un solo plan diseñado para pacientes internacionales.
                 </p>
 
-                @if (User.Identity != null && User.Identity.IsAuthenticated && User.IsInRole("Administrador"))
-                {
-                    <a class="btn-registrar" asp-action="CrearPaquete" asp-controller="Paquete">
-                        <i class="bi bi-plus-circle-fill"></i> Registrar Paquete
-                    </a>
-                }
             </div>
         </div>
 

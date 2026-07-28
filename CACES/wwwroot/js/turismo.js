@@ -7,7 +7,7 @@ async function cargarPaquetes() {
     if (!contenedor) return;
 
     try {
-        const response = await fetch(window.location.href, {
+        const response = await fetch('/Paquete/ObtenerPaquetesSoloActivos', {
             cache: 'no-store',
             headers: {
                 'X-Requested-With': 'XMLHttpRequest',
@@ -54,11 +54,7 @@ async function cargarPaquetes() {
                             <a href="https://wa.me" class="btn-reservar" target="_blank" rel="noopener noreferrer">
                                 <i class="bi bi-whatsapp"></i> Reservar
                             </a>
-                            ${esAdmin ? `
-                                <a href="/Paquete/ActualizarPaquete/${p.idPaquete}" class="btn-editar-paquete" title="Editar paquete">
-                                    <i class="bi bi-pencil-square"></i>
-                                </a>
-                            ` : ''}
+                            
                         </div>
                     </div>
                 </article>
