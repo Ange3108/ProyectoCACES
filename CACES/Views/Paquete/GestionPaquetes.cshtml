@@ -1,0 +1,62 @@
+﻿@using CACES.BLL.DTOs.Paquete
+@model List<PaqueteDTO>
+
+@{
+    ViewData["Title"] = "Gestión de Paquetes Quirúrgicos";
+}
+
+<div class="container py-5">
+    <div class="card border-0 shadow-lg rounded-4 overflow-hidden">
+
+        <div class="card-header border-0 py-4" style="background:#163B73;">
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+                <div>
+                    <h2 class="text-white fw-bold mb-1">
+                        <i class="bi bi-hospital me-2"></i>
+                        Gestión de Paquetes Quirúrgicos
+                    </h2>
+                    <p class="text-white-50 mb-0">
+                        Administre el catálogo global de paquetes turísticos y sus precios base en el sistema.
+                    </p>
+                </div>
+
+                <div>
+                    <a asp-controller="Paquete" asp-action="CrearPaquete" class="btn text-white px-4 py-2 rounded-3 fw-semibold shadow-sm" style="background:#20C4D8; border:none;">
+                        <i class="bi bi-plus-lg me-2"></i>Agregar Paquete
+                    </a>
+                </div>
+            </div>
+        </div>
+
+        <div class="card-body p-4">
+
+            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+                <table class="table table-hover align-middle mb-0">
+                    <thead style="background:#163B73; color:white;">
+                        <tr>
+                            <th>Paquete</th>
+                            <th>Descripción</th>
+                            <th>Duración</th>
+                            <th>Precio Base</th>
+                            <th>Estado</th>
+                            <th style="width:200px;" class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody id="contenedorTablaPaquetes">
+                        <tr>
+                            <td colspan="6" class="text-center py-5 text-muted">
+                                <div class="spinner-border text-primary me-2" role="status"></div>
+                                Cargando paquetes...
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/gestion-paquetes.js" asp-append-version="true"></script>
+}

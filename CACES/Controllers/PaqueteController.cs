@@ -44,14 +44,13 @@ namespace CACES.Controllers
         {
             try
             {
-                var resultado = await _paqueteServicio.GetPaquetesAsync() ?? new List<PaqueteDTO>();
-
                 if (Request.Headers["X-Requested-With"] == "XMLHttpRequest")
                 {
-                    return Json(resultado);
+                    var datos = await _paqueteServicio.GetPaquetesAsync() ?? new List<PaqueteDTO>();
+                    return Json(datos);
                 }
 
-                return View("Turismo", resultado);
+                return View("GestionPaquetes");
             }
             catch (Exception)
             {
