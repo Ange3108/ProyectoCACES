@@ -207,6 +207,17 @@ CREATE TABLE Noticias(
     Estado BIT NOT NULL
 );
 
+CREATE TABLE Convenios (
+    Id INT PRIMARY KEY IDENTITY(1,1),
+    Nombre NVARCHAR(150) NOT NULL,          
+    Descripcion NVARCHAR(MAX) NULL,        
+    DescuentoPorcentaje DECIMAL(5,2) NULL,  
+    ContactoTelefono NVARCHAR(20) NULL,    
+    ImagenUrl NVARCHAR(500) NULL,          
+    Estado BIT DEFAULT 1 NOT NULL,     
+    FechaCreacion DATETIME DEFAULT GETDATE()
+);
+
 create table ConfiguracionQuirofano(
     id int Primary Key Identity(1,1),
     CupoMaximoDiario int

@@ -1,4 +1,5 @@
 ﻿using CACES.BLL.DTOs.Cita;
+using CACES.BLL.DTOs.Convenios;
 using CACES.BLL.DTOs.Especialidad;
 using CACES.BLL.DTOs.Horario;
 using CACES.BLL.DTOs.Icono;
@@ -579,6 +580,41 @@ namespace CACES.BLL.Mappers
             ValorRespuesta = src.ValorRespuesta,
             GeneroAlerta = false
         };
+
+        // ===== Convenio =====
+        public static MostrarConvenios? ToConvenioDTO(this Convenios src) => src == null ? null : new MostrarConvenios
+        {
+            Id = src.Id,
+            Nombre = src.Nombre,
+            Descripcion = src.Descripcion,
+            DescuentoPorcentaje = src.DescuentoPorcentaje,
+            ContactoTelefono = src.ContactoTelefono,
+            ImagenUrl = src.ImagenUrl,
+            Estado = src.Estado,
+        };
+
+        public static Convenios? ToConvenio(this CrearModificarConvenio src) => src == null ? null : new Convenios
+        {
+            Nombre = src.Nombre,
+            Descripcion = src.Descripcion,
+            DescuentoPorcentaje = src.DescuentoPorcentaje,
+            ContactoTelefono = src.ContactoTelefono,
+            ImagenUrl = src.ImagenUrl,
+            Estado = true,
+            FechaCreacion = DateTime.Now
+        };
+
+        public static void UpdateFromActualizarConvenioDTO(this Convenios dest, CrearModificarConvenio src)
+        {
+            if (src == null || dest == null) return;
+
+            dest.Nombre = src.Nombre ?? dest.Nombre;
+            dest.Descripcion = src.Descripcion ?? dest.Descripcion;
+            dest.DescuentoPorcentaje = src.DescuentoPorcentaje;
+            dest.ContactoTelefono = src.ContactoTelefono ?? dest.ContactoTelefono;
+            dest.ImagenUrl = src.ImagenUrl ?? dest.ImagenUrl;
+            dest.Estado = src.Estado;
+        }
 
     }
 }
