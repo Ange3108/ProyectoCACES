@@ -1,0 +1,155 @@
+﻿@model IEnumerable<CACES.BLL.DTOs.Convenios.MostrarConvenios>
+
+@{
+    ViewData["Title"] = "Convenios";
+}
+
+<style>
+    /* ESTILOS PARA LA SECCIÓN DE CONVENIOS */
+    .seccion-diagnosticos {
+        background-color: #f4f7fc;
+        border-radius: 20px;
+        padding: 3.5rem 2rem;
+        margin-top: 2rem;
+    }
+
+    .diag-titulo {
+        font-size: 1.7rem;
+        font-weight: 800;
+        color: #1a2d6b;
+        margin-bottom: 0.5rem;
+    }
+
+    .diag-subtitulo {
+        color: #6c757d;
+        font-size: 0.95rem;
+        margin-bottom: 3rem;
+    }
+
+    .diag-card {
+        background: white;
+        border: none;
+        border-radius: 16px;
+        padding: 1.8rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.04);
+        height: 100%;
+        transition: transform 0.2s, box-shadow 0.2s;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+    }
+
+        .diag-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(39,65,140,0.08);
+        }
+
+    .diag-icono {
+        width: 50px;
+        height: 50px;
+        background-color: #e8f7fd;
+        color: #27418C;
+        border-radius: 12px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.5rem;
+    }
+
+    .badge-descuento {
+        background-color: #e8f7fd;
+        color: #27418C;
+        font-weight: 700;
+        font-size: 0.85rem;
+        padding: 0.4rem 0.88rem;
+        border-radius: 20px;
+    }
+
+    .convenio-img {
+        width: 100%;
+        height: 150px;
+        object-fit: cover;
+        border-radius: 12px;
+        margin-bottom: 1rem;
+    }
+</style>
+
+<!-- SECCIÓN DE CONVENIOS ACTIVOS -->
+<section class="seccion-diagnosticos">
+    <div class="text-center mb-5">
+        <h2 class="diag-titulo">
+            <i class="bi bi-shield-plus me-2" style="color: #72CEF2;"></i>Convenios Institucionales y Beneficios
+        </h2>
+        <p class="diag-subtitulo max-width-600 mx-auto">
+            Aprovecha nuestras alianzas estratégicas y accede a tarifas preferenciales y descuentos exclusivos disponibles en nuestra red.
+        </p>
+    </div>
+
+    @if (Model != null && Model.Any())
+    {
+        <div class="row g-4 mb-5">
+            @foreach (var convenio in Model)
+            {
+                <div class="col-12 col-md-6 col-lg-4">
+                    <div class="diag-card">
+                        <div>
+                            @if (!string.IsNullOrEmpty(convenio.ImagenUrl))
+                            {
+                                <img src="@convenio.ImagenUrl" alt="@convenio.Nombre" class="convenio-img" />
+                            }
+
+                            <div class="d-flex justify-content-between align-items-center mb-3">
+                                @if (string.IsNullOrEmpty(convenio.ImagenUrl))
+                                {
+                                    <div class="diag-icono">
+                                        <i class="bi bi-handbag-fill"></i>
+                                    </div>
+                                }
+                                <span class="badge-descuento ms-auto">
+                                    <i class="bi bi-tag-fill me-1"></i>@convenio.DescuentoPorcentaje% desc.
+                                </span>
+                            </div>
+
+                            <h5 class="fw-bold text-dark mb-2" style="font-size: 1.15rem;">@convenio.Nombre</h5>
+
+                            <p class="text-muted mb-3" style="font-size: 0.88rem; line-height: 1.6;">
+                                @(string.IsNullOrEmpty(convenio.Descripcion) ? "Sin descripción disponible." : convenio.Descripcion)
+                            </p>
+                        </div>
+
+                        @if (!string.IsNullOrEmpty(convenio.ContactoTelefono))
+                        {
+                            <div class="pt-3 border-top mt-2 d-flex align-items-center text-muted small">
+                                <i class="bi bi-telephone-fill me-2 text-primary"></i>
+                                <span>Contacto: <strong>@convenio.ContactoTelefono</strong></span>
+                            </div>
+                        }
+                    </div>
+                </div>
+            }
+        </div>
+    }
+    else
+    {
+        <div class="text-center py-5 bg-white rounded-4 shadow-sm mb-5">
+            <i class="bi bi-info-circle text-muted mb-2" style="font-size: 2.5rem;"></i>
+            <p class="text-muted mb-0">No hay convenios activos disponibles en este momento.</p>
+        </div>
+    }
+
+    <!-- CTA ACCIÓN FINAL -->
+    <div class="mt-4 text-center">
+        <div class="p-4 bg-white rounded-4 shadow-sm border d-inline-flex flex-column flex-md-row align-items-center gap-3">
+            <div class="text-start">
+                <h6 class="fw-bold mb-1 text-dark">¿Necesitas aplicar o consultar sobre nuestros convenios?</h6>
+                <p class="text-muted mb-0 small">Nuestros asesores de atención al cliente te ayudan a coordinar y validar tus beneficios.</p>
+            </div>
+            <a href="https://wa.me"
+               target="_blank"
+               class="btn btn-success px-4 py-2 rounded-3 text-nowrap"
+               style="text-decoration: none;">
+                <i class="bi bi-whatsapp me-2"></i> Coordinar Convenios
+            </a>
+        </div>
+    </div>
+</section>

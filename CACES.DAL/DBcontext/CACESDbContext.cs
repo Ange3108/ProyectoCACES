@@ -42,6 +42,7 @@ namespace CACES.DAL.DBContext
         public DbSet<AlertaStaff> AlertasStaff { get; set; } 
 
         public DbSet<RespuestaSeguimiento> RespuestasSeguimiento { get; set; }
+        public DbSet<Convenios> Convenios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -516,6 +517,19 @@ namespace CACES.DAL.DBContext
                       .WithMany()
                       .HasForeignKey(r => r.IdPregunta)
                       .OnDelete(DeleteBehavior.Restrict);
+            });
+
+            modelBuilder.Entity<Convenios>(entity =>
+            {
+                entity.HasKey(e => e.Id);
+                entity.Property(e => e.Id).HasColumnName("Id");
+                entity.Property(e => e.Nombre).HasColumnName("Nombre").IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion").HasMaxLength(200);
+                entity.Property(e => e.DescuentoPorcentaje).HasColumnName("DescuentoPorcentaje").HasColumnType("decimal(18,2)");
+                entity.Property(e => e.ContactoTelefono).HasColumnName("ContactoTelefono").HasMaxLength(20);
+                entity.Property(e => e.ImagenUrl).HasColumnName("ImagenUrl").HasMaxLength(200);
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+                entity.Property(e => e.FechaCreacion).HasColumnName("FechaCreacion").IsRequired();
             });
 
         }

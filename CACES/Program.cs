@@ -5,6 +5,7 @@ using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.ConfiguracionCheckPoints;
 using CACES.BLL.Servicios.ConfirmacionCorreo;
+using CACES.BLL.Servicios.Convenios;
 using CACES.BLL.Servicios.Cotizaciones;
 using CACES.BLL.Servicios.Especialidad;
 using CACES.BLL.Servicios.Especialidad.ProyectoCACES.CACES.BLL.Servicios;
@@ -28,6 +29,7 @@ using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.ArchivosHistorial;
 using CACES.DAL.Repositorios.Base;
 using CACES.DAL.Repositorios.Citas;
+using CACES.DAL.Repositorios.Convenios;
 using CACES.DAL.Repositorios.Cotizaciones;
 using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
@@ -78,6 +80,7 @@ builder.Services.AddScoped<IRecetaRepositorio, RecetaRepositorio>();
 builder.Services.AddScoped<ICotizacionRepositorio, CotizacionRepositorio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<ISeguimientoPacienteRepositorio, SeguimientoPacienteRepositorio>();
+builder.Services.AddScoped<IConvenioRepositorio, ConvenioRepositorio>();
 builder.Services.AddScoped(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
@@ -107,6 +110,7 @@ builder.Services.AddScoped<IPreguntasPOpServicio, PreguntasPOpServicio>();
 builder.Services.AddScoped<ISeguimientoPacienteServicio, SeguimientoPacienteServicio>();
 builder.Services.AddScoped<IRespuestaSeguimientoServicio, RespuestaSeguimientoServicio>();
 builder.Services.AddScoped<IAlertaStaffServicio, AlertaStaffServicio>();
+builder.Services.AddScoped<IConvenioServicio, ConvenioServicio>();
 
 
 
