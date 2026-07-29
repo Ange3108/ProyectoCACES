@@ -17,6 +17,8 @@ namespace CACES.BLL.Servicios.Usuario
         Task<respuestaErrores<MostrarUsuarioDTO>> DesactivarUsuarioAsync(int id);
         (bool IsValid, string Message) ValidarContraseña(string password);
 
-      
+        Task<respuestaErrores<MostrarUsuarioDTO>> CambiarContraseñaAsync(int id, CambiarContrasenaDTO cambiarContrasenaDTO);
+
+
     }
 }

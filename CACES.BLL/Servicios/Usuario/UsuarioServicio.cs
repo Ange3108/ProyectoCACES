@@ -136,7 +136,7 @@ namespace CACES.BLL.Servicios.Usuario
         {
             using (var sha256 = System.Security.Cryptography.SHA256.Create())
             {
-                var hashedBytes = sha256.ComputeHash(System.Text.Encoding.UTF8.GetBytes(password));
+                var hashedBytes = sha256.ComputeHash(Encoding.UTF8.GetBytes(password));
                 return Convert.ToBase64String(hashedBytes);
             }
         }
@@ -250,6 +250,45 @@ namespace CACES.BLL.Servicios.Usuario
                 return respuesta;
             }
             respuesta.Dato = usuario.ToMostrarUsuarioDTO();
+            return respuesta;
+        }
+
+        public async Task<respuestaErrores<MostrarUsuarioDTO>> CambiarContraseñaAsync(int id, CambiarContrasenaDTO cambiarContrasenaDTO)
+        {
+            var respuesta = new respuestaErrores<MostrarUsuarioDTO>();
+            var usuario = await _usuarioRepository.GetUsuarioByIdAsync(id);
+            if(usuario == null)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "Usuario no encontrado";
+                respuesta.codigo = 404;
+                return respuesta;
+            }
+            var contraseñaActualHash = HashContraseña(cambiarContrasenaDTO.PasswordActual);
+            var contraseñaNuevaHash = HashContraseña(cambiarContrasenaDTO.PasswordNueva);
+            
+            if (contraseñaActualHash != usuario.PasswordHash)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "Contraseña actual incorrecta";
+                respuesta.codigo = 400;
+                return respuesta;
+            }
+
+            if (contraseñaNuevaHash == contraseñaActualHash)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.mensaje = "La nueva contraseña no puede ser igual a la actual";
+                respuesta.codigo = 400;
+                return respuesta;
+            }
+
+            usuario.PasswordHash = contraseñaNuevaHash;
+            await _usuarioRepository.UpdateUsuarioAsync(usuario);
+
+
+            respuesta.EsCorrecto = true;
+            respuesta.mensaje = "Contraseña actualizada correctamente";
             return respuesta;
         }
     }

@@ -2,31 +2,43 @@
 @{
     ViewData["Title"] = "Configuración";
 }
+<script>
+    configuracionUsuario.idUsuarioActual = @User.FindFirst("IdUsuario")?.Value;
+</script>
 
-<div class="container-fluid py-4">
+<section class="container-fluid py-4">
 
-    <div class="d-flex align-items-center mb-4">
-        <i class="bi bi-gear-fill fs-3 text-primary me-2"></i>
-        <div>
-            <h3 class="mb-0">Configuración</h3>
-            <small class="text-muted">Administra tus preferencias, notificaciones y cuenta</small>
-        </div>
+    <!-- ============ ENCABEZADO (paleta/tipografía de Especialistas.cshtml) ============ -->
+    <div class="text-center mb-5">
+        <span class="directory-eyebrow" style="color:#1AA6A6;">
+            Mi cuenta
+        </span>
+
+        <h1 class="directory-title" style="color:#0B2E59;">
+            Configuración
+        </h1>
+
+        <p class="directory-intro" style="color:#6B7280;">
+            Administra tus preferencias, notificaciones y la seguridad de tu cuenta.
+        </p>
     </div>
 
+    <hr class="directory-rule mb-4" style="border-color:#D7E3EC;" />
+
     <div class="row">
-        <!-- Navegación lateral (tabs verticales, mismo patrón de GestionSeguimiento) -->
+        <!-- Navegación lateral (tabs verticales) -->
         <div class="col-md-3">
             <div class="list-group shadow-sm" id="configTabs" role="tablist">
-                <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#tab-notificaciones" role="tab">
+                <a class="list-group-item list-group-item-action active config-tab-link" data-bs-toggle="list" href="#tab-notificaciones" role="tab">
                     <i class="bi bi-bell-fill me-2"></i>Notificaciones
                 </a>
-                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#tab-seguridad" role="tab">
+                <a class="list-group-item list-group-item-action config-tab-link" data-bs-toggle="list" href="#tab-seguridad" role="tab">
                     <i class="bi bi-shield-lock-fill me-2"></i>Seguridad
                 </a>
-                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#tab-faq" role="tab">
+                <a class="list-group-item list-group-item-action config-tab-link" data-bs-toggle="list" href="#tab-faq" role="tab">
                     <i class="bi bi-question-circle-fill me-2"></i>Preguntas Frecuentes
                 </a>
-                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#tab-soporte" role="tab">
+                <a class="list-group-item list-group-item-action config-tab-link" data-bs-toggle="list" href="#tab-soporte" role="tab">
                     <i class="bi bi-headset me-2"></i>Contacto y Soporte
                 </a>
                 <a class="list-group-item list-group-item-action text-danger" data-bs-toggle="list" href="#tab-cuenta" role="tab">
@@ -42,10 +54,27 @@
                 <!-- ============ NOTIFICACIONES ============ -->
                 <div class="tab-pane fade show active" id="tab-notificaciones" role="tabpanel">
                     <div class="card shadow-sm">
-                        <div class="card-header bg-white">
-                            <h5 class="mb-0"><i class="bi bi-bell-fill text-primary me-2"></i>Notificaciones</h5>
+                        <div class="card-header bg-white d-flex justify-content-between align-items-center">
+                            <h5 class="mb-0" style="color:#0B2E59;">
+                                <i class="bi bi-bell-fill me-2" style="color:#1AA6A6;"></i>Notificaciones
+                                <span id="badgeNotificaciones" class="badge rounded-pill ms-1" style="background-color:#1AA6A6;"></span>
+                            </h5>
+                            <button type="button" class="btn btn-sm btn-outline-secondary" id="btnMarcarTodasLeidas">
+                                Marcar todas leídas
+                            </button>
                         </div>
                         <div class="card-body">
+
+                            <div id="listaNotificaciones" class="mb-4">
+                                <div class="text-center py-3">
+                                    <div class="spinner-border spinner-border-sm" style="color:#1AA6A6;" role="status">
+                                        <span class="visually-hidden">Cargando...</span>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <hr style="border-color:#D7E3EC;" />
+
                             <div class="form-check form-switch mb-3 d-flex justify-content-between align-items-center">
                                 <label class="form-check-label" for="notifCorreo">
                                     <strong>Notificaciones por correo</strong>
@@ -71,7 +100,7 @@
                                        data-clave="NotificarSistema" checked>
                             </div>
 
-                            <hr />
+                            <hr style="border-color:#D7E3EC;" />
                             <label class="form-label"><strong>Frecuencia de resumen</strong></label>
                             <select class="form-select w-auto" id="frecuenciaResumen">
                                 <option value="Diario">Diario</option>
@@ -82,39 +111,79 @@
                     </div>
                 </div>
 
+
                 <!-- ============ SEGURIDAD ============ -->
                 <div class="tab-pane fade" id="tab-seguridad" role="tabpanel">
                     <div class="card shadow-sm">
                         <div class="card-header bg-white">
-                            <h5 class="mb-0"><i class="bi bi-shield-lock-fill text-primary me-2"></i>Seguridad</h5>
+                            <h5 class="mb-0" style="color:#0B2E59;">
+                                <i class="bi bi-shield-lock-fill me-2" style="color:#1AA6A6;"></i>Seguridad
+                            </h5>
                         </div>
                         <div class="card-body">
                             <form id="formCambiarPassword">
                                 <div class="mb-3">
                                     <label class="form-label">Contraseña actual</label>
-                                    <input type="password" class="form-control" id="passwordActual" required />
+                                    <div class="position-relative">
+                                        <input type="password"
+                                               class="form-control"
+                                               id="passwordActual"
+                                               name="passwordActual"
+                                               autocomplete="current-password"
+                                               required
+                                               style="padding-right:2.6rem;" />
+                                        <button type="button" class="btn btn-link toggle-password position-absolute top-50 end-0 translate-middle-y me-1 p-0 px-2"
+                                                id="togglePwdActual" data-target="passwordActual" aria-label="Mostrar/ocultar contraseña">
+                                            <i class="bi bi-eye" id="eyeIconActual"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Nueva contraseña</label>
-                                    <input type="password" class="form-control" id="passwordNueva" required />
+                                    <div class="position-relative">
+                                        <input type="password"
+                                               class="form-control"
+                                               id="passwordNueva"
+                                               name="passwordNueva"
+                                               autocomplete="new-password"
+                                               required
+                                               style="padding-right:2.6rem;" />
+                                        <button type="button" class="btn btn-link toggle-password position-absolute top-50 end-0 translate-middle-y me-1 p-0 px-2"
+                                                id="togglePwdNueva" data-target="passwordNueva" aria-label="Mostrar/ocultar contraseña">
+                                            <i class="bi bi-eye" id="eyeIconNueva"></i>
+                                        </button>
+                                    </div>
                                 </div>
                                 <div class="mb-3">
                                     <label class="form-label">Confirmar nueva contraseña</label>
-                                    <input type="password" class="form-control" id="passwordConfirmar" required />
+                                    <div class="position-relative">
+                                        <input type="password"
+                                               class="form-control"
+                                               id="passwordConfirmar"
+                                               name="passwordConfirmar"
+                                               autocomplete="new-password"
+                                               required
+                                               style="padding-right:2.6rem;" />
+                                        <button type="button" class="btn btn-link toggle-password position-absolute top-50 end-0 translate-middle-y me-1 p-0 px-2"
+                                                id="togglePwdConfirmar" data-target="passwordConfirmar" aria-label="Mostrar/ocultar contraseña">
+                                            <i class="bi bi-eye" id="eyeIconConfirmar"></i>
+                                        </button>
+                                    </div>
                                 </div>
-                                <button type="submit" class="btn btn-primary">
+                                <button type="submit" class="btn text-white" style="background-color:#1AA6A6;">
                                     <i class="bi bi-check-circle me-1"></i>Actualizar contraseña
                                 </button>
                             </form>
                         </div>
                     </div>
                 </div>
-
                 <!-- ============ FAQ ============ -->
                 <div class="tab-pane fade" id="tab-faq" role="tabpanel">
                     <div class="card shadow-sm">
                         <div class="card-header bg-white">
-                            <h5 class="mb-0"><i class="bi bi-question-circle-fill text-primary me-2"></i>Preguntas Frecuentes</h5>
+                            <h5 class="mb-0" style="color:#0B2E59;">
+                                <i class="bi bi-question-circle-fill me-2" style="color:#1AA6A6;"></i>Preguntas Frecuentes
+                            </h5>
                         </div>
                         <div class="card-body">
                             <div class="accordion" id="accordionFAQ">
@@ -127,9 +196,8 @@
                                     </h2>
                                     <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
                                         <div class="accordion-body">
-                                            El sistema genera checkpoints automáticos según los días configurados después de la cirugía.
-                                            En cada checkpoint se envían preguntas de seguimiento y, si una respuesta supera el umbral de alerta,
-                                            se notifica al staff correspondiente.
+                                            El sistema registra checkpoints según el plan asignado por tu especialista y te
+                                            notifica cuando se acerca una fecha de control o revisión.
                                         </div>
                                     </div>
                                 </div>
@@ -137,7 +205,7 @@
                                 <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
-                                            ¿Puedo cambiar la frecuencia de mis notificaciones?
+                                            ¿Puedo cambiar cómo recibo las notificaciones?
                                         </button>
                                     </h2>
                                     <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
@@ -175,6 +243,21 @@
                                         </div>
                                     </div>
                                 </div>
+                                 <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
+                                            ¿Cómo reservo mis citas?
+                                        </button>
+                                    </h2>
+                                    <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                        <div class="accordion-body">
+                                            Ve a la pestaña <strong>Calendario Paciente</strong>, luego da click al botón 
+                                            <strong>Listado de Citas</strong>, y por último da click al botón de <strong>Registrar
+                                                cita</strong>, llena los campos y da enviar. 
+                                        </div>
+                                    </div>
+                                </div>
+                                
 
                             </div>
                         </div>
@@ -185,39 +268,27 @@
                 <div class="tab-pane fade" id="tab-soporte" role="tabpanel">
                     <div class="card shadow-sm">
                         <div class="card-header bg-white">
-                            <h5 class="mb-0"><i class="bi bi-headset text-primary me-2"></i>Contacto y Soporte</h5>
+                            <h5 class="mb-0" style="color:#0B2E59;">
+                                <i class="bi bi-headset me-2" style="color:#1AA6A6;"></i>Contacto y Soporte
+                            </h5>
                         </div>
                         <div class="card-body">
                             <div class="row mb-4">
                                 <div class="col-md-4">
-                                    <i class="bi bi-envelope-fill text-primary me-1"></i> soporte@caces.com
+                                    <i class="bi bi-envelope-fill me-1" style="color:#1AA6A6;"></i> soporte@caces.com
                                 </div>
                                 <div class="col-md-4">
-                                    <i class="bi bi-telephone-fill text-primary me-1"></i> +506 0000-0000
+                                    <i class="bi bi-telephone-fill me-1" style="color:#1AA6A6;"></i> +506 0000-0000
                                 </div>
                                 <div class="col-md-4">
-                                    <i class="bi bi-clock-fill text-primary me-1"></i> Lun - Vie, 8am - 5pm
+                                    <i class="bi bi-clock-fill me-1" style="color:#1AA6A6;"></i> Lun - Vie, 8am - 5pm
                                 </div>
                             </div>
-                            <hr />
-                            <form id="formSoporte">
-                                <div class="mb-3">
-                                    <label class="form-label">Asunto</label>
-                                    <select class="form-select" id="asuntoSoporte">
-                                        <option>Problema técnico</option>
-                                        <option>Duda sobre seguimiento post-operatorio</option>
-                                        <option>Solicitud de cambio de datos</option>
-                                        <option>Otro</option>
-                                    </select>
-                                </div>
-                                <div class="mb-3">
-                                    <label class="form-label">Mensaje</label>
-                                    <textarea class="form-control" id="mensajeSoporte" rows="4" required></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary">
-                                    <i class="bi bi-send-fill me-1"></i>Enviar
-                                </button>
-                            </form>
+                           
+                                <a asp-area="" asp-controller="Soporte" asp-action="Contacto" class="text-decoration-none fw-bold" style="color:#27418C;">
+                    ¿Desea generar una consulta? De Click Aquí
+                </a>
+                           
                         </div>
                     </div>
                 </div>
@@ -244,7 +315,7 @@
             </div>
         </div>
     </div>
-</div>
+</section>
 
 <!-- Modal confirmación eliminar cuenta -->
 <div class="modal fade" id="modalEliminarCuenta" tabindex="-1">
@@ -268,116 +339,19 @@
     </div>
 </div>
 
+<style>
+    /* Acentos tomados de Especialistas.cshtml aplicados a los tabs de Configuración */
+    #configTabs .config-tab-link.active {
+        background-color: #1AA6A6;
+        border-color: #1AA6A6;
+        color: #fff;
+    }
+
+    #configTabs .config-tab-link:not(.active):hover {
+        color: #0B2E59;
+    }
+</style>
+
 @section Scripts {
-    <script>
-        $(function () {
-            // ---- Toggle de notificaciones (AJAX) ----
-            $('#tab-notificaciones input[type="checkbox"]').on('change', function () {
-                const clave = $(this).data('clave');
-                const valor = $(this).is(':checked');
-
-                $.ajax({
-                    url: '@Url.Action("ActualizarNotificacion", "Configuracion")',
-                    type: 'POST',
-                    data: { clave: clave, valor: valor },
-                    success: function (resp) {
-                        if (resp.esCorrecto) {
-                            toastr.success(resp.mensaje || 'Preferencia actualizada');
-                        } else {
-                            toastr.error(resp.mensaje || 'No se pudo actualizar');
-                        }
-                    },
-                    error: function () {
-                        toastr.error('Error de conexión al actualizar la notificación');
-                    }
-                });
-            });
-
-            $('#frecuenciaResumen').on('change', function () {
-                $.post('@Url.Action("ActualizarFrecuenciaResumen", "Configuracion")',
-                    { frecuencia: $(this).val() },
-                    function (resp) {
-                        if (resp.esCorrecto) toastr.success('Frecuencia actualizada');
-                    });
-            });
-
-            // ---- Cambiar contraseña ----
-            $('#formCambiarPassword').on('submit', function (e) {
-                e.preventDefault();
-
-                const actual = $('#passwordActual').val();
-                const nueva = $('#passwordNueva').val();
-                const confirmar = $('#passwordConfirmar').val();
-
-                if (nueva !== confirmar) {
-                    toastr.error('Las contraseñas nuevas no coinciden');
-                    return;
-                }
-
-                $.ajax({
-                    url: '@Url.Action("CambiarPassword", "Configuracion")',
-                    type: 'POST',
-                    data: { passwordActual: actual, passwordNueva: nueva },
-                    success: function (resp) {
-                        if (resp.esCorrecto) {
-                            toastr.success('Contraseña actualizada correctamente');
-                            $('#formCambiarPassword')[0].reset();
-                        } else {
-                            toastr.error(resp.mensaje || 'No se pudo actualizar la contraseña');
-                        }
-                    },
-                    error: function () {
-                        toastr.error('Error de conexión');
-                    }
-                });
-            });
-
-            // ---- Formulario de soporte ----
-            $('#formSoporte').on('submit', function (e) {
-                e.preventDefault();
-
-                $.ajax({
-                    url: '@Url.Action("EnviarSoporte", "Configuracion")',
-                    type: 'POST',
-                    data: {
-                        asunto: $('#asuntoSoporte').val(),
-                        mensaje: $('#mensajeSoporte').val()
-                    },
-                    success: function (resp) {
-                        if (resp.esCorrecto) {
-                            toastr.success('Tu mensaje fue enviado a soporte');
-                            $('#formSoporte')[0].reset();
-                        } else {
-                            toastr.error(resp.mensaje || 'No se pudo enviar el mensaje');
-                        }
-                    },
-                    error: function () {
-                        toastr.error('Error de conexión');
-                    }
-                });
-            });
-
-            // ---- Eliminar cuenta: habilitar botón solo si escribe "ELIMINAR" ----
-            $('#confirmarEliminarInput').on('input', function () {
-                $('#btnConfirmarEliminarCuenta').prop('disabled', $(this).val().trim() !== 'ELIMINAR');
-            });
-
-            $('#btnConfirmarEliminarCuenta').on('click', function () {
-                $.ajax({
-                    url: '@Url.Action("EliminarCuenta", "Configuracion")',
-                    type: 'POST',
-                    success: function (resp) {
-                        if (resp.esCorrecto) {
-                            window.location.href = '@Url.Action("Login", "Account")';
-                        } else {
-                            toastr.error(resp.mensaje || 'No se pudo eliminar la cuenta');
-                        }
-                    },
-                    error: function () {
-                        toastr.error('Error de conexión al eliminar la cuenta');
-                    }
-                });
-            });
-        });
-    </script>
+    <script src="~/js/configuracionUsuario.js" asp-append-version="true"></script>
 }

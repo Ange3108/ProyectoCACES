@@ -101,6 +101,15 @@ namespace CACES.Controllers
 
         }
 
+        [HttpPost, HttpGet]
+        public async Task<IActionResult> CambiarContrasena(int id, CambiarContrasenaDTO cambiarContrasenaDTO)
 
+        {
+
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var CambiarContrasena = await _usuarioServicio.CambiarContraseñaAsync(id, cambiarContrasenaDTO);
+            return Ok(CambiarContrasena);
+        }
     }
 }

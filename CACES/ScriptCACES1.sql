@@ -701,6 +701,43 @@ VALUES ('¿Ha notado sangrado o secreción anormal? (0 = No, 1 = Sí)', 0, 1, 1,
 INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
 VALUES ('Del 1 al 10, ¿qué tan satisfecho está con su recuperación general?', 1, 10, 4, 1, 1);
 
+
+-- ===== SMTP (correo) =====
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.Host', 'smtp.gmail.com', 'string', 'Smtp', 'Servidor SMTP utilizado para el envío de correos');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.Puerto', '587', 'int', 'Smtp', 'Puerto del servidor SMTP');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.Usuario', 'notificaciones@caces.com', 'string', 'Smtp', 'Usuario/correo remitente del sistema');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.UsarSSL', 'true', 'bool', 'Smtp', 'Indica si la conexión SMTP usa SSL/TLS');
+
+-- ===== Notificaciones =====
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('NotificarCorreo', 'true', 'bool', 'Notificaciones', 'Habilita el envío de notificaciones por correo');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('NotificarSMS', 'false', 'bool', 'Notificaciones', 'Habilita el envío de notificaciones por SMS');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('NotificarSistema', 'true', 'bool', 'Notificaciones', 'Habilita el badge de alertas dentro del panel administrativo');
+
+-- ===== Seguimiento post-operatorio (checkpoints) =====
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('DiasCheckpoint1', '3', 'int', 'Seguimiento', 'Día posterior a la cirugía para el primer checkpoint');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('DiasCheckpoint2', '7', 'int', 'Seguimiento', 'Día posterior a la cirugía para el segundo checkpoint');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('DiasCheckpoint3', '15', 'int', 'Seguimiento', 'Día posterior a la cirugía para el tercer checkpoint');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('HoraEnvioRecordatorios', '08:00', 'string', 'Seguimiento', 'Hora del día en que el job de Hangfire envía los recordatorios');
+
 UPDATE Usuarios
 SET PasswordHash = 'R6GvfeUKq9IZPWHh9hvY0+1D2ywQMANwAYxuux6bYIE=' --Maria123+
 WHERE CorreoElectronico = 'maria.paciente@caces.com';

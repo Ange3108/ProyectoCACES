@@ -71,7 +71,7 @@ namespace CACES.Controllers
             return View();
         }
 
-        public IActionResult ConfiguracionUsuario()
+        public IActionResult configuracionUsuario()
         {
             return View();
         }
