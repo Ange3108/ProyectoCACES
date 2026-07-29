@@ -21,7 +21,7 @@ namespace CACES.DAL.Repositorios.Soportes
             if (soporte == null)
                 return false;
 
-            soporte.FechaConsulta = DateTime.Now;
+            soporte.FechaConsulta = DateTime.UtcNow;
             soporte.Estado = true;
 
             await _context.Soportes.AddAsync(soporte);

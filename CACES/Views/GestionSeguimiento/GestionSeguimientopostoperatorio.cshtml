@@ -1,4 +1,5 @@
-﻿@{
+﻿@model dynamic
+@{
     ViewData["Title"] = "Gestión de Seguimiento Post-Operatorio";
 }
 
@@ -181,7 +182,7 @@
 <div class="modal fade" id="crearCheckpointModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="formCrearCheckpoint">
+            <form id="formCrearCheckpoint" novalidate>
                 @Html.AntiForgeryToken()
                 <div class="modal-header">
                     <h5 class="modal-title">Nuevo checkpoint</h5>
@@ -190,7 +191,8 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Día del checkpoint (posterior a la cirugía)</label>
-                        <input type="number" class="form-control" name="DiaCheckpoint" min="0" required>
+                        <input type="number" class="form-control" name="DiaCheckpoint" min="0">
+                        <span class="text-danger field-validation-valid" data-valmsg-for="DiaCheckpoint" data-valmsg-replace="true"></span>
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -205,7 +207,7 @@
 <div class="modal fade" id="editarCheckpointModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="formEditarCheckpoint">
+            <form id="formEditarCheckpoint" novalidate>
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="IdCheckPoint" id="editCheckpointId">
                 <div class="modal-header">
@@ -215,7 +217,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Día del checkpoint</label>
-                        <input type="number" class="form-control" name="DiaCheckPoint" id="editCheckpointDia" min="0" required>
+                        <input type="number" class="form-control" name="DiaCheckPoint" id="editCheckpointDia" min="0">
                     </div>
                     <div class="form-check form-switch">
                         <input class="form-check-input" type="checkbox" name="Estado" id="editCheckpointEstado">
@@ -234,7 +236,7 @@
 <div class="modal fade" id="crearPreguntaModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="formCrearPregunta">
+            <form id="formCrearPregunta" novalidate>
                 @Html.AntiForgeryToken()
                 <div class="modal-header">
                     <h5 class="modal-title">Nueva pregunta de seguimiento</h5>
@@ -243,25 +245,26 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Texto de la pregunta</label>
-                        <textarea class="form-control" name="Texto" rows="2" required></textarea>
+                        <textarea class="form-control" name="Texto" rows="2"></textarea>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Valor mínimo</label>
-                            <input type="number" class="form-control" name="ValorMinimo" required>
+                            <input type="number" class="form-control" name="ValorMinimo">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Valor máximo</label>
-                            <input type="number" class="form-control" name="ValorMaximo" required>
+                            <input type="number" class="form-control" name="ValorMaximo">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Umbral de alerta</label>
-                            <input type="number" class="form-control" name="UmbralAlerta" required>
+                            <input type="number" class="form-control" name="UmbralAlerta">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Dirección de la alerta</label>
-                        <select class="form-select" name="DireccionAlerta" required>
+                        <select class="form-select" name="DireccionAlerta">
+                            <option value="">-- Seleccione --</option>
                             <option value="0">Se alerta si la respuesta es mayor o igual al umbral</option>
                             <option value="1">Se alerta si la respuesta es menor o igual al umbral</option>
                         </select>
@@ -279,7 +282,7 @@
 <div class="modal fade" id="editarPreguntaModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="formEditarPregunta">
+            <form id="formEditarPregunta" novalidate>
                 @Html.AntiForgeryToken()
                 <input type="hidden" name="idPregunta" id="editPreguntaId">
                 <div class="modal-header">
@@ -289,25 +292,25 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Texto de la pregunta</label>
-                        <textarea class="form-control" name="Texto" id="editPreguntaTexto" rows="2" required></textarea>
+                        <textarea class="form-control" name="Texto" id="editPreguntaTexto" rows="2"></textarea>
                     </div>
                     <div class="row">
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Valor mínimo</label>
-                            <input type="number" class="form-control" name="ValorMinimo" id="editPreguntaMin" required>
+                            <input type="number" class="form-control" name="ValorMinimo" id="editPreguntaMin">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Valor máximo</label>
-                            <input type="number" class="form-control" name="ValorMaximo" id="editPreguntaMax" required>
+                            <input type="number" class="form-control" name="ValorMaximo" id="editPreguntaMax">
                         </div>
                         <div class="col-md-4 mb-3">
                             <label class="form-label">Umbral de alerta</label>
-                            <input type="number" class="form-control" name="UmbralAlerta" id="editPreguntaUmbral" required>
+                            <input type="number" class="form-control" name="UmbralAlerta" id="editPreguntaUmbral">
                         </div>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Dirección de la alerta</label>
-                        <select class="form-select" name="DireccionAlerta" id="editPreguntaDireccion" required>
+                        <select class="form-select" name="DireccionAlerta" id="editPreguntaDireccion">
                             <option value="MayorIgual">Se alerta si la respuesta es mayor o igual al umbral</option>
                             <option value="MenorIgual">Se alerta si la respuesta es menor o igual al umbral</option>
                         </select>
@@ -329,7 +332,7 @@
 <div class="modal fade" id="generarCheckpointsModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="formGenerarCheckpoints">
+            <form id="formGenerarCheckpoints" novalidate>
                 @Html.AntiForgeryToken()
                 <div class="modal-header">
                     <h5 class="modal-title">Generar checkpoints para una cirugía</h5>
@@ -338,7 +341,7 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Id de la cirugía</label>
-                        <input type="number" class="form-control" name="IdCirugia" required>
+                        <input type="number" class="form-control" name="IdCirugia">
                     </div>
                     <div class="form-text">
                         Genera un seguimiento por cada checkpoint activo, con fecha programada relativa a la fecha de la cirugía.
@@ -356,16 +359,12 @@
 <div class="modal fade" id="registrarRespuestasModal">
     <div class="modal-dialog modal-lg">
         <div class="modal-content">
-            <form id="formRegistrarRespuestas">
+            <form id="formRegistrarRespuestas" novalidate>
                 @Html.AntiForgeryToken()
-                <div class="modal-header">
-                    <h5 class="modal-title">Registrar respuestas de seguimiento</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-                </div>
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Id del seguimiento</label>
-                        <input type="number" class="form-control" id="respIdSeguimiento" required>
+                        <input type="number" class="form-control" id="respIdSeguimiento">
                     </div>
                     <div id="filasRespuestas"></div>
                     <button type="button" class="btn btn-sm btn-outline-primary" id="btnAgregarRespuesta">
@@ -384,7 +383,7 @@
 <div class="modal fade" id="atenderAlertaModal">
     <div class="modal-dialog">
         <div class="modal-content">
-            <form id="formAtenderAlerta">
+            <form id="formAtenderAlerta" novalidate>
                 @Html.AntiForgeryToken()
                 <input type="hidden" id="atenderIdAlerta">
                 <div class="modal-header">
@@ -394,7 +393,8 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Nuevo estado</label>
-                        <select class="form-select" id="atenderEstado" required>
+                        <select class="form-select" id="atenderEstado">
+                            <option value="">-- Seleccione --</option>
                             <option value="1">Contactado</option>
                             <option value="2">Resuelto</option>
                         </select>

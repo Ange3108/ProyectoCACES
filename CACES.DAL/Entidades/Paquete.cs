@@ -24,7 +24,7 @@ namespace CACES.DAL.Entidades
         public decimal Precio { get; set; }
 
         [Column("FechaDeRegistro")]
-        public DateTime FechaDeRegistro { get; set; } = DateTime.Now;
+        public DateTime FechaDeRegistro { get; set; } = DateTime.UtcNow;
 
         [Column("Estado")]
         public bool Estado { get; set; }

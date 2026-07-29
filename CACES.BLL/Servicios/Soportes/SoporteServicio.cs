@@ -31,7 +31,7 @@ namespace CACES.BLL.Servicios.Soportes
                 IdUsuario = idUsuario,
                 Asunto = asunto.Trim(),
                 Mensaje = mensaje.Trim(),
-                FechaConsulta = DateTime.Now,
+                FechaConsulta = DateTime.UtcNow,
                 Estado = true
             };
 

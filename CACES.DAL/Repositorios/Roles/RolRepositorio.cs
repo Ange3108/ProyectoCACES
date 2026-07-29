@@ -49,7 +49,7 @@ namespace CACES.DAL.Repositorios.Roles
                 return false;
 
             usuario.Estado = nuevoEstado;
-            usuario.FechaDeModificacion = DateTime.Now;
+            usuario.FechaDeModificacion = DateTime.UtcNow;
 
             _context.Usuarios.Update(usuario);
 
@@ -87,7 +87,7 @@ namespace CACES.DAL.Repositorios.Roles
                 RoleId = roleId
             });
 
-            usuario.FechaDeModificacion = DateTime.Now;
+            usuario.FechaDeModificacion = DateTime.UtcNow;
 
             return await _context.SaveChangesAsync() > 0;
         }
@@ -115,7 +115,7 @@ namespace CACES.DAL.Repositorios.Roles
                 return false;
 
             usuario.Estado = false;
-            usuario.FechaDeModificacion = DateTime.Now;
+            usuario.FechaDeModificacion = DateTime.UtcNow;
 
             _context.Usuarios.Update(usuario);
 

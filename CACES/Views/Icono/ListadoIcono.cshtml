@@ -1,5 +1,5 @@
 ﻿@using CACES.BLL.DTOs.Icono
-@model IEnumerable<IconoDTO>
+@model IconoDTO
 
 @{
     ViewData["Title"] = "Gestión de Íconos";
@@ -55,11 +55,13 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Nombre descriptivo</label>
-                        <input type="text" class="form-control" id="NombreRegistro" name="Nombre" placeholder="Ej. Cardiología" required>
+                        <input type="text" class="form-control" asp-for="Nombre" id="NombreRegistro" placeholder="Ej. Cardiología" required>
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Clase de Bootstrap Icons</label>
-                        <input type="text" class="form-control" id="CodigoRegistro" name="Codigo" placeholder="bi bi-heart-pulse" required>
+                        <input type="text" class="form-control" asp-for="Codigo" id="CodigoRegistro" placeholder="bi bi-heart-pulse" required>
+                        <span asp-validation-for="Codigo" class="text-danger"></span>
                         <div class="form-text">
                             Consulta la lista completa en
                             <a href="https://icons.getbootstrap.com/" target="_blank">icons.getbootstrap.com</a>
@@ -91,11 +93,14 @@
                 <div class="modal-body">
                     <div class="mb-3">
                         <label class="form-label">Nombre descriptivo</label>
-                        <input type="text" class="form-control" id="NombreEditar" name="Nombre" required>
+                        <input type="text" class="form-control" id="NombreEditar" asp-for="Nombre" required>
+                        <span asp-validation-for="Nombre" class="text-danger"></span>
+
                     </div>
                     <div class="mb-3">
                         <label class="form-label">Codigo de iconoIcons</label>
-                        <input type="text" class="form-control" id="CodigoEditar" name="Codigo" required>
+                        <input type="text" class="form-control" id="CodigoEditar" asp-for="Codigo" required>
+                        <span asp-validation-for="Codigo" class="text-danger"></span>
                     </div>
                     <div class="text-center py-3">
                         <span class="fs-1"><i id="previewEditar" class="bi bi-question-circle"></i></span>

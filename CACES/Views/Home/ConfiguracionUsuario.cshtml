@@ -1,0 +1,383 @@
+@model dynamic
+@{
+    ViewData["Title"] = "Configuración";
+}
+
+<div class="container-fluid py-4">
+
+    <div class="d-flex align-items-center mb-4">
+        <i class="bi bi-gear-fill fs-3 text-primary me-2"></i>
+        <div>
+            <h3 class="mb-0">Configuración</h3>
+            <small class="text-muted">Administra tus preferencias, notificaciones y cuenta</small>
+        </div>
+    </div>
+
+    <div class="row">
+        <!-- Navegación lateral (tabs verticales, mismo patrón de GestionSeguimiento) -->
+        <div class="col-md-3">
+            <div class="list-group shadow-sm" id="configTabs" role="tablist">
+                <a class="list-group-item list-group-item-action active" data-bs-toggle="list" href="#tab-notificaciones" role="tab">
+                    <i class="bi bi-bell-fill me-2"></i>Notificaciones
+                </a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#tab-seguridad" role="tab">
+                    <i class="bi bi-shield-lock-fill me-2"></i>Seguridad
+                </a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#tab-faq" role="tab">
+                    <i class="bi bi-question-circle-fill me-2"></i>Preguntas Frecuentes
+                </a>
+                <a class="list-group-item list-group-item-action" data-bs-toggle="list" href="#tab-soporte" role="tab">
+                    <i class="bi bi-headset me-2"></i>Contacto y Soporte
+                </a>
+                <a class="list-group-item list-group-item-action text-danger" data-bs-toggle="list" href="#tab-cuenta" role="tab">
+                    <i class="bi bi-exclamation-triangle-fill me-2"></i>Eliminar Cuenta
+                </a>
+            </div>
+        </div>
+
+        <!-- Contenido -->
+        <div class="col-md-9">
+            <div class="tab-content">
+
+                <!-- ============ NOTIFICACIONES ============ -->
+                <div class="tab-pane fade show active" id="tab-notificaciones" role="tabpanel">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="bi bi-bell-fill text-primary me-2"></i>Notificaciones</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="form-check form-switch mb-3 d-flex justify-content-between align-items-center">
+                                <label class="form-check-label" for="notifCorreo">
+                                    <strong>Notificaciones por correo</strong>
+                                    <div class="text-muted small">Recordatorios de checkpoints y alertas del seguimiento post-operatorio</div>
+                                </label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="notifCorreo"
+                                       data-clave="NotificarCorreo" checked>
+                            </div>
+                            <div class="form-check form-switch mb-3 d-flex justify-content-between align-items-center">
+                                <label class="form-check-label" for="notifSMS">
+                                    <strong>Notificaciones por SMS</strong>
+                                    <div class="text-muted small">Avisos urgentes cuando se genera una alerta de staff</div>
+                                </label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="notifSMS"
+                                       data-clave="NotificarSMS">
+                            </div>
+                            <div class="form-check form-switch mb-3 d-flex justify-content-between align-items-center">
+                                <label class="form-check-label" for="notifSistema">
+                                    <strong>Notificaciones dentro del sistema</strong>
+                                    <div class="text-muted small">Badge de alertas visible en el panel administrativo</div>
+                                </label>
+                                <input class="form-check-input" type="checkbox" role="switch" id="notifSistema"
+                                       data-clave="NotificarSistema" checked>
+                            </div>
+
+                            <hr />
+                            <label class="form-label"><strong>Frecuencia de resumen</strong></label>
+                            <select class="form-select w-auto" id="frecuenciaResumen">
+                                <option value="Diario">Diario</option>
+                                <option value="Semanal">Semanal</option>
+                                <option value="Nunca">Nunca</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ SEGURIDAD ============ -->
+                <div class="tab-pane fade" id="tab-seguridad" role="tabpanel">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="bi bi-shield-lock-fill text-primary me-2"></i>Seguridad</h5>
+                        </div>
+                        <div class="card-body">
+                            <form id="formCambiarPassword">
+                                <div class="mb-3">
+                                    <label class="form-label">Contraseña actual</label>
+                                    <input type="password" class="form-control" id="passwordActual" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Nueva contraseña</label>
+                                    <input type="password" class="form-control" id="passwordNueva" required />
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Confirmar nueva contraseña</label>
+                                    <input type="password" class="form-control" id="passwordConfirmar" required />
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-check-circle me-1"></i>Actualizar contraseña
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ FAQ ============ -->
+                <div class="tab-pane fade" id="tab-faq" role="tabpanel">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="bi bi-question-circle-fill text-primary me-2"></i>Preguntas Frecuentes</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="accordion" id="accordionFAQ">
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq1">
+                                            ¿Cómo funciona el seguimiento post-operatorio?
+                                        </button>
+                                    </h2>
+                                    <div id="faq1" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                        <div class="accordion-body">
+                                            El sistema genera checkpoints automáticos según los días configurados después de la cirugía.
+                                            En cada checkpoint se envían preguntas de seguimiento y, si una respuesta supera el umbral de alerta,
+                                            se notifica al staff correspondiente.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq2">
+                                            ¿Puedo cambiar la frecuencia de mis notificaciones?
+                                        </button>
+                                    </h2>
+                                    <div id="faq2" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                        <div class="accordion-body">
+                                            Sí, desde la pestaña <strong>Notificaciones</strong> puedes activar o desactivar canales
+                                            (correo, SMS, sistema) y elegir la frecuencia del resumen.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq3">
+                                            ¿Qué pasa si elimino mi cuenta?
+                                        </button>
+                                    </h2>
+                                    <div id="faq3" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                        <div class="accordion-body">
+                                            Tu cuenta y datos asociados quedarán marcados como inactivos según la política de retención
+                                            del sistema. Esta acción no se puede deshacer desde la interfaz.
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq4">
+                                            ¿Cómo contacto a soporte técnico?
+                                        </button>
+                                    </h2>
+                                    <div id="faq4" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                        <div class="accordion-body">
+                                            Ve a la pestaña <strong>Contacto y Soporte</strong> y llena el formulario, o escríbenos
+                                            directamente a los medios de contacto listados ahí.
+                                        </div>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ CONTACTO Y SOPORTE ============ -->
+                <div class="tab-pane fade" id="tab-soporte" role="tabpanel">
+                    <div class="card shadow-sm">
+                        <div class="card-header bg-white">
+                            <h5 class="mb-0"><i class="bi bi-headset text-primary me-2"></i>Contacto y Soporte</h5>
+                        </div>
+                        <div class="card-body">
+                            <div class="row mb-4">
+                                <div class="col-md-4">
+                                    <i class="bi bi-envelope-fill text-primary me-1"></i> soporte@caces.com
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="bi bi-telephone-fill text-primary me-1"></i> +506 0000-0000
+                                </div>
+                                <div class="col-md-4">
+                                    <i class="bi bi-clock-fill text-primary me-1"></i> Lun - Vie, 8am - 5pm
+                                </div>
+                            </div>
+                            <hr />
+                            <form id="formSoporte">
+                                <div class="mb-3">
+                                    <label class="form-label">Asunto</label>
+                                    <select class="form-select" id="asuntoSoporte">
+                                        <option>Problema técnico</option>
+                                        <option>Duda sobre seguimiento post-operatorio</option>
+                                        <option>Solicitud de cambio de datos</option>
+                                        <option>Otro</option>
+                                    </select>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Mensaje</label>
+                                    <textarea class="form-control" id="mensajeSoporte" rows="4" required></textarea>
+                                </div>
+                                <button type="submit" class="btn btn-primary">
+                                    <i class="bi bi-send-fill me-1"></i>Enviar
+                                </button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- ============ ELIMINAR CUENTA ============ -->
+                <div class="tab-pane fade" id="tab-cuenta" role="tabpanel">
+                    <div class="card border-danger shadow-sm">
+                        <div class="card-header bg-danger text-white">
+                            <h5 class="mb-0"><i class="bi bi-exclamation-triangle-fill me-2"></i>Zona de Peligro</h5>
+                        </div>
+                        <div class="card-body">
+                            <p><strong>Eliminar tu cuenta es una acción permanente.</strong></p>
+                            <p class="text-muted">
+                                Se desactivará tu acceso al sistema y tus datos personales dejarán de ser visibles
+                                según la política de retención vigente. Esta acción no se puede deshacer.
+                            </p>
+                            <button type="button" class="btn btn-outline-danger" data-bs-toggle="modal" data-bs-target="#modalEliminarCuenta">
+                                <i class="bi bi-trash-fill me-1"></i>Eliminar mi cuenta
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal confirmación eliminar cuenta -->
+<div class="modal fade" id="modalEliminarCuenta" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-danger text-white">
+                <h5 class="modal-title"><i class="bi bi-exclamation-triangle-fill me-2"></i>Confirmar eliminación</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <p>Escribe <strong>ELIMINAR</strong> para confirmar que deseas eliminar tu cuenta de forma permanente.</p>
+                <input type="text" class="form-control" id="confirmarEliminarInput" placeholder="ELIMINAR" />
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-danger" id="btnConfirmarEliminarCuenta" disabled>
+                    <i class="bi bi-trash-fill me-1"></i>Eliminar definitivamente
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        $(function () {
+            // ---- Toggle de notificaciones (AJAX) ----
+            $('#tab-notificaciones input[type="checkbox"]').on('change', function () {
+                const clave = $(this).data('clave');
+                const valor = $(this).is(':checked');
+
+                $.ajax({
+                    url: '@Url.Action("ActualizarNotificacion", "Configuracion")',
+                    type: 'POST',
+                    data: { clave: clave, valor: valor },
+                    success: function (resp) {
+                        if (resp.esCorrecto) {
+                            toastr.success(resp.mensaje || 'Preferencia actualizada');
+                        } else {
+                            toastr.error(resp.mensaje || 'No se pudo actualizar');
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Error de conexión al actualizar la notificación');
+                    }
+                });
+            });
+
+            $('#frecuenciaResumen').on('change', function () {
+                $.post('@Url.Action("ActualizarFrecuenciaResumen", "Configuracion")',
+                    { frecuencia: $(this).val() },
+                    function (resp) {
+                        if (resp.esCorrecto) toastr.success('Frecuencia actualizada');
+                    });
+            });
+
+            // ---- Cambiar contraseña ----
+            $('#formCambiarPassword').on('submit', function (e) {
+                e.preventDefault();
+
+                const actual = $('#passwordActual').val();
+                const nueva = $('#passwordNueva').val();
+                const confirmar = $('#passwordConfirmar').val();
+
+                if (nueva !== confirmar) {
+                    toastr.error('Las contraseñas nuevas no coinciden');
+                    return;
+                }
+
+                $.ajax({
+                    url: '@Url.Action("CambiarPassword", "Configuracion")',
+                    type: 'POST',
+                    data: { passwordActual: actual, passwordNueva: nueva },
+                    success: function (resp) {
+                        if (resp.esCorrecto) {
+                            toastr.success('Contraseña actualizada correctamente');
+                            $('#formCambiarPassword')[0].reset();
+                        } else {
+                            toastr.error(resp.mensaje || 'No se pudo actualizar la contraseña');
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Error de conexión');
+                    }
+                });
+            });
+
+            // ---- Formulario de soporte ----
+            $('#formSoporte').on('submit', function (e) {
+                e.preventDefault();
+
+                $.ajax({
+                    url: '@Url.Action("EnviarSoporte", "Configuracion")',
+                    type: 'POST',
+                    data: {
+                        asunto: $('#asuntoSoporte').val(),
+                        mensaje: $('#mensajeSoporte').val()
+                    },
+                    success: function (resp) {
+                        if (resp.esCorrecto) {
+                            toastr.success('Tu mensaje fue enviado a soporte');
+                            $('#formSoporte')[0].reset();
+                        } else {
+                            toastr.error(resp.mensaje || 'No se pudo enviar el mensaje');
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Error de conexión');
+                    }
+                });
+            });
+
+            // ---- Eliminar cuenta: habilitar botón solo si escribe "ELIMINAR" ----
+            $('#confirmarEliminarInput').on('input', function () {
+                $('#btnConfirmarEliminarCuenta').prop('disabled', $(this).val().trim() !== 'ELIMINAR');
+            });
+
+            $('#btnConfirmarEliminarCuenta').on('click', function () {
+                $.ajax({
+                    url: '@Url.Action("EliminarCuenta", "Configuracion")',
+                    type: 'POST',
+                    success: function (resp) {
+                        if (resp.esCorrecto) {
+                            window.location.href = '@Url.Action("Login", "Account")';
+                        } else {
+                            toastr.error(resp.mensaje || 'No se pudo eliminar la cuenta');
+                        }
+                    },
+                    error: function () {
+                        toastr.error('Error de conexión al eliminar la cuenta');
+                    }
+                });
+            });
+        });
+    </script>
+}

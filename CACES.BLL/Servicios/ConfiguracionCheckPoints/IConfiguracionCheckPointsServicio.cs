@@ -8,9 +8,9 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
 {
     public interface IConfiguracionCheckPointsServicio
     {
-        Task<respuestaErrores<List<ConfiguracionCheckPointDTO>>> ObtenerConfiguracionesCheckPoints();
+        Task<respuestaErrores<List<ConfiguracionCheckPointDTO>>> ObtenerCheckPoints();
         Task<respuestaErrores<ConfiguracionCheckPointDTO>> ObtenerConfiguracionCheckPointPorId(int id);
-        Task<respuestaErrores<List<ConfiguracionCheckPointDTO>>> ObtenerConfiguracionesCheckPointsActivas();
+        Task<respuestaErrores<List<ConfiguracionCheckPointDTO>>> ObtenerCheckPointsActivas();
         Task<respuestaErrores<ConfiguracionCheckPointDTO>> CrearConfiguracionCheckPoint(RegistrarConfiguracionCheckpointDTO configuracionCheckPoint);
         Task<respuestaErrores<ConfiguracionCheckPointDTO>> ActualizarConfiguracionCheckPoint(ConfiguracionCheckPointDTO configuracionCheckPoint);
         Task<respuestaErrores<ConfiguracionCheckPointDTO>> EliminarConfiguracionCheckPoint(int id);

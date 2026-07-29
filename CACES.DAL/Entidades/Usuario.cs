@@ -24,7 +24,7 @@ namespace CACES.DAL.Entidades
 
         public string? Foto { get; set; }
 
-        public DateTime FechaDeRegistro { get; set; } = DateTime.Now;
+        public DateTime FechaDeRegistro { get; set; } = DateTime.UtcNow;
 
         public DateTime? FechaDeModificacion { get; set; }
 

@@ -78,7 +78,7 @@ namespace CACES.DAL.Repositorios.Citas
 
         public async Task<Cita> RegistrarAsync(Cita cita)
         {
-            cita.FechaDeRegistro = DateTime.Now;
+            cita.FechaDeRegistro = DateTime.UtcNow;
             cita.FechaDeModificacion = null;
             cita.Estado = 1;
 
@@ -90,7 +90,7 @@ namespace CACES.DAL.Repositorios.Citas
 
         public async Task<Cita> ActualizarAsync(Cita cita)
         {
-            cita.FechaDeModificacion = DateTime.Now;
+            cita.FechaDeModificacion = DateTime.UtcNow;
 
             _context.Citas.Update(cita);
             await _context.SaveChangesAsync();

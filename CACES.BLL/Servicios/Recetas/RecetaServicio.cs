@@ -40,7 +40,7 @@ namespace CACES.BLL.Servicios.Recetas
                     IdCita = dto.IdCita,
                     Medicamentos = dto.Medicamentos,
                     Instrucciones = dto.Instrucciones,
-                    FechaDeRegistro = DateTime.Now,
+                    FechaDeRegistro = DateTime.UtcNow,
                     FechaDeVencimiento = dto.FechaDeVencimiento
                 };
 

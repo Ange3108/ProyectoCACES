@@ -1,21 +1,22 @@
 ﻿using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 using CACES.BLL.Mappers;
+using CACES.BLL.Servicios.Notificacion;
 using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using CACES.DAL.Repositorios.Base;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace CACES.BLL.Servicios.AlertaStaff
 {
     public class AlertaStaffServicio : IAlertaStaffServicio
     {
         private readonly IRepositorioGenerico<DAL.Entidades.SeguimientoPostOperatorio.AlertaStaff> _repositorioAlertas;
+        private readonly INotificadorServicio _notificadorServicio;
 
-        public AlertaStaffServicio(IRepositorioGenerico<DAL.Entidades.SeguimientoPostOperatorio.AlertaStaff> repositorioAlertas)
+        public AlertaStaffServicio(IRepositorioGenerico<DAL.Entidades.SeguimientoPostOperatorio.AlertaStaff> repositorioAlertas, INotificadorServicio notificadorServicio)
         {
             _repositorioAlertas = repositorioAlertas;
+            _notificadorServicio = notificadorServicio;
         }
 
         public async Task<respuestaErrores<List<AlertaStaffDTO>>> ObtenerTodas()
@@ -75,6 +76,14 @@ namespace CACES.BLL.Servicios.AlertaStaff
 
             await _repositorioAlertas.Actualizar(alerta);
             await _repositorioAlertas.GuardarCambiosAsync();
+
+            // Notificar la alerta atendida
+            await _notificadorServicio.NotificarAsync(
+                evento: "AlertaStaffAtendida",
+                idUsuario: dto.IdUsuarioAtendio == 0 ? 0 : dto.IdUsuarioAtendio,
+                titulo: "Alerta atendida",
+                mensaje: $"La alerta #{alerta.IdAlerta} del seguimiento #{alerta.IdSeguimiento} fue marcada como {dto.Estado}."
+            );
 
             respuesta.EsCorrecto = true;
             respuesta.Dato = true;

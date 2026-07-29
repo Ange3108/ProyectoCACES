@@ -71,6 +71,11 @@ namespace CACES.Controllers
             return View();
         }
 
+        public IActionResult ConfiguracionUsuario()
+        {
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> ResumenCentro()
         {
@@ -90,7 +95,7 @@ namespace CACES.Controllers
                     .Include(m => m.Usuario)
                     .Where(m => m.Usuario.Estado == true)
                     .CountAsync(),
-                timestamp = DateTime.Now
+                timestamp = DateTime.UtcNow
             };
 
             return Json(data);

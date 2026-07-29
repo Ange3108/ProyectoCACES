@@ -24,7 +24,7 @@ namespace CACES.BLL.Servicios.Paquete
             try
             {
                 var paquete = registrarPaqueteDto.ToPaquete();
-                paquete.FechaDeRegistro = DateTime.Now;
+                paquete.FechaDeRegistro = DateTime.UtcNow;
                 paquete.Estado = true;
 
                 bool resultado = await _paqueteRepositorio.CreatePaqueteAsync(paquete);

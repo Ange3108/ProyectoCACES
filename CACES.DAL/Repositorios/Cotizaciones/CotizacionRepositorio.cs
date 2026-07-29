@@ -18,8 +18,8 @@ namespace CACES.DAL.Repositorios.Cotizaciones
 
         public async Task<Cotizacion> RegistrarAsync(Cotizacion cotizacion)
         {
-            cotizacion.FechaDeRegistro = DateTime.Now;
-            cotizacion.FechaSolicitud = DateTime.Now;
+            cotizacion.FechaDeRegistro = DateTime.UtcNow;
+            cotizacion.FechaSolicitud = DateTime.UtcNow;
             cotizacion.Estado = 1;
 
             await _context.Cotizaciones.AddAsync(cotizacion);
@@ -30,7 +30,7 @@ namespace CACES.DAL.Repositorios.Cotizaciones
 
         public async Task<Cotizacion> ActualizarAsync(Cotizacion cotizacion)
         {
-            cotizacion.FechaDeModificacion = DateTime.Now;
+            cotizacion.FechaDeModificacion = DateTime.UtcNow;
 
             _context.Cotizaciones.Update(cotizacion);
 

@@ -85,7 +85,7 @@ namespace CACES.DAL.Repositorios.Usuario
 
             usuario.Estado = false;
             usuario.EmailConfirmed = false;
-            usuario.FechaDeModificacion = DateTime.Now;
+            usuario.FechaDeModificacion = DateTime.UtcNow;
 
             _context.Usuarios.Update(usuario);
             return await _context.SaveChangesAsync() > 0;

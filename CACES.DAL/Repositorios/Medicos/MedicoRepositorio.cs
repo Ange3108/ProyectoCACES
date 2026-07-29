@@ -90,7 +90,7 @@ namespace CACES.DAL.Repositorios.Medicos
             existing.Usuario.Telefono = medico.Usuario.Telefono;
             existing.Usuario.Foto = medico.Usuario.Foto;
             existing.Usuario.Estado = medico.Usuario.Estado;
-            existing.Usuario.FechaDeModificacion = DateTime.Now;
+            existing.Usuario.FechaDeModificacion = DateTime.UtcNow;
 
             return await _context.SaveChangesAsync() > 0;
         }
@@ -124,7 +124,7 @@ namespace CACES.DAL.Repositorios.Medicos
                     "UPDATE HorariosDisponibles SET Estado = 0 WHERE Id_Medico = {0}", id);
 
                 medico.Usuario.Estado = false;
-                medico.Usuario.FechaDeModificacion = DateTime.Now;
+                medico.Usuario.FechaDeModificacion = DateTime.UtcNow;
 
                 var ok = await _context.SaveChangesAsync() > 0;
 

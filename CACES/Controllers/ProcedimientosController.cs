@@ -252,7 +252,7 @@ namespace CACES.Controllers
             }).GeneratePdf();
 
             // Retorna el archivo para descarga nativa e inmediata en el navegador
-            string nombreArchivo = $"Reporte_Cirugia_{id}_ {cirugia.NombrePaciente}_{DateTime.Now:yyyyMMdd}.pdf";
+            string nombreArchivo = $"Reporte_Cirugia_{id}_ {cirugia.NombrePaciente}_{DateTime.UtcNow:yyyyMMdd}.pdf";
             return File(pdfBytes, "application/pdf", nombreArchivo);
         }
 

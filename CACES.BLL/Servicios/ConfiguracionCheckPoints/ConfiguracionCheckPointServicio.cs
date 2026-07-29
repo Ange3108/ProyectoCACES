@@ -122,7 +122,7 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
             return respuesta;
         }
 
-        public async Task<respuestaErrores<List<ConfiguracionCheckPointDTO>>> ObtenerConfiguracionesCheckPoints()
+        public async Task<respuestaErrores<List<ConfiguracionCheckPointDTO>>> ObtenerCheckPoints()
         {
             var respuesta = new respuestaErrores<List<ConfiguracionCheckPointDTO>>();
             var checkpoints = await _repositorioGenerico.ObtenerTodosAsync();
@@ -134,7 +134,7 @@ namespace CACES.BLL.Servicios.ConfiguracionCheckPoints
             return respuesta;
         }
 
-        public async Task<respuestaErrores<List<ConfiguracionCheckPointDTO>>> ObtenerConfiguracionesCheckPointsActivas()
+        public async Task<respuestaErrores<List<ConfiguracionCheckPointDTO>>> ObtenerCheckPointsActivas()
         {
             var lista = await _repositorioGenerico.ObtenerActivos();
             var checkpointsList = lista.Select(c => c.ToConfiguracionCheckpointDTO()!).ToList();

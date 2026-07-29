@@ -63,7 +63,7 @@
                             }
 
                             @* Opciones comunes *@
-                            <li class="nav-item"><a class="nav-link" asp-controller="Horarios" asp-action="Registrar">Configuración</a></li>
+                            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="ConfiguracionUsuario">Configuración</a></li>
 
                             <li class="nav-item">
                                 <form asp-controller="Login_Logout" asp-action="Logout" method="post" class="d-inline">
@@ -73,6 +73,28 @@
                             </li>
                         }
                     </ul>
+                </div>
+
+                <div class="dropdown ms-2" id="campanitaNotificaciones">
+                    <button class="btn btn-link text-decoration-none position-relative" type="button"
+                            id="btnCampanita" data-bs-toggle="dropdown" aria-expanded="false">
+                        <i class="bi bi-bell fs-5"></i>
+                        <span id="badgeCampanita"
+                              class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle d-none">
+                            0
+                        </span>
+                    </button>
+                    <div class="dropdown-menu dropdown-menu-end p-0 shadow" style="width:340px;" aria-labelledby="btnCampanita">
+                        <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+                            <strong>Notificaciones</strong>
+                            <button type="button" class="btn btn-sm btn-link text-decoration-none p-0" id="btnMarcarTodasLeidas">
+                                Marcar todas como leídas
+                            </button>
+                        </div>
+                        <div id="listaCampanita" style="max-height:360px; overflow-y:auto;">
+                            <div class="text-center text-muted py-4">Cargando...</div>
+                        </div>
+                    </div>
                 </div>
 
                 @* Icono de cuenta *@
@@ -147,6 +169,7 @@
     <script src="https://cdn.datatables.net/v/bs5/dt-2.3.8/datatables.min.js" integrity="sha384-M6UGhVy7VWBGzDEGllTBBFgXu43d6sWM07qFvlFrfOr/R3GhL8TLsG0iwMzJuX3N" crossorigin="anonymous"></script>
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.26.25/dist/sweetalert2.all.min.js"></script>
     <script src="~/js/site.js" asp-append-version="true"></script>
+    <script src="~/js/Campanita.js" asp-append-version="true"></script>
     @await RenderSectionAsync("Scripts", required: false)
 </body>
 </html>

@@ -2,7 +2,7 @@
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Usuario;
 using CACES.BLL.Mappers;
-using CACES.BLL.Servicios.ConfirmacionCorreo;
+using CACES.BLL.Servicios.Notificacion;
 using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Entidades;
@@ -215,7 +215,7 @@ namespace CACES.BLL.Servicios.Paciente
                 EnfermedadesCronicas = dto.Historial.EnfermedadesCronicas,
                 Antecedentes = dto.Historial.Antecedentes,
                 Detalles = dto.Historial.Detalles,
-                FechaDeCreacion = DateTime.Now
+                FechaDeCreacion = DateTime.UtcNow
             };
 
             var historialCreado = await _historialRepositorio.CreateHistorialAsync(nuevoHistorial);

@@ -22,7 +22,7 @@ namespace CACES.DAL.Entidades
         [Column("Id_Procedimiento")]
         public int IdProcedimiento { get; set; }
 
-        public DateTime FechaSolicitud { get; set; } = DateTime.Now;
+        public DateTime FechaSolicitud { get; set; } = DateTime.UtcNow;
 
         [Column(TypeName = "decimal(10,2)")]
         public decimal PrecioBase { get; set; }
@@ -41,7 +41,7 @@ namespace CACES.DAL.Entidades
 
         public byte Estado { get; set; } = 1;
 
-        public DateTime FechaDeRegistro { get; set; } = DateTime.Now;
+        public DateTime FechaDeRegistro { get; set; } = DateTime.UtcNow;
 
         public DateTime? FechaDeModificacion { get; set; }
 

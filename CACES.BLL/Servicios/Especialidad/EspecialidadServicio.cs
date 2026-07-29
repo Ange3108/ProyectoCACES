@@ -2,7 +2,7 @@
 using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Especialidad;
 using CACES.BLL.DTOs.Usuario;
-using CACES.BLL.Servicios.ConfirmacionCorreo;
+using CACES.BLL.Servicios.Notificacion;
 using CACES.BLL.Servicios.Especialidad;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Especialidades;
@@ -56,7 +56,7 @@ namespace CACES.BLL.Servicios.Especialidad
 
                     // Mapear el DTO a la entidad de base de datos
                     var nuevoEspecialidad = especialidadDto.ToEspecialidad();
-                    nuevoEspecialidad.FechaDeRegistro = DateTime.Now;
+                    nuevoEspecialidad.FechaDeRegistro = DateTime.UtcNow;
                     nuevoEspecialidad.Estado = especialidadDto.Estado;
 
                     // Guardar en la base de datos

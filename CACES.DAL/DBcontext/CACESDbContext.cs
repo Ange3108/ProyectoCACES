@@ -1,4 +1,5 @@
 using CACES.DAL.Entidades;
+using CACES.DAL.Entidades.Configuración;
 using CACES.DAL.Entidades.Roles;
 using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using Microsoft.EntityFrameworkCore;
@@ -43,7 +44,10 @@ namespace CACES.DAL.DBContext
 
         public DbSet<RespuestaSeguimiento> RespuestasSeguimiento { get; set; }
         public DbSet<Convenios> Convenios { get; set; }
+        public DbSet<Notificacion> Notificaciones { get; set; }
+        public DbSet<Configuracion> Configuraciones { get; set; }
 
+        public DbSet<NotificacionUsuario> NotificacionesUsuario { get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -518,7 +522,6 @@ namespace CACES.DAL.DBContext
                       .HasForeignKey(r => r.IdPregunta)
                       .OnDelete(DeleteBehavior.Restrict);
             });
-
             modelBuilder.Entity<Convenios>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -530,6 +533,41 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.ImagenUrl).HasColumnName("ImagenUrl").HasMaxLength(200);
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.Property(e => e.FechaCreacion).HasColumnName("FechaCreacion").IsRequired();
+            });
+
+            modelBuilder.Entity<Notificacion>(entity =>
+            {
+                entity.HasKey(e => e.Id_Notificacion);
+                entity.Property(e => e.Id_Notificacion).HasColumnName("Id_Notificacion");
+                entity.Property(e => e.Evento).HasColumnName("Evento").IsRequired().HasMaxLength(100);
+                entity.Property(e => e.CanalPlataforma).HasColumnName("CanalPlataforma").IsRequired();
+                entity.Property(e => e.CanalEmail).HasColumnName("CanalEmail").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+            });
+
+            modelBuilder.Entity<Configuracion>(entity =>
+            {
+                entity.HasKey(e => e.IdConfiguracion);
+                entity.Property(e => e.IdConfiguracion).HasColumnName("Id_Configuracion");
+                entity.Property(e => e.Clave).HasColumnName("Clave").IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Valor).HasColumnName("Valor").IsRequired().HasMaxLength(500);
+                entity.Property(e => e.Tipo).HasColumnName("Tipo").HasMaxLength(200);
+                entity.Property(e => e.Categoria).HasColumnName("Categoria").IsRequired();
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion").HasMaxLength(500);
+
+            });
+
+            modelBuilder.Entity<NotificacionUsuario>(entity =>
+            {
+                entity.HasKey(e => e.IdNotificacionUsuario);
+                entity.Property(e => e.IdNotificacionUsuario).HasColumnName("Id_NotificacionUsuario");
+                entity.Property(e => e.IdUsuario).HasColumnName("IdUsuario").IsRequired();
+                entity.Property(e => e.Evento).HasColumnName("Evento").IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Titulo).HasColumnName("Titulo").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Mensaje).HasColumnName("Mensaje").IsRequired().HasMaxLength(500);
+                entity.Property(e => e.Leido).HasColumnName("Leido").IsRequired();
+                entity.Property(e => e.FechaCreacion).HasColumnName("FechaCreacion").IsRequired();
+                entity.Property(e => e.FechaLectura).HasColumnName("FechaLectura");
             });
 
         }

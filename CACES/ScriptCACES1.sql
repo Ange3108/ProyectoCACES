@@ -322,7 +322,7 @@ CREATE TABLE Notificaciones (
     Estado BIT NOT NULL DEFAULT 1
 );
 
-CREATE TABLE ConfiguracionSistema (
+CREATE TABLE Configuracion (
     Id_Configuracion INT IDENTITY(1,1) PRIMARY KEY,
     Clave VARCHAR(100) NOT NULL UNIQUE,
     Valor VARCHAR(500) NOT NULL,
@@ -330,6 +330,20 @@ CREATE TABLE ConfiguracionSistema (
     Categoria VARCHAR(100) NOT NULL, -- "Notificaciones", "Calendario", "Seguimiento"
     Descripcion VARCHAR(500) NULL
 );
+
+
+CREATE TABLE NotificacionUsuario(
+
+    Id_NotificacionUsuario INT Identity (1,1) primary key,
+    IdUsuario int NOT NULL,
+    Evento varchar(100) NOT NULL,
+    Titulo varchar(100) NOT NULL,
+    Mensaje varchar (500) NOT NULL,
+    Leido bit,
+    FechaCreacion Datetime NOT NULL,
+    FechaLectura datetime not null,
+    Constraint FK_Usuario_Notificacion FOREIGN KEY (IdUsuario) REFERENCES Usuarios(Id_Usuario)
+    );
 
 
 /****** Object:  Table [dbo].[AspNetRoles]    Script Date: 12/11/2024 13:29:30 ******/

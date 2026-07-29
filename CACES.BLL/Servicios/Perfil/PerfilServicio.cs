@@ -60,7 +60,7 @@ namespace CACES.BLL.Servicios.Perfil
 
                 usuario.UpdateFromActualizarPerfilDTO(perfilDto);
 
-                usuario.FechaDeModificacion = DateTime.Now;
+                usuario.FechaDeModificacion = DateTime.UtcNow;
 
                 bool resultado = await _usuarioRepository.UpdateUsuarioAsync(usuario);
 
