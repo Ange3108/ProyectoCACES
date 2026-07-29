@@ -8,7 +8,6 @@
 
     <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
 
-        <!-- ENCABEZADO -->
         <div class="card-header border-0 p-4"
              style="background:#163B73;">
 
@@ -27,7 +26,8 @@
 
                     <p class="mb-0 text-white-50">
 
-                        Administre las solicitudes de cotización realizadas por los pacientes.
+                        Consulte las cotizaciones generadas y realice
+                        ajustes cuando sea necesario.
 
                     </p>
 
@@ -46,31 +46,35 @@
 
         </div>
 
-        <!-- CONTENIDO -->
         <div class="card-body p-4">
 
             <div id="alertaCotizaciones"
-                 class="alert alert-danger border-0 rounded-3 shadow-sm d-none">
+                 class="alert alert-danger border-0 rounded-3
+                shadow-sm d-none">
 
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
 
                 <span id="textoAlertaCotizaciones">
+
                     No fue posible cargar las cotizaciones.
+
                 </span>
 
             </div>
 
             <div id="sinCotizaciones"
-                 class="alert alert-info border-0 rounded-3 shadow-sm text-center py-4 d-none">
+                 class="alert alert-info border-0 rounded-3
+                shadow-sm text-center py-4 d-none">
 
                 <i class="bi bi-file-earmark-x fs-2 d-block mb-2"></i>
 
-                No hay solicitudes de cotización registradas.
+                No hay cotizaciones registradas.
 
             </div>
 
             <div id="contenedorTablaCotizaciones"
-                 class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+                 class="table-responsive border rounded-4
+                shadow-sm overflow-hidden">
 
                 <table id="tbGestionCotizaciones"
                        class="table table-hover align-middle mb-0">
@@ -121,7 +125,6 @@
 
 </div>
 
-<!-- MODAL EDITAR COTIZACIÓN -->
 <div class="modal fade"
      id="editarCotizacionModal"
      tabindex="-1"
@@ -130,7 +133,8 @@
 
     <div class="modal-dialog modal-lg modal-dialog-centered">
 
-        <div class="modal-content border-0 shadow-lg rounded-4 overflow-hidden">
+        <div class="modal-content border-0 shadow-lg
+            rounded-4 overflow-hidden">
 
             <form id="formEditarCotizacion"
                   asp-controller="Cotizacion"
@@ -143,7 +147,6 @@
                        id="IdCotizacion"
                        name="IdCotizacion" />
 
-                <!-- HEADER MODAL -->
                 <div class="modal-header border-0 text-white p-4"
                      style="background:#163B73;">
 
@@ -153,13 +156,14 @@
                             id="editarCotizacionModalLabel">
 
                             <i class="bi bi-pencil-square me-2"></i>
-                            Preparar Cotización
+                            Ajustar Cotización
 
                         </h5>
 
                         <small class="text-white-50">
 
-                            Defina los montos y envíe la cotización al paciente.
+                            Modifique únicamente los valores que requieran
+                            un ajuste administrativo.
 
                         </small>
 
@@ -173,12 +177,22 @@
 
                 </div>
 
-                <!-- CUERPO MODAL -->
                 <div class="modal-body p-4">
+
+                    <div class="alert border-0 rounded-3"
+                         style="background:#EFF6FF;
+                        color:#1E3A8A;">
+
+                        <i class="bi bi-info-circle-fill me-2"></i>
+
+                        Los honorarios médicos, equipo y estadía fueron
+                        calculados automáticamente y se mantienen incluidos
+                        en el total final.
+
+                    </div>
 
                     <div class="row g-4">
 
-                        <!-- PRECIO BASE -->
                         <div class="col-md-4">
 
                             <label for="PrecioBase"
@@ -206,7 +220,6 @@
 
                         </div>
 
-                        <!-- DESCUENTO -->
                         <div class="col-md-4">
 
                             <label for="Descuento"
@@ -234,7 +247,6 @@
 
                         </div>
 
-                        <!-- IMPUESTO -->
                         <div class="col-md-4">
 
                             <label for="Impuesto"
@@ -262,7 +274,6 @@
 
                         </div>
 
-                        <!-- OBSERVACIONES -->
                         <div class="col-12">
 
                             <label for="Observaciones"
@@ -277,7 +288,7 @@
                                       class="form-control"
                                       rows="4"
                                       maxlength="500"
-                                      placeholder="Agregue detalles, condiciones o recomendaciones de la cotización..."></textarea>
+                                      placeholder="Agregue condiciones, recomendaciones o detalles adicionales..."></textarea>
 
                             <div class="form-text text-end">
 
@@ -289,7 +300,6 @@
 
                         </div>
 
-                        <!-- ESTADO -->
                         <div class="col-md-6">
 
                             <label for="Estado"
@@ -324,7 +334,6 @@
 
                         </div>
 
-                        <!-- TOTAL -->
                         <div class="col-md-6">
 
                             <div class="rounded-4 p-3 h-100"
@@ -333,14 +342,15 @@
 
                                 <small class="text-muted d-block mb-1">
 
-                                    Total calculado
+                                    Ajuste visible
 
                                 </small>
 
                                 <div class="d-flex align-items-center gap-2">
 
                                     <i class="bi bi-cash-stack fs-4"
-                                       style="color:#0F766E;"></i>
+                                       style="color:#0F766E;">
+                                    </i>
 
                                     <strong id="totalCotizacion"
                                             class="fs-4"
@@ -354,7 +364,8 @@
 
                                 <small class="text-muted">
 
-                                    Precio base − descuento + impuesto
+                                    El servidor añadirá también honorarios,
+                                    equipo y estadía.
 
                                 </small>
 
@@ -366,11 +377,12 @@
 
                 </div>
 
-                <!-- PIE MODAL -->
-                <div class="modal-footer border-0 px-4 pb-4 pt-0">
+                <div class="modal-footer border-0
+                    px-4 pb-4 pt-0">
 
                     <button type="button"
-                            class="btn btn-sm btn-outline-secondary rounded-2 px-3"
+                            class="btn btn-outline-secondary
+                        rounded-3 px-4"
                             data-bs-dismiss="modal">
 
                         <i class="bi bi-x-lg me-1"></i>
@@ -380,10 +392,11 @@
 
                     <button type="submit"
                             id="btnGuardarCotizacion"
-                            class="btn btn-sm rounded-2 px-3 btn-guardar-cotizacion">
+                            class="btn rounded-3 px-4
+                        btn-guardar-cotizacion">
 
                         <i class="bi bi-check-lg me-1"></i>
-                        Guardar cotización
+                        Guardar cambios
 
                     </button>
 
@@ -400,10 +413,10 @@
 <style>
 
     #tbGestionCotizaciones thead th {
-        background: #ffffff;
-        color: #111827;
-        border-bottom: 1px solid #dee2e6;
         padding: 14px 12px;
+        color: #111827;
+        background: #ffffff;
+        border-bottom: 1px solid #DEE2E6;
         font-size: .9rem;
         font-weight: 600;
         white-space: nowrap;
@@ -412,7 +425,7 @@
     #tbGestionCotizaciones tbody td {
         padding: 14px 12px;
         vertical-align: middle;
-        border-bottom: 1px solid #e5e7eb;
+        border-bottom: 1px solid #E5E7EB;
     }
 
     #tbGestionCotizaciones tbody tr:last-child td {
@@ -420,7 +433,7 @@
     }
 
     #tbGestionCotizaciones tbody tr:hover {
-        background: #f8fafc;
+        background: #F8FAFC;
     }
 
     #tbGestionCotizaciones .badge {
@@ -428,8 +441,8 @@
     }
 
     .btn-guardar-cotizacion {
-        color: #20C4D8;
-        background: transparent;
+        color: #ffffff;
+        background: #20C4D8;
         border: 1px solid #20C4D8;
         font-weight: 500;
     }
@@ -437,8 +450,8 @@
         .btn-guardar-cotizacion:hover,
         .btn-guardar-cotizacion:focus {
             color: #ffffff;
-            background: #20C4D8;
-            border-color: #20C4D8;
+            background: #17AFC2;
+            border-color: #17AFC2;
             box-shadow: none;
         }
 
@@ -451,16 +464,8 @@
         .form-control:focus,
         .form-select:focus {
             border-color: #20C4D8;
-            box-shadow: 0 0 0 .2rem rgba(32, 196, 216, .15);
+            box-shadow: 0 0 0 .2rem rgba(32,196,216,.15);
         }
-
-    .input-group > .input-group-text:first-child {
-        border-radius: 8px 0 0 8px;
-    }
-
-    .input-group > .form-control:last-child {
-        border-radius: 0 8px 8px 0;
-    }
 
 </style>
 

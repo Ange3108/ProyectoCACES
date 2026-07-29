@@ -228,6 +228,7 @@
                 e.preventDefault();
 
                 const formulario = $(this);
+
                 const boton = formulario.find(
                     'button[type="submit"]'
                 );
@@ -237,6 +238,9 @@
 
                 const idMedico =
                     parseInt($('#idMedico').val());
+
+                const diasEstadia =
+                    parseInt($('#DiasEstadia').val());
 
                 if (!idProcedimiento || !idMedico) {
 
@@ -249,30 +253,55 @@
                     return;
                 }
 
+                if (!diasEstadia ||
+                    diasEstadia < 1 ||
+                    diasEstadia > 30) {
+
+                    Swal.fire({
+                        icon: 'warning',
+                        title: 'Estadía inválida',
+                        text: 'Indique entre 1 y 30 días de estadía.'
+                    });
+
+                    return;
+                }
+
                 const dto = {
+
                     idMedico: idMedico,
+
                     idProcedimiento: idProcedimiento,
+
+                    diasEstadia: diasEstadia,
+
                     observaciones:
-                        $('#ObservacionesSolicitud').val()?.trim() || null
+                        $('#ObservacionesSolicitud')
+                            .val()
+                            ?.trim() || null
                 };
 
                 boton
                     .prop('disabled', true)
                     .html(`
-                        <span class="spinner-border
-                                     spinner-border-sm
-                                     me-2"></span>
-                        Enviando...
-                    `);
+                <span class="spinner-border
+                             spinner-border-sm
+                             me-2">
+                </span>
+
+                Calculando...
+            `);
 
                 fetch('/Cotizacion/RegistrarCotizacion', {
 
                     method: 'POST',
 
                     headers: {
+
                         'Content-Type': 'application/json',
+
                         'RequestVerificationToken':
-                            $('input[name="__RequestVerificationToken"]').val()
+                            $('input[name="__RequestVerificationToken"]')
+                                .val()
                     },
 
                     body: JSON.stringify(dto)
@@ -280,12 +309,25 @@
                 })
                     .then(async response => {
 
-                        const respuesta = await response.json();
+                        let respuesta;
+
+                        try {
+
+                            respuesta = await response.json();
+
+                        }
+                        catch {
+
+                            throw new Error(
+                                'El servidor devolvió una respuesta no válida.'
+                            );
+                        }
 
                         if (!response.ok) {
+
                             throw new Error(
                                 respuesta?.mensaje ??
-                                'No fue posible registrar la solicitud.'
+                                'No fue posible calcular la cotización.'
                             );
                         }
 
@@ -294,18 +336,49 @@
                     .then(respuesta => {
 
                         if (!respuesta?.esCorrecto) {
+
                             throw new Error(
                                 respuesta?.mensaje ??
-                                'No fue posible registrar la solicitud.'
+                                'No fue posible calcular la cotización.'
                             );
                         }
 
                         Swal.fire({
+
                             icon: 'success',
-                            title: 'Solicitud enviada',
-                            text: respuesta.mensaje,
-                            confirmButtonText: 'Aceptar'
-                        }).then(() => {
+
+                            title: 'Cotización generada',
+
+                            text:
+                                respuesta.mensaje ??
+                                'La cotización fue generada correctamente.',
+
+                            confirmButtonText: 'Ver detalle',
+
+                            allowOutsideClick: false
+
+                        }).then(resultado => {
+
+                            if (!resultado.isConfirmed) {
+                                return;
+                            }
+
+                            if (respuesta.redirectUrl) {
+
+                                window.location.href =
+                                    respuesta.redirectUrl;
+
+                                return;
+                            }
+
+                            if (respuesta.idCotizacion) {
+
+                                window.location.href =
+                                    '/Cotizacion/Detalle/' +
+                                    respuesta.idCotizacion;
+
+                                return;
+                            }
 
                             window.location.href =
                                 '/Cotizacion/MisCotizaciones';
@@ -318,7 +391,9 @@
                         Swal.fire({
                             icon: 'error',
                             title: 'Error',
-                            text: error.message
+                            text:
+                                error.message ??
+                                'No fue posible calcular la cotización.'
                         });
                     })
                     .finally(() => {
@@ -326,9 +401,9 @@
                         boton
                             .prop('disabled', false)
                             .html(`
-                                <i class="bi bi-send me-2"></i>
-                                Solicitar Cotización
-                            `);
+                        <i class="bi bi-calculator me-2"></i>
+                        Calcular Cotización
+                    `);
                     });
             });
         },
