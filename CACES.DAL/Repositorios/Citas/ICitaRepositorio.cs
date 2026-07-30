@@ -17,6 +17,7 @@ namespace CACES.DAL.Repositorios.Citas
         Task<List<Medico>> ObtenerMedicosAsync(int? idEspecialidad = null);
         Task<List<Especialidad>> ObtenerEspecialidadesAsync();
         Task<List<HorariosDisponibles>> ObtenerHorariosAsync(int idMedico);
+        Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync();
 
         Task<int> ContarCitasPorFechaAsync(DateTime fecha);
         Task<bool> TieneHorarioActivoAsync(int idMedico, int diaSemana);

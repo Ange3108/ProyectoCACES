@@ -27,5 +27,7 @@ namespace CACES.BLL.DTOs.Cita
         [Required(ErrorMessage = "El motivo es requerido")]
         [StringLength(100)]
         public string Motivo { get; set; } = string.Empty;
+
+        public int? IdProcedimiento { get; set; }
     }
 }

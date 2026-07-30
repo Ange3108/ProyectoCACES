@@ -24,6 +24,7 @@ namespace CACES.DAL.Repositorios.Citas
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
                 .Include(c => c.Receta)
+                .Include(c => c.Procedimiento)
                 .OrderByDescending(c => c.Fecha)
                 .ThenBy(c => c.IdHorario)
                 .ToListAsync();
@@ -40,6 +41,7 @@ namespace CACES.DAL.Repositorios.Citas
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
                 .Include(c => c.Receta)
+                .Include(c => c.Procedimiento)
                 .Where(c => c.IdPaciente == idPaciente)
                 .OrderByDescending(c => c.Fecha)
                 .ThenBy(c => c.IdHorario)
@@ -57,6 +59,7 @@ namespace CACES.DAL.Repositorios.Citas
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
                 .Include(c => c.Receta)
+                .Include(c => c.Procedimiento)
                 .Where(c => c.IdMedico == idMedico)
                 .OrderByDescending(c => c.Fecha)
                 .ThenBy(c => c.IdHorario)
@@ -73,6 +76,7 @@ namespace CACES.DAL.Repositorios.Citas
                 .Include(c => c.Especialidad)
                 .Include(c => c.Horario)
                 .Include(c => c.Receta)
+                .Include(c => c.Procedimiento)
                 .FirstOrDefaultAsync(c => c.IdCita == idCita);
         }
 
@@ -145,6 +149,14 @@ namespace CACES.DAL.Repositorios.Citas
                 .AsNoTracking()
                 .Where(e => e.Estado)
                 .OrderBy(e => e.Nombre)
+                .ToListAsync();
+        }
+
+        public async Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync()
+        {
+            return await _context.Procedimientos
+                .Where(p => p.Estado == true)
+                .OrderBy(p => p.Nombre)
                 .ToListAsync();
         }
 

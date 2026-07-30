@@ -1,5 +1,7 @@
 ﻿using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Cita;
+using CACES.BLL.DTOs.Procedimientos;
+using CACES.DAL.Entidades;
 
 namespace CACES.BLL.Servicios.Citas
 {
@@ -28,5 +30,6 @@ namespace CACES.BLL.Servicios.Citas
         Task<respuestaErrores<List<CitaComboDTO>>> ObtenerEspecialidadesActivasAsync();
 
         Task<respuestaErrores<List<CitaHorarioDTO>>> ObtenerHorariosPorMedicoAsync(int idMedico);
+        Task<List<ProcedimientoDTO>> ObtenerProcedimientosFijosAsync();
     }
 }

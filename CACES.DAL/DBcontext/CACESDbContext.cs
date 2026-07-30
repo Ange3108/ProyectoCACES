@@ -107,6 +107,7 @@ namespace CACES.DAL.DBContext
     entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
     entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
     entity.Property(e => e.Estado).HasColumnName("Estado");
+    entity.Property(e => e.IdProcedimiento).HasColumnName("Id_Procedimiento");
 
     entity.HasOne(c => c.Paciente)
           .WithMany(p => p.Citas)
@@ -131,6 +132,12 @@ namespace CACES.DAL.DBContext
           .HasForeignKey(c => c.IdHorario)
           .OnDelete(DeleteBehavior.Restrict)
           .HasConstraintName("FK_Citas_Horario");
+
+    entity.HasOne(c => c.Procedimiento)
+          .WithMany()
+          .HasForeignKey(c => c.IdProcedimiento)
+          .OnDelete(DeleteBehavior.Restrict)
+          .HasConstraintName("FK_Citas_Procedimiento");
 });
 
             // Configuración de la entidad HistorialMedico

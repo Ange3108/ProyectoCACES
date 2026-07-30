@@ -30,5 +30,11 @@ namespace CACES.BLL.DTOs.Cita
         public int? IdReceta { get; set; }
 
         public bool TieneReceta => IdReceta.HasValue;
+        public int? IdProcedimiento { get; set; }
+
+        public string NombreProcedimiento { get; set; } = "N/A";
+
+        // Propiedad rápida para saber en la interfaz si la cita incluye un procedimiento
+        public bool EsProcedimiento => IdProcedimiento.HasValue && IdProcedimiento > 0;
     }
 }
