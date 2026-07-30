@@ -141,6 +141,19 @@
                     Ver reporte <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
+           
+         <div class="report-card">
+        <div class="report-card-icon">
+            <i class="bi bi-handbag-fill"></i>
+        </div>
+        <div class="report-card-body">
+            <h5 class="report-card-title">Gestión de Convenios</h5>
+            <p class="report-card-text">Administra los convenios institucionales y los porcentajes de descuento disponibles en el sistema.</p>
+        </div>
+        <a asp-action="ObtenerConvenios" asp-controller="Convenio" class="btn-report">
+            Ver reporte <i class="bi bi-arrow-right"></i>
+        </a>
+    </div>
             <div class="report-card">
                 <div class="report-card-icon">
                     <i class="bi bi-wrench"></i>
@@ -167,17 +180,32 @@
             </div>
             <div class="report-card">
                 <div class="report-card-icon">
-                    <i class="bi bi-handbag-fill"></i>
+                    <i class="bi bi-box2-heart-fill"></i>
                 </div>
                 <div class="report-card-body">
-                    <h5 class="report-card-title">Gestión de Convenios</h5>
-                    <p class="report-card-text">Administra los convenios institucionales y los porcentajes de descuento disponibles en el sistema.</p>
+                    <h5 class="report-card-title">Gestión Configuración</h5>
+                    <p class="report-card-text">No sé que debo poner aún  </p>
                 </div>
-                <a asp-action="ObtenerConvenios" asp-controller="Convenio" class="btn-report">
+                <a asp-action="Correo" asp-controller="Configuracion" class="btn-report">
+                    Ver reporte <i class="bi bi-arrow-right"></i>
+                </a>
+            </div>
+            <div class="report-card">
+                <div class="report-card-icon">
+                    <i class="bi bi-box2-heart-fill"></i>
+                </div>
+                <div class="report-card-body">
+                    <h5 class="report-card-title">Gestión de Notificaciones</h5>
+                    <p class="report-card-text">Administra los íconos para las especialidades </p>
+                </div>
+                <a asp-action="Notificacion" asp-controller="Notificacion" class="btn-report">
                     Ver reporte <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
         </div>
+
+
+
     </section>
 </div>
 

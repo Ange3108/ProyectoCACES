@@ -6,7 +6,6 @@
 
     <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
 
-        <!-- ENCABEZADO -->
         <div class="card-header border-0 p-4"
              style="background:#163B73;">
 
@@ -25,7 +24,8 @@
 
                     <p class="mb-0 text-white-50">
 
-                        Consulte el estado y los montos de sus solicitudes de cotización.
+                        Consulte sus cotizaciones médicas y el desglose
+                        de los costos estimados.
 
                     </p>
 
@@ -34,10 +34,11 @@
                 <a asp-controller="Cotizacion"
                    asp-action="SolicitarCotizacion"
                    class="btn text-white px-4 py-2 rounded-3 fw-semibold"
-                   style="background:#20C4D8;border:none;">
+                   style="background:#20C4D8;
+                    border-color:#20C4D8;">
 
-                    <i class="bi bi-plus-lg me-2"></i>
-                    Solicitar Cotización
+                    <i class="bi bi-calculator me-2"></i>
+                    Calcular Cotización
 
                 </a>
 
@@ -45,7 +46,6 @@
 
         </div>
 
-        <!-- CONTENIDO -->
         <div class="card-body p-4">
 
             <div id="alertaMisCotizaciones"
@@ -54,22 +54,43 @@
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
 
                 <span id="textoAlertaMisCotizaciones">
+
                     No fue posible cargar sus cotizaciones.
+
                 </span>
 
             </div>
 
             <div id="sinMisCotizaciones"
-                 class="alert alert-info border-0 rounded-3 shadow-sm text-center py-4 d-none">
+                 class="alert alert-info border-0 rounded-3
+                shadow-sm text-center py-4 d-none">
 
                 <i class="bi bi-file-earmark-x fs-2 d-block mb-2"></i>
 
-                Todavía no tiene solicitudes de cotización registradas.
+                <h5 class="fw-bold">
+                    Todavía no tiene cotizaciones
+                </h5>
+
+                <p class="mb-3">
+                    Genere una cotización para conocer el precio estimado
+                    de un procedimiento.
+                </p>
+
+                <a asp-controller="Cotizacion"
+                   asp-action="SolicitarCotizacion"
+                   class="btn text-white rounded-3 px-4"
+                   style="background:#20C4D8;">
+
+                    <i class="bi bi-calculator me-2"></i>
+                    Calcular Cotización
+
+                </a>
 
             </div>
 
             <div id="contenedorMisCotizaciones"
-                 class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+                 class="table-responsive border rounded-4
+                shadow-sm overflow-hidden">
 
                 <table id="tbMisCotizaciones"
                        class="table table-hover align-middle mb-0">
@@ -93,7 +114,7 @@
                             </th>
 
                             <th class="text-center"
-                                style="min-width:220px;">
+                                style="min-width:140px;">
 
                                 Acciones
 
@@ -119,10 +140,10 @@
 <style>
 
     #tbMisCotizaciones thead th {
-        background: #ffffff;
-        color: #111827;
-        border-bottom: 1px solid #dee2e6;
         padding: 14px 12px;
+        color: #111827;
+        background: #ffffff;
+        border-bottom: 1px solid #DEE2E6;
         font-size: .9rem;
         font-weight: 600;
         white-space: nowrap;
@@ -131,7 +152,7 @@
     #tbMisCotizaciones tbody td {
         padding: 14px 12px;
         vertical-align: middle;
-        border-bottom: 1px solid #e5e7eb;
+        border-bottom: 1px solid #E5E7EB;
     }
 
     #tbMisCotizaciones tbody tr:last-child td {
@@ -139,7 +160,7 @@
     }
 
     #tbMisCotizaciones tbody tr:hover {
-        background: #f8fafc;
+        background: #F8FAFC;
     }
 
     #tbMisCotizaciones .badge {

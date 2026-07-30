@@ -45,11 +45,15 @@ namespace CACES.Controllers
         [HttpPost]
         public async Task<IActionResult> ActualizarIcono(int id, IconoDTO iconoDTO)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var resultado = await _iconoServicio.ActualizarIconoAsync(id, iconoDTO);
             return Json(resultado);
         }
         public async Task<IActionResult> EliminarIcono(int id)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var resultado = await _iconoServicio.EliminarIconoAsync(id);
             return Json(resultado);
         }

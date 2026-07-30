@@ -22,7 +22,7 @@ namespace CACES.BLL.Servicios.HistorialMedicos
 
         public async Task<bool> UpdateHistorialAsync(HistorialMedico historial)
         {
-            historial.FechaDeModificacion = DateTime.Now;
+            historial.FechaDeModificacion = DateTime.UtcNow;
 
             return await _historialRepositorio.UpdateHistorialAsync(historial);
         }

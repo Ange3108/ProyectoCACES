@@ -353,7 +353,7 @@ namespace CACES.Controllers
                                 datos.Item().Text(texto =>
                                 {
                                     texto.Span("Fecha de emisión: ").Bold();
-                                    texto.Span(DateTime.Now.ToString("dd/MM/yyyy HH:mm"));
+                                    texto.Span(DateTime.UtcNow.ToString("dd/MM/yyyy HH:mm"));
                                 });
                             });
 

@@ -147,7 +147,7 @@ namespace CACES.BLL.Servicios.Citas
 
                     Motivo = dto.Motivo.Trim(),
 
-                    FechaDeRegistro = DateTime.Now,
+                    FechaDeRegistro = DateTime.UtcNow,
                     FechaDeModificacion = null,
                     Estado = 1
                 };

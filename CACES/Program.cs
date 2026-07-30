@@ -3,8 +3,9 @@ using CACES.BLL.Servicios.AlertaStaff;
 using CACES.BLL.Servicios.ArchivosHistorial;
 using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
+using CACES.BLL.Servicios.Configuracion;
 using CACES.BLL.Servicios.ConfiguracionCheckPoints;
-using CACES.BLL.Servicios.ConfirmacionCorreo;
+
 using CACES.BLL.Servicios.Convenios;
 using CACES.BLL.Servicios.Cotizaciones;
 using CACES.BLL.Servicios.Especialidad;
@@ -13,6 +14,7 @@ using CACES.BLL.Servicios.HistorialMedicos;
 using CACES.BLL.Servicios.Horario;
 using CACES.BLL.Servicios.Icono;
 using CACES.BLL.Servicios.Medicos;
+using CACES.BLL.Servicios.Notificacion;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;
 using CACES.BLL.Servicios.Perfil;
@@ -80,7 +82,10 @@ builder.Services.AddScoped<IRecetaRepositorio, RecetaRepositorio>();
 builder.Services.AddScoped<ICotizacionRepositorio, CotizacionRepositorio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
 builder.Services.AddScoped<ISeguimientoPacienteRepositorio, SeguimientoPacienteRepositorio>();
+builder.Services.AddScoped<INotificacionRepositorio, NotificacionRepositorio>();
+builder.Services.AddScoped<IConfiguracionRepositorio, ConfiguracionRepositorio>();
 builder.Services.AddScoped<IConvenioRepositorio, ConvenioRepositorio>();
+builder.Services.AddScoped<INotificacionUsuarioRepositorio, NotificacionUsuarioRepositorio>();
 builder.Services.AddScoped(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
@@ -111,6 +116,14 @@ builder.Services.AddScoped<ISeguimientoPacienteServicio, SeguimientoPacienteServ
 builder.Services.AddScoped<IRespuestaSeguimientoServicio, RespuestaSeguimientoServicio>();
 builder.Services.AddScoped<IAlertaStaffServicio, AlertaStaffServicio>();
 builder.Services.AddScoped<IConvenioServicio, ConvenioServicio>();
+
+
+builder.Services.AddScoped<INotificacionServicio, NotificacionServicio>();
+builder.Services.AddScoped<IConfiguracionServicio, ConfiguracionServicio>();
+builder.Services.AddScoped<INotificadorServicio, NotificadorServicio>();
+builder.Services.AddScoped<INotificacionUsuarioServicio, NotificacionUsuarioServicio>();
+
+
 
 
 

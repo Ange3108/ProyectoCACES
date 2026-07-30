@@ -1,4 +1,5 @@
 using CACES.DAL.Entidades;
+using CACES.DAL.Entidades.Configuración;
 using CACES.DAL.Entidades.Roles;
 using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using Microsoft.EntityFrameworkCore;
@@ -36,14 +37,21 @@ namespace CACES.DAL.DBContext
         public DbSet<Soporte> Soportes { get; set; }
         public DbSet<Cotizacion> Cotizaciones { get; set; }
         public DbSet<Icono> Iconos { get; set; }
+<<<<<<< Updated upstream
         public DbSet<ConfiguracionCheckpoints> ConfiguracionCheckpoints { get; set; }
         public DbSet<SeguimientoPaciente> SeguimientoPacientes { get; set; }
         public DbSet<PreguntaSeguimiento> PreguntasSeguimiento { get; set; }
         public DbSet<AlertaStaff> AlertasStaff { get; set; } 
+=======
+        public DbSet<ConfiguracionCotizacion> ConfiguracionesCotizacion { get; set; }
+>>>>>>> Stashed changes
 
         public DbSet<RespuestaSeguimiento> RespuestasSeguimiento { get; set; }
         public DbSet<Convenios> Convenios { get; set; }
+        public DbSet<Notificacion> Notificaciones { get; set; }
+        public DbSet<Configuracion> Configuraciones { get; set; }
 
+        public DbSet<NotificacionUsuario> NotificacionesUsuario { get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
@@ -139,6 +147,37 @@ namespace CACES.DAL.DBContext
           .OnDelete(DeleteBehavior.Restrict)
           .HasConstraintName("FK_Citas_Procedimiento");
 });
+            //Configuracion Configuracion Cotizacion
+
+            modelBuilder.Entity<ConfiguracionCotizacion>(entity =>
+            {
+                entity.ToTable("ConfiguracionCotizacion");
+
+                entity.HasKey(e => e.IdConfiguracion);
+
+                entity.Property(e => e.IdConfiguracion)
+                    .HasColumnName("Id_Configuracion");
+
+                entity.Property(e => e.PorcentajeEquipo)
+                    .HasColumnType("decimal(5,2)")
+                    .IsRequired();
+
+                entity.Property(e => e.CostoEstadiaDiaria)
+                    .HasColumnType("decimal(10,2)")
+                    .IsRequired();
+
+                entity.Property(e => e.PorcentajeImpuesto)
+                    .HasColumnType("decimal(5,2)")
+                    .IsRequired();
+
+                entity.Property(e => e.Estado)
+                    .IsRequired();
+
+                entity.Property(e => e.FechaDeRegistro)
+                    .IsRequired();
+
+                entity.Property(e => e.FechaDeModificacion);
+            });
 
             // Configuración de la entidad HistorialMedico
             modelBuilder.Entity<HistorialMedico>(entity =>
@@ -380,24 +419,44 @@ namespace CACES.DAL.DBContext
             });
 
             //configuración de la entidad Precios
-
             modelBuilder.Entity<Precios>(entity =>
             {
-                entity.HasKey(e => e.Id_Precio);
-                entity.Property(e => e.Id_Precio).HasColumnName("Id_Precio");
-                entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
-                entity.Property(e => e.Id_Procedimiento).HasColumnName("Id_Procedimiento").IsRequired();
-                entity.Property(e => e.Costo).HasColumnName("Costo").IsRequired();
-                entity.Property(e => e.Detalles).HasColumnName("Detalles").IsRequired().HasMaxLength(100);
-                entity.HasOne(d => d.Procedimiento)
-                  .WithMany(p => p.Precios)
-                  .HasForeignKey(d => d.Id_Procedimiento)
-                  .OnDelete(DeleteBehavior.ClientSetNull);
+                entity.ToTable("Precios");
 
-                entity.HasOne(d => d.Medico)
-                      .WithMany()
-                      .HasForeignKey(d => d.Id_Medico)
-                      .OnDelete(DeleteBehavior.ClientSetNull);
+                entity.HasKey(e => e.Id_Precio);
+
+                entity.Property(e => e.Id_Precio)
+                    .HasColumnName("Id_Precio");
+
+                entity.Property(e => e.Id_Medico)
+                    .HasColumnName("Id_Medico")
+                    .IsRequired();
+
+                entity.Property(e => e.Id_Procedimiento)
+                    .HasColumnName("Id_Procedimiento")
+                    .IsRequired();
+
+                entity.Property(e => e.Costo)
+                    .HasColumnName("Costo")
+                    .HasColumnType("decimal(10,2)")
+                    .IsRequired();
+
+                entity.Property(e => e.Detalles)
+                    .HasColumnName("Detalles")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.HasOne(e => e.Medico)
+                    .WithMany(m => m.Precios)
+                    .HasForeignKey(e => e.Id_Medico)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Precios_Medico");
+
+                entity.HasOne(e => e.Procedimiento)
+                    .WithMany(p => p.Precios)
+                    .HasForeignKey(e => e.Id_Procedimiento)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Precios_Procedimiento");
             });
 
             //configuración de la entidad HorariosDisponibles
@@ -525,7 +584,6 @@ namespace CACES.DAL.DBContext
                       .HasForeignKey(r => r.IdPregunta)
                       .OnDelete(DeleteBehavior.Restrict);
             });
-
             modelBuilder.Entity<Convenios>(entity =>
             {
                 entity.HasKey(e => e.Id);
@@ -537,6 +595,41 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.ImagenUrl).HasColumnName("ImagenUrl").HasMaxLength(200);
                 entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
                 entity.Property(e => e.FechaCreacion).HasColumnName("FechaCreacion").IsRequired();
+            });
+
+            modelBuilder.Entity<Notificacion>(entity =>
+            {
+                entity.HasKey(e => e.Id_Notificacion);
+                entity.Property(e => e.Id_Notificacion).HasColumnName("Id_Notificacion");
+                entity.Property(e => e.Evento).HasColumnName("Evento").IsRequired().HasMaxLength(100);
+                entity.Property(e => e.CanalPlataforma).HasColumnName("CanalPlataforma").IsRequired();
+                entity.Property(e => e.CanalEmail).HasColumnName("CanalEmail").IsRequired();
+                entity.Property(e => e.Estado).HasColumnName("Estado").IsRequired();
+            });
+
+            modelBuilder.Entity<Configuracion>(entity =>
+            {
+                entity.HasKey(e => e.IdConfiguracion);
+                entity.Property(e => e.IdConfiguracion).HasColumnName("Id_Configuracion");
+                entity.Property(e => e.Clave).HasColumnName("Clave").IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Valor).HasColumnName("Valor").IsRequired().HasMaxLength(500);
+                entity.Property(e => e.Tipo).HasColumnName("Tipo").HasMaxLength(200);
+                entity.Property(e => e.Categoria).HasColumnName("Categoria").IsRequired();
+                entity.Property(e => e.Descripcion).HasColumnName("Descripcion").HasMaxLength(500);
+
+            });
+
+            modelBuilder.Entity<NotificacionUsuario>(entity =>
+            {
+                entity.HasKey(e => e.IdNotificacionUsuario);
+                entity.Property(e => e.IdNotificacionUsuario).HasColumnName("Id_NotificacionUsuario");
+                entity.Property(e => e.IdUsuario).HasColumnName("IdUsuario").IsRequired();
+                entity.Property(e => e.Evento).HasColumnName("Evento").IsRequired().HasMaxLength(100);
+                entity.Property(e => e.Titulo).HasColumnName("Titulo").IsRequired().HasMaxLength(200);
+                entity.Property(e => e.Mensaje).HasColumnName("Mensaje").IsRequired().HasMaxLength(500);
+                entity.Property(e => e.Leido).HasColumnName("Leido").IsRequired();
+                entity.Property(e => e.FechaCreacion).HasColumnName("FechaCreacion").IsRequired();
+                entity.Property(e => e.FechaLectura).HasColumnName("FechaLectura");
             });
 
         }

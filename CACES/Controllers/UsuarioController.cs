@@ -43,12 +43,12 @@ namespace CACES.Controllers
         public async Task<IActionResult> RegistroUsuario(RegistrarUsuarioDTO registrarUsuarioDTO)
         {
             if (!ModelState.IsValid)
-                return BadRequest(ModelState);
+                return View("~/Views/Usuarios/RegistroUsuario.cshtml", registrarUsuarioDTO);
             var UsuarioCreado = await _usuarioServicio.CrearUsuarioAsync(registrarUsuarioDTO);
             if (!UsuarioCreado.EsCorrecto)
             {
                 ModelState.AddModelError(string.Empty, UsuarioCreado.mensaje);
-                return BadRequest(UsuarioCreado);
+                return View("~/Views/Usuarios/RegistroUsuario.cshtml", registrarUsuarioDTO);
             }
 
             // Verificar si el usuario que está operando en la sesión es Administrador
@@ -101,6 +101,15 @@ namespace CACES.Controllers
 
         }
 
+        [HttpPost, HttpGet]
+        public async Task<IActionResult> CambiarContrasena(int id, CambiarContrasenaDTO cambiarContrasenaDTO)
 
+        {
+
+            if(!ModelState.IsValid)
+                return BadRequest(ModelState);
+            var CambiarContrasena = await _usuarioServicio.CambiarContraseñaAsync(id, cambiarContrasenaDTO);
+            return Ok(CambiarContrasena);
+        }
     }
 }

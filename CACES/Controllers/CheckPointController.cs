@@ -5,26 +5,26 @@ using Microsoft.AspNetCore.Mvc;
 
 namespace CACES.Controllers
 {
-    public class ConfiguracionCheckPointController : Controller
+    public class CheckPointController : Controller
     {
         private readonly IConfiguracionCheckPointsServicio _configuracionCheckPointServicio;
 
-        public ConfiguracionCheckPointController(IConfiguracionCheckPointsServicio configuracionCheckPointServicio)
+        public CheckPointController(IConfiguracionCheckPointsServicio configuracionCheckPointServicio)
         {
             _configuracionCheckPointServicio = configuracionCheckPointServicio;
         }
 
         [HttpGet]
-        public async Task<ActionResult> ObtenerConfiguracionesCheckPoints()
+        public async Task<ActionResult> ObtenerCheckPoints()
         {
-            var resultado = await _configuracionCheckPointServicio.ObtenerConfiguracionesCheckPoints();
+            var resultado = await _configuracionCheckPointServicio.ObtenerCheckPoints();
             return Json(resultado);
         }
 
         [HttpGet]
-        public async Task<ActionResult> ObtenerConfiguracionesCheckPointsActivas()
+        public async Task<ActionResult> ObtenerCheckPointsActivas()
         {
-            var resultado = await _configuracionCheckPointServicio.ObtenerConfiguracionesCheckPointsActivas();
+            var resultado = await _configuracionCheckPointServicio.ObtenerCheckPointsActivas();
             return Json(resultado);
         }
 

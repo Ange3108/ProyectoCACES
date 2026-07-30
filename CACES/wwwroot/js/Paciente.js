@@ -148,7 +148,7 @@
                                     <span class="badge rounded-pill px-3 py-2"
                                           style="background:#DCFCE7;color:#166534;">
                                         <i class="bi bi-check-circle-fill me-1"></i>
-                                        Estado
+                                        Activo
                                     </span>
                                 `
                                 : `

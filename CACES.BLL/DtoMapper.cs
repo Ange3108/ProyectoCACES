@@ -1,9 +1,11 @@
 ﻿using CACES.BLL.DTOs.Cita;
 using CACES.BLL.DTOs.Convenios;
 using CACES.BLL.DTOs.Especialidad;
+using CACES.BLL.DTOs.Configuracion;
 using CACES.BLL.DTOs.Horario;
 using CACES.BLL.DTOs.Icono;
 using CACES.BLL.DTOs.Medico;
+using CACES.BLL.DTOs.Notificacion;
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Paquete;
 using CACES.BLL.DTOs.Perfil;
@@ -12,9 +14,9 @@ using CACES.BLL.DTOs.Receta;
 using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 using CACES.BLL.DTOs.Usuario;
 using CACES.DAL.Entidades;
+using CACES.DAL.Entidades.Configuración;
 using CACES.DAL.Entidades.SeguimientoPostOperatorio;
-using System;
-using System.Linq;
+
 
 namespace CACES.BLL.Mappers
 {
@@ -197,7 +199,7 @@ namespace CACES.BLL.Mappers
             IdEspecialidad = src.IdEspecialidad,
             Experiencia = src.Experiencia,
             Certificaciones = src.Certificaciones,
-            FechaDeRegistro = DateTime.Now
+            FechaDeRegistro = DateTime.UtcNow
         };
 
         public static EditarMedicoDTO? ToEditarMedicoDTO(this Medico src) => src == null ? null : new EditarMedicoDTO
@@ -263,7 +265,7 @@ namespace CACES.BLL.Mappers
 
         };
 
-       
+
 
         // ===== Perfil =====
         public static PerfilUsuarioDTO? ToPerfilUsuarioDTO(this Usuario src)
@@ -340,7 +342,7 @@ namespace CACES.BLL.Mappers
             Duracion = src.Duracion,
             Precio = src.Precio,
             Estado = src.Estado,
-            FechaDeRegistro = DateTime.Now
+            FechaDeRegistro = DateTime.UtcNow
         };
 
         public static void UpdateFromPaqueteDTO(this Paquete dest, PaqueteDTO src)
@@ -497,6 +499,7 @@ namespace CACES.BLL.Mappers
             Codigo = src.Codigo,
             Nombre = src.Nombre
         };
+        // ===== ConfiguracionCheckpoints =====
 
         public static ConfiguracionCheckPointDTO? ToConfiguracionCheckpointDTO(this ConfiguracionCheckpoints src) => src == null ? null : new ConfiguracionCheckPointDTO
         {
@@ -519,7 +522,7 @@ namespace CACES.BLL.Mappers
         };
 
 
-
+        // ===== PreguntaSeguimiento =====
 
         public static PreguntasPOpDTO? ToPreguntaSeguimientoDTO(this PreguntaSeguimiento src) => src == null ? null : new PreguntasPOpDTO
         {
@@ -549,7 +552,7 @@ namespace CACES.BLL.Mappers
             ValorMinimo = src.ValorMinimo,
             ValorMaximo = src.ValorMaximo,
             UmbralAlerta = src.UmbralAlerta,
-            DireccionAlerta =  Enum.Parse<DireccionAlerta>(src.DireccionAlerta),
+            DireccionAlerta = Enum.Parse<DireccionAlerta>(src.DireccionAlerta),
             Estado = src.Estado
         };
 
@@ -563,6 +566,7 @@ namespace CACES.BLL.Mappers
             FechaRegistro = src.FechaRegistro
         };
 
+        // ===== AlertaStaff =====
         public static AlertaStaffDTO? ToMostrarAlertaStaffDTO(this AlertaStaff src) => src == null ? null : new AlertaStaffDTO
         {
             idAlerta = src.IdAlerta,
@@ -574,6 +578,8 @@ namespace CACES.BLL.Mappers
             Observaciones = src.Observaciones,
             FechaAtencion = src.FechaAtencion
         };
+
+        // ===== RespuestaSeguimiento =====
         public static MostrarRespuestaSeguimientoDTO? ToMostrarRespuestaSeguimientoDTO(this RespuestaSeguimiento src) => src == null ? null : new MostrarRespuestaSeguimientoDTO
         {
             idRespuesta = src.IdRespuesta,
@@ -591,10 +597,82 @@ namespace CACES.BLL.Mappers
             ValorRespuesta = src.ValorRespuesta,
             GeneroAlerta = false
         };
+        // ===== Notificacion =====
+        public static NotificacionDTO? ToDTO(this Notificacion entidad) => entidad == null ? null :
+    new NotificacionDTO
+    {
+        Id_Notificacion = entidad.Id_Notificacion,
+        Evento = entidad.Evento,
+        CanalPlataforma = entidad.CanalPlataforma,
+        CanalEmail = entidad.CanalEmail,
+        Estado = entidad.Estado
+    };
+
+
+        public static Notificacion? ToEntity(this NotificacionDTO dto) => dto == null ? null : new Notificacion
+        {
+
+            Id_Notificacion = dto.Id_Notificacion,
+            Evento = dto.Evento,
+            CanalPlataforma = dto.CanalPlataforma,
+            CanalEmail = dto.CanalEmail,
+            Estado = dto.Estado
+
+        };
+
+        // ===== Configuracion =====
+        public static ConfiguracionDTO? ToDTO(this Configuracion entidad) => entidad == null ? null :
+    new ConfiguracionDTO
+    {
+        IdConfiguracion = entidad.IdConfiguracion,
+        Clave = entidad.Clave,
+        Valor = entidad.Valor,
+        Tipo = entidad.Tipo,
+        Categoria = entidad.Categoria,
+        Descripcion = entidad.Descripcion
+    };
+
+        public static Configuracion? ToEntity(this ConfiguracionDTO dto) => dto == null ? null :
+    new Configuracion
+    {
+        IdConfiguracion = dto.IdConfiguracion,
+        Clave = dto.Clave,
+        Valor = dto.Valor,
+        Tipo = dto.Tipo,
+        Categoria = dto.Categoria,
+        Descripcion = dto.Descripcion
+    };
+
+        public static NotificacionUsuarioDTO? ToDTO(this NotificacionUsuario entidad) => entidad == null ? null : new NotificacionUsuarioDTO
+
+        {
+            IdNotificacionUsuario = entidad.IdNotificacionUsuario,
+            IdUsuario = entidad.IdUsuario,
+            Evento = entidad.Evento,
+            Titulo = entidad.Titulo,
+            Mensaje = entidad.Mensaje,
+            Leido = entidad.Leido,
+            FechaCreacion = entidad.FechaCreacion
+        };
+
+
+
+        public static NotificacionUsuario? ToEntity(this NotificacionUsuarioDTO dto) => dto == null ? null : new NotificacionUsuario
+        {
+
+            IdUsuario = dto.IdUsuario,
+            Evento = dto.Evento,
+            Titulo = dto.Titulo,
+            Mensaje = dto.Mensaje,
+            Leido = false,
+            FechaCreacion = DateTime.UtcNow
+
+        };
 
         // ===== Convenio =====
         public static MostrarConvenios? ToConvenioDTO(this Convenios src) => src == null ? null : new MostrarConvenios
-        {
+        { 
+
             Id = src.Id,
             Nombre = src.Nombre,
             Descripcion = src.Descripcion,
@@ -602,9 +680,11 @@ namespace CACES.BLL.Mappers
             ContactoTelefono = src.ContactoTelefono,
             ImagenUrl = src.ImagenUrl,
             Estado = src.Estado,
-        };
 
-        public static Convenios? ToConvenio(this CrearModificarConvenio src) => src == null ? null : new Convenios
+            
+    };
+
+    public static Convenios? ToConvenio(this CrearModificarConvenio src) => src == null ? null : new Convenios
         {
             Nombre = src.Nombre,
             Descripcion = src.Descripcion,

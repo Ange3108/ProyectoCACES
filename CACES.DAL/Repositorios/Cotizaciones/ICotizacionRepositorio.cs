@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CACES.DAL.Entidades;
+﻿using CACES.DAL.Entidades;
 
 namespace CACES.DAL.Repositorios.Cotizaciones
 {
@@ -22,6 +19,12 @@ namespace CACES.DAL.Repositorios.Cotizaciones
         Task<List<Medico>> ObtenerMedicosAsync();
 
         Task<List<Procedimiento>> ObtenerProcedimientosAsync();
-        
+
+        Task<Procedimiento?> ObtenerProcedimientoPorIdAsync(int idProcedimiento);
+
+        Task<Precios?> ObtenerPrecioMedicoAsync(int idMedico,int idProcedimiento);
+        Task<ConfiguracionCotizacion?> ObtenerConfiguracionActivaAsync();
+
+
     }
 }

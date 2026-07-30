@@ -1,0 +1,66 @@
+@{
+    ViewData["Title"] = "Gestión de Notificaciones";
+}
+
+<div class="container py-5">
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+        <div class="card-header banner-header p-4">
+            <h3 class="mb-1 fw-bold"><i class="bi bi-bell me-2"></i>Gestión de Notificaciones</h3>
+            <p class="mb-0 opacity-75">Define, por evento del sistema, si se notifica por la campanita, por correo, o ambos.</p>
+        </div>
+
+        <div class="card-body p-4">
+            <div class="d-flex justify-content-end mb-3">
+                <button type="button" class="btn btn-primary" id="btnNuevaNotificacion">
+                    <i class="bi bi-plus-lg me-1"></i>Nuevo evento
+                </button>
+            </div>
+
+            <div id="contenedorNotificaciones">
+                <div class="alert alert-info text-center rounded-3 py-4">
+                    <i class="bi bi-hourglass-split fs-2 d-block mb-2 text-muted"></i>
+                    Cargando notificaciones...
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- ===================== MODAL: Crear / Editar Notificación ===================== -->
+<div class="modal fade" id="modalNotificacion" tabindex="-1">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="tituloModalNotificacion"><i class="bi bi-plus-lg me-1"></i>Nuevo evento</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body">
+                <input type="hidden" id="idNotificacion">
+                <div class="mb-3">
+                    <label class="form-label">Evento</label>
+                    <input type="text" class="form-control" id="notifEvento" placeholder="Ej. SeguimientoAlertaGenerada">
+                </div>
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" id="notifCanalPlataforma" checked>
+                    <label class="form-check-label" for="notifCanalPlataforma">Notificar por campanita</label>
+                </div>
+                <div class="form-check form-switch mb-2">
+                    <input class="form-check-input" type="checkbox" id="notifCanalEmail">
+                    <label class="form-check-label" for="notifCanalEmail">Notificar por correo</label>
+                </div>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="notifEstado" checked>
+                    <label class="form-check-label" for="notifEstado">Activo</label>
+                </div>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                <button type="button" class="btn btn-primary" id="btnGuardarNotificacion">Guardar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/Notificacion.js" asp-append-version="true"></script>
+}

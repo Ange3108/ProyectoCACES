@@ -324,7 +324,7 @@ CREATE TABLE Notificaciones (
     Estado BIT NOT NULL DEFAULT 1
 );
 
-CREATE TABLE ConfiguracionSistema (
+CREATE TABLE Configuracion (
     Id_Configuracion INT IDENTITY(1,1) PRIMARY KEY,
     Clave VARCHAR(100) NOT NULL UNIQUE,
     Valor VARCHAR(500) NOT NULL,
@@ -332,6 +332,20 @@ CREATE TABLE ConfiguracionSistema (
     Categoria VARCHAR(100) NOT NULL, -- "Notificaciones", "Calendario", "Seguimiento"
     Descripcion VARCHAR(500) NULL
 );
+
+
+CREATE TABLE NotificacionUsuario(
+
+    Id_NotificacionUsuario INT Identity (1,1) primary key,
+    IdUsuario int NOT NULL,
+    Evento varchar(100) NOT NULL,
+    Titulo varchar(100) NOT NULL,
+    Mensaje varchar (500) NOT NULL,
+    Leido bit,
+    FechaCreacion Datetime NOT NULL,
+    FechaLectura datetime not null,
+    Constraint FK_Usuario_Notificacion FOREIGN KEY (IdUsuario) REFERENCES Usuarios(Id_Usuario)
+    );
 
 
 /****** Object:  Table [dbo].[AspNetRoles]    Script Date: 12/11/2024 13:29:30 ******/
@@ -712,6 +726,42 @@ VALUES (
     1, 
     GETDATE()
 );
+
+-- ===== SMTP (correo) =====
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.Host', 'smtp.gmail.com', 'string', 'Smtp', 'Servidor SMTP utilizado para el envío de correos');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.Puerto', '587', 'int', 'Smtp', 'Puerto del servidor SMTP');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.Usuario', 'notificaciones@caces.com', 'string', 'Smtp', 'Usuario/correo remitente del sistema');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.UsarSSL', 'true', 'bool', 'Smtp', 'Indica si la conexión SMTP usa SSL/TLS');
+
+-- ===== Notificaciones =====
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('NotificarCorreo', 'true', 'bool', 'Notificaciones', 'Habilita el envío de notificaciones por correo');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('NotificarSMS', 'false', 'bool', 'Notificaciones', 'Habilita el envío de notificaciones por SMS');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('NotificarSistema', 'true', 'bool', 'Notificaciones', 'Habilita el badge de alertas dentro del panel administrativo');
+
+-- ===== Seguimiento post-operatorio (checkpoints) =====
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('DiasCheckpoint1', '3', 'int', 'Seguimiento', 'Día posterior a la cirugía para el primer checkpoint');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('DiasCheckpoint2', '7', 'int', 'Seguimiento', 'Día posterior a la cirugía para el segundo checkpoint');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('DiasCheckpoint3', '15', 'int', 'Seguimiento', 'Día posterior a la cirugía para el tercer checkpoint');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('HoraEnvioRecordatorios', '08:00', 'string', 'Seguimiento', 'Hora del día en que el job de Hangfire envía los recordatorios');
 
 UPDATE Usuarios
 SET PasswordHash = 'R6GvfeUKq9IZPWHh9hvY0+1D2ywQMANwAYxuux6bYIE=' --Maria123+

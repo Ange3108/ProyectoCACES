@@ -2,33 +2,46 @@
 
 @{
     ViewData["Title"] = "Detalle de Cotización";
+
+    string claseEstado = Model.Estado switch
+    {
+        1 => "estado-pendiente",
+        2 => "estado-enviada",
+        3 => "estado-aceptada",
+        4 => "estado-rechazada",
+        _ => "estado-desconocido"
+    };
 }
 
 <div class="container py-5">
 
     <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
 
-        <div class="card-header banner-header p-4">
+        <div class="card-header border-0 p-4"
+             style="background:#163B73;">
 
-            <div class="d-flex justify-content-between align-items-center">
+            <div class="d-flex flex-column flex-md-row
+                justify-content-between
+                align-items-md-center gap-3">
 
                 <div>
 
-                    <h3 class="fw-bold mb-1">
-                        <i class="bi bi-file-earmark-medical me-2"></i>
+                    <h3 class="fw-bold text-white mb-1">
+
+                        <i class="bi bi-file-earmark-medical-fill me-2"></i>
                         Detalle de Cotización
+
                     </h3>
 
-                    <p class="mb-0 opacity-75">
-                        Información completa de la cotización médica.
+                    <p class="text-white-50 mb-0">
+
+                        @Model.NumeroCotizacion
+
                     </p>
 
                 </div>
 
-                <span class="badge rounded-pill px-4 py-2 fs-6
-                    @(Model.Estado == 0 ? "bg-warning text-dark" :
-                        Model.Estado == 1 ? "bg-success" :
-                        "bg-danger")">
+                <span class="badge rounded-pill px-4 py-2 fs-6 @claseEstado">
 
                     @Model.EstadoTexto
 
@@ -38,71 +51,119 @@
 
         </div>
 
-        <div class="card-body p-5">
+        <div class="card-body p-4 p-lg-5">
 
             <div class="row g-4">
 
-                <div class="col-md-6">
+                <div class="col-lg-6">
 
-                    <div class="border rounded-4 p-4 h-100">
+                    <div class="info-card h-100">
 
-                        <h5 class="fw-bold mb-4 text-primary">
+                        <h5 class="fw-bold mb-4"
+                            style="color:#163B73;">
 
                             <i class="bi bi-person-fill me-2"></i>
-
-                            Información del Paciente
+                            Información general
 
                         </h5>
 
-                        <p>
-                            <strong>Paciente:</strong><br />
-                            @Model.NombrePaciente
-                        </p>
+                        <div class="detalle-item">
 
-                        <p>
-                            <strong>Médico:</strong><br />
-                            @Model.NombreMedico
-                        </p>
+                            <span>Paciente</span>
 
-                        <p class="mb-0">
-                            <strong>Fecha de solicitud:</strong><br />
-                            @Model.FechaSolicitud.ToString("dd/MM/yyyy HH:mm")
-                        </p>
+                            <strong>
+                                @Model.NombrePaciente
+                            </strong>
+
+                        </div>
+
+                        <div class="detalle-item">
+
+                            <span>Médico</span>
+
+                            <strong>
+                                @Model.NombreMedico
+                            </strong>
+
+                        </div>
+
+                        <div class="detalle-item mb-0">
+
+                            <span>Fecha de generación</span>
+
+                            <strong>
+                                @Model.FechaSolicitud.ToString("dd/MM/yyyy HH:mm")
+                            </strong>
+
+                        </div>
 
                     </div>
 
                 </div>
 
-                <div class="col-md-6">
+                <div class="col-lg-6">
 
-                    <div class="border rounded-4 p-4 h-100">
+                    <div class="info-card h-100">
 
-                        <h5 class="fw-bold mb-4 text-primary">
+                        <h5 class="fw-bold mb-4"
+                            style="color:#163B73;">
 
-                            <i class="bi bi-hospital me-2"></i>
-
+                            <i class="bi bi-hospital-fill me-2"></i>
                             Procedimiento
 
                         </h5>
 
-                        <h4 class="fw-bold text-dark">
+                        <h4 class="fw-bold text-dark mb-3">
 
                             @Model.NombreProcedimiento
 
                         </h4>
 
-                        <p class="text-muted mt-3">
+                        <div class="d-flex align-items-center gap-2 mb-3">
+
+                            <span class="detalle-icono">
+
+                                <i class="bi bi-calendar3"></i>
+
+                            </span>
+
+                            <div>
+
+                                <small class="text-muted d-block">
+                                    Estadía estimada
+                                </small>
+
+                                <strong>
+
+                                    @Model.DiasEstadia
+                                    @(Model.DiasEstadia == 1 ? "día" : "días")
+
+                                </strong>
+
+                            </div>
+
+                        </div>
+
+                        <div>
+
+                            <small class="text-muted d-block mb-1">
+                                Observaciones
+                            </small>
 
                             @if (string.IsNullOrWhiteSpace(Model.Observaciones))
                             {
-                                <span>No se agregaron observaciones.</span>
+                                <span class="text-muted">
+                                    No se agregaron observaciones.
+                                </span>
                             }
                             else
                             {
-                                @Model.Observaciones
+                                <span>
+                                    @Model.Observaciones
+                                </span>
                             }
 
-                        </p>
+                        </div>
 
                     </div>
 
@@ -110,73 +171,213 @@
 
             </div>
 
-            <hr class="my-5" />
+            <div class="row g-4 mt-2">
 
-            <div class="row">
+                <div class="col-lg-8">
 
-                <div class="col-lg-5 ms-auto">
+                    <div class="card border rounded-4 h-100">
 
-                    <div class="card border-0 shadow-sm rounded-4">
+                        <div class="card-header bg-white border-bottom p-4">
 
-                        <div class="card-header bg-light fw-bold">
+                            <h5 class="fw-bold mb-1"
+                                style="color:#163B73;">
 
-                            Resumen Económico
+                                <i class="bi bi-receipt-cutoff me-2"></i>
+                                Desglose de la cotización
+
+                            </h5>
+
+                            <small class="text-muted">
+
+                                Detalle de los conceptos incluidos en el cálculo.
+
+                            </small>
 
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body p-4">
 
-                            <div class="d-flex justify-content-between mb-3">
+                            <div class="costo-fila">
 
-                                <span>Precio Base</span>
+                                <div>
+
+                                    <span class="costo-icono">
+
+                                        <i class="bi bi-clipboard2-pulse"></i>
+
+                                    </span>
+
+                                    <span>Precio base del procedimiento</span>
+
+                                </div>
 
                                 <strong>
-
-                                    ₡ @Model.PrecioBase.ToString("N2")
-
+                                    ₡@Model.PrecioBase.ToString("N2")
                                 </strong>
 
                             </div>
 
-                            <div class="d-flex justify-content-between mb-3">
+                            <div class="costo-fila">
 
-                                <span>Descuento</span>
+                                <div>
+
+                                    <span class="costo-icono">
+
+                                        <i class="bi bi-person-badge"></i>
+
+                                    </span>
+
+                                    <span>Honorarios médicos</span>
+
+                                </div>
+
+                                <strong>
+                                    ₡@Model.HonorariosMedico.ToString("N2")
+                                </strong>
+
+                            </div>
+
+                            <div class="costo-fila">
+
+                                <div>
+
+                                    <span class="costo-icono">
+
+                                        <i class="bi bi-heart-pulse"></i>
+
+                                    </span>
+
+                                    <span>Uso de equipo médico</span>
+
+                                </div>
+
+                                <strong>
+                                    ₡@Model.CostoEquipo.ToString("N2")
+                                </strong>
+
+                            </div>
+
+                            <div class="costo-fila">
+
+                                <div>
+
+                                    <span class="costo-icono">
+
+                                        <i class="bi bi-building"></i>
+
+                                    </span>
+
+                                    <span>
+
+                                        Estadía hospitalaria
+                                        <small class="text-muted">
+
+                                            (@Model.DiasEstadia
+                                            @(Model.DiasEstadia == 1 ? "día" : "días"))
+
+                                        </small>
+
+                                    </span>
+
+                                </div>
+
+                                <strong>
+                                    ₡@Model.CostoEstadia.ToString("N2")
+                                </strong>
+
+                            </div>
+
+                            <div class="costo-fila">
+
+                                <div>
+
+                                    <span class="costo-icono">
+
+                                        <i class="bi bi-percent"></i>
+
+                                    </span>
+
+                                    <span>Descuento</span>
+
+                                </div>
 
                                 <strong class="text-success">
 
-                                    - ₡ @Model.Descuento.ToString("N2")
+                                    - ₡@Model.Descuento.ToString("N2")
 
                                 </strong>
 
                             </div>
 
-                            <div class="d-flex justify-content-between mb-3">
+                            <div class="costo-fila border-bottom-0 pb-0">
 
-                                <span>Impuesto</span>
+                                <div>
+
+                                    <span class="costo-icono">
+
+                                        <i class="bi bi-bank"></i>
+
+                                    </span>
+
+                                    <span>Impuesto</span>
+
+                                </div>
 
                                 <strong>
-
-                                    ₡ @Model.Impuesto.ToString("N2")
-
+                                    ₡@Model.Impuesto.ToString("N2")
                                 </strong>
 
                             </div>
 
-                            <hr />
+                        </div>
 
-                            <div class="d-flex justify-content-between">
+                    </div>
 
-                                <h4 class="fw-bold">
+                </div>
 
-                                    Total
+                <div class="col-lg-4">
 
-                                </h4>
+                    <div class="card border-0 rounded-4 total-card h-100">
 
-                                <h3 class="fw-bold text-primary">
+                        <div class="card-body p-4
+                            d-flex flex-column
+                            justify-content-between">
 
-                                    ₡ @Model.Total.ToString("N2")
+                            <div>
 
-                                </h3>
+                                <span class="total-icono">
+
+                                    <i class="bi bi-cash-stack"></i>
+
+                                </span>
+
+                                <h5 class="fw-semibold mt-4 mb-1">
+                                    Total estimado
+                                </h5>
+
+                                <p class="small mb-4 opacity-75">
+
+                                    Monto calculado con la configuración
+                                    vigente del sistema.
+
+                                </p>
+
+                            </div>
+
+                            <div>
+
+                                <h2 class="fw-bold mb-2">
+
+                                    ₡@Model.Total.ToString("N2")
+
+                                </h2>
+
+                                <small class="opacity-75">
+
+                                    Este monto es una estimación y puede variar
+                                    según la valoración médica.
+
+                                </small>
 
                             </div>
 
@@ -188,25 +389,51 @@
 
             </div>
 
-            <hr class="my-5" />
+            <div class="alert border-0 rounded-3 mt-4 mb-0"
+                 style="background:#FFFBEB;color:#92400E;">
 
-            <div class="text-end">
+                <i class="bi bi-exclamation-circle-fill me-2"></i>
 
-                <a asp-action="MisCotizaciones"
-                   class="btn btn-secondary px-4">
+                Esta cotización es informativa. El precio final puede cambiar
+                según la valoración del médico y las necesidades del paciente.
 
-                    <i class="bi bi-arrow-left me-2"></i>
+            </div>
 
-                    Volver
+            <hr class="my-4" />
 
-                </a>
+            <div class="d-flex flex-column flex-sm-row
+                justify-content-end gap-2">
 
-                <button class="btn text-white px-4 ms-2"
+                @if (User.IsInRole("Administrador"))
+                {
+                    <a asp-controller="Cotizacion"
+                       asp-action="GestionCotizaciones"
+                       class="btn btn-outline-secondary rounded-3 px-4">
+
+                        <i class="bi bi-arrow-left me-2"></i>
+                        Volver a gestión
+
+                    </a>
+                }
+                else
+                {
+                    <a asp-controller="Cotizacion"
+                       asp-action="MisCotizaciones"
+                       class="btn btn-outline-secondary rounded-3 px-4">
+
+                        <i class="bi bi-arrow-left me-2"></i>
+                        Mis cotizaciones
+
+                    </a>
+                }
+
+                <button type="button"
+                        class="btn rounded-3 px-4 text-white"
                         onclick="window.print();"
-                        style="background:#20C4D8;">
+                        style="background:#20C4D8;
+                    border-color:#20C4D8;">
 
                     <i class="bi bi-printer me-2"></i>
-
                     Imprimir
 
                 </button>
@@ -218,3 +445,121 @@
     </div>
 
 </div>
+
+<style>
+
+    .info-card {
+        padding: 24px;
+        border: 1px solid #E2E8F0;
+        border-radius: 16px;
+        background: #ffffff;
+    }
+
+    .detalle-item {
+        margin-bottom: 18px;
+    }
+
+        .detalle-item span {
+            display: block;
+            margin-bottom: 3px;
+            color: #64748B;
+            font-size: .88rem;
+        }
+
+        .detalle-item strong {
+            color: #111827;
+        }
+
+    .detalle-icono,
+    .costo-icono {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 34px;
+        height: 34px;
+        margin-right: 10px;
+        border-radius: 9px;
+        background: #ECFEFF;
+        color: #0891B2;
+    }
+
+    .costo-fila {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        gap: 16px;
+        padding: 16px 0;
+        border-bottom: 1px solid #E5E7EB;
+    }
+
+        .costo-fila > div {
+            display: flex;
+            align-items: center;
+        }
+
+        .costo-fila strong {
+            white-space: nowrap;
+        }
+
+    .total-card {
+        color: #ffffff;
+        background: #163B73;
+    }
+
+    .total-icono {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 58px;
+        height: 58px;
+        border-radius: 16px;
+        background: rgba(255,255,255,.14);
+        font-size: 1.7rem;
+    }
+
+    .estado-pendiente {
+        color: #92400E;
+        background: #FEF3C7;
+    }
+
+    .estado-enviada {
+        color: #1E40AF;
+        background: #DBEAFE;
+    }
+
+    .estado-aceptada {
+        color: #166534;
+        background: #DCFCE7;
+    }
+
+    .estado-rechazada {
+        color: #991B1B;
+        background: #FEE2E2;
+    }
+
+    .estado-desconocido {
+        color: #374151;
+        background: #E5E7EB;
+    }
+
+    @@media print {
+
+        header,
+        nav,
+        footer,
+        .btn,
+        .alert {
+            display: none !important;
+        }
+
+        .container {
+            max-width: 100% !important;
+            padding: 0 !important;
+        }
+
+        .card {
+            box-shadow: none !important;
+        }
+    }
+
+</style>

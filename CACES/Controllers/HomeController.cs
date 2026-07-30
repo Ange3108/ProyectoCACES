@@ -71,6 +71,15 @@ namespace CACES.Controllers
             return View();
         }
 
+<<<<<<< Updated upstream
+        public IActionResult configuracionUsuario()
+        {
+            return View();
+        }
+=======
+        
+>>>>>>> Stashed changes
+
         [HttpGet]
         public async Task<IActionResult> ResumenCentro()
         {
@@ -82,18 +91,27 @@ namespace CACES.Controllers
                     .Include(c => c.Cita)
                     .Where(c => c.Cita != null && c.Cita.Fecha.Date == hoy)
                     .CountAsync(),
+
                 citas = await _context.Citas
                     .Where(c => c.Fecha.Date == hoy)
                     .CountAsync(),
+
                 pacientes = await _context.Pacientes.CountAsync(),
+
                 medicos = await _context.Medicos
                     .Include(m => m.Usuario)
                     .Where(m => m.Usuario.Estado == true)
                     .CountAsync(),
+<<<<<<< Updated upstream
+                timestamp = DateTime.UtcNow
+=======
+
                 timestamp = DateTime.Now
+>>>>>>> Stashed changes
             };
 
             return Json(data);
         }
     }
 }
+    

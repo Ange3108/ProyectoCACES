@@ -123,7 +123,7 @@ namespace CACES.Controllers
                 NombreArchivo = archivo.FileName,
                 RutaArchivo = "/uploads/historial/" + nombreArchivo,
                 TipoArchivo = archivo.ContentType,
-                FechaDeSubida = DateTime.Now
+                FechaDeSubida = DateTime.UtcNow
             };
 
             var resultado = await _archivoServicio.CrearArchivoAsync(archivoHistorial);

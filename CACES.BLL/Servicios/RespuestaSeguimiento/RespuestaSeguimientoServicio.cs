@@ -101,7 +101,7 @@ namespace CACES.BLL.Servicios.RespuestaSeguimiento
             }
 
             seguimiento.Estado = huboAlerta ? EstadoSeguimiento.RequiereAtencion : EstadoSeguimiento.Completado;
-            seguimiento.FechaRegistro = DateTime.Now;
+            seguimiento.FechaRegistro = DateTime.UtcNow;
             await _repositorioSeguimiento.Actualizar(seguimiento);
 
             if (huboAlerta)
@@ -109,7 +109,7 @@ namespace CACES.BLL.Servicios.RespuestaSeguimiento
                 var alerta = new DAL.Entidades.SeguimientoPostOperatorio.AlertaStaff
                 {
                     IdSeguimiento = idSeguimiento,
-                    FechaGenerada = DateTime.Now,
+                    FechaGenerada = DateTime.UtcNow,
                     Estado = EstadoAlerta.Pendiente
                 };
 

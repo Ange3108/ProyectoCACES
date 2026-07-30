@@ -95,7 +95,7 @@ namespace CACES.Controllers
             if (!ModelState.IsValid)
             {
                 TempData["Error"] = "Debe completar todos los campos obligatorios.";
-                return View(dto);
+                return View("EditarMedico", dto); ;
             }
 
             if (FotoArchivo != null && FotoArchivo.Length > 0)
@@ -117,7 +117,8 @@ namespace CACES.Controllers
 
             if (!resultado.EsCorrecto)
             {
-                return BadRequest(resultado);
+                TempData["Error"] = resultado.mensaje; // 👈 agregado: para que se vea el error real de negocio, no solo de validación
+                return View("EditarMedico", dto); ;
             }
 
             TempData["Exito"] = resultado.mensaje;

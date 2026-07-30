@@ -44,7 +44,6 @@
 
   <ItemGroup>
     <Folder Include="Views\Horario\" />
-    <Folder Include="Views\CheckPoint\" />
   </ItemGroup>
 
 </Project>

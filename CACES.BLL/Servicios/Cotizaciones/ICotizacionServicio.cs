@@ -1,37 +1,39 @@
 ﻿using CACES.BLL.DTOs.Cotizacion;
 using CACES.DAL.Entidades;
-using System;
-using System.Collections.Generic;
-using System.Text;
-using CACES.BLL.DTOs.Cotizacion;
-using CACES.DAL.Entidades;
 using PacienteEntidad = CACES.DAL.Entidades.Paciente;
 
 namespace CACES.BLL.Servicios.Cotizaciones
 {
     public interface ICotizacionServicio
     {
-        Task<bool> RegistrarCotizacionAsync(
+        Task<int> RegistrarCotizacionAsync(
             RegistrarCotizacionDTO dto);
 
         Task<bool> ActualizarCotizacionAsync(
             EditarCotizacionDTO dto);
 
-        Task<List<MostrarCotizacionDTO>> ObtenerTodasAsync();
+        Task<List<MostrarCotizacionDTO>>
+            ObtenerTodasAsync();
 
-        Task<List<MostrarCotizacionDTO>> ObtenerPorPacienteAsync(
-            int idPaciente);
+        Task<List<MostrarCotizacionDTO>>
+            ObtenerPorPacienteAsync(
+                int idPaciente);
 
-        Task<EditarCotizacionDTO?> ObtenerEditarAsync(
-            int idCotizacion);
+        Task<EditarCotizacionDTO?>
+            ObtenerEditarAsync(
+                int idCotizacion);
 
-        Task<MostrarCotizacionDTO?> ObtenerDetalleAsync(
-            int idCotizacion);
+        Task<MostrarCotizacionDTO?>
+            ObtenerDetalleAsync(
+                int idCotizacion);
 
-        Task<List<Procedimiento>> ObtenerProcedimientosAsync();
+        Task<List<Procedimiento>>
+            ObtenerProcedimientosAsync();
 
-        Task<List<Medico>> ObtenerMedicosAsync();
+        Task<List<Medico>>
+            ObtenerMedicosAsync();
 
-        Task<List<PacienteEntidad>> ObtenerPacientesAsync();
+        Task<List<PacienteEntidad>>
+            ObtenerPacientesAsync();
     }
 }

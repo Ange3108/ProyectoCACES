@@ -42,7 +42,7 @@ namespace CACES.DAL.Entidades
         public string Antecedentes { get; set; } = null!;
 
         [Column("FechaDeCreacion")]
-        public DateTime FechaDeCreacion { get; set; } = DateTime.Now;
+        public DateTime FechaDeCreacion { get; set; } = DateTime.UtcNow;
 
         [Column("FechaDeModificacion")]
         public DateTime? FechaDeModificacion { get; set; }

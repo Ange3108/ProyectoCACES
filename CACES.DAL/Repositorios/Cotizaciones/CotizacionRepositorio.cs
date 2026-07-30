@@ -18,8 +18,8 @@ namespace CACES.DAL.Repositorios.Cotizaciones
 
         public async Task<Cotizacion> RegistrarAsync(Cotizacion cotizacion)
         {
-            cotizacion.FechaDeRegistro = DateTime.Now;
-            cotizacion.FechaSolicitud = DateTime.Now;
+            cotizacion.FechaDeRegistro = DateTime.UtcNow;
+            cotizacion.FechaSolicitud = DateTime.UtcNow;
             cotizacion.Estado = 1;
 
             await _context.Cotizaciones.AddAsync(cotizacion);
@@ -30,7 +30,7 @@ namespace CACES.DAL.Repositorios.Cotizaciones
 
         public async Task<Cotizacion> ActualizarAsync(Cotizacion cotizacion)
         {
-            cotizacion.FechaDeModificacion = DateTime.Now;
+            cotizacion.FechaDeModificacion = DateTime.UtcNow;
 
             _context.Cotizaciones.Update(cotizacion);
 
@@ -135,6 +135,34 @@ namespace CACES.DAL.Repositorios.Cotizaciones
                 .OrderBy(p => p.Nombre)
 
                 .ToListAsync();
+        }
+
+        public async Task<Procedimiento?> ObtenerProcedimientoPorIdAsync(
+            int idProcedimiento)
+                {
+                    return await _context.Procedimientos
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(p =>
+                            p.Id_Procedimiento == idProcedimiento &&
+                            p.Estado);
+                }
+
+        public async Task<Precios?> ObtenerPrecioMedicoAsync(
+            int idMedico,
+            int idProcedimiento)
+        {
+            return await _context.Precios
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p =>
+                    p.Id_Medico == idMedico &&
+                    p.Id_Procedimiento == idProcedimiento);
+        }
+
+        public async Task<ConfiguracionCotizacion?> ObtenerConfiguracionActivaAsync()
+        {
+            return await _context.ConfiguracionesCotizacion
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Estado);
         }
     }
 
