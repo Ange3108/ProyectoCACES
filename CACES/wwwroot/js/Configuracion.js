@@ -94,6 +94,7 @@
                                 data-id="${c.idConfiguracion}"
                                 data-clave="${c.clave}"
                                 data-valor="${c.valor}"
+                                data-categoria="${c.categoria}"
                                 data-descripcion="${c.descripcion ?? ''}">
                                 <i class="bi bi-pencil"></i> Editar
                             </button>
@@ -170,6 +171,7 @@
             $('#editarIdConfiguracion').val(id);
             $('#editarClave').val(btn.data('clave'));
             $('#editarValor').val(btn.data('valor'));
+            $('#editarCategoria').val(btn.data('categoria'));
             $('#editarDescripcion').val(btn.data('descripcion'));
             $('#modalEditarConfiguracion').modal('show');
         },
@@ -184,6 +186,7 @@
             const datos = {
                 IdConfiguracion: parseInt($('#editarIdConfiguracion').val()),
                 Valor: valor,
+                Categoria: $('#editarCategoria').val()?.trim(),
                 Descripcion: $('#editarDescripcion').val()?.trim() || null
             };
 

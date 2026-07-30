@@ -2,9 +2,7 @@
 @{
     ViewData["Title"] = "Configuración";
 }
-<script>
-    configuracionUsuario.idUsuarioActual = @User.FindFirst("IdUsuario")?.Value;
-</script>
+
 
 <section class="container-fluid py-4">
 
@@ -243,7 +241,7 @@
                                         </div>
                                     </div>
                                 </div>
-                                 <div class="accordion-item">
+                                <div class="accordion-item">
                                     <h2 class="accordion-header">
                                         <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq5">
                                             ¿Cómo reservo mis citas?
@@ -251,18 +249,77 @@
                                     </h2>
                                     <div id="faq5" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
                                         <div class="accordion-body">
-                                            Ve a la pestaña <strong>Calendario Paciente</strong>, luego da click al botón 
-                                            <strong>Listado de Citas</strong>, y por último da click al botón de <strong>Registrar
-                                                cita</strong>, llena los campos y da enviar. 
-                                        </div>
+                                            Ve a la pestaña <strong>Calendario Paciente</strong>, luego da click al botón
+                                            <strong>Listado de Citas</strong>, y por último da click al botón de <strong>
+                                            Registrar
+                                            cita
+                                        </strong>, llena los campos y da enviar.
                                     </div>
                                 </div>
-                                
-
                             </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq6">
+                                        ¿Cómo cambio mi contraseña?
+                                    </button>
+                                </h2>
+                                <div id="faq6" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                    <div class="accordion-body">
+                                        Ve a la pestaña <strong>Seguridad</strong>, ingresa tu contraseña actual y la nueva
+                                        contraseña con su confirmación, y da click en <strong>Actualizar contraseña</strong>.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq7">
+                                        ¿Cómo encuentro un especialista?
+                                    </button>
+                                </h2>
+                                <div id="faq7" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                    <div class="accordion-body">
+                                        Desde el directorio de <strong>Especialistas</strong> puedes buscar por nombre,
+                                        especialidad o disponibilidad, y ver el perfil de cada uno antes de agendar una cita.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq8">
+                                        ¿Qué significa la frecuencia de resumen en Notificaciones?
+                                    </button>
+                                </h2>
+                                <div id="faq8" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                    <div class="accordion-body">
+                                        Define cada cuánto recibes un correo con el resumen de tu actividad y alertas
+                                        pendientes: puedes elegir <strong>Diario</strong>, <strong>Semanal</strong> o
+                                        <strong>Nunca</strong>, desde la pestaña Notificaciones.
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="accordion-item">
+                                <h2 class="accordion-header">
+                                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#faq9">
+                                        Olvidé mi contraseña actual, ¿qué hago?
+                                    </button>
+                                </h2>
+                                <div id="faq9" class="accordion-collapse collapse" data-bs-parent="#accordionFAQ">
+                                    <div class="accordion-body">
+                                        Si no recuerdas tu contraseña actual, no podrás cambiarla desde esta pestaña.
+                                        Contáctanos desde <strong>Contacto y Soporte</strong> para que te ayudemos a
+                                        recuperar el acceso a tu cuenta.
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
                 </div>
+            </div>
 
                 <!-- ============ CONTACTO Y SOPORTE ============ -->
                 <div class="tab-pane fade" id="tab-soporte" role="tabpanel">
@@ -353,5 +410,9 @@
 </style>
 
 @section Scripts {
+    
     <script src="~/js/configuracionUsuario.js" asp-append-version="true"></script>
+    <script>
+        configuracionUsuario.idUsuarioActual = '@User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value';
+    </script>
 }

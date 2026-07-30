@@ -65,7 +65,7 @@
 
                 this.tablas.checkpoints = tabla.DataTable({
                     ajax: {
-                    url: '/ConfiguracionCheckPoint/ObtenerCheckPoints',
+                    url: '/CheckPoint/ObtenerCheckPoints',
                 type: 'GET',
                     dataSrc: (r) => (r && r.esCorrecto && Array.isArray(r.dato)) ? r.dato : [],
                     error: (xhr) => this.mostrarError(xhr, 'No fue posible cargar los checkpoints.')

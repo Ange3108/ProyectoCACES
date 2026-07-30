@@ -77,7 +77,7 @@
                         const dia = diasSemana[h.diaSemana] ?? h.diaSemana;
                         const hora = (h.horaInicio ?? '').toString().substring(0, 5);
                         const estado = h.estado
-                            ? '<span class="badge bg-success">Estado</span>'
+                            ? '<span class="badge bg-success">Activo</span>'
                             : '<span class="badge bg-secondary">Inactivo</span>';
 
                         filas += `
