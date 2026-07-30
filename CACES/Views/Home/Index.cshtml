@@ -361,6 +361,7 @@
                         <div class="carousel-item @(i == 0 ? "active" : "")">
 
                             <img src="~/img/@noticia.Imagen"
+                                 asp-append-version="true"
                                  class="d-block w-100"
                                  alt="@noticia.Titulo"
                                  onerror="this.parentElement.classList.add('no-image'); this.style.display='none';" />
@@ -1005,22 +1006,139 @@
             });
         }
 
-        function subirNoticia() {
-            const nombre = document.getElementById('noticiaName')?.value?.trim();
-            const file   = document.getElementById('noticiaFile')?.files[0];
+                       async function subirNoticia() {
 
-            if (!nombre) { alert('Por favor ingrese un nombre para la noticia.'); return; }
-            if (!file)   { alert('Por favor seleccione una imagen.'); return; }
+            const titulo =
+                document.getElementById('noticiaName')?.value?.trim();
+
+            const contenido =
+                document.getElementById('noticiaDesc')?.value?.trim();
+
+            const imagen =
+                document.getElementById('noticiaFile')?.files[0];
+
+            const btn =
+                document.getElementById('btnSubirNoticia');
+
+            if (!titulo) {
+                mostrarToast(
+                    'Ingrese el título de la noticia.',
+                    'error'
+                );
+                return;
+            }
+
+            if (!contenido) {
+                mostrarToast(
+                    'Ingrese la descripción de la noticia.',
+                    'error'
+                );
+                return;
+            }
+
+            if (!imagen) {
+                mostrarToast(
+                    'Seleccione una imagen.',
+                    'error'
+                );
+                return;
+            }
 
             const formData = new FormData();
-            formData.append('nombre', nombre);
-            formData.append('descripcion', document.getElementById('noticiaDesc')?.value ?? '');
-            formData.append('imagen', file);
 
-            const btn = document.getElementById('btnSubirNoticia');
+            formData.append('titulo', titulo);
+            formData.append('contenido', contenido);
+            formData.append('imagen', imagen);
+
+           
             btn.disabled = true;
-            btn.innerHTML = '<span class="spinner-border spinner-border-sm me-1"></span>Publicando…';
 
+<<<<<<< Updated upstream
+=======
+            btn.innerHTML = `
+                <span class="spinner-border spinner-border-sm me-2"></span>
+                Publicando...
+            `;
+
+            try {
+
+                const response = await fetch('/Noticia/Crear', {
+                    method: 'POST',
+
+                    body: formData
+                });
+
+                const textoRespuesta =
+                    await response.text();
+
+                let resultado = null;
+
+                if (textoRespuesta) {
+                    try {
+                        resultado = JSON.parse(textoRespuesta);
+                    }
+                    catch {
+                        console.error(
+                            'Respuesta del servidor:',
+                            textoRespuesta
+                        );
+                    }
+                }
+
+                if (!response.ok) {
+                    throw new Error(
+                        resultado?.mensaje ??
+                        `Error del servidor (${response.status}).`
+                    );
+                }
+
+                if (!resultado?.esCorrecto) {
+                    throw new Error(
+                        resultado?.mensaje ??
+                        'No fue posible guardar la noticia.'
+                    );
+                }
+
+                mostrarToast(
+                    resultado.mensaje,
+                    'success'
+                );
+
+                const modalElemento =
+                    document.getElementById('modalSubirNoticia');
+
+                bootstrap.Modal
+                    .getInstance(modalElemento)
+                    ?.hide();
+
+                document
+                    .getElementById('formSubirNoticia')
+                    ?.reset();
+
+                setTimeout(() => {
+                    window.location.reload();
+                }, 800);
+            }
+            catch (error) {
+
+                console.error(error);
+
+                mostrarToast(
+                    error.message ??
+                    'Ocurrió un error al publicar la noticia.',
+                    'error'
+                );
+            }
+            finally {
+
+                btn.disabled = false;
+
+                btn.innerHTML = `
+                    <i class="bi bi-upload me-1"></i>
+                    Publicar noticia
+                `;
+            }
+>>>>>>> Stashed changes
         }
 
         function mostrarToast(msg, tipo) {

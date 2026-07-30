@@ -136,6 +136,34 @@ namespace CACES.DAL.Repositorios.Cotizaciones
 
                 .ToListAsync();
         }
+
+        public async Task<Procedimiento?> ObtenerProcedimientoPorIdAsync(
+            int idProcedimiento)
+                {
+                    return await _context.Procedimientos
+                        .AsNoTracking()
+                        .FirstOrDefaultAsync(p =>
+                            p.Id_Procedimiento == idProcedimiento &&
+                            p.Estado);
+                }
+
+        public async Task<Precios?> ObtenerPrecioMedicoAsync(
+            int idMedico,
+            int idProcedimiento)
+        {
+            return await _context.Precios
+                .AsNoTracking()
+                .FirstOrDefaultAsync(p =>
+                    p.Id_Medico == idMedico &&
+                    p.Id_Procedimiento == idProcedimiento);
+        }
+
+        public async Task<ConfiguracionCotizacion?> ObtenerConfiguracionActivaAsync()
+        {
+            return await _context.ConfiguracionesCotizacion
+                .AsNoTracking()
+                .FirstOrDefaultAsync(c => c.Estado);
+        }
     }
 
 }

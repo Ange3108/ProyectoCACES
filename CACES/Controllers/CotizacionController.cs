@@ -113,15 +113,18 @@ namespace CACES.Controllers
 
             try
             {
-                var resultado =
-                    await _cotizacionServicio.RegistrarCotizacionAsync(dto);
+                var idCotizacion =
+    await _cotizacionServicio.RegistrarCotizacionAsync(dto);
 
                 return Json(new
                 {
-                    esCorrecto = resultado,
-                    mensaje = resultado
-                        ? "Solicitud enviada correctamente."
-                        : "No fue posible registrar la solicitud."
+                    esCorrecto = true,
+                    idCotizacion = idCotizacion,
+                    redirectUrl = Url.Action(
+                        "Detalle",
+                        "Cotizacion",
+                        new { id = idCotizacion }),
+                    mensaje = "Cotización generada correctamente."
                 });
             }
             catch (Exception ex)

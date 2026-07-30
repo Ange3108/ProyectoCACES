@@ -37,10 +37,14 @@ namespace CACES.DAL.DBContext
         public DbSet<Soporte> Soportes { get; set; }
         public DbSet<Cotizacion> Cotizaciones { get; set; }
         public DbSet<Icono> Iconos { get; set; }
+<<<<<<< Updated upstream
         public DbSet<ConfiguracionCheckpoints> ConfiguracionCheckpoints { get; set; }
         public DbSet<SeguimientoPaciente> SeguimientoPacientes { get; set; }
         public DbSet<PreguntaSeguimiento> PreguntasSeguimiento { get; set; }
         public DbSet<AlertaStaff> AlertasStaff { get; set; } 
+=======
+        public DbSet<ConfiguracionCotizacion> ConfiguracionesCotizacion { get; set; }
+>>>>>>> Stashed changes
 
         public DbSet<RespuestaSeguimiento> RespuestasSeguimiento { get; set; }
         public DbSet<Convenios> Convenios { get; set; }
@@ -136,6 +140,37 @@ namespace CACES.DAL.DBContext
           .OnDelete(DeleteBehavior.Restrict)
           .HasConstraintName("FK_Citas_Horario");
 });
+            //Configuracion Configuracion Cotizacion
+
+            modelBuilder.Entity<ConfiguracionCotizacion>(entity =>
+            {
+                entity.ToTable("ConfiguracionCotizacion");
+
+                entity.HasKey(e => e.IdConfiguracion);
+
+                entity.Property(e => e.IdConfiguracion)
+                    .HasColumnName("Id_Configuracion");
+
+                entity.Property(e => e.PorcentajeEquipo)
+                    .HasColumnType("decimal(5,2)")
+                    .IsRequired();
+
+                entity.Property(e => e.CostoEstadiaDiaria)
+                    .HasColumnType("decimal(10,2)")
+                    .IsRequired();
+
+                entity.Property(e => e.PorcentajeImpuesto)
+                    .HasColumnType("decimal(5,2)")
+                    .IsRequired();
+
+                entity.Property(e => e.Estado)
+                    .IsRequired();
+
+                entity.Property(e => e.FechaDeRegistro)
+                    .IsRequired();
+
+                entity.Property(e => e.FechaDeModificacion);
+            });
 
             // Configuración de la entidad HistorialMedico
             modelBuilder.Entity<HistorialMedico>(entity =>
@@ -377,24 +412,44 @@ namespace CACES.DAL.DBContext
             });
 
             //configuración de la entidad Precios
-
             modelBuilder.Entity<Precios>(entity =>
             {
-                entity.HasKey(e => e.Id_Precio);
-                entity.Property(e => e.Id_Precio).HasColumnName("Id_Precio");
-                entity.Property(e => e.Id_Medico).HasColumnName("Id_Medico").IsRequired();
-                entity.Property(e => e.Id_Procedimiento).HasColumnName("Id_Procedimiento").IsRequired();
-                entity.Property(e => e.Costo).HasColumnName("Costo").IsRequired();
-                entity.Property(e => e.Detalles).HasColumnName("Detalles").IsRequired().HasMaxLength(100);
-                entity.HasOne(d => d.Procedimiento)
-                  .WithMany(p => p.Precios)
-                  .HasForeignKey(d => d.Id_Procedimiento)
-                  .OnDelete(DeleteBehavior.ClientSetNull);
+                entity.ToTable("Precios");
 
-                entity.HasOne(d => d.Medico)
-                      .WithMany()
-                      .HasForeignKey(d => d.Id_Medico)
-                      .OnDelete(DeleteBehavior.ClientSetNull);
+                entity.HasKey(e => e.Id_Precio);
+
+                entity.Property(e => e.Id_Precio)
+                    .HasColumnName("Id_Precio");
+
+                entity.Property(e => e.Id_Medico)
+                    .HasColumnName("Id_Medico")
+                    .IsRequired();
+
+                entity.Property(e => e.Id_Procedimiento)
+                    .HasColumnName("Id_Procedimiento")
+                    .IsRequired();
+
+                entity.Property(e => e.Costo)
+                    .HasColumnName("Costo")
+                    .HasColumnType("decimal(10,2)")
+                    .IsRequired();
+
+                entity.Property(e => e.Detalles)
+                    .HasColumnName("Detalles")
+                    .HasMaxLength(100)
+                    .IsRequired();
+
+                entity.HasOne(e => e.Medico)
+                    .WithMany(m => m.Precios)
+                    .HasForeignKey(e => e.Id_Medico)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Precios_Medico");
+
+                entity.HasOne(e => e.Procedimiento)
+                    .WithMany(p => p.Precios)
+                    .HasForeignKey(e => e.Id_Procedimiento)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_Precios_Procedimiento");
             });
 
             //configuración de la entidad HorariosDisponibles
