@@ -37,6 +37,9 @@ namespace CACES.DAL.Entidades
         [Column("Estado")]
         public byte Estado { get; set; }
 
+        [Column("Id_Procedimiento")]
+        public int? IdProcedimiento { get; set; }
+
         public virtual Paciente Paciente { get; set; } = null!;
 
         public virtual Medico Medico { get; set; } = null!;
@@ -48,5 +51,6 @@ namespace CACES.DAL.Entidades
         public virtual Receta? Receta { get; set; }
 
         public virtual Cirugias? Cirugia { get; set; }
+        public virtual Procedimiento? Procedimiento { get; set; }
     }
 }

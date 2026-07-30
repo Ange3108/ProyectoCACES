@@ -103,10 +103,12 @@ CREATE TABLE Citas(
     FechaDeRegistro DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL,
     Estado TINYINT NOT NULL,
+    Id_Procedimiento INT NULL,
 	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
 	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
-    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
+    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario),
+    CONSTRAINT FK_Citas_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento)
 );
 
 CREATE TABLE Soportes
@@ -701,6 +703,29 @@ VALUES ('¿Ha notado sangrado o secreción anormal? (0 = No, 1 = Sí)', 0, 1, 1,
 INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
 VALUES ('Del 1 al 10, ¿qué tan satisfecho está con su recuperación general?', 1, 10, 4, 1, 1);
 
+INSERT INTO Convenios (Nombre, Descripcion, DescuentoPorcentaje, ContactoTelefono, ImagenUrl,  Estado, FechaCreacion
+) 
+VALUES (
+    'Convenio de Laboratorio Clínico', 
+    'Tu procesamiento de análisis clínicos cuenta con prioridad VIP en la línea de análisis para agilizar tu diagnóstico médico. El convenio te asegura tarifas corporativas exclusivas en perfiles hormonales, químicos e inmunológicos generales. Los resultados se envían automáticamente al sistema interno de CACES para que tu especialista los revise de inmediato.', 
+    20.00, 
+    '8584-6870', 
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAyBAy2__h8h1u-HyzGM-CPbIb5RcPQwdsxSHtB6iNX8i0k4lJ07e8eyow&s=10', 
+    1, 
+    GETDATE()
+);
+
+INSERT INTO Convenios (Nombre, Descripcion,  DescuentoPorcentaje, ContactoTelefono, ImagenUrl, Estado, FechaCreacion
+) 
+VALUES (
+    'Convenio de Imagenología Radiológica', 
+    'Acceso preferencial a estudios de Resonancia Magnética (RMN), Tomografía Computarizada (TAC), Ultrasonidos y Rayos X de última generación. Interpretación garantizada por radiólogos certificados internacionalmente, asegurando informes con precisión diagnóstica de estándar global. Recibe tus imágenes en formato digital compatible para que puedas descargarlas, llevarlas contigo o compartirlas con tus médicos en tu país de origen.', 
+    25.00, 
+    '8584-6990', 
+    'https://www.campustraining.es/wp-content/uploads/2024/01/Densidades-radiologicas.png',
+    1, 
+    GETDATE()
+);
 
 -- ===== SMTP (correo) =====
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
