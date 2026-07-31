@@ -72,15 +72,12 @@
             .then(res => {
                 select.empty().append('<option value="">-- Seleccione un procedimiento --</option>');
 
-                // Obtenemos la lista dependiendo de si tu API envuelve los datos en .dato o los manda directos
                 const lista = res.dato || res;
 
-                // 🔍 Revisa esta salida en la consola de tu navegador (F12)
                 console.log("Objetos recibidos del backend:", lista);
 
                 if (Array.isArray(lista)) {
                     lista.forEach(p => {
-                        // Mapeo flexible para capturar el ID sin importar la convención del C# DTO / Entity
                         const idVal = p.idProcedimiento
                             ?? p.idProcedimientoMedico
                             ?? p.id

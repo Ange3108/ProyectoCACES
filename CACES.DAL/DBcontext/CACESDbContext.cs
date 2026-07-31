@@ -37,14 +37,11 @@ namespace CACES.DAL.DBContext
         public DbSet<Soporte> Soportes { get; set; }
         public DbSet<Cotizacion> Cotizaciones { get; set; }
         public DbSet<Icono> Iconos { get; set; }
-<<<<<<< Updated upstream
         public DbSet<ConfiguracionCheckpoints> ConfiguracionCheckpoints { get; set; }
         public DbSet<SeguimientoPaciente> SeguimientoPacientes { get; set; }
         public DbSet<PreguntaSeguimiento> PreguntasSeguimiento { get; set; }
         public DbSet<AlertaStaff> AlertasStaff { get; set; } 
-=======
         public DbSet<ConfiguracionCotizacion> ConfiguracionesCotizacion { get; set; }
->>>>>>> Stashed changes
 
         public DbSet<RespuestaSeguimiento> RespuestasSeguimiento { get; set; }
         public DbSet<Convenios> Convenios { get; set; }
