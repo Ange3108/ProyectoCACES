@@ -92,24 +92,6 @@ CREATE TABLE HorariosDisponibles(
     CONSTRAINT FK_Horarios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
 );
 
-CREATE TABLE Citas(
-    Id_Cita INT PRIMARY KEY IDENTITY(1,1),
-    Id_Paciente INT NOT NULL,
-    Id_Medico INT NOT NULL,
-    Id_Especialidad INT NOT NULL,
-    Id_Horario INT NOT NULL,
-    Fecha Date NOT NULL,
-    Motivo VARCHAR(100) NOT NULL,
-    FechaDeRegistro DATETIME NOT NULL,
-    FechaDeModificacion DATETIME NULL,
-    Estado TINYINT NOT NULL,
-    Id_Procedimiento INT NULL,
-	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
-	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
-    CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
-    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario),
-    CONSTRAINT FK_Citas_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento)
-);
 
 CREATE TABLE Soportes
 (
@@ -136,16 +118,6 @@ CREATE TABLE ArchivosHistorial(
 );
 GO
 
-CREATE TABLE Recetas(
-    Id_Receta INT PRIMARY KEY IDENTITY(1,1),
-    Id_Cita INT NOT NULL,
-    Medicamentos VARCHAR(MAX) NOT NULL,
-    Instrucciones VARCHAR(500),
-    FechaDeRegistro DATETIME NOT NULL,
-    FechaDeVencimiento DATETIME NOT NULL,
-    CONSTRAINT FK_Recetas_Cita FOREIGN KEY (Id_Cita) REFERENCES Citas(Id_Cita)
-);
-GO
 CREATE TABLE Paquetes(
     Id_Paquete INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(50) NOT NULL,
@@ -168,6 +140,37 @@ CREATE TABLE Procedimiento(
     CONSTRAINT FK_Procedimiento_Especialidad
     FOREIGN KEY(Id_Especialidad)
     REFERENCES Especialidad(Id_Especialidad)
+);
+GO
+
+CREATE TABLE Citas(
+    Id_Cita INT PRIMARY KEY IDENTITY(1,1),
+    Id_Paciente INT NOT NULL,
+    Id_Medico INT NOT NULL,
+    Id_Especialidad INT NOT NULL,
+    Id_Horario INT NOT NULL,
+    Fecha Date NOT NULL,
+    Motivo VARCHAR(100) NOT NULL,
+    FechaDeRegistro DATETIME NOT NULL,
+    FechaDeModificacion DATETIME NULL,
+    Estado TINYINT NOT NULL,
+    Id_Procedimiento INT NULL,
+	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
+	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
+    CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
+    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario),
+    CONSTRAINT FK_Citas_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento)
+);
+GO
+
+CREATE TABLE Recetas(
+    Id_Receta INT PRIMARY KEY IDENTITY(1,1),
+    Id_Cita INT NOT NULL,
+    Medicamentos VARCHAR(MAX) NOT NULL,
+    Instrucciones VARCHAR(500),
+    FechaDeRegistro DATETIME NOT NULL,
+    FechaDeVencimiento DATETIME NOT NULL,
+    CONSTRAINT FK_Recetas_Cita FOREIGN KEY (Id_Cita) REFERENCES Citas(Id_Cita)
 );
 GO
 CREATE TABLE Precios(

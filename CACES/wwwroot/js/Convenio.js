@@ -64,6 +64,17 @@ async function cargarConvenios() {
         }
         tbody.innerHTML = html;
 
+        if ($.fn.DataTable.isDataTable('#tablaConvenios')) {
+            $('#tablaConvenios').DataTable().destroy();
+        }
+
+        $('#tablaConvenios').DataTable({
+            language: {
+                url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+            },
+            responsive: true,
+            destroy: true
+        });
     } catch (err) {
         console.error(err);
         tbody.innerHTML = `
