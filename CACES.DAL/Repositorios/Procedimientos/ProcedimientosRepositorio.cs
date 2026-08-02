@@ -14,53 +14,6 @@ namespace CACES.DAL.Repositorios.Procedimientos
         }
 
 
-        public async Task<HorariosDisponibles> ObtenerHorarioPorRangoAsync(int idMedico, int diaSemana, TimeSpan hora)
-        {
-            return await _context.HorariosDisponibles
-                .FirstOrDefaultAsync(h => h.Id_Medico == idMedico
-                                       && h.DiaSemana == diaSemana
-                                       && h.Estado
-                                       && h.HoraInicio <= hora);
-        }
-
-      
-        public async Task<List<Cirugias>> ObtenerCirugiasPorMedicoAsync(int idMedico)
-        {
-            return await _context.Cirugias
-        .Where(c => c.Id_Medico == idMedico) 
-        .Include(c => c.Procedimiento)       
-        .Include(c => c.Horario)             
-        .Include(c => c.Paciente)           
-            .ThenInclude(p => p.Usuario)    
-        .Include(c => c.Medico)              
-            .ThenInclude(m => m.Usuario)    
-        .ToListAsync();
-        }
-
-        public async Task<List<Cirugias>> ObtenerTodasLasCirugiasAsync()
-        {
-            return await _context.Cirugias
-                .Include(c => c.Procedimiento)
-                .Include(c => c.Paciente)
-                    .ThenInclude(p => p.Usuario) 
-                .Include(c => c.Medico)
-                    .ThenInclude(m => m.Usuario) 
-                .Include(c => c.Horario)
-                .ToListAsync();
-        }
-
-        public async Task<Cirugias?> ObtenerCirugiaParaReporteAsync(int idCirugia)
-        {
-            return await _context.Cirugias
-                .Include(c => c.Procedimiento)
-
-                .Include(c => c.Paciente)
-
-                .Include(c => c.Medico)
-                    .ThenInclude(m => m.Usuario)
-
-                .FirstOrDefaultAsync(c => c.Id_Cirugia == idCirugia);
-        }
 
         public async Task<List<Procedimiento>> ObtenerTodosLosProcedimientosAsync()
         {

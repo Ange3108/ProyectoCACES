@@ -4,10 +4,7 @@ namespace CACES.DAL.Repositorios.Procedimientos
 {
     public interface IProcedimientosRepositorio
     {
-        Task<List<Cirugias>> ObtenerCirugiasPorMedicoAsync(int idMedico);
-        Task<List<Cirugias>> ObtenerTodasLasCirugiasAsync();
-        Task<Cirugias?> ObtenerCirugiaParaReporteAsync(int idCirugia);
-        Task<HorariosDisponibles> ObtenerHorarioPorRangoAsync(int idMedico, int diaSemana, TimeSpan hora);
+    
         Task<List<Procedimiento>> ObtenerTodosLosProcedimientosAsync();
         Task<bool> InsertarProcedimientoAsync(Procedimiento entidad);
         Task<Procedimiento> ObtenerProcedimientoPorIdAsync(int id);
