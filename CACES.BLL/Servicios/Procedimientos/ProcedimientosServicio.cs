@@ -21,99 +21,13 @@ namespace CACES.BLL.Servicios.Procedimientos
 
         }
 
-        public async Task<List<MostrarProcedimientosDTO>> ObtenerDetalleCirugiaAsync(int idPaciente)
-        {
-            var listaCirugias = await _procedimientosRepositorio.ObtenerDetalleCirugiaAsync(idPaciente);
-            return MapearListaCirugiasAMostrarDTO(listaCirugias);
-        }
+        
+
+      
 
        
 
-        public async Task<List<MostrarProcedimientosDTO>> ObtenerCirugiasPorMedicoAsync(int idMedico)
-        {
-            var listaCirugias = await _procedimientosRepositorio.ObtenerCirugiasPorMedicoAsync(idMedico);
-
-            return MapearListaCirugiasAMostrarDTO(listaCirugias);
-        }
-
-        public async Task<List<MostrarProcedimientosDTO>> ObtenerTodasLasCirugiasAsync()
-        {
-            var listaCirugias = await _procedimientosRepositorio.ObtenerTodasLasCirugiasAsync();
-            return MapearListaCirugiasAMostrarDTO(listaCirugias);
-        }
-
-        private List<MostrarProcedimientosDTO> MapearListaCirugiasAMostrarDTO(List<Cirugias> listaCirugias)
-        {
-            var listaDtos = new List<MostrarProcedimientosDTO>();
-
-            foreach (var cirugia in listaCirugias)
-            {
-                DateTime fechaFinalCita = DateTime.Today;
-
-                if (cirugia.Horario != null)
-                {
-                    DayOfWeek diaObjetivo = (DayOfWeek)cirugia.Horario.DiaSemana;
-                    while (fechaFinalCita.DayOfWeek != diaObjetivo)
-                    {
-                        fechaFinalCita = fechaFinalCita.AddDays(1);
-                    }
-                    fechaFinalCita = fechaFinalCita.Add(cirugia.Horario.HoraInicio);
-                }
-
-                string nombreDelMedico = cirugia.Medico?.Usuario != null
-                    ? $"Dr. {cirugia.Medico.Usuario.Nombres}"
-                    : "Médico No Asignado";
-
-                string nombreDelPaciente = "Paciente Desconocido";
-                if (cirugia.Paciente?.Usuario != null)
-                {
-                    var u = cirugia.Paciente.Usuario;
-                    nombreDelPaciente = $"{u.Nombres} {u.PrimerApellido} {u.SegundoApellido}".Trim();
-                }
-
-                listaDtos.Add(new MostrarProcedimientosDTO
-                {
-                    Id_Cirugia = cirugia.Id_Cirugia,
-                    Id_Paciente = cirugia.Id_Paciente,
-                    Nombre = cirugia.Procedimiento?.Nombre ?? "Procedimiento Desconocido",
-                    NombreMedico = nombreDelMedico,
-                    NombrePaciente = nombreDelPaciente,
-                    PrimerApellidoPaciente = cirugia.Paciente?.Usuario?.PrimerApellido ?? "Desconocido",
-                    SegundoApellidoPaciente = cirugia.Paciente?.Usuario?.SegundoApellido ?? "",
-                    Fecha = fechaFinalCita,
-                    Estado = cirugia.Estado,
-                    Descripcion = cirugia.Procedimiento?.Descripcion ?? "Sin indicaciones particulares."
-                });
-            }
-
-            return listaDtos;
-        }
-
-        public async Task<respuestaErrores<MostrarProcedimientosDTO>> ObtenerDatosReporteAsync(int idCirugia)
-        {
-            var respuesta = new respuestaErrores<MostrarProcedimientosDTO>();
-
-            var listaCirugias = await _procedimientosRepositorio.ObtenerTodasLasCirugiasAsync();
-            var cirugiaFisica = listaCirugias.FirstOrDefault(c => c.Id_Cirugia == idCirugia);
-
-            if (cirugiaFisica == null)
-            {
-                respuesta.EsCorrecto = false;
-                respuesta.mensaje = "El registro de la cirugía o procedimiento no fue encontrado en el sistema.";
-                respuesta.codigo = 404;
-                return respuesta;
-            }
-
-            var listaDtoMapeada = MapearListaCirugiasAMostrarDTO(new List<Cirugias> { cirugiaFisica });
-            var dto = listaDtoMapeada.First();
-
-            respuesta.EsCorrecto = true;
-            respuesta.mensaje = "Información del procedimiento cargada con éxito.";
-            respuesta.Dato = dto;
-
-            return respuesta;
-        }
-
+        
         public async Task<List<InsertarProcedimientosDto>> ListarProcedimientosAsync()
         {
             var entidades = await _procedimientosRepositorio.ObtenerTodosLosProcedimientosAsync();
