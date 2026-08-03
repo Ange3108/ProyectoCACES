@@ -1,9 +1,6 @@
 ﻿@using CACES.BLL.DTOs.Especialidad
 @model mostrarDetalleEspecialidadDTO
 
-@{
-    ViewData["Title"] = Model.Nombre;
-}
 
 <section class="container py-5">
 
@@ -28,7 +25,6 @@
         <span class="section-eyebrow">Atención disponible</span>
         <h2 class="section-heading">Procedimientos</h2>
 
-        
         @if (Model.Procedimientos != null && Model.Procedimientos.Any())
         {
             <div class="ledger">
@@ -51,7 +47,6 @@
         {
             <p class="empty-note">Todavía no hay procedimientos registrados para esta especialidad.</p>
         }
-        
     </section>
 
     <section>
@@ -63,20 +58,20 @@
             <div class="staff-grid">
                 @foreach (var medico in Model.Medicos)
                 {
+                    var fotoRuta = ResolverFoto(medico.Foto);
+                    var nombreCompleto = $"{medico.Nombres} {medico.PrimerApellido} {medico.SegundoApellido}".Trim();
+
                     <div class="staff-card">
-                        @if (!string.IsNullOrWhiteSpace(medico.Foto))
-                        {
-                            <img src="@medico.Foto" alt="@medico.Nombres @medico.PrimerApellido" class="staff-photo" />
-                        }
-                        else
-                        {
-                            <span class="staff-photo staff-photo-placeholder"><i class="bi bi-person-fill"></i></span>
-                        }
+                        <img src="@fotoRuta"
+                             alt="Foto de @nombreCompleto"
+                             class="staff-photo"
+                             style="object-fit: cover;"
+                             onerror="this.onerror=null; this.src='/img/default.jpg';" />
+
                         <p class="staff-role">Especialista</p>
-                        <h3 class="staff-name">Dr(a). @medico.Nombres @medico.PrimerApellido @medico.SegundoApellido</h3>
+                        <h3 class="staff-name">Dr(a). @nombreCompleto</h3>
                         <p class="staff-phone"><i class="bi bi-telephone"></i> @medico.Telefono</p>
 
-                        @* Ajusta controller/action si tu ruta de perfil de médico es distinta *@
                         <a asp-area="" asp-controller="Medico" asp-action="Perfil" asp-route-id="@medico.IdMedico" class="staff-link">
                             Ver perfil
                         </a>
@@ -89,5 +84,31 @@
             <p class="empty-note">Todavía no hay médicos asignados a esta especialidad.</p>
         }
     </section>
-
 </section>
+
+@{
+    ViewData["Title"] = Model.Nombre;
+
+    string ResolverFoto(string? foto)
+    {
+        if (string.IsNullOrWhiteSpace(foto))
+        {
+            return "/img/default.jpg";
+        }
+
+        foto = foto.Trim();
+
+        if (foto.StartsWith('/') || foto.StartsWith("http", StringComparison.OrdinalIgnoreCase))
+        {
+            return foto;
+        }
+
+        if (foto.StartsWith("img/", StringComparison.OrdinalIgnoreCase) ||
+            foto.StartsWith("uploads/", StringComparison.OrdinalIgnoreCase))
+        {
+            return $"/{foto}";
+        }
+
+        return $"/img/{foto}";
+    }
+}
