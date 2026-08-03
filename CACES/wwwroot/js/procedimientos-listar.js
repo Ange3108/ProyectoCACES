@@ -1,5 +1,7 @@
 ﻿(() => {
 
+    let tablaDataTable = null;
+
     const Procedimientos = {
 
         init() {
@@ -12,11 +14,24 @@
                 url: '/Procedimientos/ObtenerProcedimientosQuirur',
                 type: 'GET',
                 dataType: 'json',
+                cache: false,
+                headers: {
+                    'X-Requested-With': 'XMLHttpRequest',
+                    'Cache-Control': 'no-cache, no-store, must-revalidate',
+                    'Pragma': 'no-cache',
+                    'Expires': '0'
+                },
                 success: function (respuesta) {
 
                     if (!respuesta.exito) {
                         Swal.fire({ title: 'Error', text: respuesta.mensaje || 'No se pudieron obtener los datos.', icon: 'error' });
                         return;
+                    }
+
+                    // Si DataTables ya existía, se destruye antes de reemplazar el contenido HTML
+                    if (tablaDataTable) {
+                        tablaDataTable.destroy();
+                        tablaDataTable = null;
                     }
 
                     const lista = respuesta.datos || [];
@@ -73,6 +88,21 @@
                     }
 
                     $('#tbodyProcedimientos').html(html);
+
+                    // Inicializar DataTables solo si hay datos en la lista
+                    if (lista.length > 0) {
+                        tablaDataTable = $('#tbProcedimientos').DataTable({
+                            language: {
+                                url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
+                            },
+                            responsive: true,
+                            pageLength: 10,
+                            lengthMenu: [5, 10, 25, 50],
+                            columnDefs: [
+                                { orderable: false, targets: 5 } // Deshabilita la ordenación en la columna de Acciones
+                            ]
+                        });
+                    }
                 },
 
                 error: function () {
@@ -84,7 +114,6 @@
         escucharEventos() {
             const self = this;
 
-            // Evento delegado para el botón de Cambiar Estado
             $(document).on('click', '.btn-cambiar-estado', function () {
                 const id = $(this).data('id');
                 const token = $('input[name="__RequestVerificationToken"]').val();
