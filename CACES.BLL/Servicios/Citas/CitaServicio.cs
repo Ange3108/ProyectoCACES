@@ -61,9 +61,6 @@ namespace CACES.BLL.Servicios.Citas
                 if (dto.IdEspecialidad <= 0)
                     return CrearError("Debe seleccionar una especialidad.", 400);
 
-                if (dto.IdProcedimiento <= 0)
-                    return CrearError("Puede seleccionar un procedimiento.", 400);
-
                 if (dto.FechaCita == default)
                     return CrearError("Debe seleccionar la fecha de la cita.", 400);
 
@@ -447,17 +444,34 @@ namespace CACES.BLL.Servicios.Citas
             return respuesta;
         }
 
-        public async Task<List<ProcedimientoDTO>> ObtenerProcedimientosFijosAsync()
+        public async Task<respuestaErrores<List<ProcedimientoDTO>>> ObtenerProcedimientosFijosAsync(int? idEspecialidad = null)
         {
-            var entidades = await _citaRepositorio.ObtenerProcedimientosFijosAsync();
+            var respuesta = new respuestaErrores<List<ProcedimientoDTO>>();
 
-            return entidades.Select(p => new ProcedimientoDTO
+            try
             {
-                Id_Procedimiento = p.Id_Procedimiento,
-                Nombre = p.Nombre,
-                PrecioBase = p.PrecioBase,
-                Estado = p.Estado
-            }).ToList();
+                var entidades = await _citaRepositorio.ObtenerProcedimientosFijosAsync(idEspecialidad);
+
+                respuesta.EsCorrecto = true;
+                respuesta.codigo = 200;
+                respuesta.mensaje = "Procedimientos obtenidos correctamente.";
+                respuesta.Dato = entidades.Select(p => new ProcedimientoDTO
+                {
+                    Id_Procedimiento = p.Id_Procedimiento,
+                    Nombre = p.Nombre,
+                    PrecioBase = p.PrecioBase,
+                    Estado = p.Estado
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.codigo = 500;
+                respuesta.mensaje = "Error al obtener los procedimientos: " + ex.Message;
+                respuesta.Dato = new List<ProcedimientoDTO>();
+            }
+
+            return respuesta;
         }
 
         public async Task<respuestaErrores<List<CitaHorarioDTO>>> ObtenerHorariosPorMedicoAsync(int idMedico)

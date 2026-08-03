@@ -2,6 +2,7 @@
 using CACES.BLL.DTOs.Procedimientos;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.Paciente;
+using CACES.DAL.Entidades;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using QuestPDF.Fluent;
@@ -231,11 +232,16 @@ namespace CACES.Controllers
 
         [Authorize(Roles = "Paciente,Administrador")]
         [HttpGet]
-        public async Task<IActionResult> ObtenerProcedimientos()
+        public async Task<IActionResult> ObtenerProcedimientos(int? idEspecialidad)
         {
-            List<ProcedimientoDTO> procedimientos = await _citaServicio.ObtenerProcedimientosFijosAsync();
+            var resultado = await _citaServicio.ObtenerProcedimientosFijosAsync(idEspecialidad);
 
-            return Json(procedimientos);
+            if (resultado.EsCorrecto)
+            {
+                return Json(resultado.Dato);
+            }
+
+            return Json(new List<ProcedimientoDTO>());
         }
 
         [Authorize(Roles = "Paciente,Administrador")]
