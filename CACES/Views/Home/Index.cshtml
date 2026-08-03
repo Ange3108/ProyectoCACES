@@ -482,36 +482,26 @@
             </div>
 
             <div class="col">
+                @{
+                    string urlProcedimientos = Url.Action("ObtenerProcedimientos", "Procedimientos");
 
-                @if (User.IsInRole("Medico") || User.IsInRole("Administrador"))
-                {
-                    <a href="@Url.Action("ObtenerProcedimientosQuirur", "Procedimientos")"
-                       class="acceso-card">
-
-                        <div class="acceso-icon" style="background:#f0fdf4;">
-                            <i class="bi bi-bandaid-fill" style="color:#16a34a;"></i>
-                        </div>
-
-                        <h6>Procedimientos</h6>
-                        <small>Quirúrgicos</small>
-
-                    </a>
-                }
-                else
-                {
-                    <a href="@Url.Action("ObtenerProcedimientos", "Procedimientos")"
-                       class="acceso-card">
-
-                        <div class="acceso-icon" style="background:#f0fdf4;">
-                            <i class="bi bi-bandaid-fill" style="color:#16a34a;"></i>
-                        </div>
-
-                        <h6>Procedimientos</h6>
-                        <small>Quirúrgicos</small>
-
-                    </a>
+                    if (User.IsInRole("Medico") || User.IsInRole("Administrador"))
+                    {
+                        urlProcedimientos = Url.Action("ObtenerProcedimientosQuirur", "Procedimientos");
+                    }
+                    else if (User.IsInRole("Paciente"))
+                    {
+                        urlProcedimientos = Url.Action("MisProcedimientos", "ProcedimientoAgendar");
+                    }
                 }
 
+                <a href="@urlProcedimientos" class="acceso-card">
+                    <div class="acceso-icon" style="background:#f0fdf4;">
+                        <i class="bi bi-bandaid-fill" style="color:#16a34a;"></i>
+                    </div>
+                    <h6>Procedimientos</h6>
+                    <small>Quirúrgicos</small>
+                </a>
             </div>
 
             @* Accesos del médico *@
@@ -1053,8 +1043,7 @@
            
             btn.disabled = true;
 
-<<<<<<< Updated upstream
-=======
+
             btn.innerHTML = `
                 <span class="spinner-border spinner-border-sm me-2"></span>
                 Publicando...
@@ -1138,7 +1127,6 @@
                     Publicar noticia
                 `;
             }
->>>>>>> Stashed changes
         }
 
         function mostrarToast(msg, tipo) {
