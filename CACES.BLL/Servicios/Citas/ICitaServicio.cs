@@ -33,6 +33,6 @@ namespace CACES.BLL.Servicios.Citas
 
         Task<respuestaErrores<MostrarCitaDTO>> EditarCitaAsync(EditarCitaDTO dto);
 
-        Task<List<ProcedimientoDTO>> ObtenerProcedimientosFijosAsync();
+        Task<respuestaErrores<List<ProcedimientoDTO>>> ObtenerProcedimientosFijosAsync(int? idEspecialidad = null);
     }
 }

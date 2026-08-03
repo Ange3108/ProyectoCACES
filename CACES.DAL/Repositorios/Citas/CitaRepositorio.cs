@@ -152,10 +152,18 @@ namespace CACES.DAL.Repositorios.Citas
                 .ToListAsync();
         }
 
-        public async Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync()
+        public async Task<List<Procedimiento>> ObtenerProcedimientosFijosAsync(int? idEspecialidad = null)
         {
-            return await _context.Procedimientos
-                .Where(p => p.Estado == true)
+            var query = _context.Procedimientos
+                .AsNoTracking()
+                .Where(p => p.Estado == true);
+
+            if (idEspecialidad.HasValue)
+            {
+                query = query.Where(p => p.Id_Especialidad == idEspecialidad.Value);
+            }
+
+            return await query
                 .OrderBy(p => p.Nombre)
                 .ToListAsync();
         }
