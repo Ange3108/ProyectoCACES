@@ -1,5 +1,19 @@
---DROP DATABASE [CACES];
---GO
+USE master;
+GO
+
+IF EXISTS (
+    SELECT 1
+    FROM sys.databases
+    WHERE name = 'CACES'
+)
+BEGIN
+    ALTER DATABASE [CACES]
+    SET SINGLE_USER
+    WITH ROLLBACK IMMEDIATE;
+
+    DROP DATABASE [CACES];
+END
+GO
 
 CREATE DATABASE CACES;
 GO
@@ -92,6 +106,22 @@ CREATE TABLE HorariosDisponibles(
     CONSTRAINT FK_Horarios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
 );
 
+CREATE TABLE Citas(
+    Id_Cita INT PRIMARY KEY IDENTITY(1,1),
+    Id_Paciente INT NOT NULL,
+    Id_Medico INT NOT NULL,
+    Id_Especialidad INT NOT NULL,
+    Id_Horario INT NOT NULL,
+    Fecha Date NOT NULL,
+    Motivo VARCHAR(100) NOT NULL,
+    FechaDeRegistro DATETIME NOT NULL,
+    FechaDeModificacion DATETIME NULL,
+    Estado TINYINT NOT NULL,
+	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
+	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
+    CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
+    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
+);
 
 CREATE TABLE Soportes
 (
@@ -118,6 +148,16 @@ CREATE TABLE ArchivosHistorial(
 );
 GO
 
+CREATE TABLE Recetas(
+    Id_Receta INT PRIMARY KEY IDENTITY(1,1),
+    Id_Cita INT NOT NULL,
+    Medicamentos VARCHAR(MAX) NOT NULL,
+    Instrucciones VARCHAR(500),
+    FechaDeRegistro DATETIME NOT NULL,
+    FechaDeVencimiento DATETIME NOT NULL,
+    CONSTRAINT FK_Recetas_Cita FOREIGN KEY (Id_Cita) REFERENCES Citas(Id_Cita)
+);
+GO
 CREATE TABLE Paquetes(
     Id_Paquete INT PRIMARY KEY IDENTITY(1,1),
     Nombre VARCHAR(50) NOT NULL,
@@ -140,37 +180,6 @@ CREATE TABLE Procedimiento(
     CONSTRAINT FK_Procedimiento_Especialidad
     FOREIGN KEY(Id_Especialidad)
     REFERENCES Especialidad(Id_Especialidad)
-);
-GO
-
-CREATE TABLE Citas(
-    Id_Cita INT PRIMARY KEY IDENTITY(1,1),
-    Id_Paciente INT NOT NULL,
-    Id_Medico INT NOT NULL,
-    Id_Especialidad INT NOT NULL,
-    Id_Horario INT NOT NULL,
-    Fecha Date NOT NULL,
-    Motivo VARCHAR(100) NOT NULL,
-    FechaDeRegistro DATETIME NOT NULL,
-    FechaDeModificacion DATETIME NULL,
-    Estado TINYINT NOT NULL,
-    Id_Procedimiento INT NULL,
-	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
-	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
-    CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
-    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario),
-    CONSTRAINT FK_Citas_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento)
-);
-GO
-
-CREATE TABLE Recetas(
-    Id_Receta INT PRIMARY KEY IDENTITY(1,1),
-    Id_Cita INT NOT NULL,
-    Medicamentos VARCHAR(MAX) NOT NULL,
-    Instrucciones VARCHAR(500),
-    FechaDeRegistro DATETIME NOT NULL,
-    FechaDeVencimiento DATETIME NOT NULL,
-    CONSTRAINT FK_Recetas_Cita FOREIGN KEY (Id_Cita) REFERENCES Citas(Id_Cita)
 );
 GO
 CREATE TABLE Precios(
@@ -706,29 +715,6 @@ VALUES ('¿Ha notado sangrado o secreción anormal? (0 = No, 1 = Sí)', 0, 1, 1,
 INSERT INTO PreguntaSeguimiento (Texto, ValorMinimo, ValorMaximo, UmbralAlerta, DireccionAlerta, Estado)
 VALUES ('Del 1 al 10, ¿qué tan satisfecho está con su recuperación general?', 1, 10, 4, 1, 1);
 
-INSERT INTO Convenios (Nombre, Descripcion, DescuentoPorcentaje, ContactoTelefono, ImagenUrl,  Estado, FechaCreacion
-) 
-VALUES (
-    'Convenio de Laboratorio Clínico', 
-    'Tu procesamiento de análisis clínicos cuenta con prioridad VIP en la línea de análisis para agilizar tu diagnóstico médico. El convenio te asegura tarifas corporativas exclusivas en perfiles hormonales, químicos e inmunológicos generales. Los resultados se envían automáticamente al sistema interno de CACES para que tu especialista los revise de inmediato.', 
-    20.00, 
-    '8584-6870', 
-    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAyBAy2__h8h1u-HyzGM-CPbIb5RcPQwdsxSHtB6iNX8i0k4lJ07e8eyow&s=10', 
-    1, 
-    GETDATE()
-);
-
-INSERT INTO Convenios (Nombre, Descripcion,  DescuentoPorcentaje, ContactoTelefono, ImagenUrl, Estado, FechaCreacion
-) 
-VALUES (
-    'Convenio de Imagenología Radiológica', 
-    'Acceso preferencial a estudios de Resonancia Magnética (RMN), Tomografía Computarizada (TAC), Ultrasonidos y Rayos X de última generación. Interpretación garantizada por radiólogos certificados internacionalmente, asegurando informes con precisión diagnóstica de estándar global. Recibe tus imágenes en formato digital compatible para que puedas descargarlas, llevarlas contigo o compartirlas con tus médicos en tu país de origen.', 
-    25.00, 
-    '8584-6990', 
-    'https://www.campustraining.es/wp-content/uploads/2024/01/Densidades-radiologicas.png',
-    1, 
-    GETDATE()
-);
 
 -- ===== SMTP (correo) =====
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
@@ -774,3 +760,359 @@ SELECT *
 FROM Recetas
 ORDER BY Id_Receta DESC;
 
+SELECT COLUMN_NAME
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Cotizaciones';
+
+
+ALTER TABLE Cotizacion
+ADD
+    CostoEquipo DECIMAL(10,2) NULL,
+    CostoEstadia DECIMAL(10,2) NULL,
+    DiasEstadia INT NULL,
+    HonorariosMedico DECIMAL(10,2) NULL;
+
+
+BEGIN TRANSACTION;
+
+BEGIN TRY
+
+    DECLARE @IdEspecialidad INT;
+    DECLARE @IdUsuario INT;
+    DECLARE @IdMedico INT;
+
+    /* Buscar la especialidad */
+    SELECT TOP 1
+        @IdEspecialidad = Id_Especialidad
+    FROM Especialidad
+    WHERE Nombre LIKE '%Ortopedia%'
+       OR Nombre LIKE '%Traumatología%';
+
+    /* Crear especialidad si no existe */
+    IF @IdEspecialidad IS NULL
+    BEGIN
+        INSERT INTO Especialidad
+        (
+            Nombre,
+            Descripcion,
+            FechaDeRegistro,
+            Estado
+        )
+        VALUES
+        (
+            'Ortopedia y Traumatología',
+            'Diagnóstico y tratamiento médico y quirúrgico de lesiones del sistema musculoesquelético.',
+            GETDATE(),
+            1
+        );
+
+        SET @IdEspecialidad = SCOPE_IDENTITY();
+    END;
+
+    /* Buscar usuario */
+    SELECT TOP 1
+        @IdUsuario = Id_Usuario
+    FROM Usuarios
+    WHERE CorreoElectronico = 'ortopedia@caces.com';
+
+    /* Crear usuario si no existe */
+    IF @IdUsuario IS NULL
+    BEGIN
+        INSERT INTO Usuarios
+        (
+            Nombres,
+            PrimerApellido,
+            SegundoApellido,
+            CorreoElectronico,
+            DUI,
+            Foto,
+            FechaDeRegistro,
+            Estado
+        )
+        VALUES
+        (
+            'Daniel',
+            'Vargas',
+            'Mora',
+            'ortopedia@caces.com',
+            '109990999',
+            '/img/default.jpg',
+            GETDATE(),
+            1
+        );
+
+        SET @IdUsuario = SCOPE_IDENTITY();
+    END;
+
+    /* Buscar médico */
+    SELECT TOP 1
+        @IdMedico = Id_Medico
+    FROM Medicos
+    WHERE Id_Usuario = @IdUsuario;
+
+    /* Crear médico si no existe */
+    IF @IdMedico IS NULL
+    BEGIN
+        INSERT INTO Medicos
+        (
+            Id_Especialidad,
+            Id_Usuario,
+            Experiencia,
+            Certificaciones,
+            FechaDeRegistro
+        )
+        VALUES
+        (
+            @IdEspecialidad,
+            @IdUsuario,
+            '10 años de experiencia en cirugía ortopédica, artroscopia y tratamiento de fracturas.',
+            'Especialista en Ortopedia y Traumatología',
+            GETDATE()
+        );
+
+        SET @IdMedico = SCOPE_IDENTITY();
+    END;
+
+    /* Osteosíntesis */
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM Precios
+        WHERE Id_Medico = @IdMedico
+          AND Id_Procedimiento = 19
+    )
+    BEGIN
+        INSERT INTO Precios
+        (
+            Id_Medico,
+            Id_Procedimiento,
+            Costo,
+            Detalles
+        )
+        VALUES
+        (
+            @IdMedico,
+            19,
+            1600.00,
+            'Honorarios médicos por cirugía de osteosíntesis'
+        );
+    END;
+
+    /* Artroscopia */
+    IF NOT EXISTS
+    (
+        SELECT 1
+        FROM Precios
+        WHERE Id_Medico = @IdMedico
+          AND Id_Procedimiento = 20
+    )
+    BEGIN
+        INSERT INTO Precios
+        (
+            Id_Medico,
+            Id_Procedimiento,
+            Costo,
+            Detalles
+        )
+        VALUES
+        (
+            @IdMedico,
+            20,
+            1400.00,
+            'Honorarios médicos por procedimiento de artroscopia'
+        );
+    END;
+
+    COMMIT TRANSACTION;
+
+    SELECT
+        'Médico y precios registrados correctamente.' AS Resultado,
+        @IdEspecialidad AS IdEspecialidad,
+        @IdUsuario AS IdUsuario,
+        @IdMedico AS IdMedico;
+
+END TRY
+BEGIN CATCH
+
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+
+    SELECT
+        ERROR_NUMBER() AS NumeroError,
+        ERROR_LINE() AS LineaError,
+        ERROR_MESSAGE() AS MensajeError;
+
+END CATCH;
+
+
+
+SELECT *
+FROM Especialidad
+WHERE Nombre LIKE '%Ortopedia%';
+
+SELECT *
+FROM Usuarios
+WHERE CorreoElectronico = 'ortopedia@caces.com';
+
+
+UPDATE Usuarios
+SET Foto = '/img/DoctorDaniel.jpg'
+WHERE Id_Usuario = 9;
+
+
+
+
+
+
+BEGIN TRANSACTION;
+
+BEGIN TRY
+
+    /* Elimina las asociaciones anteriores para evitar
+       médicos incorrectos o procedimientos duplicados */
+    DELETE FROM Precios;
+
+    /* Reinicia el consecutivo de Id_Precio */
+    DBCC CHECKIDENT ('Precios', RESEED, 0);
+
+    /* =====================================================
+       OSCAR LÓPEZ — CIRUGÍA GENERAL
+       Id_Medico = 1
+       ===================================================== */
+
+    INSERT INTO Precios
+    (
+        Id_Medico,
+        Id_Procedimiento,
+        Costo,
+        Detalles
+    )
+    VALUES
+    (1, 1,  900.00,  'Honorarios médicos en USD por colecistectomía'),
+    (1, 2,  750.00,  'Honorarios médicos en USD por apendicectomía'),
+    (1, 3,  850.00,  'Honorarios médicos en USD por reparación de hernia'),
+    (1, 4,  1200.00, 'Honorarios médicos en USD por cirugía de hernia de hiato'),
+    (1, 5,  1300.00, 'Honorarios médicos en USD por tratamiento quirúrgico de acalasia'),
+    (1, 6,  1400.00, 'Honorarios médicos en USD por esplenectomía'),
+    (1, 7,  1800.00, 'Honorarios médicos en USD por colectomía'),
+    (1, 8,  2000.00, 'Honorarios médicos en USD por gastrectomía'),
+    (1, 12, 1500.00, 'Honorarios médicos en USD por procedimiento de resección'),
+    (1, 13, 1600.00, 'Honorarios médicos en USD por mastectomía');
+
+    /* =====================================================
+       LIAM RAMÍREZ — GINECOLOGÍA
+       Id_Medico = 2
+       ===================================================== */
+
+    INSERT INTO Precios
+    (
+        Id_Medico,
+        Id_Procedimiento,
+        Costo,
+        Detalles
+    )
+    VALUES
+    (2, 9,  1500.00, 'Honorarios médicos en USD por histerectomía'),
+    (2, 10, 600.00,  'Honorarios médicos en USD por esterilización quirúrgica'),
+    (2, 11, 1100.00, 'Honorarios médicos en USD por cirugía de quiste de ovario');
+
+    /* =====================================================
+       ANA FERNÁNDEZ — CIRUGÍA PLÁSTICA
+       Id_Medico = 3
+       ===================================================== */
+
+    INSERT INTO Precios
+    (
+        Id_Medico,
+        Id_Procedimiento,
+        Costo,
+        Detalles
+    )
+    VALUES
+    (3, 14, 1500.00, 'Honorarios médicos en USD por lipoescultura'),
+    (3, 15, 1800.00, 'Honorarios médicos en USD por dermolipectomía'),
+    (3, 16, 2000.00, 'Honorarios médicos en USD por lifting facial'),
+    (3, 17, 1400.00, 'Honorarios médicos en USD por liposucción'),
+    (3, 18, 1700.00, 'Honorarios médicos en USD por cirugía de reducción'),
+    (3, 21, 1800.00, 'Honorarios médicos en USD por cirugía estética de senos');
+
+    /* =====================================================
+       ORTOPEDIA Y TRAUMATOLOGÍA
+       Id_Medico = 4
+       ===================================================== */
+
+    INSERT INTO Precios
+    (
+        Id_Medico,
+        Id_Procedimiento,
+        Costo,
+        Detalles
+    )
+    VALUES
+    (4, 19, 1600.00, 'Honorarios médicos en USD por osteosíntesis'),
+    (4, 20, 1400.00, 'Honorarios médicos en USD por artroscopia');
+
+    COMMIT TRANSACTION;
+
+    PRINT 'Los 21 procedimientos fueron asociados correctamente.';
+
+END TRY
+BEGIN CATCH
+
+    IF @@TRANCOUNT > 0
+        ROLLBACK TRANSACTION;
+
+    SELECT
+        ERROR_NUMBER() AS NumeroError,
+        ERROR_LINE() AS LineaError,
+        ERROR_MESSAGE() AS MensajeError;
+
+END CATCH;
+
+IF OBJECT_ID('dbo.ConfiguracionCotizacion', 'U') IS NULL
+BEGIN
+    CREATE TABLE dbo.ConfiguracionCotizacion
+    (
+        Id_Configuracion INT IDENTITY(1,1) NOT NULL
+            CONSTRAINT PK_ConfiguracionCotizacion PRIMARY KEY,
+
+        PorcentajeEquipo DECIMAL(5,2) NOT NULL,
+
+        CostoEstadiaDiaria DECIMAL(10,2) NOT NULL,
+
+        PorcentajeImpuesto DECIMAL(5,2) NOT NULL,
+
+        Estado BIT NOT NULL,
+
+        FechaDeRegistro DATETIME2 NOT NULL,
+
+        FechaDeModificacion DATETIME2 NULL
+    );
+END;
+
+IF NOT EXISTS
+(
+    SELECT 1
+    FROM dbo.ConfiguracionCotizacion
+    WHERE Estado = 1
+)
+BEGIN
+    INSERT INTO dbo.ConfiguracionCotizacion
+    (
+        PorcentajeEquipo,
+        CostoEstadiaDiaria,
+        PorcentajeImpuesto,
+        Estado,
+        FechaDeRegistro,
+        FechaDeModificacion
+    )
+    VALUES
+    (
+        35.00,      -- 10% del precio base para equipo
+        250.00,     -- $250 por día de estadía
+        13.00,      -- 13% de impuesto
+        1,
+        GETDATE(),
+        NULL
+    );
+END;
