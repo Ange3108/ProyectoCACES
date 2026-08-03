@@ -1116,3 +1116,32 @@ BEGIN
         NULL
     );
 END;
+
+IF COL_LENGTH('dbo.Citas', 'Id_Procedimiento') IS NULL
+BEGIN
+    ALTER TABLE dbo.Citas
+    ADD Id_Procedimiento INT NULL;
+END;
+GO
+
+IF NOT EXISTS
+(
+    SELECT 1
+    FROM sys.foreign_keys
+    WHERE name = 'FK_Citas_Procedimiento'
+)
+BEGIN
+    ALTER TABLE dbo.Citas
+    ADD CONSTRAINT FK_Citas_Procedimiento
+        FOREIGN KEY (Id_Procedimiento)
+        REFERENCES dbo.Procedimiento(Id_Procedimiento);
+END;
+GO
+
+SELECT
+    COLUMN_NAME,
+    DATA_TYPE,
+    IS_NULLABLE
+FROM INFORMATION_SCHEMA.COLUMNS
+WHERE TABLE_NAME = 'Citas'
+ORDER BY ORDINAL_POSITION;
