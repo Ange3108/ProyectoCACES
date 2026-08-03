@@ -104,8 +104,8 @@ namespace CACES.Controllers
                     .Where(m => m.Usuario.Estado == true)
                     .CountAsync(),
                 timestamp = DateTime.UtcNow
-
             };
+            
 
             return Json(data);
         }

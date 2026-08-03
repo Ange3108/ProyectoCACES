@@ -37,14 +37,12 @@ namespace CACES.DAL.DBContext
         public DbSet<Soporte> Soportes { get; set; }
         public DbSet<Cotizacion> Cotizaciones { get; set; }
         public DbSet<Icono> Iconos { get; set; }
-
         public DbSet<ConfiguracionCheckpoints> ConfiguracionCheckpoints { get; set; }
         public DbSet<SeguimientoPaciente> SeguimientoPacientes { get; set; }
         public DbSet<PreguntaSeguimiento> PreguntasSeguimiento { get; set; }
         public DbSet<AlertaStaff> AlertasStaff { get; set; } 
 
         public DbSet<ConfiguracionCotizacion> ConfiguracionesCotizacion { get; set; }
-
 
         public DbSet<RespuestaSeguimiento> RespuestasSeguimiento { get; set; }
         public DbSet<Convenios> Convenios { get; set; }
@@ -115,6 +113,7 @@ namespace CACES.DAL.DBContext
     entity.Property(e => e.FechaDeRegistro).HasColumnName("FechaDeRegistro");
     entity.Property(e => e.FechaDeModificacion).HasColumnName("FechaDeModificacion");
     entity.Property(e => e.Estado).HasColumnName("Estado");
+    entity.Property(e => e.IdProcedimiento).HasColumnName("Id_Procedimiento");
 
     entity.HasOne(c => c.Paciente)
           .WithMany(p => p.Citas)
@@ -139,6 +138,12 @@ namespace CACES.DAL.DBContext
           .HasForeignKey(c => c.IdHorario)
           .OnDelete(DeleteBehavior.Restrict)
           .HasConstraintName("FK_Citas_Horario");
+
+    entity.HasOne(c => c.Procedimiento)
+          .WithMany()
+          .HasForeignKey(c => c.IdProcedimiento)
+          .OnDelete(DeleteBehavior.Restrict)
+          .HasConstraintName("FK_Citas_Procedimiento");
 });
             //Configuracion Configuracion Cotizacion
 

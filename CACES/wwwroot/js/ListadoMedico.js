@@ -198,7 +198,7 @@
                                           ">
 
                                         <i class="bi bi-check-circle-fill me-1"></i>
-                                        Estado
+                                        Activo
 
                                     </span>
                                 `

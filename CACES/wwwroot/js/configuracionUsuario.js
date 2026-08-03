@@ -10,6 +10,24 @@
         },
 
         eventos() {
+
+          
+                // ---- Toggle mostrar/ocultar contraseña ----
+                $(document).on('click', '.toggle-password', function () {
+                    const targetId = $(this).data('target');
+                    const $input = $('#' + targetId);
+                    const $icon = $(this).find('i');
+
+                    if ($input.attr('type') === 'password') {
+                        $input.attr('type', 'text');
+                        $icon.removeClass('bi-eye').addClass('bi-eye-slash');
+                    } else {
+                        $input.attr('type', 'password');
+                        $icon.removeClass('bi-eye-slash').addClass('bi-eye');
+                    }
+                });
+
+
             // ---- Notificaciones (bell / lista de pendientes) ----
             $(document).on('click', '.btn-marcar-leida', function () {
                 const id = $(this).data('id');

@@ -1,12 +1,13 @@
 ﻿using CACES.BLL.DTOs.Cita;
+using CACES.BLL.DTOs.Procedimientos;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.Paciente;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using System.Security.Claims;
 using QuestPDF.Fluent;
 using QuestPDF.Helpers;
 using QuestPDF.Infrastructure;
+using System.Security.Claims;
 
 namespace CACES.Controllers
 {
@@ -230,6 +231,15 @@ namespace CACES.Controllers
 
         [Authorize(Roles = "Paciente,Administrador")]
         [HttpGet]
+        public async Task<IActionResult> ObtenerProcedimientos()
+        {
+            List<ProcedimientoDTO> procedimientos = await _citaServicio.ObtenerProcedimientosFijosAsync();
+
+            return Json(procedimientos);
+        }
+
+        [Authorize(Roles = "Paciente,Administrador")]
+        [HttpGet]
         public async Task<IActionResult> ObtenerHorariosPorMedico(
             int idMedico)
         {
@@ -334,6 +344,14 @@ namespace CACES.Controllers
 
                                 datos.Item().Text(texto =>
                                 {
+                                    texto.Span("Procedimiento: ").Bold();
+                                    texto.Span(string.IsNullOrWhiteSpace(cita.NombreProcedimiento)
+                                        ? "No especificado"
+                                        : cita.NombreProcedimiento);
+                                });
+
+                                datos.Item().Text(texto =>
+                                {
                                     texto.Span("Fecha de la cita: ").Bold();
                                     texto.Span(cita.FechaCita.ToString("dd/MM/yyyy"));
                                 });
@@ -353,7 +371,6 @@ namespace CACES.Controllers
                                 datos.Item().Text(texto =>
                                 {
                                     texto.Span("Estado: ").Bold();
-
                                     texto.Span(cita.EstadoTexto)
                                         .Bold()
                                         .FontColor(cita.Estado == 1
@@ -374,7 +391,6 @@ namespace CACES.Controllers
                             .Text("Presente este comprobante el día de su cita médica.")
                             .Italic()
                             .FontColor(Colors.Grey.Darken1);
-
                     });
 
                     page.Footer().Column(footer =>

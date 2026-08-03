@@ -3,7 +3,12 @@
     if (!contenedor) return;
 
     fetch('/Paquete/ObtenerPaquetes', {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        cache: 'no-store',
+        headers: {
+            'X-Requested-With': 'XMLHttpRequest',
+            'Cache-Control': 'no-cache, no-store, must-revalidate',
+            'Pragma': 'no-cache'
+        }
     })
         .then(res => {
             if (!res.ok) throw new Error("Error en la respuesta");
@@ -19,6 +24,7 @@
                 </tr>`;
                 return;
             }
+          
 
             let html = '';
             for (let i = 0; i < paquetes.length; i++) {
@@ -49,6 +55,18 @@
                 </tr>`;
             }
             contenedor.innerHTML = html;
+
+            if ($.fn.DataTable.isDataTable('#tablaPaquetes')) {
+                $('#tablaPaquetes').DataTable().destroy();
+            }
+
+            $('#tablaPaquetes').DataTable({
+                language: {
+                    url: 'https://cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
+                },
+                responsive: true,
+                destroy: true
+            });
         })
         .catch(err => {
             console.error(err);
@@ -59,6 +77,7 @@
                 </td>
             </tr>`;
         });
+   
 })();
 
 function escapeHtml(texto) {

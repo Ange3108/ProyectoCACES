@@ -80,7 +80,9 @@ namespace CACES.BLL.Mappers
             Hora = src.Horario?.HoraInicio ?? TimeSpan.Zero,
             Motivo = src.Motivo,
             Estado = src.Estado,
-            IdReceta = null
+            IdReceta = null,
+            IdProcedimiento = src.IdProcedimiento,
+            NombreProcedimiento = src.Procedimiento?.Nombre ?? "N/A"
         };
 
         public static RegistrarCitaDTO? ToRegistrarCitaDTO(this Cita src) => src == null ? null : new RegistrarCitaDTO
@@ -91,8 +93,8 @@ namespace CACES.BLL.Mappers
             IdHorario = src.IdHorario,
             FechaCita = src.Fecha,
             Hora = src.Horario?.HoraInicio ?? TimeSpan.Zero,
-            Motivo = src.Motivo
-
+            Motivo = src.Motivo,
+            IdProcedimiento = src.IdProcedimiento
         };
 
         public static Cita? ToCita(this RegistrarCitaDTO src) => src == null ? null : new Cita
@@ -104,8 +106,8 @@ namespace CACES.BLL.Mappers
             Fecha = src.FechaCita,
             Motivo = src.Motivo,
             Estado = 1,
-            FechaDeRegistro = DateTime.UtcNow,
-
+            FechaDeRegistro = DateTime.Now,
+            IdProcedimiento = src.IdProcedimiento
         };
 
         // ===== Especialidad =====
@@ -430,6 +432,15 @@ namespace CACES.BLL.Mappers
 
                 Estado = src.Estado
             };
+        public static ProcedimientoDTO? ToProcedimientoDTO(this Procedimiento? src) => src == null ? null :
+            new ProcedimientoDTO
+            {
+                Id_Procedimiento = src.Id_Procedimiento,
+                Nombre = src.Nombre,
+                PrecioBase = src.PrecioBase,
+                Estado = src.Estado
+            };
+
         // ===== Receta =====
         public static MostrarRecetaDTO? ToMostrarRecetaDTO(this Receta src) => src == null ? null : new MostrarRecetaDTO
         {

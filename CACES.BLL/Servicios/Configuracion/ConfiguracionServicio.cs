@@ -132,6 +132,7 @@ namespace CACES.BLL.Servicios.Configuracion
             }
 
             entidad.Valor = dto.Valor;
+            entidad.Categoria = dto.Categoria;
             entidad.Descripcion = dto.Descripcion;
 
             _repositorio.Actualizar(entidad);

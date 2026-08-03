@@ -19,7 +19,7 @@ namespace CACES.BLL.Servicios.Notificacion
 
             public async Task<respuestaErrores<List<NotificacionDTO>>> ObtenerTodos()
             {
-                var lista = await _repositorio.ObtenerActivos();
+                var lista = await _repositorio.ObtenerTodosAsync();
                 var dtos = lista.Select(n => n.ToDTO()).ToList();
 
                 return new respuestaErrores<List<NotificacionDTO>>

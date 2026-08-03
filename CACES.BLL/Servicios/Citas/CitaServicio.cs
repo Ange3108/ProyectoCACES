@@ -1,6 +1,7 @@
 ﻿using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Cita;
 using CACES.BLL.DTOs.Especialidad;
+using CACES.BLL.DTOs.Procedimientos;
 using CACES.DAL.Entidades;
 using CACES.DAL.Repositorios.Citas;
 
@@ -59,6 +60,9 @@ namespace CACES.BLL.Servicios.Citas
 
                 if (dto.IdEspecialidad <= 0)
                     return CrearError("Debe seleccionar una especialidad.", 400);
+
+                if (dto.IdProcedimiento <= 0)
+                    return CrearError("Puede seleccionar un procedimiento.", 400);
 
                 if (dto.FechaCita == default)
                     return CrearError("Debe seleccionar la fecha de la cita.", 400);
@@ -135,6 +139,7 @@ namespace CACES.BLL.Servicios.Citas
                     IdPaciente = idPaciente,
                     IdMedico = dto.IdMedico,
                     IdEspecialidad = dto.IdEspecialidad,
+                    IdProcedimiento = dto.IdProcedimiento,
                     IdHorario = dto.IdHorario,
 
                     Fecha = dto.FechaCita.Date,
@@ -442,6 +447,19 @@ namespace CACES.BLL.Servicios.Citas
             return respuesta;
         }
 
+        public async Task<List<ProcedimientoDTO>> ObtenerProcedimientosFijosAsync()
+        {
+            var entidades = await _citaRepositorio.ObtenerProcedimientosFijosAsync();
+
+            return entidades.Select(p => new ProcedimientoDTO
+            {
+                Id_Procedimiento = p.Id_Procedimiento,
+                Nombre = p.Nombre,
+                PrecioBase = p.PrecioBase,
+                Estado = p.Estado
+            }).ToList();
+        }
+
         public async Task<respuestaErrores<List<CitaHorarioDTO>>> ObtenerHorariosPorMedicoAsync(int idMedico)
         {
             var respuesta = new respuestaErrores<List<CitaHorarioDTO>>();
@@ -468,6 +486,7 @@ namespace CACES.BLL.Servicios.Citas
                 IdPaciente = cita.IdPaciente,
                 IdMedico = cita.IdMedico,
                 IdEspecialidad = cita.IdEspecialidad,
+                IdProcedimiento = cita.IdProcedimiento,
                 IdHorario = cita.IdHorario,
 
                 IdReceta = cita.Receta?.IdReceta,
@@ -489,7 +508,8 @@ namespace CACES.BLL.Servicios.Citas
                     ? $"{cita.Medico.Usuario.Nombres} {cita.Medico.Usuario.PrimerApellido}"
                     : string.Empty,
 
-                NombreEspecialidad = cita.Especialidad?.Nombre ?? string.Empty
+                NombreEspecialidad = cita.Especialidad?.Nombre ?? string.Empty,
+                NombreProcedimiento = cita.Procedimiento?.Nombre ?? string.Empty
             };
         }
 
