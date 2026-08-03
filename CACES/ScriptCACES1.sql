@@ -106,6 +106,19 @@ CREATE TABLE HorariosDisponibles(
     CONSTRAINT FK_Horarios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
 );
 
+CREATE TABLE Procedimiento(
+    Id_Procedimiento INT PRIMARY KEY IDENTITY(1,1),
+    Id_Especialidad INT NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(200),
+    PrecioBase DECIMAL(10,2),
+    Estado BIT NOT NULL,
+
+    CONSTRAINT FK_Procedimiento_Especialidad
+    FOREIGN KEY(Id_Especialidad)
+    REFERENCES Especialidad(Id_Especialidad)
+);
+
 CREATE TABLE Citas(
     Id_Cita INT PRIMARY KEY IDENTITY(1,1),
     Id_Paciente INT NOT NULL,
@@ -117,11 +130,14 @@ CREATE TABLE Citas(
     FechaDeRegistro DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL,
     Estado TINYINT NOT NULL,
+    Id_Procedimiento INT NULL,
 	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
 	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
-    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
+    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario),
+    CONSTRAINT FK_Citas_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento)
 );
+GO
 
 CREATE TABLE Soportes
 (
@@ -169,19 +185,7 @@ CREATE TABLE Paquetes(
 );
 GO
 
-CREATE TABLE Procedimiento(
-    Id_Procedimiento INT PRIMARY KEY IDENTITY(1,1),
-    Id_Especialidad INT NOT NULL,
-    Nombre VARCHAR(100) NOT NULL,
-    Descripcion VARCHAR(200),
-    PrecioBase DECIMAL(10,2),
-    Estado BIT NOT NULL,
 
-    CONSTRAINT FK_Procedimiento_Especialidad
-    FOREIGN KEY(Id_Especialidad)
-    REFERENCES Especialidad(Id_Especialidad)
-);
-GO
 CREATE TABLE Precios(
     Id_Precio INT PRIMARY KEY IDENTITY(1,1),
     Id_Medico INT NOT NULL,
@@ -290,7 +294,7 @@ CREATE TABLE PreguntaSeguimiento (
     ValorMinimo INT NOT NULL,
     ValorMaximo INT NOT NULL,
     UmbralAlerta INT NOT NULL,
-    DireccionAlerta INT NOT NULL, -- enum: 0=MayorIgual, 1=MenorIgual
+    DireccionAlerta INT NOT NULL, 
     Estado BIT NOT NULL DEFAULT 1
 );
 
@@ -330,7 +334,7 @@ CREATE TABLE AlertaStaff (
 
 CREATE TABLE Notificaciones (
     Id_Notificacion INT IDENTITY(1,1) PRIMARY KEY,
-    Evento VARCHAR(100) NOT NULL, -- "RecordatorioCheckpoint", "AlertaRespuestaNegativa"
+    Evento VARCHAR(100) NOT NULL, 
     CanalPlataforma BIT NOT NULL DEFAULT 1,
     CanalEmail BIT NOT NULL DEFAULT 1,
     Estado BIT NOT NULL DEFAULT 1
@@ -587,33 +591,6 @@ INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio,  Estado) VALU
 (3, 5, '12:00',  1);
 GO
 
--- CITAS
-INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario,Fecha, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)VALUES
-(1, 1, 1, 1, '2026-07-01','Valoración para colecistectomía laparoscópica',GETDATE(), NULL, 1),
-(2, 2, 2, 2, '2026-07-02','Valoración para histerectomía',GETDATE(), NULL, 1),
-(3, 3, 4, 3, '2026-07-03', 'Consulta para lipoescultura',GETDATE(), NULL, 1);
-GO
-
--- ARCHIVOS HISTORIAL
-INSERT INTO ArchivosHistorial (Id_Historial, NombreArchivo, RutaArchivo, TipoArchivo, FechaDeSubida) VALUES
-(1, 'Radiografia_torax.pdf', '/archivos/radiografias/rxtoraz1.pdf', 'radiografía', GETDATE()),
-(2, 'Analisis_sangre.pdf', '/archivos/analisis/sangre2.pdf', 'análisis', GETDATE()),
-(3, 'EEG_2024.pdf', '/archivos/estudios/eeg3.pdf', 'estudio', GETDATE());
-GO
-
--- RECETAS
-INSERT INTO Recetas (Id_Cita, Medicamentos, Instrucciones, FechaDeRegistro, FechaDeVencimiento) VALUES
-(1, 'Omeprazol 20mg, Tramadol 100mg', 'Tomar según indicaciones postoperatorias', GETDATE(), DATEADD(DAY, 30, GETDATE())),
-(2, 'Doxorrubicina IV, Ciclofosfamida IV', 'Administrar según protocolo de quimioterapia', GETDATE(), DATEADD(DAY, 30, GETDATE())),
-(3, 'Cefazolina 1g, Paracetamol 500mg', 'Tomar antibiótico y analgésico postoperatorio', GETDATE(), DATEADD(DAY, 30, GETDATE()));
-GO
-
--- PAQUETES
-INSERT INTO Paquetes (Nombre, Descripcion, Duracion, Precio, FechaDeRegistro, Estado) VALUES
-('Paquete Laparoscopia', 'Paquete Laparoscopia - Cirugía mínimamente invasiva', '3 meses', '2500.00', GETDATE(), 1),
-('Paquete Oncología', 'Paquete Oncología - Tratamiento integral', '6 meses', '5000.00', GETDATE(), 1),
-('Paquete Cirugía', 'Paquete Cirugía - Procedimiento quirúrgico', '4 meses', '3500.00', GETDATE(), 1);
-GO
 
 INSERT INTO Procedimiento
 (Id_Especialidad, Nombre, Descripcion, PrecioBase, Estado)
@@ -639,6 +616,35 @@ VALUES
 (5, 'Osteosíntesis', 'Fijación interna de fracturas mediante implantes.', 2300.00, 1),
 (5, 'Artroscopia', 'Procedimiento mínimamente invasivo para articulaciones.', 1900.00, 1),
 (6, 'Cirugía de Senos Paranasales', 'Intervención quirúrgica de los senos paranasales.', 1400.00, 1);
+
+
+-- CITAS
+INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario,Fecha, Motivo, FechaDeRegistro, FechaDeModificacion, Estado, Id_Procedimiento)VALUES
+(1, 1, 1, 1, '2026-07-01','Valoración para colecistectomía laparoscópica',GETDATE(), NULL, 1,1),
+(2, 2, 2, 2, '2026-07-02','Valoración para histerectomía',GETDATE(), NULL, 1,9),
+(3, 3, 4, 3, '2026-07-03', 'Consulta para lipoescultura',GETDATE(), NULL, 1,14);
+GO
+
+-- ARCHIVOS HISTORIAL
+INSERT INTO ArchivosHistorial (Id_Historial, NombreArchivo, RutaArchivo, TipoArchivo, FechaDeSubida) VALUES
+(1, 'Radiografia_torax.pdf', '/archivos/radiografias/rxtoraz1.pdf', 'radiografía', GETDATE()),
+(2, 'Analisis_sangre.pdf', '/archivos/analisis/sangre2.pdf', 'análisis', GETDATE()),
+(3, 'EEG_2024.pdf', '/archivos/estudios/eeg3.pdf', 'estudio', GETDATE());
+GO
+
+-- RECETAS
+INSERT INTO Recetas (Id_Cita, Medicamentos, Instrucciones, FechaDeRegistro, FechaDeVencimiento) VALUES
+(1, 'Omeprazol 20mg, Tramadol 100mg', 'Tomar según indicaciones postoperatorias', GETDATE(), DATEADD(DAY, 30, GETDATE())),
+(2, 'Doxorrubicina IV, Ciclofosfamida IV', 'Administrar según protocolo de quimioterapia', GETDATE(), DATEADD(DAY, 30, GETDATE())),
+(3, 'Cefazolina 1g, Paracetamol 500mg', 'Tomar antibiótico y analgésico postoperatorio', GETDATE(), DATEADD(DAY, 30, GETDATE()));
+GO
+
+-- PAQUETES
+INSERT INTO Paquetes (Nombre, Descripcion, Duracion, Precio, FechaDeRegistro, Estado) VALUES
+('Paquete Laparoscopia', 'Paquete Laparoscopia - Cirugía mínimamente invasiva', '3 meses', '2500.00', GETDATE(), 1),
+('Paquete Oncología', 'Paquete Oncología - Tratamiento integral', '6 meses', '5000.00', GETDATE(), 1),
+('Paquete Cirugía', 'Paquete Cirugía - Procedimiento quirúrgico', '4 meses', '3500.00', GETDATE(), 1);
+GO
 
 -- PRECIOS
 INSERT INTO Precios
