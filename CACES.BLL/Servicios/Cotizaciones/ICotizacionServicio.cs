@@ -27,13 +27,12 @@ namespace CACES.BLL.Servicios.Cotizaciones
             ObtenerDetalleAsync(
                 int idCotizacion);
 
-        Task<List<Procedimiento>>
-            ObtenerProcedimientosAsync();
+        Task<List<Procedimiento>>ObtenerProcedimientosAsync();
 
-        Task<List<Medico>>
-            ObtenerMedicosAsync();
+        Task<List<Medico>>ObtenerMedicosAsync();
 
-        Task<List<PacienteEntidad>>
-            ObtenerPacientesAsync();
+        Task<List<PacienteEntidad>> ObtenerPacientesAsync();
+
+        Task<Precios?> ObtenerMedicoPorProcedimientoAsync(int idProcedimiento);
     }
 }

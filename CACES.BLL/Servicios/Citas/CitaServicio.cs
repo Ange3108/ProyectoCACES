@@ -1,5 +1,4 @@
-﻿
-using CACES.BLL.DTOs;
+﻿using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.Cita;
 using CACES.BLL.DTOs.Especialidad;
 using CACES.DAL.Entidades;
@@ -532,6 +531,156 @@ namespace CACES.BLL.Servicios.Citas
                 7 => "Domingo",
                 _ => ""
             };
+        }
+
+        public async Task<respuestaErrores<MostrarCitaDTO>> EditarCitaAsync(
+    EditarCitaDTO dto)
+        {
+            try
+            {
+                if (dto == null)
+                    return CrearError("Los datos de la cita son requeridos.", 400);
+
+                if (dto.IdCita <= 0)
+                    return CrearError("La cita no es válida.", 400);
+
+                if (dto.IdEspecialidad <= 0)
+                    return CrearError("Debe seleccionar una especialidad.", 400);
+
+                if (dto.IdMedico <= 0)
+                    return CrearError("Debe seleccionar un médico.", 400);
+
+                if (dto.IdHorario <= 0)
+                    return CrearError("Debe seleccionar un horario.", 400);
+
+                if (dto.FechaCita == default)
+                    return CrearError("Debe seleccionar la fecha de la cita.", 400);
+
+                if (dto.FechaCita.Date < DateTime.Today)
+                {
+                    return CrearError(
+                        "No se puede cambiar la cita a una fecha pasada.",
+                        400
+                    );
+                }
+
+                if (string.IsNullOrWhiteSpace(dto.Motivo))
+                    return CrearError("Debe ingresar el motivo de la cita.", 400);
+
+                if (dto.Motivo.Trim().Length > 100)
+                {
+                    return CrearError(
+                        "El motivo no puede superar los 100 caracteres.",
+                        400
+                    );
+                }
+
+                var cita = await _citaRepositorio.ObtenerEntidadPorIdAsync(
+                    dto.IdCita
+                );
+
+                if (cita == null)
+                    return CrearError("La cita no existe.", 404);
+
+                if (cita.Estado != 1)
+                {
+                    return CrearError(
+                        "No se puede editar una cita cancelada.",
+                        400
+                    );
+                }
+
+                var diaSemana = ConvertirDiaSemana(
+                    dto.FechaCita.DayOfWeek
+                );
+
+                var tieneHorarioActivo =
+                    await _citaRepositorio.TieneHorarioActivoAsync(
+                        dto.IdMedico,
+                        diaSemana
+                    );
+
+                if (!tieneHorarioActivo)
+                {
+                    return CrearError(
+                        "El médico no tiene un horario activo para el día seleccionado.",
+                        400
+                    );
+                }
+
+                var horarios =
+                    await _citaRepositorio.ObtenerHorariosAsync(dto.IdMedico);
+
+                var horarioSeleccionado = horarios.FirstOrDefault(h =>
+                    h.Id_Horario == dto.IdHorario &&
+                    h.Estado
+                );
+
+                if (horarioSeleccionado == null)
+                {
+                    return CrearError(
+                        "El horario seleccionado no es válido.",
+                        400
+                    );
+                }
+
+                if (horarioSeleccionado.DiaSemana != diaSemana)
+                {
+                    return CrearError(
+                        "El horario no corresponde con el día de la fecha seleccionada.",
+                        400
+                    );
+                }
+
+                var existeOtraCita =
+                    await _citaRepositorio.ExisteCitaAsync(
+                        dto.IdMedico,
+                        dto.FechaCita.Date,
+                        dto.IdHorario,
+                        dto.IdCita
+                    );
+
+                if (existeOtraCita)
+                {
+                    return CrearError(
+                        "El médico ya tiene otra cita registrada para esa fecha y horario.",
+                        409
+                    );
+                }
+
+                cita.IdEspecialidad = dto.IdEspecialidad;
+                cita.IdMedico = dto.IdMedico;
+                cita.IdHorario = dto.IdHorario;
+                cita.Fecha = dto.FechaCita.Date;
+                cita.Motivo = dto.Motivo.Trim();
+                cita.FechaDeModificacion = DateTime.UtcNow;
+
+                await _citaRepositorio.ActualizarAsync(cita);
+
+                var citaActualizada =
+                    await _citaRepositorio.ObtenerEntidadPorIdAsync(
+                        dto.IdCita
+                    );
+
+                return new respuestaErrores<MostrarCitaDTO>
+                {
+                    EsCorrecto = true,
+                    codigo = 200,
+                    mensaje = "Cita actualizada correctamente.",
+                    Dato = citaActualizada != null
+                        ? MapearCita(citaActualizada)
+                        : MapearCita(cita)
+                };
+            }
+            catch (Exception ex)
+            {
+                var detalle = ex.InnerException?.Message ?? ex.Message;
+
+                return CrearError(
+                    "Error al editar la cita: " + detalle,
+                    500
+                );
+            }
         }
     }
 }

@@ -26,8 +26,8 @@
 
                     <p class="text-white-50 mb-0">
 
-                        Seleccione el procedimiento y el médico para obtener
-                        inmediatamente un precio estimado.
+                        Seleccione el procedimiento. El médico se asignará
+                        automáticamente según la configuración del sistema.
 
                     </p>
 
@@ -113,20 +113,25 @@
                         <label asp-for="IdMedico"
                                class="form-label fw-semibold">
 
-                            Médico
+                            Médico asignado
 
                         </label>
 
                         <select asp-for="IdMedico"
                                 id="idMedico"
                                 class="form-select"
-                                required>
+                                readonly
+                                disabled>
 
                             <option value="">
-                                Seleccione un médico
+                                Seleccione primero un procedimiento
                             </option>
 
                         </select>
+
+                        <small class="text-muted">
+                            El médico será seleccionado automáticamente.
+                        </small>
 
                         <span asp-validation-for="IdMedico"
                               class="text-danger small">

@@ -117,12 +117,29 @@
                                     Contraseña
                                 </label>
 
-                                <input name="Usuario.passwordHash"
+                                <input asp-for="Usuario.passwordHash"
                                        type="password"
                                        class="form-control rounded-3"
                                        style="border-color:#D7E3EC;" />
 
                                 <span asp-validation-for="Usuario.passwordHash"
+                                      class="text-danger small"></span>
+
+                            </div>
+
+                            <div class="col-md-3 mb-3">
+
+                                <label asp-for="Usuario.ConfirmarPassword"
+                                       class="form-label fw-semibold">
+                                    Confirmar contraseña
+                                </label>
+
+                                <input asp-for="Usuario.ConfirmarPassword"
+                                       type="password"
+                                       class="form-control rounded-3"
+                                       style="border-color:#D7E3EC;" />
+
+                                <span asp-validation-for="Usuario.ConfirmarPassword"
                                       class="text-danger small"></span>
 
                             </div>

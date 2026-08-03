@@ -25,10 +25,7 @@ namespace CACES.BLL.Servicios.Cotizaciones
                     "El paciente seleccionado no es válido."
                 );
 
-            if (dto.IdMedico <= 0)
-                throw new ArgumentException(
-                    "El médico seleccionado no es válido."
-                );
+          
 
             if (dto.IdProcedimiento <= 0)
                 throw new ArgumentException(
@@ -41,9 +38,9 @@ namespace CACES.BLL.Servicios.Cotizaciones
                 );
 
             var procedimiento =
-                await _repositorio.ObtenerProcedimientoPorIdAsync(
-                    dto.IdProcedimiento
-                );
+             await _repositorio.ObtenerProcedimientoPorIdAsync(
+                 dto.IdProcedimiento
+             );
 
             if (procedimiento == null)
             {
@@ -53,18 +50,18 @@ namespace CACES.BLL.Servicios.Cotizaciones
             }
 
             var precioMedico =
-                await _repositorio.ObtenerPrecioMedicoAsync(
-                    dto.IdMedico,
+                await _repositorio.ObtenerPrecioPorProcedimientoAsync(
                     dto.IdProcedimiento
                 );
 
             if (precioMedico == null)
             {
                 throw new InvalidOperationException(
-                    "El médico seleccionado no tiene un precio configurado para este procedimiento."
+                    "No existe un médico con precio configurado para este procedimiento."
                 );
             }
 
+            dto.IdMedico = precioMedico.Id_Medico;
             var configuracion =
                 await _repositorio.ObtenerConfiguracionActivaAsync();
 
@@ -288,6 +285,20 @@ namespace CACES.BLL.Servicios.Cotizaciones
         {
             return await _repositorio
                 .ObtenerPacientesAsync();
+        }
+
+        public async Task<Precios?> ObtenerMedicoPorProcedimientoAsync(
+            int idProcedimiento)
+                {
+                    if (idProcedimiento <= 0)
+                    {
+                        throw new ArgumentException(
+                            "El procedimiento seleccionado no es válido."
+                        );
+                    }
+
+                    return await _repositorio
+                        .ObtenerPrecioPorProcedimientoAsync(idProcedimiento);
         }
 
         private static MostrarCotizacionDTO

@@ -25,6 +25,12 @@ namespace CACES.BLL.DTOs.Medico
         [Required(ErrorMessage = "La contraseña es obligatoria")]
         [StringLength(100, MinimumLength = 8)]
         public string Password { get; set; } = null!;
+
+        [Required(ErrorMessage = "Debe confirmar la contraseña")]
+        [DataType(DataType.Password)]
+        [Compare(nameof(Password), ErrorMessage = "Las contraseñas no coinciden.")]
+        public string ConfirmarPassword { get; set; } = null!;
+
         [Required(ErrorMessage = "La dirección es obligatoria")]
         public string Direccion { get; set; } = null!;
         [Required(ErrorMessage = "La fecha de nacimiento es obligatoria")]

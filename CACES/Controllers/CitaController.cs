@@ -147,6 +147,34 @@ namespace CACES.Controllers
             return Json(await _citaServicio.GetCitasAsync());
         }
 
+        [Authorize(Roles = "Administrador,Medico")]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerCita(int idCita)
+        {
+            var resultado = await _citaServicio.ObtenerTicketAsync(idCita);
+
+            return Json(resultado);
+        }
+
+        [Authorize(Roles = "Administrador")]
+        [HttpPost]
+        public async Task<IActionResult> EditarCita(
+    [FromBody] EditarCitaDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return Json(new
+                {
+                    EsCorrecto = false,
+                    mensaje = "Datos inválidos."
+                });
+            }
+
+            var resultado = await _citaServicio.EditarCitaAsync(dto);
+
+            return Json(resultado);
+        }
+
         [Authorize(Roles = "Paciente,Medico,Administrador")]
         [HttpPost]
         public async Task<IActionResult> CancelarCita(int idCita)

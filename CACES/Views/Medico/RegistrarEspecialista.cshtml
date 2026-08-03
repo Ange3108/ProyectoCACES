@@ -111,10 +111,33 @@
                         </div>
 
                         <div class="col-12 col-md-6">
-                            <label asp-for="Password" class="form-label fw-semibold" style="color:#0B2E59;">Contraseña</label>
-                            <input asp-for="Password" type="password" class="form-control rounded-3 shadow-sm" style="border-color:#D7E3EC;"
-                                   placeholder="Mínimo 8 caracteres, un número y un símbolo">
-                            <span asp-validation-for="Password" class="text-danger small"></span>
+                            <label asp-for="Password" class="form-label fw-semibold" style="color:#0B2E59;">
+                                Contraseña
+                            </label>
+
+                            <input asp-for="Password"
+                                   type="password"
+                                   class="form-control rounded-3 shadow-sm"
+                                   style="border-color:#D7E3EC;"
+                                   placeholder="Mínimo 8 caracteres, un número y un símbolo" />
+
+                            <span asp-validation-for="Password"
+                                  class="text-danger small"></span>
+                        </div>
+
+                        <div class="col-12 col-md-6">
+                            <label asp-for="ConfirmarPassword" class="form-label fw-semibold" style="color:#0B2E59;">
+                                Confirmar contraseña
+                            </label>
+
+                            <input asp-for="ConfirmarPassword"
+                                   type="password"
+                                   class="form-control rounded-3 shadow-sm"
+                                   style="border-color:#D7E3EC;"
+                                   placeholder="Repita la contraseña" />
+
+                            <span asp-validation-for="ConfirmarPassword"
+                                  class="text-danger small"></span>
                         </div>
 
                         <div class="col-12 col-md-6">

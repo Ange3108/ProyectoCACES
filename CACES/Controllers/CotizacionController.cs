@@ -333,6 +333,77 @@ namespace CACES.Controllers
 
         [Authorize(Roles = "Paciente,Administrador")]
         [HttpGet]
+        public async Task<IActionResult> ObtenerMedicoPorProcedimiento(
+    int idProcedimiento)
+        {
+            if (idProcedimiento <= 0)
+            {
+                return BadRequest(new
+                {
+                    esCorrecto = false,
+                    mensaje = "El procedimiento seleccionado no es válido."
+                });
+            }
+
+            try
+            {
+                var precio =
+                    await _cotizacionServicio
+                        .ObtenerMedicoPorProcedimientoAsync(
+                            idProcedimiento
+                        );
+
+                if (precio == null)
+                {
+                    return NotFound(new
+                    {
+                        esCorrecto = false,
+                        mensaje =
+                            "No existe un médico asociado a este procedimiento."
+                    });
+                }
+
+                var medico = precio.Medico;
+
+                var nombreCompleto = string.Join(
+                    " ",
+                    new[]
+                    {
+                medico.Usuario?.Nombres,
+                medico.Usuario?.PrimerApellido,
+                medico.Usuario?.SegundoApellido
+                    }
+                    .Where(valor =>
+                        !string.IsNullOrWhiteSpace(valor))
+                );
+
+                return Json(new
+                {
+                    esCorrecto = true,
+                    dato = new
+                    {
+                        idMedico = precio.Id_Medico,
+                        nombreCompleto = nombreCompleto,
+                        especialidad =
+                            medico.Especialidad?.Nombre
+                            ?? "Sin especialidad",
+                        honorarios = precio.Costo
+                    }
+                });
+            }
+            catch (Exception ex)
+            {
+                return StatusCode(500, new
+                {
+                    esCorrecto = false,
+                    mensaje =
+                        $"No fue posible obtener el médico: {ex.Message}"
+                });
+            }
+        }
+
+        [Authorize(Roles = "Paciente,Administrador")]
+        [HttpGet]
         public async Task<IActionResult> ObtenerMedicos()
         {
             try

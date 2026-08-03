@@ -20,11 +20,17 @@ namespace CACES.DAL.Repositorios.Cotizaciones
 
         Task<List<Procedimiento>> ObtenerProcedimientosAsync();
 
-        Task<Procedimiento?> ObtenerProcedimientoPorIdAsync(int idProcedimiento);
+        Task<Procedimiento?> ObtenerProcedimientoPorIdAsync(
+            int idProcedimiento);
 
-        Task<Precios?> ObtenerPrecioMedicoAsync(int idMedico,int idProcedimiento);
-        Task<ConfiguracionCotizacion?> ObtenerConfiguracionActivaAsync();
+        Task<Precios?> ObtenerPrecioMedicoAsync(
+            int idMedico,
+            int idProcedimiento);
 
+        Task<Precios?> ObtenerPrecioPorProcedimientoAsync(
+            int idProcedimiento);
 
+        Task<ConfiguracionCotizacion?>ObtenerConfiguracionActivaAsync();
+        
     }
 }

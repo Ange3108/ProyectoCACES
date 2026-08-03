@@ -9,7 +9,7 @@
 
             if ($('#formCotizacion').length) {
                 this.cargarProcedimientos();
-                this.cargarMedicos();
+                this.registrarCambioProcedimiento();
                 this.registrarSolicitud();
             }
 
@@ -112,113 +112,79 @@
             });
         }, 
 
-        cargarMedicos() {
+        registrarCambioProcedimiento() {
 
-            const combo = $('#idMedico');
+            $('#idProcedimiento').on('change', function () {
 
-            if (!combo.length) {
-                return;
-            }
+                const idProcedimiento = $(this).val();
 
-            combo
-                .prop('disabled', true)
-                .empty()
-                .append(`
-            <option value="">
-                Cargando médicos...
-            </option>
-        `);
+                const comboMedico = $('#idMedico');
 
-            $.ajax({
+                comboMedico.empty();
 
-                url: '/Cotizacion/ObtenerMedicos',
-                type: 'GET',
+                if (!idProcedimiento) {
 
-                success: function (respuesta) {
-
-                    combo.empty();
-
-                    combo.append(`
+                    comboMedico.append(`
                 <option value="">
-                    Seleccione un médico
+                    Seleccione primero un procedimiento
                 </option>
             `);
 
-                    if (!respuesta?.esCorrecto ||
-                        !Array.isArray(respuesta.dato)) {
+                    return;
+                }
 
-                        Swal.fire({
-                            icon: 'error',
-                            title: 'Error',
-                            text: respuesta?.mensaje ??
-                                'No fue posible cargar los médicos.'
-                        });
+                comboMedico.prop('disabled', true);
 
-                        return;
-                    }
+                fetch(`/Cotizacion/ObtenerMedicoPorProcedimiento?idProcedimiento=${idProcedimiento}`)
 
-                    respuesta.dato.forEach(medico => {
+                    .then(async response => {
 
-                        const idMedico =
-                            medico.idMedico ??
-                            medico.id_Medico;
+                        const respuesta = await response.json();
 
-                        const nombre =
-                            medico.nombreCompleto ??
-                            [
-                                medico.nombres ??
-                                medico.usuario?.nombres ??
-                                '',
+                        if (!response.ok || !respuesta.esCorrecto) {
 
-                                medico.primerApellido ??
-                                medico.usuario?.primerApellido ??
-                                '',
-
-                                medico.segundoApellido ??
-                                medico.usuario?.segundoApellido ??
-                                ''
-                            ]
-                                .join(' ')
-                                .replace(/\s+/g, ' ')
-                                .trim();
-
-                        const especialidad =
-                            medico.nombreEspecialidad ??
-                            medico.especialidad?.nombre ??
-                            '';
-
-                        if (!idMedico) {
-                            return;
+                            throw new Error(
+                                respuesta.mensaje ??
+                                'No fue posible obtener el médico.'
+                            );
                         }
 
-                        const texto = especialidad
-                            ? `${nombre} - ${especialidad}`
-                            : nombre;
+                        return respuesta.dato;
+                    })
 
-                        combo.append(`
-                    <option value="${idMedico}">
-                        ${texto || 'Médico'}
+                    .then(medico => {
+
+                        comboMedico.empty();
+
+                        comboMedico.append(`
+                    <option value="${medico.idMedico}" selected>
+                        ${medico.nombreCompleto} - ${medico.especialidad}
                     </option>
                 `);
+
+                        comboMedico.prop('disabled', false);
+
+                    })
+
+                    .catch(error => {
+
+                        comboMedico.empty();
+
+                        comboMedico.append(`
+                    <option value="">
+                        Sin médico disponible
+                    </option>
+                `);
+
+                        Swal.fire({
+                            icon: 'warning',
+                            title: 'Procedimiento sin médico',
+                            text: error.message
+                        });
                     });
-                },
 
-                error: function (xhr) {
-
-                    console.error(xhr.responseText);
-
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: xhr.responseJSON?.mensaje ??
-                            'No fue posible cargar los médicos.'
-                    });
-                },
-
-                complete: function () {
-                    combo.prop('disabled', false);
-                }
             });
+
         },
 
         registrarSolicitud() {
@@ -237,17 +203,17 @@
                     parseInt($('#idProcedimiento').val());
 
                 const idMedico =
-                    parseInt($('#idMedico').val());
+                    Number($('#idMedico').val()) || 0;
 
                 const diasEstadia =
                     parseInt($('#DiasEstadia').val());
 
-                if (!idProcedimiento || !idMedico) {
+                if(!idProcedimiento) {
 
                     Swal.fire({
                         icon: 'warning',
                         title: 'Datos incompletos',
-                        text: 'Seleccione un procedimiento y un médico.'
+                        text: 'Seleccione un procedimiento.'
                     });
 
                     return;

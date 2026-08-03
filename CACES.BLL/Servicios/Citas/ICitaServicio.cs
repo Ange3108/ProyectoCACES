@@ -28,5 +28,8 @@ namespace CACES.BLL.Servicios.Citas
         Task<respuestaErrores<List<CitaComboDTO>>> ObtenerEspecialidadesActivasAsync();
 
         Task<respuestaErrores<List<CitaHorarioDTO>>> ObtenerHorariosPorMedicoAsync(int idMedico);
+
+        Task<respuestaErrores<MostrarCitaDTO>> EditarCitaAsync(EditarCitaDTO dto);
+
     }
 }

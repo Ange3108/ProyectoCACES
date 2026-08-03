@@ -40,7 +40,14 @@ namespace CACES.BLL.DTOs.Usuario
 
         [Required(ErrorMessage = "La contraseña es requerida")]
         [StringLength(100, MinimumLength = 8)]
+        [DataType(DataType.Password)]
         public string passwordHash { get; set; } = null!;
+
+        [Required(ErrorMessage = "Debe confirmar la contraseña")]
+        [DataType(DataType.Password)]
+        [Compare(nameof(passwordHash), ErrorMessage = "Las contraseñas no coinciden.")]
+        public string ConfirmarPassword { get; set; } = null!;
+
         public string? Foto { get; set; }
 
 

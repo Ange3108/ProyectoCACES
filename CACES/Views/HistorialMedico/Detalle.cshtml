@@ -98,20 +98,28 @@
 
             <hr class="my-5">
 
-            <div class="d-flex justify-content-between align-items-center mb-4">
+            <div class="d-flex justify-content-between align-items-center mb-3">
 
-                <div>
-                    <h4 class="fw-bold mb-1" style="color:#163B73;">
-                        Imágenes Médicas
-                    </h4>
+                <h5 class="mb-0">
+                    Imágenes médicas
+                </h5>
 
-                    <span class="text-muted">
-                        Archivos asociados al historial clínico
-                    </span>
-                </div>
+                @if (User.IsInRole("Paciente") || User.IsInRole("Medico"))
+                {
+                    <a asp-controller="HistorialMedico"
+                       asp-action="SubirImagen"
+                       asp-route-idHistorial="@Model.IdHistorial"
+                       class="btn btn-success rounded-3">
+
+                        <i class="bi bi-cloud-arrow-up me-2"></i>
+                        Subir imagen
+
+                    </a>
+                }
 
             </div>
 
+            <!-- Aquí sigue el foreach de las imágenes -->
             @if (archivos != null && archivos.Any())
             {
                 <div class="row g-4">

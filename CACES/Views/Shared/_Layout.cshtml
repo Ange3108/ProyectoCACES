@@ -34,42 +34,30 @@
                         <li class="nav-item"><a class="nav-link" asp-controller="Paquete" asp-action="ObtenerPaquetesSoloActivos">Turismo Médico</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Medico" asp-action="Especialistas">Especialistas</a></li>
                         <li class="nav-item"><a class="nav-link" asp-controller="Convenio" asp-action="ObtenerConveniosSoloActivos">Convenios</a></li>
-
+                        <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Conocenos">Conózcanos</a></li>
 
                         @if (User.Identity != null && User.Identity.IsAuthenticated)
                         {
                             @* Menú Paciente *@
                             @if (User.IsInRole("Paciente"))
                             {
-                                <li class="nav-item"><a class="nav-link" asp-controller="Cita" asp-action="Calendario">Calendario Paciente</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-controller="Procedimientos" asp-action="ObtenerProcedimientos">Procedimientos Quirúrgicos</a></li>
-
+                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdownPaciente" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-heart me-1"></i>Paciente</a><ul class="dropdown-menu" aria-labelledby="dropdownPaciente"><li><a class="dropdown-item" asp-controller="Cita" asp-action="Calendario"><i class="bi bi-calendar3 me-2"></i>Calendario Paciente</a></li><li><a class="dropdown-item" asp-controller="Procedimientos" asp-action="ObtenerProcedimientos"><i class="bi bi-clipboard2-pulse me-2"></i>Procedimientos Quirúrgicos</a></li></ul></li>
                             }
 
                             @* Menú Médico *@
                             @if (User.IsInRole("Medico"))
                             {
-                                
-                                <li class="nav-item"><a class="nav-link" asp-controller="Cita" asp-action="Calendario">Calendario Medico</a></li>
-                                <li class="nav-item"><a class="nav-link" asp-controller="Paciente" asp-action="Pacientes">Historiales Pacientes</a></li>
+                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdownMedico" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-heart-pulse me-1"></i>Médico</a><ul class="dropdown-menu" aria-labelledby="dropdownMedico"><li><a class="dropdown-item" asp-controller="Cita" asp-action="Calendario"><i class="bi bi-calendar3 me-2"></i>Calendario Médico</a></li><li><a class="dropdown-item" asp-controller="Paciente" asp-action="Pacientes"><i class="bi bi-folder2-open me-2"></i>Historiales de Pacientes</a></li></ul></li>
                             }
 
                             @* Menú Administrador *@
                             @if (User.IsInRole("Administrador"))
                             {
-                                
-                                <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="Reportes">Reportes</a></li>
+                                <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdownAdministrador" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-gear-fill me-1"></i>Administración</a><ul class="dropdown-menu" aria-labelledby="dropdownAdministrador"><li><a class="dropdown-item" asp-controller="Home" asp-action="Reportes"><i class="bi bi-bar-chart-line me-2"></i>Reportes</a></li></ul></li>
                             }
 
                             @* Opciones comunes *@
-                            <li class="nav-item"><a class="nav-link" asp-controller="Home" asp-action="configuracionUsuario">Configuración</a></li>
-
-                            <li class="nav-item">
-                                <form asp-controller="Login_Logout" asp-action="Logout" method="post" class="d-inline">
-                                    @Html.AntiForgeryToken()
-                                    <button type="submit" class="nav-link btn btn-link">Cerrar Sesión</button>
-                                </form>
-                            </li>
+                            <li class="nav-item dropdown"><a class="nav-link dropdown-toggle" href="#" id="dropdownCuenta" role="button" data-bs-toggle="dropdown" aria-expanded="false"><i class="bi bi-person-circle me-1"></i>Mi cuenta</a><ul class="dropdown-menu dropdown-menu-end" aria-labelledby="dropdownCuenta"><li><a class="dropdown-item" asp-controller="Home" asp-action="configuracionUsuario"><i class="bi bi-sliders me-2"></i>Configuración</a></li><li><hr class="dropdown-divider"></li><li><form asp-controller="Login_Logout" asp-action="Logout" method="post">@Html.AntiForgeryToken()<button type="submit" class="dropdown-item text-danger"><i class="bi bi-box-arrow-right me-2"></i>Cerrar sesión</button></form></li></ul></li>
                         }
                     </ul>
                 </div>

@@ -67,6 +67,158 @@
     </div>
 </div>
 
+<div class="modal fade"
+     id="modalEditarCita"
+     tabindex="-1"
+     aria-labelledby="tituloModalEditarCita"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+
+            <div class="modal-header border-0 px-4 py-3"
+                 style="background-color: #163B73;">
+
+                <div>
+                    <h5 class="modal-title text-white fw-bold mb-1"
+                        id="tituloModalEditarCita">
+
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Editar cita médica
+                    </h5>
+
+                    <p class="text-white-50 small mb-0">
+                        Actualice la información de la cita seleccionada.
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar">
+                </button>
+
+            </div>
+
+            <div class="modal-body p-4">
+
+                <input type="hidden" id="editarIdCita" />
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label for="editarEspecialidad"
+                               class="form-label fw-semibold text-dark">
+
+                            <i class="bi bi-heart-pulse me-1 text-info"></i>
+                            Especialidad
+                        </label>
+
+                        <select id="editarEspecialidad"
+                                class="form-select rounded-3">
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label for="editarMedico"
+                               class="form-label fw-semibold text-dark">
+
+                            <i class="bi bi-person-badge me-1 text-info"></i>
+                            Médico
+                        </label>
+
+                        <select id="editarMedico"
+                                class="form-select rounded-3">
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label for="editarHorario"
+                               class="form-label fw-semibold text-dark">
+
+                            <i class="bi bi-clock me-1 text-info"></i>
+                            Horario
+                        </label>
+
+                        <select id="editarHorario"
+                                class="form-select rounded-3">
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label for="editarFecha"
+                               class="form-label fw-semibold text-dark">
+
+                            <i class="bi bi-calendar-event me-1 text-info"></i>
+                            Fecha
+                        </label>
+
+                        <input type="date"
+                               id="editarFecha"
+                               class="form-control rounded-3" />
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <label for="editarMotivo"
+                               class="form-label fw-semibold text-dark">
+
+                            <i class="bi bi-file-earmark-medical me-1 text-info"></i>
+                            Motivo de la cita
+                        </label>
+
+                        <textarea id="editarMotivo"
+                                  class="form-control rounded-3"
+                                  rows="4"
+                                  maxlength="100"
+                                  placeholder="Ingrese el motivo de la cita">
+                        </textarea>
+
+                        <div class="form-text">
+                            Máximo 100 caracteres.
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer border-0 bg-light px-4 py-3">
+
+                <button type="button"
+                        class="btn btn-outline-secondary rounded-3 px-4"
+                        data-bs-dismiss="modal">
+
+                    <i class="bi bi-x-circle me-1"></i>
+                    Cancelar
+                </button>
+
+                <button type="button"
+                        class="btn rounded-3 px-4 text-white fw-semibold"
+                        style="background-color: #17B26A;"
+                        onclick="Citas.guardarEdicion()">
+
+                    <i class="bi bi-check-circle me-1"></i>
+                    Guardar cambios
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/citas.js" asp-append-version="true"></script>
 }

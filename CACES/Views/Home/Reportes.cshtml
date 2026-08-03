@@ -156,14 +156,27 @@
     </div>
             <div class="report-card">
                 <div class="report-card-icon">
-                    <i class="bi bi-wrench"></i>
+                    <i class="bi bi-headset"></i>
                 </div>
+
                 <div class="report-card-body">
-                    <h5 class="report-card-title">Gestión de soporte</h5>
-                    <p class="report-card-text">Administra las preguntas que han realizado los usuarios de este sistema</p>
+                    <h5 class="report-card-title">
+                        Gestión de Soporte
+                    </h5>
+
+                    <p class="report-card-text">
+                        Administra las consultas, dudas y solicitudes enviadas por los usuarios
+                        del sistema desde el formulario de soporte.
+                    </p>
                 </div>
-                <a asp-action="GestionConsultas" asp-controller="Soporte" class="btn-report">
-                    Ver reporte <i class="bi bi-arrow-right"></i>
+
+                <a asp-controller="Soporte"
+                   asp-action="GestionConsultas"
+                   class="btn-report">
+
+                    Ver gestión
+                    <i class="bi bi-arrow-right"></i>
+
                 </a>
             </div>
             <div class="report-card">

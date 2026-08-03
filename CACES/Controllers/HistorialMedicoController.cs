@@ -85,7 +85,7 @@ namespace CACES.Controllers
         }
 
         [HttpGet]
-        [Authorize(Roles = "Medico")]
+        [Authorize(Roles = "Medico,Paciente")]
         public IActionResult SubirImagen(int idHistorial)
         {
             ViewBag.IdHistorial = idHistorial;
@@ -93,7 +93,7 @@ namespace CACES.Controllers
         }
 
         [HttpPost]
-        [Authorize(Roles = "Medico")]
+        [Authorize(Roles = "Medico,Paciente")]
         public async Task<IActionResult> SubirImagen(int idHistorial, IFormFile archivo)
         {
             if (archivo == null || archivo.Length == 0)

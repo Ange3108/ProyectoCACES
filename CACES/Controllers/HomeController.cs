@@ -63,7 +63,11 @@ namespace CACES.Controllers
         {
             return View("~/Views/Convenios/Convenios.cshtml");
         }
-        
+
+        public IActionResult Conocenos()
+        {
+            return View();
+        }
 
         [Authorize(Roles = "Administrador")]
         public IActionResult Reportes()
@@ -71,14 +75,11 @@ namespace CACES.Controllers
             return View();
         }
 
-<<<<<<< Updated upstream
         public IActionResult configuracionUsuario()
         {
             return View();
         }
-=======
-        
->>>>>>> Stashed changes
+
 
         [HttpGet]
         public async Task<IActionResult> ResumenCentro()
@@ -102,12 +103,8 @@ namespace CACES.Controllers
                     .Include(m => m.Usuario)
                     .Where(m => m.Usuario.Estado == true)
                     .CountAsync(),
-<<<<<<< Updated upstream
                 timestamp = DateTime.UtcNow
-=======
 
-                timestamp = DateTime.Now
->>>>>>> Stashed changes
             };
 
             return Json(data);

@@ -325,14 +325,23 @@
                     render: function (data) {
 
                         let botones = `
-            <a href="/Cita/Ticket/${data.idCita}"
-               class="btn btn-sm btn-outline-info rounded-3"
-               title="Ver ticket">
+                    <button type="button"
+                            class="btn btn-sm btn-outline-primary rounded-3"
+                            title="Editar"
+                            onclick="Citas.abrirEditar(${data.idCita})">
 
-                <i class="bi bi-receipt"></i>
+                        <i class="bi bi-pencil-square"></i>
 
-            </a>
-        `;
+                    </button>
+
+                    <a href="/Cita/Ticket/${data.idCita}"
+                       class="btn btn-sm btn-outline-info rounded-3"
+                       title="Ver ticket">
+
+                        <i class="bi bi-receipt"></i>
+
+                    </a>
+                `;
 
                         if (data.idReceta) {
 
@@ -376,6 +385,185 @@
                 url: '//cdn.datatables.net/plug-ins/1.13.7/i18n/es-ES.json'
             }
         });
+    },
+
+    abrirEditar(idCita) {
+
+        fetch(`/Cita/ObtenerCita?idCita=${idCita}`)
+            .then(r => r.json())
+            .then(res => {
+
+                if (!res.esCorrecto) {
+                    Swal.fire("Error", res.mensaje, "error");
+                    return;
+                }
+
+                const cita = res.dato;
+
+                $("#editarIdCita").val(cita.idCita);
+                $("#editarFecha").val(cita.fechaCita.substring(0, 10));
+                $("#editarMotivo").val(cita.motivo);
+
+                Citas.cargarEspecialidadesEditar(
+                    cita.idEspecialidad,
+                    cita.idMedico,
+                    cita.idHorario
+                );
+
+                const modal = new bootstrap.Modal(
+                    document.getElementById("modalEditarCita")
+                );
+
+                modal.show();
+            });
+
+    },
+
+    cargarEspecialidadesEditar(idEspecialidad, idMedico, idHorario) {
+
+        fetch('/Cita/ObtenerEspecialidadesActivas')
+            .then(r => r.json())
+            .then(res => {
+
+                const select = $("#editarEspecialidad");
+
+                select.empty();
+
+                res.dato.forEach(e => {
+
+                    select.append(`
+                    <option value="${e.id}">
+                        ${e.nombre}
+                    </option>
+                `);
+
+                });
+
+                select.val(idEspecialidad);
+
+                Citas.cargarMedicosEditar(
+                    idEspecialidad,
+                    idMedico,
+                    idHorario
+                );
+
+            });
+
+    },
+
+    cargarMedicosEditar(idEspecialidad, idMedico, idHorario) {
+
+        fetch(`/Cita/ObtenerMedicos?idEspecialidad=${idEspecialidad}`)
+            .then(r => r.json())
+            .then(res => {
+
+                const select = $("#editarMedico");
+
+                select.empty();
+
+                res.dato.forEach(m => {
+
+                    select.append(`
+                    <option value="${m.id}">
+                        ${m.nombre}
+                    </option>
+                `);
+
+                });
+
+                select.val(idMedico);
+
+                Citas.cargarHorariosEditar(
+                    idMedico,
+                    idHorario
+                );
+
+            });
+
+    },
+
+    cargarHorariosEditar(idMedico, idHorario) {
+
+        fetch(`/Cita/ObtenerHorariosPorMedico?idMedico=${idMedico}`)
+            .then(r => r.json())
+            .then(res => {
+
+                const select = $("#editarHorario");
+
+                select.empty();
+
+                res.dato.forEach(h => {
+
+                    select.append(`
+                    <option value="${h.idHorario}">
+                        ${h.horarioTexto}
+                    </option>
+                `);
+
+                });
+
+                select.val(idHorario);
+
+            });
+
+    },
+
+    guardarEdicion() {
+
+        const dto = {
+
+            idCita: parseInt($("#editarIdCita").val()),
+            idEspecialidad: parseInt($("#editarEspecialidad").val()),
+            idMedico: parseInt($("#editarMedico").val()),
+            idHorario: parseInt($("#editarHorario").val()),
+            fechaCita: $("#editarFecha").val(),
+            motivo: $("#editarMotivo").val()
+
+        };
+
+        fetch("/Cita/EditarCita", {
+
+            method: "POST",
+
+            headers: {
+                "Content-Type": "application/json"
+            },
+
+            body: JSON.stringify(dto)
+
+        })
+            .then(r => r.json())
+            .then(res => {
+
+                if (res.esCorrecto) {
+
+                    Swal.fire(
+                        "Correcto",
+                        res.mensaje,
+                        "success"
+                    );
+
+                    bootstrap.Modal
+                        .getInstance(
+                            document.getElementById("modalEditarCita")
+                        )
+                        .hide();
+
+                    Citas.tablaGestionCitas.ajax.reload();
+
+                }
+                else {
+
+                    Swal.fire(
+                        "Error",
+                        res.mensaje,
+                        "error"
+                    );
+
+                }
+
+            });
+
     },
 
     cancelarCita(idCita) {

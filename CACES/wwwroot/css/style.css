@@ -1429,3 +1429,1043 @@ body {
 .certificaciones-especialista {
     min-height: 38px;
 }
+
+/* ==========================================================
+   NAVBAR RESPONSIVE - CACES
+   ========================================================== */
+
+@media (max-width: 991.98px) {
+
+    .custom-navbar .container-fluid {
+        min-height: auto;
+        padding: .8rem 1rem;
+        position: relative;
+    }
+
+    .brand-name {
+        font-size: 1.55rem;
+    }
+
+    .brand-icon img {
+        width: 42px;
+        height: 42px;
+    }
+
+    .navbar-toggler {
+        border: 0;
+        box-shadow: none !important;
+        padding: .35rem;
+        margin-left: auto;
+        z-index: 1002;
+    }
+
+    .navbar-collapse {
+        width: 100%;
+        margin-top: 1rem;
+    }
+
+    .custom-navbar .navbar-collapse {
+        position: static;
+        background: #ffffff;
+        border-radius: 16px;
+        padding: 1rem;
+        border: 1px solid #E6EDF2;
+        box-shadow: 0 12px 30px rgba(0,0,0,.08);
+    }
+
+    .nav-center-list {
+        width: 100%;
+        align-items: stretch;
+    }
+
+        .nav-center-list .nav-item {
+            width: 100%;
+        }
+
+        .nav-center-list .nav-link {
+            display: block;
+            width: 100%;
+            padding: .85rem 1rem;
+            border-radius: .7rem;
+            color: var(--navy);
+        }
+
+            .nav-center-list .nav-link:hover {
+                background: rgba(26,166,166,.08);
+                color: var(--turquoise);
+            }
+
+    .dropdown-menu {
+        position: static !important;
+        float: none;
+        transform: none !important;
+        width: 100%;
+        margin-top: .35rem;
+        border: 0;
+        box-shadow: none;
+        background: #F8FBFD;
+        border-radius: .75rem;
+    }
+
+    .dropdown-item {
+        padding: .75rem 1rem;
+    }
+
+    .account-link {
+        width: 46px;
+        height: 46px;
+    }
+
+    #campanitaNotificaciones {
+        margin-right: .75rem;
+    }
+
+        #campanitaNotificaciones .dropdown-menu {
+            width: 100%;
+            max-width: 100%;
+        }
+}
+
+.custom-navbar .dropdown-menu {
+    min-width: 230px;
+    padding: .55rem;
+    border: 1px solid var(--border);
+    border-radius: .8rem;
+    background: var(--white);
+    box-shadow: 0 .75rem 2rem rgba(11, 46, 89, .14);
+}
+
+.custom-navbar .dropdown-item {
+    display: flex;
+    align-items: center;
+    padding: .7rem .8rem;
+    color: var(--navy);
+    font-size: .9rem;
+    font-weight: 600;
+    border-radius: .55rem;
+}
+
+    .custom-navbar .dropdown-item:hover,
+    .custom-navbar .dropdown-item:focus {
+        color: var(--turquoise-dark);
+        background: rgba(26, 166, 166, .1);
+    }
+
+.custom-navbar .dropdown-divider {
+    margin: .4rem 0;
+    border-color: var(--border);
+}
+
+.custom-navbar .dropdown-item.text-danger:hover {
+    color: #fff !important;
+    background: #dc3545;
+}
+
+.custom-navbar .dropdown-item form,
+.custom-navbar form {
+    margin: 0;
+}
+
+@media (max-width: 991.98px) {
+    .custom-navbar .dropdown-menu {
+        position: static !important;
+        width: 100%;
+        min-width: 100%;
+        margin: .25rem 0 .6rem;
+        transform: none !important;
+        box-shadow: none;
+        background: #f8fbfd;
+    }
+
+    .custom-navbar .dropdown-toggle {
+        width: 100%;
+        display: flex;
+        align-items: center;
+    }
+
+        .custom-navbar .dropdown-toggle::after {
+            margin-left: auto;
+        }
+}
+
+/* ==========================================================
+   CONÓZCANOS — CACES
+   Hero • Historia • Estadísticas • Misión • Valores • Timeline
+   ========================================================== */
+
+.conocenos-page {
+    overflow: hidden;
+    background: var(--background);
+    color: var(--text);
+}
+
+.conocenos-section {
+    padding: 6.5rem 0;
+}
+
+.conocenos-section-label {
+    display: inline-flex;
+    align-items: center;
+    gap: .7rem;
+    margin-bottom: 1rem;
+    color: var(--turquoise-dark);
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .18em;
+    text-transform: uppercase;
+}
+
+    .conocenos-section-label::before {
+        content: "";
+        width: 28px;
+        height: 2px;
+        background: var(--turquoise);
+    }
+
+.conocenos-section-title {
+    max-width: 740px;
+    margin: 0 0 1.25rem;
+    color: var(--navy-dark);
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2rem, 4vw, 3.25rem);
+    font-weight: 700;
+    line-height: 1.12;
+}
+
+.conocenos-section-text {
+    color: var(--text-muted);
+    font-size: 1.02rem;
+    line-height: 1.85;
+}
+
+.conocenos-heading-center {
+    max-width: 760px;
+    margin: 0 auto 3.5rem;
+    text-align: center;
+}
+
+    .conocenos-heading-center .conocenos-section-label {
+        justify-content: center;
+    }
+
+    .conocenos-heading-center .conocenos-section-title {
+        margin-right: auto;
+        margin-left: auto;
+    }
+
+    .conocenos-heading-center > p {
+        max-width: 660px;
+        margin: 0 auto;
+        color: var(--text-muted);
+        font-size: 1rem;
+        line-height: 1.75;
+    }
+
+/* HERO */
+
+.conocenos-hero {
+    position: relative;
+    min-height: calc(100vh - 96px);
+    display: flex;
+    align-items: center;
+    background-image: url("../img/pasilloCaces.jpg");
+    background-size: cover;
+    background-position: center;
+    isolation: isolate;
+}
+
+.conocenos-hero-overlay {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    background: rgba(5, 29, 57, .82);
+}
+
+.conocenos-hero-content {
+    position: relative;
+    z-index: 2;
+    padding-top: 6rem;
+    padding-bottom: 7rem;
+}
+
+.conocenos-eyebrow {
+    display: inline-flex;
+    align-items: center;
+    padding: .6rem 1rem;
+    margin-bottom: 1.5rem;
+    border: 1px solid rgba(255, 255, 255, .28);
+    border-radius: 50px;
+    background: rgba(255, 255, 255, .08);
+    color: #fff;
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .13em;
+    text-transform: uppercase;
+}
+
+.conocenos-hero h1 {
+    max-width: 850px;
+    margin-bottom: 1.5rem;
+    color: #fff;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(3rem, 7vw, 5.9rem);
+    font-weight: 700;
+    line-height: .98;
+    letter-spacing: -.035em;
+}
+
+    .conocenos-hero h1 span {
+        display: block;
+        color: #65D1D1;
+    }
+
+.conocenos-hero p {
+    max-width: 700px;
+    margin-bottom: 2rem;
+    color: rgba(255, 255, 255, .84);
+    font-size: clamp(1rem, 2vw, 1.15rem);
+    line-height: 1.8;
+}
+
+.conocenos-hero-actions {
+    display: flex;
+    flex-wrap: wrap;
+    gap: .85rem;
+}
+
+.conocenos-btn-primary,
+.conocenos-btn-outline {
+    min-height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: .8rem 1.35rem;
+    border-radius: .65rem;
+    font-weight: 800;
+    transition: transform .2s ease, background .2s ease;
+}
+
+.conocenos-btn-primary {
+    border: 1px solid var(--turquoise);
+    background: var(--turquoise);
+    color: #fff;
+}
+
+    .conocenos-btn-primary:hover {
+        border-color: var(--turquoise-dark);
+        background: var(--turquoise-dark);
+        color: #fff;
+        transform: translateY(-2px);
+    }
+
+.conocenos-btn-outline {
+    border: 1px solid rgba(255, 255, 255, .65);
+    background: transparent;
+    color: #fff;
+}
+
+    .conocenos-btn-outline:hover {
+        border-color: #fff;
+        background: #fff;
+        color: var(--navy);
+        transform: translateY(-2px);
+    }
+
+.conocenos-hero-card {
+    position: absolute;
+    right: 5%;
+    bottom: -38px;
+    z-index: 3;
+    min-width: 330px;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 1.25rem 1.5rem;
+    border-left: 4px solid var(--turquoise);
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 1rem 3rem rgba(5, 29, 57, .22);
+}
+
+.conocenos-hero-card-icon {
+    width: 52px;
+    height: 52px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    border-radius: 50%;
+    background: #E8F7F8;
+    color: var(--turquoise-dark);
+    font-size: 1.45rem;
+}
+
+.conocenos-hero-card strong,
+.conocenos-hero-card span {
+    display: block;
+}
+
+.conocenos-hero-card strong {
+    color: var(--navy);
+    font-size: .95rem;
+}
+
+.conocenos-hero-card span {
+    margin-top: .15rem;
+    color: var(--text-muted);
+    font-size: .8rem;
+}
+
+/* HISTORIA */
+
+.conocenos-historia {
+    padding-top: 9rem;
+    background: #fff;
+}
+
+.conocenos-image-wrapper {
+    position: relative;
+    padding: 0 2rem 2rem 0;
+}
+
+    .conocenos-image-wrapper::before {
+        content: "";
+        position: absolute;
+        right: 0;
+        bottom: 0;
+        width: 70%;
+        height: 75%;
+        border: 2px solid var(--turquoise);
+        border-radius: 1.25rem;
+    }
+
+.conocenos-history-image {
+    position: relative;
+    z-index: 1;
+    width: 100%;
+    min-height: 510px;
+    object-fit: cover;
+    border-radius: 1.25rem;
+    box-shadow: 0 1rem 3rem rgba(11, 46, 89, .16);
+}
+
+.conocenos-image-badge {
+    position: absolute;
+    right: -.25rem;
+    bottom: 3.5rem;
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    padding: 1rem 1.2rem;
+    border-radius: .85rem;
+    background: var(--navy);
+    color: #fff;
+    box-shadow: 0 .8rem 2rem rgba(11, 46, 89, .24);
+}
+
+    .conocenos-image-badge > i {
+        color: #65D1D1;
+        font-size: 1.55rem;
+    }
+
+    .conocenos-image-badge strong,
+    .conocenos-image-badge span {
+        display: block;
+    }
+
+    .conocenos-image-badge strong {
+        font-size: .88rem;
+    }
+
+    .conocenos-image-badge span {
+        color: rgba(255, 255, 255, .7);
+        font-size: .72rem;
+    }
+
+.conocenos-history-points {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+    .conocenos-history-points div {
+        display: flex;
+        align-items: center;
+        gap: .6rem;
+        color: var(--navy);
+        font-size: .92rem;
+        font-weight: 700;
+    }
+
+    .conocenos-history-points i {
+        color: var(--turquoise);
+    }
+
+/* ESTADÍSTICAS */
+
+.conocenos-stats {
+    padding: 4.5rem 0;
+    background: var(--navy);
+}
+
+.conocenos-stat-card {
+    height: 100%;
+    padding: 1.5rem;
+    border-right: 1px solid rgba(255, 255, 255, .14);
+    text-align: center;
+}
+
+.conocenos-stats [class*="col-"]:last-child .conocenos-stat-card {
+    border-right: 0;
+}
+
+.conocenos-stat-icon {
+    width: 54px;
+    height: 54px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1rem;
+    border-radius: 50%;
+    background: rgba(101, 209, 209, .12);
+    color: #65D1D1;
+    font-size: 1.45rem;
+}
+
+.conocenos-stat-card strong {
+    display: block;
+    color: #fff;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.2rem, 5vw, 3.5rem);
+    line-height: 1;
+}
+
+.conocenos-stat-card span {
+    display: block;
+    margin-top: .75rem;
+    color: rgba(255, 255, 255, .72);
+    font-size: .82rem;
+    font-weight: 700;
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+/* MISIÓN Y VISIÓN */
+
+.conocenos-purpose {
+    background: #F3F8FA;
+}
+
+.conocenos-purpose-card {
+    position: relative;
+    height: 100%;
+    padding: 2.6rem;
+    overflow: hidden;
+    border: 1px solid var(--border);
+    border-radius: 1.25rem;
+    background: #fff;
+    box-shadow: 0 .8rem 2.4rem rgba(11, 46, 89, .08);
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+
+    .conocenos-purpose-card:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 1.2rem 3rem rgba(11, 46, 89, .13);
+    }
+
+.conocenos-purpose-number {
+    position: absolute;
+    top: 1.2rem;
+    right: 1.5rem;
+    color: rgba(11, 46, 89, .06);
+    font-family: "Playfair Display", serif;
+    font-size: 5rem;
+    font-weight: 700;
+    line-height: 1;
+}
+
+.conocenos-purpose-icon {
+    width: 66px;
+    height: 66px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    border-radius: 1rem;
+    background: var(--navy);
+    color: #fff;
+    font-size: 1.7rem;
+}
+
+.conocenos-purpose-card h3 {
+    color: var(--navy-dark);
+    font-family: "Playfair Display", serif;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+.conocenos-purpose-card p {
+    margin: 0;
+    color: var(--text-muted);
+    line-height: 1.8;
+}
+
+/* VALORES */
+
+.conocenos-values {
+    background: #fff;
+}
+
+.conocenos-value-card {
+    height: 100%;
+    padding: 2rem;
+    border: 1px solid transparent;
+    border-radius: 1rem;
+    background: #F8FBFD;
+    transition: transform .22s ease, border-color .22s ease, box-shadow .22s ease;
+}
+
+    .conocenos-value-card:hover {
+        border-color: rgba(26, 166, 166, .4);
+        background: #fff;
+        box-shadow: 0 1rem 2.5rem rgba(11, 46, 89, .1);
+        transform: translateY(-5px);
+    }
+
+.conocenos-value-icon {
+    width: 58px;
+    height: 58px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.25rem;
+    border-radius: 50%;
+    background: #E8F7F8;
+    color: var(--turquoise-dark);
+    font-size: 1.35rem;
+}
+
+.conocenos-value-card h3 {
+    color: var(--navy);
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+.conocenos-value-card p {
+    margin: 0;
+    color: var(--text-muted);
+    font-size: .93rem;
+    line-height: 1.7;
+}
+
+/* LÍNEA DEL TIEMPO */
+
+.conocenos-timeline-section {
+    background: #F3F8FA;
+}
+
+.conocenos-timeline {
+    position: relative;
+    max-width: 960px;
+    margin: 0 auto;
+}
+
+    .conocenos-timeline::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        bottom: 0;
+        left: 120px;
+        width: 2px;
+        background: #C8E9E9;
+    }
+
+.conocenos-timeline-item {
+    position: relative;
+    display: grid;
+    grid-template-columns: 90px 40px 1fr;
+    gap: 1rem;
+    padding-bottom: 2.5rem;
+}
+
+.conocenos-timeline-year {
+    padding-top: .85rem;
+    color: var(--navy);
+    font-family: "Playfair Display", serif;
+    font-size: 1.45rem;
+    font-weight: 700;
+    text-align: right;
+}
+
+.conocenos-timeline-dot {
+    position: relative;
+    z-index: 2;
+    width: 18px;
+    height: 18px;
+    margin: 1.1rem auto 0;
+    border: 4px solid #F3F8FA;
+    border-radius: 50%;
+    background: var(--turquoise);
+    box-shadow: 0 0 0 2px var(--turquoise);
+}
+
+.conocenos-timeline-content {
+    padding: 1.3rem 1.5rem;
+    border-left: 4px solid var(--turquoise);
+    border-radius: .85rem;
+    background: #fff;
+    box-shadow: 0 .55rem 1.5rem rgba(11, 46, 89, .07);
+}
+
+    .conocenos-timeline-content h3 {
+        margin-bottom: .4rem;
+        color: var(--navy);
+        font-size: 1.08rem;
+        font-weight: 800;
+    }
+
+    .conocenos-timeline-content p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: .91rem;
+        line-height: 1.65;
+    }
+
+/* BENEFICIOS */
+
+.conocenos-choose {
+    background: #fff;
+}
+
+.conocenos-benefits-grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1rem;
+}
+
+.conocenos-benefit-card {
+    position: relative;
+    min-height: 230px;
+    padding: 1.7rem;
+    border: 1px solid var(--border);
+    border-radius: 1rem;
+    background: #fff;
+    transition: transform .22s ease, box-shadow .22s ease;
+}
+
+    .conocenos-benefit-card:hover {
+        box-shadow: 0 .9rem 2.2rem rgba(11, 46, 89, .11);
+        transform: translateY(-4px);
+    }
+
+    .conocenos-benefit-card > span {
+        position: absolute;
+        top: 1rem;
+        right: 1.15rem;
+        color: #DDE8EF;
+        font-family: "Playfair Display", serif;
+        font-size: 2rem;
+        font-weight: 700;
+    }
+
+    .conocenos-benefit-card > i {
+        display: block;
+        margin-bottom: 1.3rem;
+        color: var(--turquoise);
+        font-size: 1.8rem;
+    }
+
+    .conocenos-benefit-card h3 {
+        color: var(--navy);
+        font-size: 1rem;
+        font-weight: 800;
+    }
+
+    .conocenos-benefit-card p {
+        margin: 0;
+        color: var(--text-muted);
+        font-size: .88rem;
+        line-height: 1.65;
+    }
+
+/* CTA FINAL */
+
+.conocenos-final-section {
+    padding: 2rem 0 7rem;
+    background: #fff;
+}
+
+.conocenos-final-card {
+    display: grid;
+    grid-template-columns: auto 1fr auto;
+    align-items: center;
+    gap: 2rem;
+    padding: 3.2rem;
+    border-radius: 1.4rem;
+    background: var(--navy);
+    box-shadow: 0 1rem 3rem rgba(11, 46, 89, .2);
+}
+
+.conocenos-final-icon {
+    width: 76px;
+    height: 76px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, .1);
+    color: #65D1D1;
+    font-size: 2rem;
+}
+
+.conocenos-final-content > span {
+    display: block;
+    margin-bottom: .5rem;
+    color: #65D1D1;
+    font-size: .74rem;
+    font-weight: 800;
+    letter-spacing: .14em;
+    text-transform: uppercase;
+}
+
+.conocenos-final-content h2 {
+    margin-bottom: .6rem;
+    color: #fff;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(1.8rem, 4vw, 2.7rem);
+    font-weight: 700;
+}
+
+.conocenos-final-content p {
+    max-width: 650px;
+    margin: 0;
+    color: rgba(255, 255, 255, .72);
+    line-height: 1.7;
+}
+
+.conocenos-final-actions {
+    display: flex;
+    flex-direction: column;
+    gap: .7rem;
+    min-width: 180px;
+}
+
+.conocenos-final-btn-light,
+.conocenos-final-btn-outline {
+    padding: .75rem 1rem;
+    border-radius: .6rem;
+    font-size: .9rem;
+    font-weight: 800;
+}
+
+.conocenos-final-btn-light {
+    border: 1px solid #fff;
+    background: #fff;
+    color: var(--navy);
+}
+
+    .conocenos-final-btn-light:hover {
+        border-color: var(--turquoise);
+        background: var(--turquoise);
+        color: #fff;
+    }
+
+.conocenos-final-btn-outline {
+    border: 1px solid rgba(255, 255, 255, .55);
+    background: transparent;
+    color: #fff;
+}
+
+    .conocenos-final-btn-outline:hover {
+        border-color: #fff;
+        background: #fff;
+        color: var(--navy);
+    }
+
+/* RESPONSIVE */
+
+@media (max-width: 991.98px) {
+    .conocenos-section {
+        padding: 5rem 0;
+    }
+
+    .conocenos-hero {
+        min-height: 760px;
+    }
+
+    .conocenos-hero-card {
+        right: 1rem;
+        bottom: -45px;
+    }
+
+    .conocenos-history-image {
+        min-height: 420px;
+    }
+
+    .conocenos-stats [class*="col-"]:nth-child(2)
+    .conocenos-stat-card {
+        border-right: 0;
+    }
+
+    .conocenos-stat-card {
+        border-bottom: 1px solid rgba(255, 255, 255, .14);
+    }
+
+    .conocenos-final-card {
+        grid-template-columns: auto 1fr;
+    }
+
+    .conocenos-final-actions {
+        grid-column: 1 / -1;
+        flex-direction: row;
+        padding-left: 108px;
+    }
+}
+
+@media (max-width: 767.98px) {
+    .conocenos-section {
+        padding: 4rem 0;
+    }
+
+    .conocenos-hero {
+        min-height: 700px;
+        background-position: 60% center;
+    }
+
+    .conocenos-hero-content {
+        padding-top: 5rem;
+        padding-bottom: 6rem;
+    }
+
+    .conocenos-hero h1 {
+        font-size: clamp(2.7rem, 13vw, 4rem);
+        line-height: 1.03;
+    }
+
+    .conocenos-eyebrow {
+        font-size: .64rem;
+        letter-spacing: .08em;
+    }
+
+    .conocenos-hero-card {
+        right: 1rem;
+        left: 1rem;
+        min-width: 0;
+        width: auto;
+    }
+
+    .conocenos-historia {
+        padding-top: 7rem;
+    }
+
+    .conocenos-image-wrapper {
+        padding: 0 1rem 1rem 0;
+    }
+
+    .conocenos-history-image {
+        min-height: 360px;
+    }
+
+    .conocenos-image-badge {
+        right: -.4rem;
+        bottom: 2rem;
+    }
+
+    .conocenos-history-points {
+        grid-template-columns: 1fr;
+    }
+
+    .conocenos-purpose-card {
+        padding: 2rem;
+    }
+
+    .conocenos-benefits-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .conocenos-timeline::before {
+        left: 9px;
+    }
+
+    .conocenos-timeline-item {
+        grid-template-columns: 20px 1fr;
+        gap: 1rem;
+    }
+
+    .conocenos-timeline-year {
+        grid-column: 2;
+        padding: 0;
+        text-align: left;
+    }
+
+    .conocenos-timeline-dot {
+        grid-column: 1;
+        grid-row: 1 / span 2;
+        width: 16px;
+        height: 16px;
+        margin: .35rem 0 0 1px;
+    }
+
+    .conocenos-timeline-content {
+        grid-column: 2;
+    }
+
+    .conocenos-final-card {
+        display: flex;
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 2rem;
+    }
+
+    .conocenos-final-actions {
+        width: 100%;
+        flex-direction: column;
+        padding-left: 0;
+    }
+
+        .conocenos-final-actions .btn {
+            width: 100%;
+        }
+}
+
+@media (max-width: 575.98px) {
+    .conocenos-hero-actions {
+        flex-direction: column;
+    }
+
+        .conocenos-hero-actions .btn {
+            width: 100%;
+        }
+
+    .conocenos-stat-card {
+        padding: 1.2rem .5rem;
+    }
+
+        .conocenos-stat-card strong {
+            font-size: 2.25rem;
+        }
+
+        .conocenos-stat-card span {
+            font-size: .66rem;
+        }
+
+    .conocenos-image-badge {
+        position: relative;
+        right: auto;
+        bottom: auto;
+        width: calc(100% - 1rem);
+        margin: -2rem auto 0;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .conocenos-btn-primary,
+    .conocenos-btn-outline,
+    .conocenos-purpose-card,
+    .conocenos-value-card,
+    .conocenos-benefit-card {
+        transition: none;
+    }
+}

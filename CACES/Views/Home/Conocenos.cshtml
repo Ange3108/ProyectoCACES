@@ -1,0 +1,576 @@
+﻿@{
+    ViewData["Title"] = "Conózcanos";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="conocenos-page">
+
+    <!-- HERO -->
+    <section class="conocenos-hero">
+        <div class="conocenos-hero-overlay"></div>
+
+        <div class="container conocenos-hero-content">
+            <div class="row align-items-center">
+                <div class="col-lg-8 col-xl-7">
+
+                    <span class="conocenos-eyebrow">
+                        Centro de Atención Clínica Especializada
+                    </span>
+
+                    <h1>
+                        Más que atención médica,
+                        <span>un compromiso con tu salud.</span>
+                    </h1>
+
+                    <p>
+                        En CACES combinamos experiencia, innovación y calidad
+                        humana para ofrecer servicios médicos especializados,
+                        seguros y centrados en cada paciente.
+                    </p>
+
+                    <div class="conocenos-hero-actions">
+                        <a asp-controller="Especialistas"
+                           asp-action="Especialistas"
+                           class="btn conocenos-btn-primary">
+                            <i class="bi bi-person-heart me-2"></i>
+                            Nuestros especialistas
+                        </a>
+
+                        @if (User.Identity != null &&
+                             User.Identity.IsAuthenticated &&
+                             User.IsInRole("Paciente"))
+                        {
+                            <a asp-controller="Cita"
+                               asp-action="RegistrarCita"
+                               class="btn conocenos-btn-outline">
+                                <i class="bi bi-calendar2-plus me-2"></i>
+                                Agendar cita
+                            </a>
+                        }
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="conocenos-hero-card">
+            <div class="conocenos-hero-card-icon">
+                <i class="bi bi-heart-pulse"></i>
+            </div>
+
+            <div>
+                <strong>Atención especializada</strong>
+                <span>Excelencia médica y trato humano</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- HISTORIA -->
+    <section class="conocenos-section conocenos-historia">
+        <div class="container">
+            <div class="row align-items-center g-5">
+
+                <div class="col-lg-6">
+                    <div class="conocenos-image-wrapper">
+                        <img src="~/img/pasilloCaces.jpg"
+                             alt="Instalaciones de CACES"
+                             class="conocenos-history-image" />
+
+                        <div class="conocenos-image-badge">
+                            <i class="bi bi-shield-check"></i>
+
+                            <div>
+                                <strong>Atención segura</strong>
+                                <span>Calidad en cada proceso</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="col-lg-6">
+
+                    <span class="conocenos-section-label">
+                        Nuestra historia
+                    </span>
+
+                    <h2 class="conocenos-section-title">
+                        Una institución creada para cuidar lo más importante.
+                    </h2>
+
+                    <p class="conocenos-section-text">
+                        CACES nació con la visión de brindar atención médica
+                        especializada mediante la integración de profesionales
+                        altamente capacitados, tecnología moderna y un servicio
+                        cercano para cada paciente.
+                    </p>
+
+                    <p class="conocenos-section-text">
+                        Desde nuestros inicios hemos trabajado para construir
+                        una institución confiable, accesible y comprometida con
+                        el bienestar integral de las personas y sus familias.
+                    </p>
+
+                    <div class="conocenos-history-points">
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Atención personalizada
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Profesionales especializados
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Tecnología médica moderna
+                        </div>
+
+                        <div>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Seguimiento continuo
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ESTADÍSTICAS -->
+    <section class="conocenos-stats">
+        <div class="container">
+            <div class="row g-4">
+
+                <div class="col-6 col-lg-3">
+                    <div class="conocenos-stat-card">
+                        <div class="conocenos-stat-icon">
+                            <i class="bi bi-hospital"></i>
+                        </div>
+
+                        <strong class="conocenos-counter" data-target="25">
+                            5+
+                        </strong>
+
+                        <span>Especialidades</span>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="conocenos-stat-card">
+                        <div class="conocenos-stat-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+
+                        <strong class="conocenos-counter" data-target="80">
+                            10+
+                        </strong>
+
+                        <span>Especialistas</span>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="conocenos-stat-card">
+                        <div class="conocenos-stat-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                        <strong class="conocenos-counter" data-target="15000">
+                            5 000+
+                        </strong>
+
+                        <span>Pacientes atendidos</span>
+                    </div>
+                </div>
+
+                <div class="col-6 col-lg-3">
+                    <div class="conocenos-stat-card">
+                        <div class="conocenos-stat-icon">
+                            <i class="bi bi-star"></i>
+                        </div>
+
+                        <strong class="conocenos-counter" data-target="98">
+                            98%
+                        </strong>
+
+                        <span>Satisfacción</span>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MISIÓN Y VISIÓN -->
+    <section class="conocenos-section conocenos-purpose">
+        <div class="container">
+
+            <div class="conocenos-heading-center">
+                <span class="conocenos-section-label">
+                    Nuestro propósito
+                </span>
+
+                <h2 class="conocenos-section-title">
+                    Cuidamos el presente mientras construimos el futuro.
+                </h2>
+
+                <p>
+                    Nuestra labor se fundamenta en una atención responsable,
+                    innovadora y centrada en las personas.
+                </p>
+            </div>
+
+            <div class="row g-4">
+                <div class="col-lg-6">
+                    <article class="conocenos-purpose-card">
+                        <div class="conocenos-purpose-number">01</div>
+
+                        <div class="conocenos-purpose-icon">
+                            <i class="bi bi-heart-pulse"></i>
+                        </div>
+
+                        <h3>Misión</h3>
+
+                        <p>
+                            Brindar servicios médicos especializados con altos
+                            estándares de calidad, seguridad y humanidad,
+                            promoviendo el bienestar integral de cada paciente
+                            mediante profesionales comprometidos y tecnología
+                            confiable.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="col-lg-6">
+                    <article class="conocenos-purpose-card">
+                        <div class="conocenos-purpose-number">02</div>
+
+                        <div class="conocenos-purpose-icon">
+                            <i class="bi bi-eye"></i>
+                        </div>
+
+                        <h3>Visión</h3>
+
+                        <p>
+                            Ser una institución médica reconocida por su
+                            excelencia, innovación y atención personalizada,
+                            consolidándonos como referente nacional en servicios
+                            clínicos especializados.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- VALORES -->
+    <section class="conocenos-section conocenos-values">
+        <div class="container">
+
+            <div class="conocenos-heading-center">
+                <span class="conocenos-section-label">
+                    Nuestros valores
+                </span>
+
+                <h2 class="conocenos-section-title">
+                    Principios que acompañan cada decisión.
+                </h2>
+
+                <p>
+                    Cada integrante de CACES trabaja bajo valores que fortalecen
+                    la confianza y la calidad de nuestros servicios.
+                </p>
+            </div>
+
+            <div class="row g-4">
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="conocenos-value-card">
+                        <div class="conocenos-value-icon">
+                            <i class="bi bi-heart"></i>
+                        </div>
+
+                        <h3>Humanismo</h3>
+
+                        <p>
+                            Escuchamos, acompañamos y atendemos a cada paciente
+                            con sensibilidad, empatía y respeto.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="conocenos-value-card">
+                        <div class="conocenos-value-icon">
+                            <i class="bi bi-award"></i>
+                        </div>
+
+                        <h3>Excelencia</h3>
+
+                        <p>
+                            Buscamos los más altos estándares de calidad en cada
+                            servicio y procedimiento médico.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="conocenos-value-card">
+                        <div class="conocenos-value-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+
+                        <h3>Compromiso</h3>
+
+                        <p>
+                            Asumimos con responsabilidad el cuidado y bienestar
+                            de nuestros pacientes.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="conocenos-value-card">
+                        <div class="conocenos-value-icon">
+                            <i class="bi bi-lightbulb"></i>
+                        </div>
+
+                        <h3>Innovación</h3>
+
+                        <p>
+                            Incorporamos tecnología y nuevas prácticas para
+                            mejorar continuamente la atención.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="conocenos-value-card">
+                        <div class="conocenos-value-icon">
+                            <i class="bi bi-shield-check"></i>
+                        </div>
+
+                        <h3>Ética</h3>
+
+                        <p>
+                            Actuamos con honestidad, confidencialidad y respeto
+                            en todos nuestros procesos.
+                        </p>
+                    </article>
+                </div>
+
+                <div class="col-md-6 col-lg-4">
+                    <article class="conocenos-value-card">
+                        <div class="conocenos-value-icon">
+                            <i class="bi bi-globe-americas"></i>
+                        </div>
+
+                        <h3>Responsabilidad</h3>
+
+                        <p>
+                            Promovemos prácticas responsables con nuestros
+                            pacientes, colaboradores y comunidad.
+                        </p>
+                    </article>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- LÍNEA DEL TIEMPO -->
+    <section class="conocenos-section conocenos-timeline-section">
+        <div class="container">
+
+            <div class="conocenos-heading-center">
+                <span class="conocenos-section-label">
+                    Nuestra evolución
+                </span>
+
+                <h2 class="conocenos-section-title">
+                    Creciendo junto a nuestros pacientes.
+                </h2>
+            </div>
+
+            <div class="conocenos-timeline">
+
+                <article class="conocenos-timeline-item">
+                    <div class="conocenos-timeline-year">2010</div>
+                    <div class="conocenos-timeline-dot"></div>
+
+                    <div class="conocenos-timeline-content">
+                        <h3>Nace CACES</h3>
+                        <p>
+                            Iniciamos con la visión de ofrecer atención médica
+                            especializada y cercana.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="conocenos-timeline-item">
+                    <div class="conocenos-timeline-year">2015</div>
+                    <div class="conocenos-timeline-dot"></div>
+
+                    <div class="conocenos-timeline-content">
+                        <h3>Nuevas especialidades</h3>
+                        <p>
+                            Ampliamos nuestros servicios para responder a más
+                            necesidades de salud.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="conocenos-timeline-item">
+                    <div class="conocenos-timeline-year">2020</div>
+                    <div class="conocenos-timeline-dot"></div>
+
+                    <div class="conocenos-timeline-content">
+                        <h3>Transformación tecnológica</h3>
+                        <p>
+                            Incorporamos nuevas herramientas para modernizar la
+                            atención y el seguimiento clínico.
+                        </p>
+                    </div>
+                </article>
+
+                <article class="conocenos-timeline-item">
+                    <div class="conocenos-timeline-year">2026</div>
+                    <div class="conocenos-timeline-dot"></div>
+
+                    <div class="conocenos-timeline-content">
+                        <h3>Un centro integral</h3>
+                        <p>
+                            Consolidamos una plataforma completa de atención,
+                            especialistas, citas y procedimientos.
+                        </p>
+                    </div>
+                </article>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- POR QUÉ ELEGIRNOS -->
+    <section class="conocenos-section conocenos-choose">
+        <div class="container">
+            <div class="row align-items-center g-5">
+
+                <div class="col-lg-5">
+
+                    <span class="conocenos-section-label">
+                        Por qué elegir CACES
+                    </span>
+
+                    <h2 class="conocenos-section-title">
+                        Una atención pensada alrededor de cada persona.
+                    </h2>
+
+                    <p class="conocenos-section-text">
+                        Nuestro modelo combina experiencia profesional,
+                        acompañamiento humano y procesos organizados para
+                        ofrecer una experiencia médica segura y eficiente.
+                    </p>
+
+                    <a asp-controller="Medico"
+                       asp-action="Especialistas"
+                       class="btn conocenos-btn-primary">
+                        <i class="bi bi-person-heart me-2"></i>
+                        Nuestros especialistas
+                    </a>
+                </div>
+
+                <div class="col-lg-7">
+                    <div class="conocenos-benefits-grid">
+
+                        <article class="conocenos-benefit-card">
+                            <span>01</span>
+                            <i class="bi bi-person-check"></i>
+                            <h3>Atención personalizada</h3>
+                            <p>
+                                Cada paciente recibe acompañamiento de acuerdo
+                                con sus necesidades.
+                            </p>
+                        </article>
+
+                        <article class="conocenos-benefit-card">
+                            <span>02</span>
+                            <i class="bi bi-cpu"></i>
+                            <h3>Tecnología moderna</h3>
+                            <p>
+                                Utilizamos herramientas que facilitan procesos
+                                médicos más eficientes.
+                            </p>
+                        </article>
+
+                        <article class="conocenos-benefit-card">
+                            <span>03</span>
+                            <i class="bi bi-patch-check"></i>
+                            <h3>Especialistas calificados</h3>
+                            <p>
+                                Profesionales comprometidos con la calidad y la
+                                actualización constante.
+                            </p>
+                        </article>
+
+                        <article class="conocenos-benefit-card">
+                            <span>04</span>
+                            <i class="bi bi-clipboard2-pulse"></i>
+                            <h3>Seguimiento integral</h3>
+                            <p>
+                                Mantenemos continuidad en la atención y el
+                                historial clínico.
+                            </p>
+                        </article>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA FINAL -->
+    <section class="conocenos-final-section">
+        <div class="container">
+            <div class="conocenos-final-card">
+
+                <div class="conocenos-final-icon">
+                    <i class="bi bi-heart-pulse"></i>
+                </div>
+
+                <div class="conocenos-final-content">
+                    <span>Estamos para acompañarte</span>
+
+                    <h2>
+                        Tu salud merece atención especializada.
+                    </h2>
+
+                    <p>
+                        Conoce nuestros servicios y encuentra el profesional
+                        indicado para cuidar de ti y tu familia.
+                    </p>
+                </div>
+
+                <div class="conocenos-final-actions">
+                    <a asp-controller="Medico"
+                       asp-action="Especialistas"
+                       class="btn conocenos-btn-primary">
+                        <i class="bi bi-person-heart me-2"></i>
+                        Nuestros especialistas
+                    </a>
+
+                    @if (User.Identity != null &&
+                         User.Identity.IsAuthenticated &&
+                         User.IsInRole("Paciente"))
+                    {
+                        <a asp-controller="Cita"
+                           asp-action="RegistrarCita"
+                           class="btn conocenos-final-btn-outline">
+                            Agendar cita
+                        </a>
+                    }
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+</main>
