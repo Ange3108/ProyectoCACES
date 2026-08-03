@@ -357,18 +357,7 @@ namespace CACES.BLL.Mappers
         }
 
         // ===== Procedimiento =====
-        public static RegistrarProcedimientosDto? ToRegistrarProcedimientosDto(this Cirugias src) => src == null ? null :
-    new RegistrarProcedimientosDto
-    {
-        IdPaciente = src.Id_Paciente,
-        NombrePaciente = $"{src.Paciente?.Usuario?.Nombres} {src.Paciente?.Usuario?.PrimerApellido}",
-        IdMedico = src.Id_Medico,
-        NombreMedico = $"{src.Medico?.Usuario?.Nombres} {src.Medico?.Usuario?.PrimerApellido}",
-        IdCirugia = src.Id_Cirugia,
-        NombreCirugia = src.Procedimiento?.Nombre,
-        IdCita = src.Id_Cita,
-        CitaFechaHora = $"{src.Cita?.Fecha:dd/MM/yyyy} {src.Horario?.HoraInicio}"
-    };
+        
 
         public static InsertarProcedimientosDto? ToInsertarProcedimientosDto(this Procedimiento src) => src == null ? null :
             new InsertarProcedimientosDto
@@ -393,42 +382,15 @@ namespace CACES.BLL.Mappers
                 Estado = src.Estado
             };
 
-        public static EditarProcedimientosDTO? ToEditarProcedimientosDTO(this Procedimiento src) => src == null ? null :
-            new EditarProcedimientosDTO
-            {
-                Id_Procedimiento = src.Id_Procedimiento,
-                Nombre = src.Nombre,
-                Descripcion = src.Descripcion,
-                NombreMedico = $"{src.Cirugias?.FirstOrDefault()?.Medico?.Usuario?.Nombres} {src.Cirugias?.FirstOrDefault()?.Medico?.Usuario?.PrimerApellido}",
-                NombrePaciente = $"{src.Cirugias?.FirstOrDefault()?.Paciente?.Usuario?.Nombres} {src.Cirugias?.FirstOrDefault()?.Paciente?.Usuario?.PrimerApellido} {src.Cirugias?.FirstOrDefault()?.Paciente?.Usuario?.SegundoApellido}",
-                Fecha = src.Cirugias?.FirstOrDefault()?.Cita?.Fecha ?? DateTime.MinValue,
-                Estado = src.Estado,
-                // PrecioBase = src.PrecioBase,
-
-            };
-
-        public static Procedimiento? ToProcedimiento(this EditarProcedimientosDTO src) => src == null ? null :
-            new Procedimiento
-            {
-                Id_Procedimiento = src.Id_Procedimiento,
-                Nombre = src.Nombre,
-                Descripcion = src.Descripcion,
-                // PrecioBase = src.PrecioBase,
-
-            };
-
 
         public static MostrarProcedimientosDTO? ToMostrarProcedimientosDTO(this Procedimiento src) => src == null ? null :
             new MostrarProcedimientosDTO
             {
-                Id_Cirugia = src.Cirugias?.FirstOrDefault()?.Id_Cirugia ?? 0,
-                Id_Paciente = src.Cirugias?.FirstOrDefault()?.Id_Paciente ?? 0,
+                
                 Nombre = src.Nombre,
                 NombreMedico = $"{src.Cirugias?.FirstOrDefault()?.Medico?.Usuario?.Nombres} {src.Cirugias?.FirstOrDefault()?.Medico?.Usuario?.PrimerApellido}",
-                NombrePaciente = $"{src.Cirugias?.FirstOrDefault()?.Paciente?.Usuario?.Nombres} {src.Cirugias?.FirstOrDefault()?.Paciente?.Usuario?.PrimerApellido} {src.Cirugias?.FirstOrDefault()?.Paciente?.Usuario?.SegundoApellido}",
                 Fecha = src.Cirugias?.FirstOrDefault()?.Cita?.Fecha ?? DateTime.MinValue,
                 Descripcion = src.Descripcion,
-                //PrecioBase = src.PrecioBase,
 
                 Estado = src.Estado
             };

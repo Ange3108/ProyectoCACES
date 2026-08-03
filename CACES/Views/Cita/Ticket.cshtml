@@ -25,7 +25,7 @@
                     </p>
                 </div>
 
-                <span class="badge bg-light text-dark px-3 py-2">
+                <span class="badge bg-light text-dark px-3 py-2 fs-6">
                     N.º @Model.IdCita.ToString("D6")
                 </span>
 
@@ -37,15 +37,15 @@
 
             <div class="ticket-summary mb-4">
 
-                <div class="row g-3">
+                <div class="row g-4">
 
                     <div class="col-md-6">
                         <div class="ticket-item">
-                            <span class="ticket-label">
-                                <i class="bi bi-person me-2"></i>Paciente
+                            <span class="ticket-label d-block text-muted small fw-semibold mb-1">
+                                <i class="bi bi-person me-2 text-primary"></i>Paciente
                             </span>
 
-                            <span class="ticket-value">
+                            <span class="ticket-value fw-bold fs-6 d-block">
                                 @Model.NombrePaciente
                             </span>
                         </div>
@@ -53,11 +53,11 @@
 
                     <div class="col-md-6">
                         <div class="ticket-item">
-                            <span class="ticket-label">
-                                <i class="bi bi-person-badge me-2"></i>Médico
+                            <span class="ticket-label d-block text-muted small fw-semibold mb-1">
+                                <i class="bi bi-person-badge me-2 text-primary"></i>Médico
                             </span>
 
-                            <span class="ticket-value">
+                            <span class="ticket-value fw-bold fs-6 d-block">
                                 @Model.NombreMedico
                             </span>
                         </div>
@@ -65,11 +65,11 @@
 
                     <div class="col-md-6">
                         <div class="ticket-item">
-                            <span class="ticket-label">
-                                <i class="bi bi-heart-pulse me-2"></i>Especialidad
+                            <span class="ticket-label d-block text-muted small fw-semibold mb-1">
+                                <i class="bi bi-heart-pulse me-2 text-primary"></i>Especialidad
                             </span>
 
-                            <span class="ticket-value">
+                            <span class="ticket-value fw-bold fs-6 d-block">
                                 @Model.NombreEspecialidad
                             </span>
                         </div>
@@ -77,11 +77,28 @@
 
                     <div class="col-md-6">
                         <div class="ticket-item">
-                            <span class="ticket-label">
-                                <i class="bi bi-calendar-event me-2"></i>Fecha
+                            <span class="ticket-label d-block text-muted small fw-semibold mb-1">
+                                <i class="bi bi-bandaid-fill me-2 text-primary"></i>Procedimiento
                             </span>
 
-                            <span class="ticket-value">
+                            <span class="ticket-value fw-bold fs-6 d-block">
+                                @if(Model.IdProcedimiento==null)
+                                {
+                                    <label>N/A</label>
+                                }
+                                @Model.NombreProcedimiento
+
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="ticket-item">
+                            <span class="ticket-label d-block text-muted small fw-semibold mb-1">
+                                <i class="bi bi-calendar-event me-2 text-primary"></i>Fecha
+                            </span>
+
+                            <span class="ticket-value fw-bold fs-6 d-block">
                                 @Model.FechaCita.ToString("dd/MM/yyyy")
                             </span>
                         </div>
@@ -89,11 +106,11 @@
 
                     <div class="col-md-6">
                         <div class="ticket-item">
-                            <span class="ticket-label">
-                                <i class="bi bi-clock me-2"></i>Hora
+                            <span class="ticket-label d-block text-muted small fw-semibold mb-1">
+                                <i class="bi bi-clock me-2 text-primary"></i>Hora
                             </span>
 
-                            <span class="ticket-value">
+                            <span class="ticket-value fw-bold fs-6 d-block">
                                 @Model.Hora.ToString(@"hh\:mm")
                             </span>
                         </div>
@@ -101,12 +118,12 @@
 
                     <div class="col-md-6">
                         <div class="ticket-item">
-                            <span class="ticket-label">
-                                <i class="bi bi-info-circle me-2"></i>Estado
+                            <span class="ticket-label d-block text-muted small fw-semibold mb-1">
+                                <i class="bi bi-info-circle me-2 text-primary"></i>Estado
                             </span>
 
-                            <span class="ticket-value">
-                                <span class="badge @(Model.Estado == 1 ? "bg-success" : "bg-secondary")">
+                            <span class="ticket-value d-block">
+                                <span class="badge @(Model.Estado == 1 ? "bg-success" : "bg-secondary") px-3 py-2">
                                     @Model.EstadoTexto
                                 </span>
                             </span>
@@ -115,26 +132,25 @@
 
                 </div>
 
-
-               
-
             </div>
+
+            <hr class="my-4 text-muted opacity-25" />
 
             <div class="ticket-motivo mb-4">
 
-                <div class="ticket-label mb-2">
-                    <i class="bi bi-chat-left-text me-2"></i>
+                <div class="ticket-label mb-2 text-muted small fw-semibold">
+                    <i class="bi bi-chat-left-text me-2 text-primary"></i>
                     Motivo de la cita
                 </div>
 
-                <div class="ticket-motivo-text">
+                <div class="ticket-motivo-text text-dark">
                     @Model.Motivo
                 </div>
 
             </div>
 
-            <div class="ticket-note text-center">
-                <i class="bi bi-shield-check me-2"></i>
+            <div class="ticket-note text-center text-muted small my-4">
+                <i class="bi bi-shield-check me-2 text-success"></i>
                 Presente este comprobante el día de su cita médica.
             </div>
 
