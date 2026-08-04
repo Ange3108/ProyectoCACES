@@ -32,6 +32,26 @@
 
 </section>
 
+<!-- MODAL PARA DETALLE DE MÉDICO -->
+<div class="modal fade" id="modalDetalleMedico" tabindex="-1" aria-labelledby="modalDetalleMedicoLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered modal-lg">
+        <div class="modal-content border-0 shadow-lg" style="border-radius: 1.25rem; overflow: hidden;">
+            <div class="modal-header border-0 pb-0" style="background-color: #ffffff;">
+                <h5 class="modal-title fw-bold" style="color: #0B2E59;" id="modalDetalleMedicoLabel">Perfil del Especialista</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Cerrar"></button>
+            </div>
+            <div class="modal-body p-4" id="contenidoModalMedico" style="background-color: #ffffff;">
+                <!-- Aquí inyecta AJAX -->
+            </div>
+            <div class="modal-footer border-0 pt-0" style="background-color: #ffffff;">
+                <button type="button" class="btn btn-sm rounded-pill px-4 text-secondary" data-bs-dismiss="modal" style="border: 1px solid #D7E3EC;">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
 @section Scripts {
     <script src="~/js/Especialistas.js" asp-append-version="true"></script>
 }

@@ -141,5 +141,19 @@ namespace CACES.Controllers
 
 
         }
+
+        [HttpGet]
+        public async Task<IActionResult> ObtenerPerfilPartial(int id)
+        {
+            var resultado = await _medicoServicio.GetMedicoPorIdAsync(id);
+
+            if (!resultado.EsCorrecto || resultado.Dato == null)
+            {
+                return BadRequest(new { mensaje = resultado.mensaje ?? "Médico no encontrado." });
+            }
+
+            // Retorna la vista parcial renderizada con el MedicoDTO como modelo
+            return PartialView("_DetalleMedicoPartial", resultado.Dato);
+        }
     }
 }

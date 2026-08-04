@@ -1,0 +1,58 @@
+﻿@model CACES.BLL.DTOs.Medico.MedicoDTO
+
+@{
+    string ResolverFoto(string? foto)
+    {
+        if (string.IsNullOrWhiteSpace(foto)) return "/img/default.jpg";
+        foto = foto.Trim();
+        if (foto.StartsWith('/') || foto.StartsWith("http", StringComparison.OrdinalIgnoreCase)) return foto;
+        if (foto.StartsWith("img/", StringComparison.OrdinalIgnoreCase) || foto.StartsWith("uploads/", StringComparison.OrdinalIgnoreCase)) return $"/{foto}";
+        return $"/img/{foto}";
+    }
+
+    var rutaFoto = ResolverFoto(Model.Usuario?.Foto);
+}
+
+<div class="row align-items-center g-4">
+    <!-- Foto del Médico -->
+    <div class="col-12 col-md-5 text-center">
+        <img src="@rutaFoto"
+             alt="Foto de Dr(a). @Model.Usuario?.Nombres"
+             class="rounded-circle img-fluid shadow-sm"
+             style="width: 150px; height: 150px; object-fit: cover; border: 4px solid #D9EEF2;"
+             onerror="this.onerror=null; this.src='/img/default.jpg';" />
+    </div>
+
+    <!-- Detalles del Médico -->
+    <div class="col-12 col-md-7">
+        <div class="d-flex flex-wrap gap-2 mb-2">
+            <span class="badge rounded-pill px-3 py-2" style="background-color: #DDF7F8; color: #0B6F73;">
+                <i class="bi bi-hospital me-1"></i> @(Model.NombreEspecialidad ?? "Especialista")
+            </span>
+            <span class="badge rounded-pill px-3 py-2" style="background-color: #DCFCE7; color: #166534;">
+                <i class="bi bi-check-circle-fill me-1"></i> Disponible
+            </span>
+        </div>
+
+        <h3 class="fw-bold mb-1" style="color: #0B2E59;">
+            Dr(a). @Model.Usuario?.Nombres @Model.Usuario?.PrimerApellido @Model.Usuario?.SegundoApellido
+        </h3>
+
+        <p class="mb-3" style="color: #6B7280; font-size: 0.95rem;">
+            <i class="bi bi-award me-1" style="color: #1AA6A6;"></i>
+            <strong style="color: #1AA6A6;">@Model.Experiencia</strong> año@(Model.Experiencia != 1 ? "s" : "") de experiencia
+        </p>
+
+        <hr style="border: 0; border-top: 1px solid #D7E3EC; margin: 12px 0;" />
+
+        <div>
+            <h6 class="fw-bold mb-1" style="color: #0B2E59; font-size: 0.85rem; text-transform: uppercase;">
+                Certificaciones y Estudios
+            </h6>
+            <p class="mb-0" style="color: #6B7280; font-size: 0.9rem;">
+                <i class="bi bi-patch-check me-1" style="color: #1AA6A6;"></i>
+                @(string.IsNullOrWhiteSpace(Model.Certificaciones) ? "Sin certificaciones registradas" : Model.Certificaciones)
+            </p>
+        </div>
+    </div>
+</div>

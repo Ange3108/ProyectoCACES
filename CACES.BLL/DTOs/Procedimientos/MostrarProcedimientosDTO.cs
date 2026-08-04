@@ -19,5 +19,7 @@ namespace CACES.BLL.DTOs.Procedimientos
         public bool Estado{ get; set; }
 
         public string Descripcion { get; set; }
+        public decimal? PrecioBase { get; set; }
+
     }
 }

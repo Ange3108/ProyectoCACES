@@ -391,7 +391,7 @@ namespace CACES.BLL.Mappers
                 NombreMedico = $"{src.Cirugias?.FirstOrDefault()?.Medico?.Usuario?.Nombres} {src.Cirugias?.FirstOrDefault()?.Medico?.Usuario?.PrimerApellido}",
                 Fecha = src.Cirugias?.FirstOrDefault()?.Cita?.Fecha ?? DateTime.MinValue,
                 Descripcion = src.Descripcion,
-
+                PrecioBase = src.PrecioBase,
                 Estado = src.Estado
             };
         public static ProcedimientoDTO? ToProcedimientoDTO(this Procedimiento? src) => src == null ? null :
