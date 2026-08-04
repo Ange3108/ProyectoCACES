@@ -483,7 +483,7 @@ INSERT INTO Icono (Codigo, Nombre) VALUES
 ('bi bi-clipboard2-plus', 'Historial Médico'),
 ('bi bi-person-arms-up', 'Rehabilitación'),
 ('bi bi-magic', 'Estética'),
-('bi bi-ribbon', 'Lazo'),
+('bi bi-award', 'Lazo'),
 ('bi bi-brain', 'Cerebro'),
 ('bi bi-clipboard2-heart', 'Cuidados generales'),
 ('bi bi-activity', 'Actividad'),
@@ -526,7 +526,7 @@ VALUES
  '1994-05-10', 'vk9oxOJiD5aPcsdU83YBvVgNVjLrvgij3NO2UQAh88I=', NEWID(), 0, NULL, 0, 0, 1),
 
 
-('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg',
+('Oscar', 'López', 'Barillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg',
  GETDATE(), NULL, 1, 'Cartago', 35, '8888-2222',
  '1989-08-20', '2nunQfIEgqm5rAd6Tj+JdJYsQbcdUyS3w/5F9oxe/Gk=', NEWID(), 0, NULL, 0, 0, 1),
 
@@ -548,14 +548,60 @@ GETDATE(), NULL, 1, 'Heredia', 38, '8888-6666',
 
 ('Juana', 'Solano', 'Castro', 'juana.paciente@caces.com', '55667788', 'maria.jpg',
 GETDATE(), NULL, 1, 'San José', 35, '8888-7777',
-'1990-09-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
+'1990-09-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Carlos', 'Méndez', 'Soto', 'carlos.medico@caces.com', '66778899', 'carlos.jpg',
+GETDATE(), NULL, 1, 'San José', 45, '8888-8881',
+'1981-02-18', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Laura', 'Vargas', 'Ramírez', 'laura.medico@caces.com', '77889900', 'laura.jpg',
+GETDATE(), NULL, 1, 'Heredia', 39, '8888-8882',
+'1987-10-05', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Andrés', 'Rojas', 'Campos', 'andres.medico@caces.com', '88990011', 'andres.jpg',
+GETDATE(), NULL, 1, 'Alajuela', 41, '8888-8883',
+'1985-06-27', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Gabriela', 'Castillo', 'León', 'gabriela.medico@caces.com', '99001122', 'gabriela.jpg',
+GETDATE(), NULL, 1, 'Cartago', 36, '8888-8884',
+'1990-01-13', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Fernando', 'Pérez', 'Mora', 'fernando.medico@caces.com', '10111223', 'fernando.jpg',
+GETDATE(), NULL, 1, 'Puntarenas', 50, '8888-8885',
+'1976-09-30', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
 GO
 
 -- MEDICOS
 INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Certificaciones, FechaDeRegistro) VALUES
 (1, 2, 10, 'Especialista en Cirugía General y Laparoscópica', GETDATE()),
 (2, 4, 8, 'Especialista en Ginecología y Obstetricia', GETDATE()),
-(4, 5, 12, 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE());
+(4, 5, 12, 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE()),
+
+
+-- Cirugía General
+(1, 8, 15,
+'Especialista en Cirugía General, Cirugía de Emergencias y Laparoscopía Avanzada',
+GETDATE()),
+
+-- Cirugía Oncológica Mamaria
+(3, 9, 11,
+'Especialista en Cirugía Oncológica Mamaria y Patología Mamaria',
+GETDATE()),
+
+-- Otorrinolaringología
+(6, 10, 9,
+'Especialista en Otorrinolaringología y Cirugía Endoscópica Nasosinusal',
+GETDATE()),
+
+-- Ortopedia y Traumatología
+(5, 11, 18,
+'Especialista en Ortopedia, Reemplazo Articular y Traumatología Deportiva',
+GETDATE()),
+
+-- Ginecología
+(2, 12, 13,
+'Especialista en Ginecología, Obstetricia y Cirugía Mínimamente Invasiva',
+GETDATE());
 GO
 
 -- HISTORIAL MEDICO
@@ -684,7 +730,12 @@ VALUES
 (2, '2'),
 (3, '3'),
 (4, '2'), -- Paciente
-(5, '2'); -- Paciente
+(5, '2'), -- Paciente
+(8, '2'),
+(9, '2'),
+(10, '2'),
+(11, '2'),
+(12, '2');
 GO
 
 
@@ -757,6 +808,29 @@ VALUES ('DiasCheckpoint3', '15', 'int', 'Seguimiento', 'Día posterior a la ciru
 
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
 VALUES ('HoraEnvioRecordatorios', '08:00', 'string', 'Seguimiento', 'Hora del día en que el job de Hangfire envía los recordatorios');
+INSERT INTO Convenios (Nombre, Descripcion, DescuentoPorcentaje, ContactoTelefono, ImagenUrl,  Estado, FechaCreacion
+) 
+VALUES (
+    'Convenio de Laboratorio Clínico', 
+    'Tu procesamiento de análisis clínicos cuenta con prioridad VIP en la línea de análisis para agilizar tu diagnóstico médico. El convenio te asegura tarifas corporativas exclusivas en perfiles hormonales, químicos e inmunológicos generales. Los resultados se envían automáticamente al sistema interno de CACES para que tu especialista los revise de inmediato.', 
+    20.00, 
+    '8584-6870', 
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAyBAy2__h8h1u-HyzGM-CPbIb5RcPQwdsxSHtB6iNX8i0k4lJ07e8eyow&s=10', 
+    1, 
+    GETDATE()
+);
+
+INSERT INTO Convenios (Nombre, Descripcion,  DescuentoPorcentaje, ContactoTelefono, ImagenUrl, Estado, FechaCreacion
+) 
+VALUES (
+    'Convenio de Imagenología Radiológica', 
+    'Acceso preferencial a estudios de Resonancia Magnética (RMN), Tomografía Computarizada (TAC), Ultrasonidos y Rayos X de última generación. Interpretación garantizada por radiólogos certificados internacionalmente, asegurando informes con precisión diagnóstica de estándar global. Recibe tus imágenes en formato digital compatible para que puedas descargarlas, llevarlas contigo o compartirlas con tus médicos en tu país de origen.', 
+    25.00, 
+    '8584-6990', 
+    'https://www.campustraining.es/wp-content/uploads/2024/01/Densidades-radiologicas.png',
+    1, 
+    GETDATE()
+);
 
 UPDATE Usuarios
 SET PasswordHash = 'R6GvfeUKq9IZPWHh9hvY0+1D2ywQMANwAYxuux6bYIE=' --Maria123+
