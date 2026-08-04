@@ -781,10 +781,17 @@ INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
 VALUES ('Smtp.Puerto', '587', 'int', 'Smtp', 'Puerto del servidor SMTP');
 
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
-VALUES ('Smtp.Usuario', 'notificaciones@caces.com', 'string', 'Smtp', 'Usuario/correo remitente del sistema');
+VALUES ('Smtp.Usuario', 'bebepulpo0403@gmail.com', 'string', 'Smtp', 'Usuario/correo remitente del sistema');
 
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
 VALUES ('Smtp.UsarSSL', 'true', 'bool', 'Smtp', 'Indica si la conexión SMTP usa SSL/TLS');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.Password', 'sncy xtbl qoci zswc', 'string', 'Smtp', 'Contraseña del correo para enviar las notificaciones');
+
+
+
+
 
 -- ===== Notificaciones =====
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)

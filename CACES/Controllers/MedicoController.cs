@@ -117,7 +117,7 @@ namespace CACES.Controllers
 
             if (!resultado.EsCorrecto)
             {
-                TempData["Error"] = resultado.mensaje; // 👈 agregado: para que se vea el error real de negocio, no solo de validación
+                TempData["Error"] = resultado.mensaje; 
                 return View("EditarMedico", dto); ;
             }
 
