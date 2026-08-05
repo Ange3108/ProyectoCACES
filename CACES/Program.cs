@@ -5,7 +5,7 @@ using CACES.BLL.Servicios.Auth;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.Configuracion;
 using CACES.BLL.Servicios.ConfiguracionCheckPoints;
-
+using CACES.DAL.Repositorios.SolicitudMedicos;
 using CACES.BLL.Servicios.Convenios;
 using CACES.BLL.Servicios.Cotizaciones;
 using CACES.BLL.Servicios.Especialidad;
@@ -36,7 +36,7 @@ using CACES.DAL.Repositorios.Cotizaciones;
 using CACES.DAL.Repositorios.Especialidades;
 using CACES.DAL.Repositorios.HistorialMedicos;
 using CACES.DAL.Repositorios.Horarios;
-
+using CACES.BLL.Servicios.Precio;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Paquetes;
@@ -49,6 +49,8 @@ using CACES.DAL.Repositorios.Soportes;
 using CACES.DAL.Repositorios.Usuario;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.EntityFrameworkCore;
+using CACES.DAL.Repositorios.Precio;
+using CACES.BLL.Servicios.SolicitudMedico;
 
 
 var builder = WebApplication.CreateBuilder(args);
@@ -77,7 +79,7 @@ builder.Services.AddScoped<IProcedimientosRepositorio, ProcedimientosRepositorio
 builder.Services.AddScoped<IArchivoHistorialRepositorio, ArchivoHistorialRepositorio>();
 builder.Services.AddScoped<IQuirofanoRepositorio, QuirofanoRepositorio>();
 builder.Services.AddScoped<IHorariosRepositorio, HorariosRepositorio>();
-
+builder.Services.AddScoped<IPrecioServicio, PrecioServicio>();
 builder.Services.AddScoped<IRecetaRepositorio, RecetaRepositorio>();
 builder.Services.AddScoped<ICotizacionRepositorio, CotizacionRepositorio>();
 builder.Services.AddScoped<IRolRepositorio, RolRepositorio>();
@@ -86,6 +88,7 @@ builder.Services.AddScoped<INotificacionRepositorio, NotificacionRepositorio>();
 builder.Services.AddScoped<IConfiguracionRepositorio, ConfiguracionRepositorio>();
 builder.Services.AddScoped<IConvenioRepositorio, ConvenioRepositorio>();
 builder.Services.AddScoped<INotificacionUsuarioRepositorio, NotificacionUsuarioRepositorio>();
+builder.Services.AddScoped<ISolicitudMedicoRepositorio,SolicitudMedicoRepositorio>();
 builder.Services.AddScoped(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
@@ -94,7 +97,7 @@ builder.Services.AddScoped<ICotizacionServicio, CotizacionServicio>();
 builder.Services.AddScoped<ICitaServicio, CitaServicio>();
 builder.Services.AddScoped<IPacienteServicio, PacienteServicio>();
 builder.Services.AddScoped<IMedicoServicio, MedicoServicio>();
-
+builder.Services.AddScoped<ISolicitudMedicoServicio,SolicitudMedicoServicio>();
 builder.Services.AddScoped<IAuthServicio, AuthServicio>();
 builder.Services.AddScoped<IPerfilServicio, PerfilServicio>();
 builder.Services.AddScoped<IRolServicio, RolServicio>();
@@ -122,7 +125,7 @@ builder.Services.AddScoped<INotificacionServicio, NotificacionServicio>();
 builder.Services.AddScoped<IConfiguracionServicio, ConfiguracionServicio>();
 builder.Services.AddScoped<INotificadorServicio, NotificadorServicio>();
 builder.Services.AddScoped<INotificacionUsuarioServicio, NotificacionUsuarioServicio>();
-
+builder.Services.AddScoped<IPrecioRepositorio, PrecioRepositorio>();
 
 
 

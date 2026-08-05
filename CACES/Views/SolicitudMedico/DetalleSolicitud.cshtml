@@ -1,0 +1,260 @@
+﻿<div class="modal fade"
+     id="modalDetalleSolicitud"
+     tabindex="-1"
+     aria-labelledby="tituloModalDetalleSolicitud"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-xl modal-dialog-centered modal-dialog-scrollable">
+
+        <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+
+            <div class="modal-header border-0 px-4 py-3"
+                 style="background:#0B2E59;">
+
+                <div>
+                    <h5 class="modal-title text-white fw-bold mb-1"
+                        id="tituloModalDetalleSolicitud">
+
+                        <i class="bi bi-person-lines-fill me-2"></i>
+                        Detalle de la solicitud
+                    </h5>
+
+                    <p class="text-white-50 small mb-0">
+                        Revise la información profesional antes de emitir una respuesta.
+                    </p>
+                </div>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar">
+                </button>
+
+            </div>
+
+            <div class="modal-body p-4">
+
+                <input type="hidden"
+                       id="detalleIdSolicitud" />
+
+                <div class="row g-4">
+
+                    <div class="col-lg-4">
+
+                        <div class="solicitud-admin-profile-card">
+
+                            <div class="solicitud-admin-photo-wrapper">
+
+                                <img id="detalleFoto"
+                                     src="/img/default.jpg"
+                                     alt="Fotografía del postulante"
+                                     class="solicitud-admin-photo" />
+
+                            </div>
+
+                            <h4 id="detalleNombre"
+                                class="fw-bold mb-1"
+                                style="color:#0B2E59;">
+                                Nombre del médico
+                            </h4>
+
+                            <p id="detalleEspecialidad"
+                               class="mb-3"
+                               style="color:#148989;font-weight:700;">
+                                Especialidad
+                            </p>
+
+                            <span id="detalleEstado"
+                                  class="badge rounded-pill px-3 py-2">
+                            </span>
+
+                            <hr />
+
+                            <div class="solicitud-admin-contact-item">
+                                <i class="bi bi-envelope"></i>
+
+                                <div>
+                                    <small>Correo electrónico</small>
+                                    <strong id="detalleCorreo"></strong>
+                                </div>
+                            </div>
+
+                            <div class="solicitud-admin-contact-item">
+                                <i class="bi bi-telephone"></i>
+
+                                <div>
+                                    <small>Teléfono</small>
+                                    <strong id="detalleTelefono"></strong>
+                                </div>
+                            </div>
+
+                            <div class="solicitud-admin-contact-item">
+                                <i class="bi bi-calendar3"></i>
+
+                                <div>
+                                    <small>Fecha de solicitud</small>
+                                    <strong id="detalleFechaSolicitud"></strong>
+                                </div>
+                            </div>
+
+                            <a id="btnDescargarCurriculum"
+                               href="#"
+                               target="_blank"
+                               class="btn w-100 mt-3 text-white"
+                               style="background:#1AA6A6;">
+
+                                <i class="bi bi-file-earmark-pdf me-2"></i>
+                                Ver currículum
+                            </a>
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-lg-8">
+
+                        <div class="solicitud-admin-section">
+
+                            <div class="solicitud-admin-section-title">
+                                <span>01</span>
+
+                                <div>
+                                    <h5>Experiencia profesional</h5>
+                                    <p>Información sobre trayectoria y preparación.</p>
+                                </div>
+                            </div>
+
+                            <div class="row g-3">
+
+                                <div class="col-md-4">
+                                    <div class="solicitud-admin-data-card">
+                                        <small>Años de experiencia</small>
+                                        <strong id="detalleExperiencia"></strong>
+                                    </div>
+                                </div>
+
+                                <div class="col-md-8">
+                                    <div class="solicitud-admin-data-card">
+                                        <small>Especialidad</small>
+                                        <strong id="detalleEspecialidadDato"></strong>
+                                    </div>
+                                </div>
+
+                                <div class="col-12">
+                                    <div class="solicitud-admin-data-card">
+                                        <small>Certificaciones y estudios</small>
+                                        <p id="detalleCertificaciones"
+                                           class="mb-0 mt-2"></p>
+                                    </div>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                        <div class="solicitud-admin-section mt-4">
+
+                            <div class="solicitud-admin-section-title">
+                                <span>02</span>
+
+                                <div>
+                                    <h5>Motivo de postulación</h5>
+                                    <p>Razón por la que desea formar parte de CACES.</p>
+                                </div>
+                            </div>
+
+                            <div class="solicitud-admin-data-card">
+                                <p id="detalleMotivo"
+                                   class="mb-0"></p>
+                            </div>
+
+                        </div>
+
+                        <div class="solicitud-admin-section mt-4">
+
+                            <div class="solicitud-admin-section-title">
+                                <span>03</span>
+
+                                <div>
+                                    <h5>Respuesta administrativa</h5>
+                                    <p>Indique una observación y seleccione una decisión.</p>
+                                </div>
+                            </div>
+
+                            <div class="mb-3">
+
+                                <label for="observacionAdministrador"
+                                       class="form-label fw-semibold">
+
+                                    Observación
+                                </label>
+
+                                <textarea id="observacionAdministrador"
+                                          class="form-control"
+                                          rows="4"
+                                          maxlength="500"
+                                          placeholder="Escriba una observación para el postulante..."></textarea>
+
+                                <div class="text-end mt-1">
+                                    <small class="text-muted">
+                                        <span id="contadorObservacionSolicitud">0</span>/500
+                                    </small>
+                                </div>
+
+                            </div>
+
+                            <div id="respuestaRegistrada"
+                                 class="alert alert-info d-none rounded-3">
+
+                                <i class="bi bi-info-circle-fill me-2"></i>
+                                Esta solicitud ya fue respondida.
+
+                                <div class="mt-2">
+                                    <strong>Observación:</strong>
+                                    <span id="textoRespuestaRegistrada"></span>
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer border-0 bg-light px-4 py-3">
+
+                <button type="button"
+                        class="btn btn-outline-secondary rounded-3 px-4"
+                        data-bs-dismiss="modal">
+
+                    <i class="bi bi-x-circle me-1"></i>
+                    Cerrar
+                </button>
+
+                <button type="button"
+                        id="btnRechazarSolicitud"
+                        class="btn btn-outline-danger rounded-3 px-4">
+
+                    <i class="bi bi-x-octagon me-1"></i>
+                    Rechazar
+                </button>
+
+                <button type="button"
+                        id="btnAprobarSolicitud"
+                        class="btn rounded-3 px-4 text-white fw-semibold"
+                        style="background:#17B26A;">
+
+                    <i class="bi bi-check-circle me-1"></i>
+                    Aprobar
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

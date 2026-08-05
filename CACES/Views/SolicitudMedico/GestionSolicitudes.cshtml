@@ -1,0 +1,100 @@
+﻿@{
+    ViewData["Title"] = "Solicitudes Médicas";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <div class="card-header banner-header p-4 border-0">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                <div>
+                    <h3 class="mb-1 fw-bold text-white">
+                        <i class="bi bi-person-vcard me-2"></i>
+                        Solicitudes de Médicos
+                    </h3>
+
+                    <p class="mb-0 text-white-50">
+                        Revise las postulaciones de profesionales interesados en formar parte de CACES.
+                    </p>
+                </div>
+
+                <span class="badge rounded-pill px-3 py-2"
+                      style="background:#1AA6A6;color:#fff;">
+
+                    <i class="bi bi-clipboard-check me-1"></i>
+                    Gestión de postulaciones
+                </span>
+
+            </div>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            <div id="alertaSolicitudes"
+                 class="alert alert-danger d-none rounded-3"
+                 role="alert">
+
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+                <span id="textoAlertaSolicitudes"></span>
+
+            </div>
+
+            <div id="sinSolicitudes"
+                 class="empty-state d-none text-center py-5">
+
+                <i class="bi bi-inbox fs-1 d-block mb-3"
+                   style="color:#1AA6A6;"></i>
+
+                <h5 class="fw-bold" style="color:#0B2E59;">
+                    No hay solicitudes registradas
+                </h5>
+
+                <p class="text-muted mb-0">
+                    Cuando un médico envíe una postulación, aparecerá en esta sección.
+                </p>
+
+            </div>
+
+            <div id="contenedorTablaSolicitudes"
+                 class="table-responsive">
+
+                <table id="tbSolicitudesMedicos"
+                       class="table table-hover align-middle mb-0"
+                       style="width:100%;">
+
+                    <thead class="table-light">
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Médico</th>
+                            <th>Especialidad</th>
+                            <th>Experiencia</th>
+                            <th>Correo</th>
+                            <th>Estado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+
+                    <tbody></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@await Html.PartialAsync("DetalleSolicitud")
+
+@section Scripts {
+    <script src="~/js/solicitudesMedicosAdmin.js"
+            asp-append-version="true">
+    </script>
+}

@@ -215,6 +215,56 @@
                     Ver reporte <i class="bi bi-arrow-right"></i>
                 </a>
             </div>
+
+            <div class="report-card">
+                <div class="report-card-icon">
+                    <i class="bi bi-cash-coin"></i>
+                </div>
+
+                <div class="report-card-body">
+                    <h5 class="report-card-title">
+                        Gestión de Precios
+                    </h5>
+
+                    <p class="report-card-text">
+                        Administra los precios base y honorarios médicos de cada procedimiento quirúrgico.
+                    </p>
+                </div>
+
+                <a asp-controller="Precio"
+                   asp-action="GestionPrecios"
+                   class="btn-report">
+
+                    Ver gestión
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+            </div>
+
+            <div class="report-card">
+                <div class="report-card-icon">
+                    <i class="bi bi-person-vcard-fill"></i>
+                </div>
+
+                <div class="report-card-body">
+                    <h5 class="report-card-title">
+                        Solicitudes de Médicos
+                    </h5>
+
+                    <p class="report-card-text">
+                        Revise las postulaciones de médicos interesados en formar parte de CACES y apruebe o rechace cada solicitud.
+                    </p>
+                </div>
+
+                <a asp-controller="SolicitudMedico"
+                   asp-action="GestionSolicitudes"
+                   class="btn-report">
+
+                    Ver gestión
+                    <i class="bi bi-arrow-right"></i>
+
+                </a>
+            </div>
         </div>
 
 

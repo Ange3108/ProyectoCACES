@@ -1,0 +1,421 @@
+﻿@{
+    ViewData["Title"] = "Forme parte de CACES";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<main class="solicitud-medico-page">
+
+    <!-- ENCABEZADO -->
+    <section class="solicitud-medico-hero">
+        <div class="container">
+            <div class="row align-items-center g-5">
+
+                <div class="col-lg-7">
+
+                    <span class="solicitud-medico-label">
+                        Oportunidades profesionales
+                    </span>
+
+                    <h1>
+                        Forme parte del equipo médico de CACES
+                    </h1>
+
+                    <p>
+                        Buscamos profesionales comprometidos con la excelencia,
+                        la innovación y una atención humana para nuestros pacientes.
+                    </p>
+
+                    <div class="solicitud-medico-beneficios">
+
+                        <span>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Crecimiento profesional
+                        </span>
+
+                        <span>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Tecnología médica moderna
+                        </span>
+
+                        <span>
+                            <i class="bi bi-check-circle-fill"></i>
+                            Equipo multidisciplinario
+                        </span>
+
+                    </div>
+
+                </div>
+
+                <div class="col-lg-5">
+
+                    <div class="solicitud-medico-info-card">
+
+                        <div class="solicitud-medico-info-icon">
+                            <i class="bi bi-person-badge"></i>
+                        </div>
+
+                        <h3>Proceso de postulación</h3>
+
+                        <div class="solicitud-medico-step">
+                            <span>1</span>
+                            <p>Complete sus datos profesionales.</p>
+                        </div>
+
+                        <div class="solicitud-medico-step">
+                            <span>2</span>
+                            <p>Nuestro equipo revisará la solicitud.</p>
+                        </div>
+
+                        <div class="solicitud-medico-step">
+                            <span>3</span>
+                            <p>Recibirá una respuesta por correo electrónico.</p>
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- FORMULARIO -->
+    <section class="solicitud-medico-form-section">
+
+        <div class="container">
+
+            <div class="card solicitud-medico-form-card">
+
+                <div class="solicitud-medico-form-header">
+
+                    <div>
+                        <h2>
+                            <i class="bi bi-file-earmark-medical me-2"></i>
+                            Solicitud de ingreso
+                        </h2>
+
+                        <p>
+                            Complete todos los campos para que podamos conocer
+                            su experiencia y perfil profesional.
+                        </p>
+                    </div>
+
+                    <span class="solicitud-medico-status">
+                        <i class="bi bi-shield-check me-1"></i>
+                        Información confidencial
+                    </span>
+
+                </div>
+
+                <div class="card-body p-4 p-lg-5">
+
+                    <form id="formSolicitudMedico"
+                          enctype="multipart/form-data">
+
+                        @Html.AntiForgeryToken()
+
+                        <div class="solicitud-form-title">
+                            <span>01</span>
+
+                            <div>
+                                <h3>Información personal</h3>
+                                <p>Ingrese sus datos de contacto.</p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4">
+
+                            <div class="col-md-4">
+                                <label for="Nombres"
+                                       class="form-label fw-semibold">
+                                    Nombres
+                                </label>
+
+                                <input type="text"
+                                       id="Nombres"
+                                       name="Nombres"
+                                       class="form-control"
+                                       maxlength="80"
+                                       placeholder="Ingrese sus nombres"
+                                       required />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="PrimerApellido"
+                                       class="form-label fw-semibold">
+                                    Primer apellido
+                                </label>
+
+                                <input type="text"
+                                       id="PrimerApellido"
+                                       name="PrimerApellido"
+                                       class="form-control"
+                                       maxlength="60"
+                                       placeholder="Primer apellido"
+                                       required />
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="SegundoApellido"
+                                       class="form-label fw-semibold">
+                                    Segundo apellido
+                                </label>
+
+                                <input type="text"
+                                       id="SegundoApellido"
+                                       name="SegundoApellido"
+                                       class="form-control"
+                                       maxlength="60"
+                                       placeholder="Segundo apellido" />
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="CorreoElectronico"
+                                       class="form-label fw-semibold">
+                                    Correo electrónico
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-envelope"></i>
+                                    </span>
+
+                                    <input type="email"
+                                           id="CorreoElectronico"
+                                           name="CorreoElectronico"
+                                           class="form-control"
+                                           maxlength="120"
+                                           placeholder="ejemplo@correo.com"
+                                           required />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="Telefono"
+                                       class="form-label fw-semibold">
+                                    Teléfono
+                                </label>
+
+                                <div class="input-group">
+                                    <span class="input-group-text">
+                                        <i class="bi bi-telephone"></i>
+                                    </span>
+
+                                    <input type="tel"
+                                           id="Telefono"
+                                           name="Telefono"
+                                           class="form-control"
+                                           maxlength="25"
+                                           placeholder="8888-8888"
+                                           required />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr class="solicitud-medico-divider" />
+
+                        <div class="solicitud-form-title">
+                            <span>02</span>
+
+                            <div>
+                                <h3>Perfil profesional</h3>
+                                <p>Cuéntenos sobre su preparación y experiencia.</p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4">
+
+                            <div class="col-md-8">
+                                <label for="IdEspecialidad"
+                                       class="form-label fw-semibold">
+                                    Especialidad médica
+                                </label>
+
+                                <select id="IdEspecialidad"
+                                        name="IdEspecialidad"
+                                        class="form-select"
+                                        required>
+
+                                    <option value="">
+                                        Cargando especialidades...
+                                    </option>
+
+                                </select>
+                            </div>
+
+                            <div class="col-md-4">
+                                <label for="AniosExperiencia"
+                                       class="form-label fw-semibold">
+                                    Años de experiencia
+                                </label>
+
+                                <input type="number"
+                                       id="AniosExperiencia"
+                                       name="AniosExperiencia"
+                                       class="form-control"
+                                       min="0"
+                                       max="60"
+                                       placeholder="Ej. 8"
+                                       required />
+                            </div>
+
+                            <div class="col-12">
+                                <label for="Certificaciones"
+                                       class="form-label fw-semibold">
+                                    Certificaciones y estudios adicionales
+                                </label>
+
+                                <textarea id="Certificaciones"
+                                          name="Certificaciones"
+                                          class="form-control"
+                                          rows="4"
+                                          maxlength="500"
+                                          placeholder="Indique certificaciones, posgrados, doctorados o cursos relevantes..."></textarea>
+
+                                <div class="text-end mt-1">
+                                    <small class="text-muted">
+                                        <span id="contadorCertificaciones">0</span>/500
+                                    </small>
+                                </div>
+                            </div>
+
+                            <div class="col-12">
+                                <label for="Motivo"
+                                       class="form-label fw-semibold">
+                                    ¿Por qué desea formar parte de CACES?
+                                </label>
+
+                                <textarea id="Motivo"
+                                          name="Motivo"
+                                          class="form-control"
+                                          rows="5"
+                                          maxlength="500"
+                                          placeholder="Cuéntenos qué le motiva a formar parte de nuestro equipo médico..."
+                                          required></textarea>
+
+                                <div class="text-end mt-1">
+                                    <small class="text-muted">
+                                        <span id="contadorMotivo">0</span>/500
+                                    </small>
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <hr class="solicitud-medico-divider" />
+
+                        <div class="solicitud-form-title">
+                            <span>03</span>
+
+                            <div>
+                                <h3>Documentación</h3>
+                                <p>Adjunte los archivos necesarios para revisar su perfil.</p>
+                            </div>
+                        </div>
+
+                        <div class="row g-4">
+
+                            <div class="col-md-6">
+                                <label for="Curriculum"
+                                       class="form-label fw-semibold">
+                                    Currículum
+                                </label>
+
+                                <div class="solicitud-upload-box">
+                                    <i class="bi bi-file-earmark-pdf"></i>
+
+                                    <span>Currículum profesional</span>
+
+                                    <small>
+                                        Archivo PDF, máximo 5 MB
+                                    </small>
+
+                                    <input type="file"
+                                           id="Curriculum"
+                                           name="Curriculum"
+                                           accept=".pdf,application/pdf"
+                                           required />
+                                </div>
+                            </div>
+
+                            <div class="col-md-6">
+                                <label for="Foto"
+                                       class="form-label fw-semibold">
+                                    Fotografía profesional
+                                </label>
+
+                                <div class="solicitud-upload-box">
+                                    <i class="bi bi-image"></i>
+
+                                    <span>Fotografía de perfil</span>
+
+                                    <small>
+                                        JPG, PNG o WEBP, máximo 5 MB
+                                    </small>
+
+                                    <input type="file"
+                                           id="Foto"
+                                           name="Foto"
+                                           accept=".jpg,.jpeg,.png,.webp,image/*" />
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <div class="solicitud-medico-terms">
+
+                            <div class="form-check">
+                                <input class="form-check-input"
+                                       type="checkbox"
+                                       id="aceptaTerminos"
+                                       required />
+
+                                <label class="form-check-label"
+                                       for="aceptaTerminos">
+
+                                    Confirmo que la información proporcionada es
+                                    correcta y autorizo a CACES a revisarla como
+                                    parte del proceso de selección.
+
+                                </label>
+                            </div>
+
+                        </div>
+
+                        <div class="solicitud-medico-actions">
+
+                            <a asp-controller="Home"
+                               asp-action="Conocenos"
+                               class="btn btn-outline-secondary">
+
+                                <i class="bi bi-arrow-left me-1"></i>
+                                Volver
+                            </a>
+
+                            <button type="submit"
+                                    id="btnEnviarSolicitud"
+                                    class="btn solicitud-medico-submit">
+
+                                <i class="bi bi-send-check me-2"></i>
+                                Enviar solicitud
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+@section Scripts {
+    <script src="~/js/solicitudMedico.js"
+            asp-append-version="true">
+    </script>
+}

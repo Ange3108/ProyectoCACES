@@ -1,0 +1,218 @@
+﻿<div class="modal fade"
+     id="modalEditarPrecio"
+     tabindex="-1"
+     aria-labelledby="tituloModalEditarPrecio"
+     aria-hidden="true">
+
+    <div class="modal-dialog modal-lg modal-dialog-centered">
+
+        <div class="modal-content border-0 rounded-4 shadow-lg overflow-hidden">
+
+            <div class="modal-header border-0 px-4 py-3"
+                 style="background:#0B2E59;">
+
+                <div>
+
+                    <h5 class="modal-title text-white fw-bold mb-1"
+                        id="tituloModalEditarPrecio">
+
+                        <i class="bi bi-pencil-square me-2"></i>
+                        Editar precio médico
+
+                    </h5>
+
+                    <p class="text-white-50 small mb-0">
+                        Actualice los honorarios y el estado de la tarifa seleccionada.
+                    </p>
+
+                </div>
+
+                <button type="button"
+                        class="btn-close btn-close-white"
+                        data-bs-dismiss="modal"
+                        aria-label="Cerrar">
+                </button>
+
+            </div>
+
+            <div class="modal-body p-4">
+
+                <input type="hidden"
+                       id="editarIdPrecio" />
+
+                <div class="row g-4">
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Procedimiento
+                        </label>
+
+                        <input type="text"
+                               id="editarProcedimiento"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Especialidad
+                        </label>
+
+                        <input type="text"
+                               id="editarEspecialidad"
+                               class="form-control"
+                               readonly />
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label for="editarMedico"
+                               class="form-label fw-semibold">
+
+                            Médico asignado
+
+                        </label>
+
+                        <select id="editarMedico"
+                                class="form-select">
+                        </select>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label class="form-label fw-semibold">
+                            Precio base
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                $
+                            </span>
+
+                            <input type="number"
+                                   id="editarPrecioBase"
+                                   class="form-control"
+                                   readonly />
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label for="editarHonorarios"
+                               class="form-label fw-semibold">
+
+                            Honorarios médicos
+
+                        </label>
+
+                        <div class="input-group">
+
+                            <span class="input-group-text">
+                                $
+                            </span>
+
+                            <input type="number"
+                                   id="editarHonorarios"
+                                   class="form-control"
+                                   min="0.01"
+                                   step="0.01"
+                                   required />
+
+                        </div>
+
+                    </div>
+
+                    <div class="col-md-6">
+
+                        <label for="editarEstado"
+                               class="form-label fw-semibold">
+
+                            Estado
+
+                        </label>
+
+                        <select id="editarEstado"
+                                class="form-select">
+
+                            <option value="true">
+                                Activo
+                            </option>
+
+                            <option value="false">
+                                Inactivo
+                            </option>
+
+                        </select>
+
+                    </div>
+
+                    <div class="col-12">
+
+                        <label for="editarDetalles"
+                               class="form-label fw-semibold">
+
+                            Detalles
+
+                        </label>
+
+                        <textarea id="editarDetalles"
+                                  class="form-control"
+                                  rows="4"
+                                  maxlength="100"
+                                  placeholder="Describa el concepto de los honorarios médicos">
+                        </textarea>
+
+                        <div class="d-flex justify-content-between mt-1">
+
+                            <small class="text-muted">
+                                Máximo 100 caracteres.
+                            </small>
+
+                            <small class="text-muted">
+                                <span id="contadorDetallesPrecio">0</span>/100
+                            </small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+            <div class="modal-footer border-0 bg-light px-4 py-3">
+
+                <button type="button"
+                        class="btn btn-outline-secondary rounded-3 px-4"
+                        data-bs-dismiss="modal">
+
+                    <i class="bi bi-x-circle me-1"></i>
+                    Cancelar
+
+                </button>
+
+                <button type="button"
+                        id="btnGuardarPrecio"
+                        class="btn rounded-3 px-4 text-white fw-semibold"
+                        style="background:#17B26A;">
+
+                    <i class="bi bi-check-circle me-1"></i>
+                    Guardar cambios
+
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

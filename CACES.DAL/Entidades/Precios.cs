@@ -32,5 +32,16 @@ namespace CACES.DAL.Entidades
 
         [ForeignKey(nameof(Id_Procedimiento))]
         public virtual Procedimiento Procedimiento { get; set; } = null!;
+
+        [Required]
+        [Column("Estado")]
+        public bool Estado { get; set; } = true;
+
+        [Required]
+        [Column("FechaDeRegistro")]
+        public DateTime FechaDeRegistro { get; set; } = DateTime.UtcNow;
+
+        [Column("FechaDeModificacion")]
+        public DateTime? FechaDeModificacion { get; set; }
     }
 }

@@ -31,7 +31,56 @@
     </div>
 
 </section>
+</section>
+
+<section class="join-medical-team">
+
+    <div class="container">
+
+        <div class="join-medical-card">
+
+            <div class="row align-items-center g-4">
+
+                <div class="col-lg-8">
+
+                    <span class="join-badge">
+                        Oportunidad Profesional
+                    </span>
+
+                    <h2>
+                        ¿Quiere formar parte de nuestro equipo médico?
+                    </h2>
+
+                    <p>
+                        En CACES buscamos especialistas comprometidos con la excelencia,
+                        la innovación y una atención humana. Si desea formar parte de
+                        nuestro equipo, nos encantaría conocer su perfil profesional.
+                    </p>
+
+                </div>
+
+                <div class="col-lg-4 text-lg-end text-center">
+
+                    <a asp-controller="SolicitudMedico"
+                       asp-action="SolicitarIngreso"
+                       class="btn btn-join-medical">
+
+                        <i class="bi bi-person-plus-fill me-2"></i>
+                        Enviar solicitud
+
+                    </a>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
 
 @section Scripts {
-    <script src="~/js/Especialistas.js" asp-append-version="true"></script>
+    <script src="~/js/Especialistas.js"
+            asp-append-version="true"></script>
 }

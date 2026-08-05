@@ -1,0 +1,111 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Precios";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <div class="card-header banner-header p-4 border-0">
+
+            <div class="d-flex justify-content-between align-items-center flex-wrap gap-3">
+
+                <div>
+                    <h3 class="mb-1 fw-bold text-white">
+
+                        <i class="bi bi-cash-coin me-2"></i>
+                        Gestión de Precios Médicos
+
+                    </h3>
+
+                    <p class="mb-0 text-white-50">
+                        Administre los honorarios médicos asociados a cada procedimiento.
+                    </p>
+                </div>
+
+                <div class="d-flex align-items-center gap-2">
+
+                    <span class="badge rounded-pill px-3 py-2"
+                          style="background:#1AA6A6;color:#fff;">
+
+                        <i class="bi bi-currency-dollar me-1"></i>
+                        Tarifas en USD
+
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <div class="card-body p-4">
+
+            <div id="alertaPrecios"
+                 class="alert alert-danger d-none rounded-3"
+                 role="alert">
+
+                <i class="bi bi-exclamation-triangle-fill me-2"></i>
+
+                <span id="textoAlertaPrecios"></span>
+
+            </div>
+
+            <div id="sinPrecios"
+                 class="empty-state d-none">
+
+                <i class="bi bi-cash-stack fs-1 d-block mb-3"></i>
+
+                <h5 class="fw-bold">
+                    No hay precios registrados
+                </h5>
+
+                <p class="mb-0">
+                    No existen honorarios médicos configurados actualmente.
+                </p>
+
+            </div>
+
+            <div id="contenedorTablaPrecios"
+                 class="table-responsive">
+
+                <table id="tbPrecios"
+                       class="table table-hover align-middle mb-0"
+                       style="width:100%;">
+
+                    <thead class="table-light">
+
+                        <tr>
+                            <th>Procedimiento</th>
+                            <th>Especialidad</th>
+                            <th>Médico</th>
+                            <th>Precio base</th>
+                            <th>Honorarios</th>
+                            <th>Estado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+
+                    </thead>
+
+                    <tbody></tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@await Html.PartialAsync("EditarPrecio")
+
+@section Scripts {
+
+    <script src="~/js/precios.js"
+            asp-append-version="true">
+    </script>
+
+}

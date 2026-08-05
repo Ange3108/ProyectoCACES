@@ -2469,3 +2469,603 @@ body {
         transition: none;
     }
 }
+
+#tbPrecios {
+    font-size: .92rem;
+}
+
+    #tbPrecios thead th {
+        padding: .7rem .6rem !important;
+        background: #F5F7F9 !important;
+        color: #111827 !important;
+        border-bottom: 1px solid var(--border) !important;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    #tbPrecios tbody td {
+        padding: .65rem .6rem !important;
+        vertical-align: middle;
+        border-bottom: 1px solid #E6EDF2;
+    }
+
+    #tbPrecios tbody tr:hover {
+        background: rgba(26, 166, 166, .05);
+    }
+
+    #tbPrecios .btn-editar-precio {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+        border-color: #1AA6A6;
+        color: #148989;
+    }
+
+        #tbPrecios .btn-editar-precio:hover {
+            background: #1AA6A6;
+            border-color: #1AA6A6;
+            color: #fff;
+        }
+
+#modalEditarPrecio .form-control[readonly] {
+    background: #F3F6F8;
+    color: #4B5563;
+}
+
+#modalEditarPrecio .input-group-text {
+    background: #EAF4F8;
+    border-color: #D7E3EC;
+    color: #0B2E59;
+    font-weight: 700;
+}
+
+@media (max-width: 767.98px) {
+    #modalEditarPrecio .modal-footer {
+        flex-direction: column-reverse;
+    }
+
+        #modalEditarPrecio .modal-footer .btn {
+            width: 100%;
+        }
+}
+
+.solicitud-medico-page {
+    background: #f4f8fa;
+    color: #111827;
+}
+
+.solicitud-medico-hero {
+    padding: 6rem 0 8rem;
+    background: #0b2e59;
+    color: #fff;
+}
+
+.solicitud-medico-label {
+    display: inline-flex;
+    padding: .55rem 1rem;
+    margin-bottom: 1.4rem;
+    border: 1px solid rgba(255, 255, 255, .25);
+    border-radius: 50px;
+    color: #7bd4d4;
+    font-size: .76rem;
+    font-weight: 800;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+}
+
+.solicitud-medico-hero h1 {
+    max-width: 750px;
+    margin-bottom: 1.4rem;
+    font-family: "Playfair Display", serif;
+    font-size: clamp(2.5rem, 6vw, 4.5rem);
+    font-weight: 700;
+    line-height: 1.05;
+}
+
+.solicitud-medico-hero > .container > .row > div > p {
+    max-width: 680px;
+    color: rgba(255, 255, 255, .78);
+    font-size: 1.08rem;
+    line-height: 1.8;
+}
+
+.solicitud-medico-beneficios {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem 1.6rem;
+    margin-top: 2rem;
+}
+
+    .solicitud-medico-beneficios span {
+        display: flex;
+        align-items: center;
+        gap: .55rem;
+        color: rgba(255, 255, 255, .9);
+        font-size: .9rem;
+        font-weight: 600;
+    }
+
+    .solicitud-medico-beneficios i {
+        color: #5fd0d0;
+    }
+
+.solicitud-medico-info-card {
+    padding: 2rem;
+    border: 1px solid rgba(255, 255, 255, .15);
+    border-radius: 1.2rem;
+    background: rgba(255, 255, 255, .08);
+}
+
+.solicitud-medico-info-icon {
+    width: 62px;
+    height: 62px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.2rem;
+    border-radius: 50%;
+    background: #1aa6a6;
+    color: #fff;
+    font-size: 1.65rem;
+}
+
+.solicitud-medico-info-card h3 {
+    margin-bottom: 1.5rem;
+    font-family: "Playfair Display", serif;
+    font-size: 1.6rem;
+}
+
+.solicitud-medico-step {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    margin-top: 1rem;
+}
+
+    .solicitud-medico-step span {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: rgba(95, 208, 208, .16);
+        color: #7bd4d4;
+        font-weight: 800;
+    }
+
+    .solicitud-medico-step p {
+        margin: 0;
+        color: rgba(255, 255, 255, .75);
+        font-size: .9rem;
+    }
+
+.solicitud-medico-form-section {
+    padding: 0 0 7rem;
+}
+
+.solicitud-medico-form-card {
+    margin-top: -4rem;
+    overflow: hidden;
+    border: 0;
+    border-radius: 1.25rem;
+    background: #fff;
+    box-shadow: 0 1.2rem 3.5rem rgba(11, 46, 89, .15);
+}
+
+.solicitud-medico-form-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 2rem;
+    padding: 2rem 2.5rem;
+    background: #123b70;
+    color: #fff;
+}
+
+    .solicitud-medico-form-header h2 {
+        margin-bottom: .35rem;
+        font-size: 1.65rem;
+        font-weight: 800;
+    }
+
+    .solicitud-medico-form-header p {
+        margin: 0;
+        color: rgba(255, 255, 255, .7);
+        font-size: .9rem;
+    }
+
+.solicitud-medico-status {
+    flex-shrink: 0;
+    padding: .6rem .9rem;
+    border-radius: 50px;
+    background: rgba(255, 255, 255, .1);
+    color: #fff;
+    font-size: .75rem;
+    font-weight: 700;
+}
+
+.solicitud-form-title {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.6rem;
+}
+
+    .solicitud-form-title > span {
+        width: 46px;
+        height: 46px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: .75rem;
+        background: #e7f7f7;
+        color: #148989;
+        font-weight: 800;
+    }
+
+    .solicitud-form-title h3 {
+        margin: 0 0 .2rem;
+        color: #0b2e59;
+        font-size: 1.15rem;
+        font-weight: 800;
+    }
+
+    .solicitud-form-title p {
+        margin: 0;
+        color: #6b7280;
+        font-size: .85rem;
+    }
+
+.solicitud-medico-divider {
+    margin: 2.5rem 0;
+    border-color: #dce7ed;
+}
+
+.solicitud-medico-form-card .form-control,
+.solicitud-medico-form-card .form-select {
+    min-height: 48px;
+    border-color: #d7e3ec;
+    border-radius: .65rem;
+}
+
+.solicitud-medico-form-card textarea.form-control {
+    min-height: auto;
+}
+
+.solicitud-medico-form-card .form-control:focus,
+.solicitud-medico-form-card .form-select:focus {
+    border-color: #1aa6a6;
+    box-shadow: 0 0 0 .2rem rgba(26, 166, 166, .12);
+}
+
+.solicitud-medico-form-card .input-group-text {
+    border-color: #d7e3ec;
+    background: #edf6f8;
+    color: #0b2e59;
+}
+
+.solicitud-upload-box {
+    position: relative;
+    min-height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: .45rem;
+    padding: 1.5rem;
+    border: 2px dashed #98d7d7;
+    border-radius: 1rem;
+    background: #f8fcfd;
+    text-align: center;
+    transition: border-color .2s ease, background .2s ease;
+}
+
+    .solicitud-upload-box:hover {
+        border-color: #1aa6a6;
+        background: #effafa;
+    }
+
+    .solicitud-upload-box > i {
+        color: #1aa6a6;
+        font-size: 2.2rem;
+    }
+
+    .solicitud-upload-box > span {
+        color: #0b2e59;
+        font-weight: 800;
+    }
+
+    .solicitud-upload-box > small {
+        color: #6b7280;
+    }
+
+    .solicitud-upload-box input[type="file"] {
+        width: 100%;
+        margin-top: .75rem;
+        font-size: .82rem;
+    }
+
+.solicitud-medico-terms {
+    margin-top: 2rem;
+    padding: 1.2rem 1.3rem;
+    border: 1px solid #d7e3ec;
+    border-radius: .85rem;
+    background: #f8fbfd;
+    color: #4b5563;
+    font-size: .87rem;
+    line-height: 1.6;
+}
+
+    .solicitud-medico-terms .form-check-input:checked {
+        border-color: #1aa6a6;
+        background-color: #1aa6a6;
+    }
+
+.solicitud-medico-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: .8rem;
+    margin-top: 2rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8ed;
+}
+
+    .solicitud-medico-actions .btn {
+        min-height: 46px;
+        padding: .7rem 1.25rem;
+        border-radius: .65rem;
+        font-weight: 700;
+    }
+
+.solicitud-medico-submit {
+    border: 1px solid #1aa6a6;
+    background: #1aa6a6;
+    color: #fff;
+}
+
+    .solicitud-medico-submit:hover {
+        border-color: #148989;
+        background: #148989;
+        color: #fff;
+    }
+
+@media (max-width: 767.98px) {
+    .solicitud-medico-hero {
+        padding: 4.5rem 0 7rem;
+    }
+
+    .solicitud-medico-form-header {
+        align-items: flex-start;
+        flex-direction: column;
+        padding: 1.5rem;
+    }
+
+    .solicitud-medico-actions {
+        flex-direction: column-reverse;
+    }
+
+        .solicitud-medico-actions .btn {
+            width: 100%;
+        }
+}
+
+.join-medical-team {
+    padding: 0 0 90px;
+}
+
+.join-medical-card {
+    background: #0B2E59;
+    border-radius: 28px;
+    padding: 55px;
+    color: #fff;
+    box-shadow: 0 20px 50px rgba(11,46,89,.18);
+    position: relative;
+    overflow: hidden;
+}
+
+    .join-medical-card::before {
+        content: "";
+        position: absolute;
+        right: -60px;
+        top: -60px;
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        background: rgba(26,166,166,.12);
+    }
+
+.join-badge {
+    display: inline-block;
+    padding: .45rem 1rem;
+    background: rgba(26,166,166,.18);
+    color: #7FE4E4;
+    border-radius: 50px;
+    font-size: .80rem;
+    font-weight: 700;
+    margin-bottom: 18px;
+}
+
+.join-medical-card h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    margin-bottom: 18px;
+}
+
+.join-medical-card p {
+    color: rgba(255,255,255,.82);
+    line-height: 1.8;
+    margin: 0;
+}
+
+.btn-join-medical {
+    background: #1AA6A6;
+    color: #fff;
+    font-weight: 700;
+    padding: 16px 34px;
+    border-radius: 14px;
+    transition: .3s;
+}
+
+    .btn-join-medical:hover {
+        background: #148989;
+        color: #fff;
+        transform: translateY(-3px);
+    }
+
+#tbSolicitudesMedicos {
+    font-size: .91rem;
+}
+
+    #tbSolicitudesMedicos thead th {
+        padding: .75rem .65rem !important;
+        background: #F5F7F9 !important;
+        color: #111827 !important;
+        border-bottom: 1px solid #D7E3EC !important;
+        font-weight: 700;
+        white-space: nowrap;
+    }
+
+    #tbSolicitudesMedicos tbody td {
+        padding: .7rem .65rem !important;
+        vertical-align: middle;
+        border-bottom: 1px solid #E6EDF2;
+    }
+
+    #tbSolicitudesMedicos tbody tr:hover {
+        background: rgba(26,166,166,.05);
+    }
+
+.solicitud-admin-profile-card {
+    height: 100%;
+    padding: 1.7rem;
+    border: 1px solid #D7E3EC;
+    border-radius: 1rem;
+    background: #F8FBFD;
+    text-align: center;
+}
+
+.solicitud-admin-photo-wrapper {
+    width: 135px;
+    height: 135px;
+    margin: 0 auto 1.2rem;
+    overflow: hidden;
+    border: 5px solid #fff;
+    border-radius: 50%;
+    box-shadow: 0 .6rem 1.6rem rgba(11,46,89,.14);
+}
+
+.solicitud-admin-photo {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.solicitud-admin-contact-item {
+    display: flex;
+    align-items: center;
+    gap: .8rem;
+    margin-top: 1rem;
+    text-align: left;
+}
+
+    .solicitud-admin-contact-item > i {
+        width: 38px;
+        height: 38px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: 50%;
+        background: #E7F7F7;
+        color: #148989;
+    }
+
+    .solicitud-admin-contact-item small,
+    .solicitud-admin-contact-item strong {
+        display: block;
+    }
+
+    .solicitud-admin-contact-item small {
+        color: #6B7280;
+        font-size: .72rem;
+    }
+
+    .solicitud-admin-contact-item strong {
+        color: #0B2E59;
+        font-size: .84rem;
+        word-break: break-word;
+    }
+
+.solicitud-admin-section {
+    padding: 1.4rem;
+    border: 1px solid #D7E3EC;
+    border-radius: 1rem;
+    background: #fff;
+}
+
+.solicitud-admin-section-title {
+    display: flex;
+    align-items: center;
+    gap: .9rem;
+    margin-bottom: 1.2rem;
+}
+
+    .solicitud-admin-section-title > span {
+        width: 42px;
+        height: 42px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        flex-shrink: 0;
+        border-radius: .75rem;
+        background: #E7F7F7;
+        color: #148989;
+        font-weight: 800;
+    }
+
+    .solicitud-admin-section-title h5 {
+        margin: 0 0 .2rem;
+        color: #0B2E59;
+        font-weight: 800;
+    }
+
+    .solicitud-admin-section-title p {
+        margin: 0;
+        color: #6B7280;
+        font-size: .82rem;
+    }
+
+.solicitud-admin-data-card {
+    height: 100%;
+    padding: 1rem 1.1rem;
+    border-radius: .75rem;
+    background: #F5F8FA;
+}
+
+    .solicitud-admin-data-card small {
+        display: block;
+        color: #6B7280;
+        font-size: .73rem;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .solicitud-admin-data-card strong,
+    .solicitud-admin-data-card p {
+        color: #0B2E59;
+    }
+
+@media (max-width: 767.98px) {
+    #modalDetalleSolicitud .modal-footer {
+        flex-direction: column-reverse;
+    }
+
+        #modalDetalleSolicitud .modal-footer .btn {
+            width: 100%;
+        }
+}

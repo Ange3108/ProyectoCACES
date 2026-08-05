@@ -48,7 +48,7 @@ namespace CACES.DAL.DBContext
         public DbSet<Convenios> Convenios { get; set; }
         public DbSet<Notificacion> Notificaciones { get; set; }
         public DbSet<Configuracion> Configuraciones { get; set; }
-
+        public DbSet<SolicitudMedico> SolicitudesMedico { get; set; }
         public DbSet<NotificacionUsuario> NotificacionesUsuario { get; set; } 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -85,6 +85,7 @@ namespace CACES.DAL.DBContext
                 .HasForeignKey(p => p.IdUsuario)// Apunta a la propiedad IdUsuario
                 .IsRequired(false);
             });
+
 
             modelBuilder.Entity<ConfiguracionQuirofano>(entity =>
             {
@@ -628,6 +629,72 @@ namespace CACES.DAL.DBContext
                 entity.Property(e => e.Leido).HasColumnName("Leido").IsRequired();
                 entity.Property(e => e.FechaCreacion).HasColumnName("FechaCreacion").IsRequired();
                 entity.Property(e => e.FechaLectura).HasColumnName("FechaLectura");
+            });
+
+            //Solicitud medico
+            modelBuilder.Entity<SolicitudMedico>(entity =>
+            {
+                entity.ToTable("SolicitudMedico");
+
+                entity.HasKey(e => e.IdSolicitud);
+
+                entity.Property(e => e.IdSolicitud)
+                    .HasColumnName("Id_Solicitud");
+
+                entity.Property(e => e.Nombres)
+                    .HasMaxLength(80)
+                    .IsRequired();
+
+                entity.Property(e => e.PrimerApellido)
+                    .HasMaxLength(60)
+                    .IsRequired();
+
+                entity.Property(e => e.SegundoApellido)
+                    .HasMaxLength(60);
+
+                entity.Property(e => e.CorreoElectronico)
+                    .HasMaxLength(120)
+                    .IsRequired();
+
+                entity.Property(e => e.Telefono)
+                    .HasMaxLength(25)
+                    .IsRequired();
+
+                entity.Property(e => e.IdEspecialidad)
+                    .HasColumnName("Id_Especialidad")
+                    .IsRequired();
+
+                entity.Property(e => e.AniosExperiencia)
+                    .IsRequired();
+
+                entity.Property(e => e.Certificaciones)
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.Motivo)
+                    .HasMaxLength(500)
+                    .IsRequired();
+
+                entity.Property(e => e.Curriculum)
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.Foto)
+                    .HasMaxLength(250);
+
+                entity.Property(e => e.Estado)
+                    .IsRequired();
+
+                entity.Property(e => e.ObservacionAdministrador)
+                    .HasMaxLength(500);
+
+                entity.Property(e => e.FechaSolicitud)
+                    .IsRequired();
+
+                entity.Property(e => e.FechaRespuesta);
+
+                entity.HasOne(e => e.Especialidad)
+                    .WithMany()
+                    .HasForeignKey(e => e.IdEspecialidad)
+                    .OnDelete(DeleteBehavior.Restrict);
             });
 
         }
