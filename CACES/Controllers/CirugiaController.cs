@@ -2,6 +2,7 @@
 using CACES.BLL.Servicios.Cirugia;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.Paciente;
+using CACES.BLL.Servicios.SeguimientoPaciente;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -13,15 +14,18 @@ namespace CACES.Controllers
         private readonly ICirugiaServicio _cirugiaServicio;
         private readonly ICitaServicio _citaServicio;
         private readonly IPacienteServicio _pacienteServicio;
+        private readonly ISeguimientoPacienteServicio _seguimientoServicio;
 
         public CirugiaController(
             ICirugiaServicio cirugiaServicio,
             ICitaServicio citaServicio,
-            IPacienteServicio pacienteServicio)
+            IPacienteServicio pacienteServicio,
+            ISeguimientoPacienteServicio seguimientoServicio)
         {
             _cirugiaServicio = cirugiaServicio;
             _citaServicio = citaServicio;
             _pacienteServicio = pacienteServicio;
+            _seguimientoServicio = seguimientoServicio;
         }
 
         // GET Views
@@ -39,7 +43,7 @@ namespace CACES.Controllers
             return View();
         }
 
-        [Authorize(Roles = "Administrador,Medico")]
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public IActionResult GestionCirugias()
         {
@@ -170,6 +174,22 @@ namespace CACES.Controllers
             return int.TryParse(claimId, out var idUsuario)
                 ? idUsuario
                 : null;
+        }
+        [Authorize(Roles = "Administrador,Medico")]
+        [HttpGet]
+        public async Task<IActionResult> ObtenerSeguimientoPorCirugia(int idCirugia)
+        {
+            var resultado = await _seguimientoServicio.ObtenerPorCirugia(idCirugia);
+            return Json(resultado);
+        }
+
+        //endpoint de prueba para enviar recordatorios de cirugias del dia
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public async Task<IActionResult> TestRecordatorios()
+        {
+            var resultado = await _seguimientoServicio.EnviarRecordatoriosDelDiaAsync();
+            return Json(resultado);
         }
     }
 }

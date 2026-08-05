@@ -409,6 +409,7 @@ namespace CACES.BLL.Mappers
         public static MostrarCirugiaDTO? ToMostrarCirugiaDTO(this Cirugias? src) => src == null ? null :
             new MostrarCirugiaDTO
             {
+                idCirugia = src.Id_Cirugia,
                 NombrePaciente = src.Paciente.Usuario.Nombres,
                 Procedimiento = src.Procedimiento.Nombre,
                 FechaProcedimiento = src.Cita.Fecha,

@@ -45,6 +45,11 @@ namespace CACES.BLL.Servicios.Cirugia
             cirugiaExistente.Estado = cirugia.Estado;
 
             await _repositorioGenerico.Actualizar(cirugiaExistente);
+            if(cirugiaExistente.Estado == EstadoCirugia.Finalizada) {
+            await _seguimientoPacienteServicio.GenerarCheckpoints(id);
+            }
+            await _repositorioGenerico.GuardarCambiosAsync();
+            var cirugiaConDetalle = await _cirugiaRepositorio.ObtenerConDetalleAsync(id);
 
 
 
@@ -68,6 +73,7 @@ namespace CACES.BLL.Servicios.Cirugia
             }
             cirugiaExistente.Estado = EstadoCirugia.Canelada;
             await _repositorioGenerico.Actualizar(cirugiaExistente);
+            await _repositorioGenerico.GuardarCambiosAsync();
 
             respuesta.EsCorrecto = true;
             respuesta.codigo = 200;
@@ -101,7 +107,7 @@ namespace CACES.BLL.Servicios.Cirugia
         {
             var respuesta = new respuestaErrores<List<MostrarCirugiaDTO>>();
 
-            var cirugias = await _repositorioGenerico.ObtenerTodosAsync();
+            var cirugias = await _cirugiaRepositorio.ObtenerTodosConDetalleAsync();
 
             respuesta.EsCorrecto = true;
             respuesta.codigo = 200;
@@ -114,7 +120,7 @@ namespace CACES.BLL.Servicios.Cirugia
         {
             var respuesta = new respuestaErrores<MostrarCirugiaDTO>();
 
-            var cirugiaExistente = await _repositorioGenerico.ObtenerPorIdAsync(id);
+            var cirugiaExistente = await _cirugiaRepositorio.ObtenerConDetalleAsync(id);
             if (cirugiaExistente == null)
             {
                 respuesta.EsCorrecto = false;

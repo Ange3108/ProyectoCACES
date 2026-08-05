@@ -10,5 +10,7 @@ namespace CACES.DAL.Repositorios.Cirugia
     {
         Task<bool> CambiarEstadoAsync(int id);
         Task<List<Cirugias>> conseguirCirugiaPorPAciente(int paciente);
+        Task<Cirugias?> ObtenerConDetalleAsync(int id);
+        Task<List<Cirugias>> ObtenerTodosConDetalleAsync();
     }
 }

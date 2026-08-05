@@ -5,133 +5,11 @@
             this.cargarMisCirugias();
         }
 
-        if ($('#formAgendarProcedimiento').length) {
-            this.cargarEspecialidades();
-            this.registrarEventosFormulario();
-        }
+        
     },
 
-    registrarEventosFormulario() {
-        $('#IdEspecialidad').on('change', function () {
-            const idEspecialidad = $(this).val();
-            Cirugias.cargarProcedimientos(idEspecialidad);
-            Cirugias.limpiarSelect($('#IdMedico'), 'Seleccione un procedimiento primero');
-            Cirugias.limpiarSelect($('#IdHorario'), 'Seleccione un médico primero');
-        });
-
-        $('#IdProcedimiento').on('change', function () {
-            const idEspecialidad = $('#IdEspecialidad').val();
-            Cirugias.cargarMedicos(idEspecialidad);
-            Cirugias.limpiarSelect($('#IdHorario'), 'Seleccione un médico primero');
-        });
-
-        $('#IdMedico').on('change', function () {
-            const idMedico = $(this).val();
-            Cirugias.cargarHorarios(idMedico);
-        });
-
-        $('#IdHorario').on('change', function () {
-            const horaInicio = $(this).find('option:selected').data('hora');
-            $('#Hora').val(horaInicio ? horaInicio.substring(0, 5) : '');
-        });
-
-        $('#Motivo').on('input', function () {
-            const len = $(this).val().length;
-            $('#contadorCaracteres').text(`${len} / 100`);
-        });
-
-        $('#formAgendarProcedimiento').on('submit', function (e) {
-            e.preventDefault();
-            Cirugias.guardarCirugia();
-        });
-    },
-
-    cargarEspecialidades() {
-        fetch('/Cita/ObtenerEspecialidadesActivas')
-            .then(r => r.json())
-            .then(res => {
-                const select = $('#IdEspecialidad');
-                select.empty().append('<option value="">Seleccione una especialidad...</option>');
-                if (res.dato && Array.isArray(res.dato)) {
-                    res.dato.forEach(e => select.append(`<option value="${e.id}">${e.nombre}</option>`));
-                }
-            })
-            .catch(() => console.error('Error al cargar especialidades.'));
-    },
-
-    cargarProcedimientos(idEspecialidad) {
-        const select = $('#IdProcedimiento');
-        this.limpiarSelect(select, 'Cargando procedimientos...');
-
-        if (!idEspecialidad) return;
-
-        fetch(`/Cirugia/ObtenerCirugiasFijos?idEspecialidad=${idEspecialidad}`)
-            .then(r => {
-                if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
-                return r.json();
-            })
-            .then(res => {
-                select.empty().append('<option value="">Seleccione un procedimiento...</option>');
-                const lista = Array.isArray(res) ? res : (res.dato || res.data || []);
-
-                if (lista.length > 0) {
-                    lista.forEach(p => {
-                        const id = p.id_Procedimiento ?? p.idProcedimiento ?? p.id ?? p.Id_Procedimiento ?? p.IdProcedimiento ?? p.Id;
-                        const nombre = p.nombre ?? p.nombreProcedimiento ?? p.Nombre ?? p.NombreProcedimiento;
-                        select.append(`<option value="${id}">${nombre}</option>`);
-                    });
-                    select.prop('disabled', false);
-                } else {
-                    select.append('<option value="">Sin procedimientos disponibles</option>');
-                }
-            })
-            .catch(err => {
-                console.error('Error al cargar procedimientos:', err);
-                this.limpiarSelect(select, 'Error al cargar procedimientos');
-            });
-    },
-
-    cargarMedicos(idEspecialidad) {
-        const select = $('#IdMedico');
-        this.limpiarSelect(select, 'Cargando médicos...');
-
-        if (!idEspecialidad) return;
-
-        fetch(`/Cita/ObtenerMedicos?idEspecialidad=${idEspecialidad}`)
-            .then(r => r.json())
-            .then(res => {
-                select.empty().append('<option value="">Seleccione un especialista...</option>');
-                if (res.dato && Array.isArray(res.dato)) {
-                    res.dato.forEach(m => select.append(`<option value="${m.id}">${m.nombre}</option>`));
-                    select.prop('disabled', false);
-                }
-            })
-            .catch(() => this.limpiarSelect(select, 'Error al cargar médicos'));
-    },
-
-    cargarHorarios(idMedico) {
-        const select = $('#IdHorario');
-        this.limpiarSelect(select, 'Cargando horarios...');
-
-        if (!idMedico) return;
-
-        fetch(`/Cita/ObtenerHorariosPorMedico?idMedico=${idMedico}`)
-            .then(r => r.json())
-            .then(res => {
-                select.empty().append('<option value="">Seleccione un horario...</option>');
-                if (res.dato && Array.isArray(res.dato)) {
-                    res.dato.forEach(h => {
-                        select.append(`
-                            <option value="${h.idHorario}" data-hora="${h.horaInicio}">
-                                ${h.horarioTexto}
-                            </option>
-                        `);
-                    });
-                    select.prop('disabled', false);
-                }
-            })
-            .catch(() => this.limpiarSelect(select, 'Error al cargar horarios'));
-    },
+    
+    
 
     guardarCirugia() {
         const dto = {
@@ -231,32 +109,43 @@
                         render: h => h ? h.substring(0, 5) : '--:--'
                     },
                     {
+                        
                         data: 'estado',
                         className: 'text-center',
-                        render: estado =>
-                            estado === 1
-                                ? '<span class="badge bg-success-subtle text-success border border-success px-3 py-2">Pendiente</span>'
-                                : '<span class="badge bg-danger-subtle text-danger border border-danger px-3 py-2">Cancelada</span>'
+                        render: estado => {
+                            const badges = {
+                                0: '<span class="badge bg-danger-subtle text-danger border border-danger px-3 py-2">Cancelada</span>',
+                                1: '<span class="badge bg-warning-subtle text-warning border border-warning px-3 py-2">Pendiente</span>',
+                                2: '<span class="badge bg-success-subtle text-success border border-success px-3 py-2">Finalizada</span>'
+                            };
+                            return badges[estado] ?? estado;
+                        }
+                    
                     },
                     {
                         data: null,
                         orderable: false,
                         searchable: false,
                         className: 'text-center',
-                        render: () => `
+                        render: (data, type, row) => {
+                            const idCirugia = row.idCirugia;
+                            const puedeCancel = row.estado === 1;
+
+                            return puedeCancel ? `
             <div class="d-flex justify-content-center gap-2">
-                <button class="btn btn-sm btn-outline-secondary" disabled>
-                    <i class="bi bi-eye"></i>
+                <button class="btn btn-sm btn-outline-danger rounded-3" onclick="Cirugias.cancelarCirugia(${idCirugia})" title="Cancelar">
+                    <i class="bi bi-x-circle"></i>
                 </button>
             </div>
-        `
-                    }
+        ` : '';
+                        }
+                        }
                 ]
             });
         }
     },
 
-    cancelarCirugia(idCita) {
+    cancelarCirugia(idCirugia) {
         Swal.fire({
             title: '¿Está seguro?',
             text: '¿Desea cancelar esta cirugía agendada?',
@@ -269,19 +158,16 @@
         }).then((result) => {
             if (result.isConfirmed) {
                 const formData = new FormData();
-                formData.append('idCita', idCita);
+                formData.append('idCirugia', idCirugia);
 
-                fetch('/Cirugia/CancelarCita', {
+                fetch('/Cirugia/CancelarCirugia', {
                     method: 'POST',
                     body: formData
                 })
                     .then(r => r.json())
                     .then(res => {
-                        const esExito = res.esCorrecto ?? res.esExitoso ?? res.EsCorrecto;
-                        const mensaje = res.mensaje ?? res.Mensaje;
-
-                        if (esExito) {
-                            Swal.fire('Cancelado', mensaje || 'La cirugía ha sido cancelada.', 'success')
+                        if (res.esCorrecto) {
+                            Swal.fire('Cancelado', res.mensaje || 'La cirugía ha sido cancelada.', 'success')
                                 .then(() => {
                                     if ($.fn.DataTable.isDataTable('#tbMisProcedimientos')) {
                                         $('#tbMisProcedimientos').DataTable().ajax.reload(null, false);
@@ -290,7 +176,7 @@
                                     }
                                 });
                         } else {
-                            Swal.fire('Atención', mensaje || 'No se pudo cancelar la cirugía.', 'warning');
+                            Swal.fire('Atención', res.mensaje || 'No se pudo cancelar la cirugía.', 'warning');
                         }
                     })
                     .catch(err => {

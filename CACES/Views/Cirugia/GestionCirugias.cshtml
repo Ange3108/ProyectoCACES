@@ -1,0 +1,46 @@
+﻿@{
+    ViewData["Title"] = "Gestión de Cirugías";
+}
+
+<div class="container-fluid py-4">
+    <div class="card shadow-sm border-0">
+        <div class="card-header bg-primary text-white d-flex justify-content-between align-items-center">
+            <h5 class="mb-0"><i class="bi bi-clipboard2-pulse me-2"></i>Gestión de Cirugías</h5>
+        </div>
+        <div class="card-body">
+            <table id="tbGestionCirugias" class="table table-hover align-middle w-100">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Paciente</th>
+                        <th>Procedimiento</th>
+                        <th>Médico</th>
+                        <th>Fecha</th>
+                        <th>Hora</th>
+                        <th>Estado</th>
+                        <th class="text-center">Acciones</th>
+                    </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+
+<!-- Modal de Seguimiento Post-Operatorio -->
+<div class="modal fade" id="modalSeguimiento" tabindex="-1">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title"><i class="bi bi-heart-pulse me-2"></i>Seguimiento Post-Operatorio</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
+            <div class="modal-body" id="contenidoSeguimiento">
+                <div class="text-center text-muted py-3">Cargando...</div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <script src="~/js/gestionCirugias.js" asp-append-version="true"></script>
+}

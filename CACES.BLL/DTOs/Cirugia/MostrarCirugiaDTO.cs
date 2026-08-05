@@ -7,6 +7,7 @@ namespace CACES.BLL.DTOs.Cirugia
 {
     public class MostrarCirugiaDTO
     {
+        public int idCirugia { get; set; }
         public string NombrePaciente { get; set; } = null!;
         public string Procedimiento { get; set; } = null!;
         public DateTime FechaProcedimiento { get; set; }

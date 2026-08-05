@@ -25,10 +25,11 @@ namespace CACES.BLL.Servicios.Notificacion
         public async Task NotificarAsync(string evento, int idUsuario, string titulo, string mensaje, string? correoDestinoManual = null)
         {
             var configuracion = await _notificacionServicio.ObtenerPorEvento(evento);
-
+            Console.WriteLine($"[DEBUG] Evento={evento} | EsCorrecto={configuracion.EsCorrecto} | Estado={configuracion.Dato?.Estado} | CanalEmail={configuracion.Dato?.CanalEmail}");
 
             if (!configuracion.EsCorrecto || configuracion.Dato == null || !configuracion.Dato.Estado)
                 return;
+
 
             if (configuracion.Dato.CanalPlataforma)
             {
@@ -40,11 +41,11 @@ namespace CACES.BLL.Servicios.Notificacion
                     Mensaje = mensaje
                 });
             }
-
             if (configuracion.Dato.CanalEmail)
             {
-
                 var usuario = await _usuarioCorreoProveedor.GetUsuarioPorIdAsync(idUsuario);
+                Console.WriteLine($"[DEBUG] idUsuario={idUsuario} | usuario null? {usuario == null} | correo={usuario?.Dato?.CorreoElectronico}");
+
                 if (usuario == null) return;
                 if (!string.IsNullOrWhiteSpace(usuario.Dato.CorreoElectronico))
                 {

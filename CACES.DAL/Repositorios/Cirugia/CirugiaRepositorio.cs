@@ -49,5 +49,28 @@ namespace CACES.DAL.Repositorios.Cirugia
                 .OrderByDescending(c => c.Cita.Fecha)
                 .ToListAsync();
         }
+
+        public async Task<Cirugias?> ObtenerConDetalleAsync(int id)
+        {
+            return await _context.Cirugias
+                .Include(c => c.Paciente).ThenInclude(p => p.Usuario)
+                .Include(c => c.Medico).ThenInclude(m => m.Usuario)
+                .Include(c => c.Procedimiento)
+                .Include(c => c.Cita)
+                .Include(c => c.Horario)
+                .FirstOrDefaultAsync(c => c.Id_Cirugia == id);
+        }
+
+        public async Task<List<Cirugias>> ObtenerTodosConDetalleAsync()
+        {
+            return await _context.Cirugias
+                .Include(c => c.Paciente).ThenInclude(p => p.Usuario)
+                .Include(c => c.Medico).ThenInclude(m => m.Usuario)
+                .Include(c => c.Procedimiento)
+                .Include(c => c.Cita)
+                .Include(c => c.Horario)
+                .OrderByDescending(c => c.Cita.Fecha)
+                .ToListAsync();
+        }
     }
 }

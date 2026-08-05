@@ -1311,3 +1311,14 @@ VALUES
     'maria_vargas.jpg'
 );
 
+UPDATE SeguimientoPaciente
+SET FechaProgramada = GETUTCDATE()
+WHERE Id_Seguimiento = 9; -- el que quieras probar
+
+
+
+INSERT INTO Notificaciones (Evento, CanalPlataforma, CanalEmail, Estado)
+VALUES ('RecordatorioCheckpoint', 1, 1, 1);
+
+ALTER TABLE NotificacionUsuario
+ALTER COLUMN FechaLectura DATETIME NULL;

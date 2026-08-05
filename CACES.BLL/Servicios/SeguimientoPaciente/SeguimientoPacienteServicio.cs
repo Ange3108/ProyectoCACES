@@ -1,6 +1,7 @@
 ﻿using CACES.BLL.DTOs;
 using CACES.BLL.DTOs.SeguimientoPostOperatorio;
 using CACES.BLL.Mappers;
+using CACES.BLL.Servicios.Notificacion;
 using CACES.DAL.Entidades.SeguimientoPostOperatorio;
 using CACES.DAL.Repositorios.Base;
 using CACES.DAL.Repositorios.SeguimientoPaciente;
@@ -14,11 +15,13 @@ namespace CACES.BLL.Servicios.SeguimientoPaciente
 
         private readonly IRepositorioGenerico<ConfiguracionCheckpoints> _repositorioCheckpoints;
         private readonly ISeguimientoPacienteRepositorio _seguimientoPacienteRepositorio;
+        private readonly INotificadorServicio _notificadorServicio;
 
-        public SeguimientoPacienteServicio(IRepositorioGenerico<ConfiguracionCheckpoints> repositorioCheckpoints, ISeguimientoPacienteRepositorio seguimientoPacienteRepositorio)
+        public SeguimientoPacienteServicio(IRepositorioGenerico<ConfiguracionCheckpoints> repositorioCheckpoints, ISeguimientoPacienteRepositorio seguimientoPacienteRepositorio, INotificadorServicio notificadorServicio)
         {
             _repositorioCheckpoints = repositorioCheckpoints;
             _seguimientoPacienteRepositorio = seguimientoPacienteRepositorio;
+            _notificadorServicio = notificadorServicio;
         }
         public async Task<respuestaErrores<List<MostrarSeguimientoPacienteDTO>>> ObtenerTodos()
         {
@@ -97,6 +100,33 @@ namespace CACES.BLL.Servicios.SeguimientoPaciente
             respuesta.codigo = 200;
             respuesta.mensaje = "Datos obtenidos correctamente";
 
+            return respuesta;
+        }
+
+        public async Task<respuestaErrores<int>> EnviarRecordatoriosDelDiaAsync()
+        {
+            var respuesta = new respuestaErrores<int>();
+
+            var pendientesHoy = await _seguimientoPacienteRepositorio.ObtenerProgramadosParaHoy();
+
+            int procesados = 0;
+            foreach (var seguimiento in pendientesHoy)
+            {
+                var idUsuario = seguimiento.Cirugia.Paciente.IdUsuario; 
+
+                await _notificadorServicio.NotificarAsync(
+                    evento: "RecordatorioCheckpoint",
+                    idUsuario: idUsuario,
+                    titulo: "Recordatorio de seguimiento post-operatorio",
+                    mensaje: $"Es momento de completar tu encuesta de seguimiento (día {seguimiento.DiaCheckpoint})."
+                );
+
+                procesados++;
+            }
+
+            respuesta.EsCorrecto = true;
+            respuesta.Dato = procesados;
+            respuesta.mensaje = $"{procesados} recordatorios procesados";
             return respuesta;
         }
     }

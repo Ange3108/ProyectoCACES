@@ -50,10 +50,15 @@ namespace CACES.DAL.Repositorios.SeguimientoPaciente
 
         public async Task<List<Entidades.SeguimientoPostOperatorio.SeguimientoPaciente>> ObtenerProgramadosParaHoy()
         {
+          
             var hoy = DateTime.Today;
             return await _context.SeguimientoPacientes
+                .Include(s => s.Cirugia)
+                    .ThenInclude(c => c!.Paciente)
+                        .ThenInclude(p => p.Usuario)
                 .Where(s => s.Estado == EstadoSeguimiento.Pendiente && s.FechaProgramada.Date == hoy)
                 .ToListAsync();
         }
+    
     }
 }
