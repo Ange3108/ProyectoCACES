@@ -1,4 +1,5 @@
-﻿using CACES.BLL.DTOs.Cita;
+﻿using CACES.BLL.DTOs.Cirugia;
+using CACES.BLL.DTOs.Cita;
 using CACES.BLL.DTOs.Configuracion;
 using CACES.BLL.DTOs.Convenios;
 using CACES.BLL.DTOs.Especialidad;
@@ -95,7 +96,7 @@ namespace CACES.BLL.Mappers
             FechaCita = src.Fecha,
             Hora = src.Horario?.HoraInicio ?? TimeSpan.Zero,
             Motivo = src.Motivo,
-            IdProcedimiento = src.IdProcedimiento
+            IdProcedimiento = src.IdProcedimiento ?? 0
         };
 
         public static Cita? ToCita(this RegistrarCitaDTO src) => src == null ? null : new Cita
@@ -402,6 +403,44 @@ namespace CACES.BLL.Mappers
                 Nombre = src.Nombre,
                 PrecioBase = src.PrecioBase,
                 Estado = src.Estado
+            };
+
+        //======Cirugia======
+        public static MostrarCirugiaDTO? ToMostrarCirugiaDTO(this Cirugias? src) => src == null ? null :
+            new MostrarCirugiaDTO
+            {
+                NombrePaciente = src.Paciente.Usuario.Nombres,
+                Procedimiento = src.Procedimiento.Nombre,
+                FechaProcedimiento = src.Cita.Fecha,
+                HoraProcedimiento = src.Horario.HoraInicio,
+                Estado = src.Estado,
+                MedicoResponsable = $"{src.Medico.Usuario.Nombres} {src.Medico.Usuario.PrimerApellido} {src.Medico.Usuario.SegundoApellido}".Trim(),
+
+            };
+
+        public static CirugiaDTO? ToCirugiaDTO(this Cirugias? src) => src == null ? null :
+            new CirugiaDTO
+            {
+                Id_Cirugia = src.Id_Cirugia,
+                Paciente = src.Id_Paciente,
+                Procedimiento = src.Id_Procedimiento,
+                id_cita = src.Id_Cita,
+                idhorario = src.Id_Horario,
+                Estado = src.Estado,
+                Medico = src.Id_Medico
+
+            };
+
+        public static Cirugias? ToCirugia(this CirugiaDTO? src) => src == null ? null : 
+            new Cirugias
+            {
+                Id_Cirugia = src.Id_Cirugia,
+                Id_Paciente = src.Paciente,
+                Id_Procedimiento = src.Procedimiento,
+                Id_Cita = src.id_cita,
+                Id_Horario = src.idhorario,
+                Estado = src.Estado,
+                Id_Medico = src.Medico
             };
 
         // ===== Receta =====

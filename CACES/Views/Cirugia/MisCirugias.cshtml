@@ -22,15 +22,7 @@
                     </p>
                 </div>
 
-                <a asp-controller="ProcedimientoAgendar"
-                   asp-action="AgendarProcedimiento"
-                   class="btn btn-light fw-semibold">
-
-                    <i class="bi bi-plus-circle me-1"></i>
-                    Nuevo Procedimiento
-
-                </a>
-
+                
             </div>
 
         </div>
@@ -54,10 +46,9 @@
                     <thead class="table-light">
 
                         <tr>
-                            <th>#</th>
+                            <th>Paciente</th>
                             <th>Procedimiento</th>
-                            <th>Especialidad</th>
-                            <th>Médico</th>
+                            <th>Medico</th>
                             <th>Fecha</th>
                             <th>Hora</th>
                             <th>Estado</th>
@@ -101,5 +92,5 @@
 </div>
 
 @section Scripts {
-    <script src="~/js/procedimientos.js" asp-append-version="true"></script>
+    <script src="~/js/cirugias.js" asp-append-version="true"></script>
 }

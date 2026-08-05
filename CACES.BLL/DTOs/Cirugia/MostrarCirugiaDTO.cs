@@ -1,18 +1,17 @@
-﻿using System;
+﻿using CACES.DAL.Entidades;
+using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace CACES.BLL.DTOs.Procedimientos
+namespace CACES.BLL.DTOs.Cirugia
 {
-    public class ReporteProcedimientosPaciente
+    public class MostrarCirugiaDTO
     {
         public string NombrePaciente { get; set; } = null!;
-        public string Identificacion { get; set; } = null!;
         public string Procedimiento { get; set; } = null!;
         public DateTime FechaProcedimiento { get; set; }
         public TimeSpan HoraProcedimiento { get; set; }
-        public string Estado { get; set; } = null!; // Pendiente, Realizado, Cancelado
+        public EstadoCirugia Estado { get; set; } // Pendiente, Realizado, Cancelado
         public string MedicoResponsable { get; set; } = null!;
-        public string? Observaciones { get; set; }
     }
 }

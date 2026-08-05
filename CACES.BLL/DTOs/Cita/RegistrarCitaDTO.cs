@@ -28,6 +28,6 @@ namespace CACES.BLL.DTOs.Cita
         [StringLength(100)]
         public string Motivo { get; set; } = string.Empty;
 
-        public int? IdProcedimiento { get; set; }
+        public int IdProcedimiento { get; set; }
     }
 }

@@ -1,8 +1,8 @@
-﻿const Procedimientos = {
+﻿const Cirugias = {
 
     init() {
         if ($('#tbMisProcedimientos').length) {
-            this.cargarMisProcedimientos();
+            this.cargarMisCirugias();
         }
 
         if ($('#formAgendarProcedimiento').length) {
@@ -14,20 +14,20 @@
     registrarEventosFormulario() {
         $('#IdEspecialidad').on('change', function () {
             const idEspecialidad = $(this).val();
-            Procedimientos.cargarProcedimientos(idEspecialidad);
-            Procedimientos.limpiarSelect($('#IdMedico'), 'Seleccione un procedimiento primero');
-            Procedimientos.limpiarSelect($('#IdHorario'), 'Seleccione un médico primero');
+            Cirugias.cargarProcedimientos(idEspecialidad);
+            Cirugias.limpiarSelect($('#IdMedico'), 'Seleccione un procedimiento primero');
+            Cirugias.limpiarSelect($('#IdHorario'), 'Seleccione un médico primero');
         });
 
         $('#IdProcedimiento').on('change', function () {
             const idEspecialidad = $('#IdEspecialidad').val();
-            Procedimientos.cargarMedicos(idEspecialidad);
-            Procedimientos.limpiarSelect($('#IdHorario'), 'Seleccione un médico primero');
+            Cirugias.cargarMedicos(idEspecialidad);
+            Cirugias.limpiarSelect($('#IdHorario'), 'Seleccione un médico primero');
         });
 
         $('#IdMedico').on('change', function () {
             const idMedico = $(this).val();
-            Procedimientos.cargarHorarios(idMedico);
+            Cirugias.cargarHorarios(idMedico);
         });
 
         $('#IdHorario').on('change', function () {
@@ -42,7 +42,7 @@
 
         $('#formAgendarProcedimiento').on('submit', function (e) {
             e.preventDefault();
-            Procedimientos.guardarProcedimiento();
+            Cirugias.guardarCirugia();
         });
     },
 
@@ -65,7 +65,7 @@
 
         if (!idEspecialidad) return;
 
-        fetch(`/ProcedimientoAgendar/ObtenerProcedimientosFijos?idEspecialidad=${idEspecialidad}`)
+        fetch(`/Cirugia/ObtenerCirugiasFijos?idEspecialidad=${idEspecialidad}`)
             .then(r => {
                 if (!r.ok) throw new Error(`HTTP error! status: ${r.status}`);
                 return r.json();
@@ -133,7 +133,7 @@
             .catch(() => this.limpiarSelect(select, 'Error al cargar horarios'));
     },
 
-    guardarProcedimiento() {
+    guardarCirugia() {
         const dto = {
             IdPaciente: 0,
             IdEspecialidad: parseInt($('#IdEspecialidad').val(), 10) || 0,
@@ -142,12 +142,12 @@
             IdHorario: parseInt($('#IdHorario').val(), 10) || 0,
             FechaCita: $('#FechaCita').val(),
             Hora: $('#Hora').val() ? $('#Hora').val() + ":00" : "00:00:00",
-            Motivo: $('#Motivo').val().trim() || "Agendamiento de Procedimiento Médico"
+            Motivo: $('#Motivo').val().trim() || "Agendamiento de Cirugia Médico"
         };
 
         $('#btnGuardar').prop('disabled', true);
 
-        fetch('/ProcedimientoAgendar/AgendarProcedimientoJson', {
+        fetch('/Cirugia/AgendarCirugiaJson', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(dto)
@@ -157,12 +157,12 @@
                 $('#btnGuardar').prop('disabled', false);
 
                 if (res.esCorrecto) {
-                    Swal.fire('¡Éxito!', res.mensaje || 'El procedimiento fue agendado correctamente.', 'success')
+                    Swal.fire('¡Éxito!', res.mensaje || 'La cirugía fue agendada correctamente.', 'success')
                         .then(() => {
-                            window.location.href = '/ProcedimientoAgendar/MisProcedimientos';
+                            window.location.href = '/Cirugia/MisCirugias';
                         });
                 } else {
-                    Swal.fire('Atención', res.mensaje || 'No se pudo agendar el procedimiento.', 'warning');
+                    Swal.fire('Atención', res.mensaje || 'No se pudo agendar la cirugía.', 'warning');
                 }
             })
             .catch(() => {
@@ -171,11 +171,11 @@
             });
     },
 
-    cargarMisProcedimientos() {
+    cargarMisCirugias() {
         if (!$.fn.DataTable.isDataTable('#tbMisProcedimientos')) {
             $('#tbMisProcedimientos').DataTable({
                 ajax: {
-                    url: '/ProcedimientoAgendar/ObtenerMisProcedimientos',
+                    url: '/Cirugia/ObtenerMisCirugias',
                     type: 'GET',
                     dataSrc: function (res) {
                         if (res && res.esCorrecto && Array.isArray(res.dato)) {
@@ -191,7 +191,7 @@
                         return [];
                     },
                     error: function (xhr, error, thrown) {
-                        console.error('Error al cargar procedimientos:', xhr.responseText);
+                        console.error('Error al cargar cirugías:', xhr.responseText);
                         $('#sinMisProcedimientos').removeClass('d-none');
                     }
                 },
@@ -199,72 +199,67 @@
                     url: 'https://cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json'
                 },
                 columns: [
-                    { data: 'idCita', className: 'text-center fw-bold' },
                     {
-                        data: 'nombreProcedimiento',
-                        render: data => `<span class="fw-semibold text-primary"><i class="bi bi-activity me-1"></i>${data || 'Procedimiento General'}</span>`
+                        data: null,
+                        className: 'text-center fw-bold',
+                        render: (data, type, row, meta) => meta.row + 1
                     },
-                    { data: 'nombreEspecialidad' },
-                    { data: 'nombreMedico' },
                     {
-                        data: 'fechaCita',
+                        data: 'procedimiento',
+                        render: data =>
+                            `<span class="fw-semibold text-primary">
+                <i class="bi bi-activity me-1"></i>${data}
+            </span>`
+                    },
+                    
+                    {
+                        data: 'medicoResponsable'
+                    },
+                    {
+                        data: 'fechaProcedimiento',
                         render: data => {
                             if (!data) return '';
-                            const f = new Date(data);
-                            return f.toLocaleDateString('es-ES', { year: 'numeric', month: '2-digit', day: '2-digit' });
+                            return new Date(data).toLocaleDateString('es-ES', {
+                                year: 'numeric',
+                                month: '2-digit',
+                                day: '2-digit'
+                            });
                         }
                     },
                     {
-                        data: 'hora',
-                        render: h => {
-                            if (!h) return '--:--';
-                            if (typeof h === 'string') return h.substring(0, 5);
-                            if (typeof h === 'object' && h.hours !== undefined) {
-                                const hh = String(h.hours).padStart(2, '0');
-                                const mm = String(h.minutes).padStart(2, '0');
-                                return `${hh}:${mm}`;
-                            }
-                            return String(h);
-                        }
+                        data: 'horaProcedimiento',
+                        render: h => h ? h.substring(0, 5) : '--:--'
                     },
                     {
                         data: 'estado',
                         className: 'text-center',
-                        render: (estado, type, row) => row.estadoTexto === 'Pendiente' || estado === 1
-                            ? '<span class="badge bg-success-subtle text-success border border-success px-3 py-2">Pendiente</span>'
-                            : '<span class="badge bg-danger-subtle text-danger border border-danger px-3 py-2">Cancelada</span>'
+                        render: estado =>
+                            estado === 1
+                                ? '<span class="badge bg-success-subtle text-success border border-success px-3 py-2">Pendiente</span>'
+                                : '<span class="badge bg-danger-subtle text-danger border border-danger px-3 py-2">Cancelada</span>'
                     },
                     {
                         data: null,
                         orderable: false,
                         searchable: false,
                         className: 'text-center',
-                        render: (data, type, row) => {
-                            let idCita = row.idCita || row.id;
-
-                            let btnCancelar = (row.estado === 1 || row.estadoTexto === 'Pendiente')
-                                ? `<button class="btn btn-sm btn-outline-danger rounded-3" onclick="Procedimientos.cancelarProcedimiento(${idCita})" title="Cancelar"><i class="bi bi-x-circle"></i></button>`
-                                : '';
-
-                            return `
-                                <div class="d-flex justify-content-center gap-2">
-                                    <a href="/ProcedimientoAgendar/Ticket/${idCita}" class="btn btn-sm btn-outline-info rounded-3" title="Ver Detalle">
-                                        <i class="bi bi-receipt"></i>
-                                    </a>
-                                    ${btnCancelar}
-                                </div>
-                            `;
-                        }
+                        render: () => `
+            <div class="d-flex justify-content-center gap-2">
+                <button class="btn btn-sm btn-outline-secondary" disabled>
+                    <i class="bi bi-eye"></i>
+                </button>
+            </div>
+        `
                     }
                 ]
             });
         }
     },
 
-    cancelarProcedimiento(idCita) {
+    cancelarCirugia(idCita) {
         Swal.fire({
             title: '¿Está seguro?',
-            text: '¿Desea cancelar este procedimiento agendado?',
+            text: '¿Desea cancelar esta cirugía agendada?',
             icon: 'warning',
             showCancelButton: true,
             confirmButtonColor: '#d33',
@@ -276,7 +271,7 @@
                 const formData = new FormData();
                 formData.append('idCita', idCita);
 
-                fetch('/ProcedimientoAgendar/CancelarCita', {
+                fetch('/Cirugia/CancelarCita', {
                     method: 'POST',
                     body: formData
                 })
@@ -286,7 +281,7 @@
                         const mensaje = res.mensaje ?? res.Mensaje;
 
                         if (esExito) {
-                            Swal.fire('Cancelado', mensaje || 'El procedimiento ha sido cancelado.', 'success')
+                            Swal.fire('Cancelado', mensaje || 'La cirugía ha sido cancelada.', 'success')
                                 .then(() => {
                                     if ($.fn.DataTable.isDataTable('#tbMisProcedimientos')) {
                                         $('#tbMisProcedimientos').DataTable().ajax.reload(null, false);
@@ -295,7 +290,7 @@
                                     }
                                 });
                         } else {
-                            Swal.fire('Atención', mensaje || 'No se pudo cancelar el procedimiento.', 'warning');
+                            Swal.fire('Atención', mensaje || 'No se pudo cancelar la cirugía.', 'warning');
                         }
                     })
                     .catch(err => {
@@ -312,5 +307,5 @@
 };
 
 $(document).ready(function () {
-    Procedimientos.init();
+    Cirugias.init();
 });
