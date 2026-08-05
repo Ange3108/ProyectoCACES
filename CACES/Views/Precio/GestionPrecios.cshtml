@@ -1,0 +1,204 @@
+﻿@model IEnumerable<CACES.BLL.DTOs.Precio.MostrarPrecioDTO>
+
+@{
+    ViewData["Title"] = "Gestión de Precios";
+}
+
+<div class="container py-5">
+
+    <div class="card shadow-lg border-0 rounded-4 overflow-hidden">
+
+        <!-- ENCABEZADO -->
+        <div class="card-header border-0 p-4" style="background:#163B73;">
+
+            <div class="d-flex flex-column flex-md-row justify-content-between align-items-md-center gap-3">
+
+                <div>
+                    <h3 class="mb-1 fw-bold text-white">
+                        <i class="bi bi-cash-coin me-2"></i>
+                        Gestión de Precios por Médico
+                    </h3>
+
+                    <p class="mb-0 text-white-50">
+                        Consulte, registre y administre los precios del sistema.
+                    </p>
+                </div>
+
+                <a asp-action="CrearPrecio"
+                   class="btn text-white px-4 py-2 rounded-3 fw-semibold"
+                   style="background:#20C4D8;border:none;">
+
+                    <i class="bi bi-plus-lg me-2"></i>
+                    Registrar Precio
+
+                </a>
+
+            </div>
+
+        </div>
+
+        <!-- CONTENIDO -->
+        <div class="card-body p-4">
+
+            <div class="table-responsive border rounded-4 shadow-sm overflow-hidden">
+
+                <table id="tblPrecios"
+                       class="table table-hover align-middle mb-0"
+                       style="width:100%;">
+
+                    <thead>
+                        <tr>
+                            <th>Médico</th>
+                            <th>Procedimiento</th>
+                            <th>Costo</th>
+                            <th>Detalles</th>
+                            <th class="text-center" style="width:180px;">
+                                Acciones
+                            </th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @if (Model != null && Model.Any())
+                        {
+                            foreach (var precio in Model)
+                            {
+                                <tr>
+
+                                    <td>@precio.NombreMedico</td>
+
+                                    <td>@precio.NombreProcedimiento</td>
+
+                                    <td>
+                                        <span class="fw-bold text-success">
+                                            @precio.Costo.ToString("C")
+                                        </span>
+                                    </td>
+
+                                    <td>@precio.Detalles</td>
+
+                                    <td class="text-center">
+
+                                        <a asp-action="ActualizarPrecio"
+                                           asp-route-id="@precio.IdPrecio"
+                                           class="btn btn-sm btn-outline-info rounded-2 px-3 btn-editar-precio">
+
+                                            <i class="bi bi-pencil-square me-1"></i>
+                                            Editar
+
+                                        </a>
+
+                                    </td>
+
+                                </tr>
+                            }
+                        }
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+<style>
+
+    #tblPrecios thead th {
+        background: #ffffff;
+        color: #111827;
+        border-bottom: 1px solid #dee2e6;
+        padding: 14px 12px;
+        font-size: .9rem;
+        font-weight: 600;
+        white-space: nowrap;
+    }
+
+    #tblPrecios tbody td {
+        padding: 14px 12px;
+        vertical-align: middle;
+        border-bottom: 1px solid #e5e7eb;
+    }
+
+    #tblPrecios tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    #tblPrecios tbody tr:hover {
+        background: #f8fafc;
+    }
+
+    .btn-editar-precio {
+        color: #20C4D8;
+        border-color: #20C4D8;
+        background: transparent;
+        font-weight: 500;
+        transition: .2s ease-in-out;
+    }
+
+        .btn-editar-precio:hover,
+        .btn-editar-precio:focus {
+            color: #fff;
+            background: #20C4D8;
+            border-color: #20C4D8;
+            box-shadow: none;
+        }
+
+    .dataTables_wrapper .dataTables_filter input {
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+        padding: .4rem .75rem;
+    }
+
+        .dataTables_wrapper .dataTables_filter input:focus {
+            border-color: #20C4D8;
+            box-shadow: 0 0 0 .2rem rgba(32,196,216,.15);
+            outline: none;
+        }
+
+    .dataTables_wrapper .dataTables_length select {
+        border-radius: 8px;
+        border: 1px solid #dee2e6;
+    }
+
+    .page-item.active .page-link {
+        background: #163B73;
+        border-color: #163B73;
+    }
+
+    .page-link {
+        color: #163B73;
+    }
+
+        .page-link:hover {
+            color: #20C4D8;
+        }
+
+</style>
+
+@section Scripts {
+
+    <script>
+        $(document).ready(function() {
+
+            $('#tblPrecios').DataTable({
+
+                language: {
+                    url: "//cdn.datatables.net/plug-ins/1.13.6/i18n/es-ES.json"
+                },
+
+                responsive: true,
+                pageLength: 10,
+                lengthMenu: [10, 25, 50, 100]
+
+            });
+
+        });
+    </script>
+
+}

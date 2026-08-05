@@ -18,6 +18,7 @@ using CACES.BLL.Servicios.Notificacion;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;
 using CACES.BLL.Servicios.Perfil;
+using CACES.BLL.Servicios.Precio;
 using CACES.BLL.Servicios.PreguntasPOp;
 using CACES.BLL.Servicios.Procedimientos;
 using CACES.BLL.Servicios.Quirofano;
@@ -40,6 +41,7 @@ using CACES.DAL.Repositorios.Horarios;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Paquetes;
+using CACES.DAL.Repositorios.Precio;
 using CACES.DAL.Repositorios.Procedimientos;
 using CACES.DAL.Repositorios.Quirofano;
 using CACES.DAL.Repositorios.Recetas;
@@ -87,6 +89,7 @@ builder.Services.AddScoped<IConfiguracionRepositorio, ConfiguracionRepositorio>(
 builder.Services.AddScoped<IConvenioRepositorio, ConvenioRepositorio>();
 builder.Services.AddScoped<INotificacionUsuarioRepositorio, NotificacionUsuarioRepositorio>();
 builder.Services.AddScoped(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
+builder.Services.AddScoped<IPrecioRepositorio, PrecioRepositorio>();
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
@@ -116,6 +119,7 @@ builder.Services.AddScoped<ISeguimientoPacienteServicio, SeguimientoPacienteServ
 builder.Services.AddScoped<IRespuestaSeguimientoServicio, RespuestaSeguimientoServicio>();
 builder.Services.AddScoped<IAlertaStaffServicio, AlertaStaffServicio>();
 builder.Services.AddScoped<IConvenioServicio, ConvenioServicio>();
+builder.Services.AddScoped<IPrecioServicio, PrecioServicio>();
 
 
 builder.Services.AddScoped<INotificacionServicio, NotificacionServicio>();

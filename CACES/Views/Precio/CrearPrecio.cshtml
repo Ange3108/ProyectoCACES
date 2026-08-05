@@ -1,0 +1,260 @@
+﻿@model CACES.BLL.DTOs.Precio.RegistrarPrecioDTO
+
+@{
+    ViewData["Title"] = "Registrar Precio";
+}
+
+<main class="container py-5">
+
+    <section class="form-shell">
+
+        <div class="top-action mb-3">
+            <a class="btn btn-add"
+               asp-controller="Precio"
+               asp-action="GestionPrecios">
+                <i class="bi bi-arrow-left me-2"></i>
+                Volver al listado
+            </a>
+        </div>
+
+        <div class="card form-card shadow-sm border-0 rounded-4">
+
+            <div class="card-body p-4 p-md-5">
+
+                <h1 class="section-title mb-3">
+                    Registrar Precio por Médico
+                </h1>
+
+                <p class="text-muted mb-4">
+                    Asigne un precio a un procedimiento médico dentro del sistema.
+                </p>
+
+                <form id="formCrearPrecio">
+
+                    <div class="row g-3">
+
+                        <div class="col-12 col-md-6">
+
+                            <label for="IdMedico" class="form-label">
+                                Médico
+                            </label>
+
+                            <select class="form-select"
+                                    id="IdMedico"
+                                    name="IdMedico"
+                                    required>
+
+                                <option value="">
+                                    Seleccione un médico
+                                </option>
+
+                                @if (ViewBag.Medicos != null)
+                                {
+                                    foreach (var medico in ViewBag.Medicos)
+                                    {
+                                        <option value="@medico.Value">
+                                            @medico.Text
+                                        </option>
+                                    }
+                                }
+
+                            </select>
+
+                        </div>
+
+                        <div class="col-12 col-md-6">
+
+                            <label for="IdProcedimiento" class="form-label">
+                                Procedimiento
+                            </label>
+
+                            <select class="form-select"
+                                    id="IdProcedimiento"
+                                    name="IdProcedimiento"
+                                    required>
+
+                                <option value="">
+                                    Seleccione un procedimiento
+                                </option>
+
+                                @if (ViewBag.Procedimientos != null)
+                                {
+                                    foreach (var proc in ViewBag.Procedimientos)
+                                    {
+                                        <option value="@proc.Value">
+                                            @proc.Text
+                                        </option>
+                                    }
+                                }
+
+                            </select>
+
+                        </div>
+
+                        <div class="col-12 col-md-6">
+
+                            <label for="Costo" class="form-label">
+                                Costo
+                            </label>
+
+                            <input type="number"
+                                   step="0.01"
+                                   class="form-control"
+                                   id="Costo"
+                                   name="Costo"
+                                   min="0.01"
+                                   placeholder="0.00"
+                                   required />
+
+                        </div>
+
+                        <div class="col-12">
+
+                            <label for="Detalles" class="form-label">
+                                Detalles
+                            </label>
+
+                            <textarea class="form-control"
+                                      id="Detalles"
+                                      name="Detalles"
+                                      rows="4"
+                                      maxlength="100"
+                                      placeholder="Ingrese detalles del precio..."
+                                      required></textarea>
+
+                        </div>
+
+                    </div>
+
+                    <div class="d-flex flex-column flex-sm-row justify-content-end gap-2 mt-4">
+
+                        <a asp-action="GestionPrecios"
+                           class="btn btn-outline-secondary">
+                            Cancelar
+                        </a>
+
+                        <button type="button"
+                                class="btn btn-add"
+                                onclick="guardarPrecio()">
+
+                            <i class="bi bi-check-lg me-2"></i>
+                            Guardar Precio
+
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<style>
+
+    .form-card {
+        border-radius: 16px;
+    }
+
+    .section-title {
+        font-size: 2rem;
+        font-weight: 700;
+        color: #163B73;
+    }
+
+    .form-label {
+        font-weight: 600;
+        color: #374151;
+    }
+
+    .form-control,
+    .form-select {
+        border-radius: 10px;
+        border: 1px solid #d1d5db;
+        min-height: 45px;
+    }
+
+        .form-control:focus,
+        .form-select:focus {
+            border-color: #20C4D8;
+            box-shadow: 0 0 0 .2rem rgba(32,196,216,.15);
+        }
+
+    textarea.form-control {
+        min-height: 120px;
+        resize: none;
+    }
+
+    .btn-add {
+        background: #20C4D8;
+        color: #fff;
+        border: none;
+        border-radius: 10px;
+        padding: .65rem 1.5rem;
+        font-weight: 600;
+        transition: .25s;
+    }
+
+        .btn-add:hover {
+            background: #18afc2;
+            color: #fff;
+        }
+
+</style>
+
+@section Scripts {
+
+    <partial name="~/Views/Shared/_ValidationScriptsPartial.cshtml" />
+
+    <script>
+
+        function guardarPrecio() {
+
+            const dto = {
+
+                idMedico: parseInt($("#IdMedico").val()),
+                idProcedimiento: parseInt($("#IdProcedimiento").val()),
+                costo: parseFloat($("#Costo").val()),
+                detalles: $("#Detalles").val()
+
+            };
+
+            $.ajax({
+
+                url: '@Url.Action("CrearPrecio", "Precio")',
+                type: "POST",
+                contentType: "application/json",
+                data: JSON.stringify(dto),
+
+                success: function(response) {
+
+                    if (response.esCorrecto) {
+
+                        window.location.href = '@Url.Action("GestionPrecios", "Precio")';
+
+                    } else {
+
+                        alert(response.mensaje);
+
+                    }
+
+                },
+
+                error: function(xhr) {
+
+                    const err = xhr.responseJSON;
+                    alert(err ? err.mensaje : "Ocurrió un error al registrar el precio.");
+
+                }
+
+            });
+
+        }
+
+    </script>
+
+}
