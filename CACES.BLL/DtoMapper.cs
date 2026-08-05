@@ -720,7 +720,7 @@ namespace CACES.BLL.Mappers
                 : string.Empty,
             IdProcedimiento = src.Id_Procedimiento,
             NombreProcedimiento = src.Procedimiento?.Nombre ?? string.Empty,
-            Costo = src.Costo,
+            
             Detalles = src.Detalles
         };
 
@@ -736,7 +736,7 @@ namespace CACES.BLL.Mappers
         {
             if (src == null || dest == null) return;
 
-            dest.Costo = src.Costo;
+            
             dest.Detalles = src.Detalles ?? dest.Detalles;
         }
 
