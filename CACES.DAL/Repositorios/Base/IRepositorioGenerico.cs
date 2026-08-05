@@ -8,9 +8,7 @@ namespace CACES.DAL.Repositorios.Base
     /// <typeparam name="T">Tipo de entidad que maneja el repositorio</typeparam>
     public interface IRepositorioGenerico<T> where T : class
     {
-        /// <summary>
-        /// Obtiene todas las entidades de tipo T de forma asíncrona
-        /// </summary>
+        
       
         Task<List<T>> ObtenerTodosAsync(
             bool asNoTracking = true,

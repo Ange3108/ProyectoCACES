@@ -106,6 +106,19 @@ CREATE TABLE HorariosDisponibles(
     CONSTRAINT FK_Horarios_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico)
 );
 
+CREATE TABLE Procedimiento(
+    Id_Procedimiento INT PRIMARY KEY IDENTITY(1,1),
+    Id_Especialidad INT NOT NULL,
+    Nombre VARCHAR(100) NOT NULL,
+    Descripcion VARCHAR(200),
+    PrecioBase DECIMAL(10,2),
+    Estado BIT NOT NULL,
+
+    CONSTRAINT FK_Procedimiento_Especialidad
+    FOREIGN KEY(Id_Especialidad)
+    REFERENCES Especialidad(Id_Especialidad)
+);
+
 CREATE TABLE Citas(
     Id_Cita INT PRIMARY KEY IDENTITY(1,1),
     Id_Paciente INT NOT NULL,
@@ -117,11 +130,14 @@ CREATE TABLE Citas(
     FechaDeRegistro DATETIME NOT NULL,
     FechaDeModificacion DATETIME NULL,
     Estado TINYINT NOT NULL,
+    Id_Procedimiento INT NULL,
 	CONSTRAINT FK_Citas_Medicos FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
 	CONSTRAINT FK_Citas_Pacientes FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Citas_Especialidad FOREIGN KEY (Id_Especialidad) REFERENCES Especialidad(Id_Especialidad),
-    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario)
+    CONSTRAINT FK_Citas_Horario FOREIGN KEY (Id_Horario) REFERENCES HorariosDisponibles(Id_Horario),
+    CONSTRAINT FK_Citas_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento)
 );
+GO
 
 CREATE TABLE Soportes
 (
@@ -169,19 +185,7 @@ CREATE TABLE Paquetes(
 );
 GO
 
-CREATE TABLE Procedimiento(
-    Id_Procedimiento INT PRIMARY KEY IDENTITY(1,1),
-    Id_Especialidad INT NOT NULL,
-    Nombre VARCHAR(100) NOT NULL,
-    Descripcion VARCHAR(200),
-    PrecioBase DECIMAL(10,2),
-    Estado BIT NOT NULL,
 
-    CONSTRAINT FK_Procedimiento_Especialidad
-    FOREIGN KEY(Id_Especialidad)
-    REFERENCES Especialidad(Id_Especialidad)
-);
-GO
 CREATE TABLE Precios(
     Id_Precio INT PRIMARY KEY IDENTITY(1,1),
     Id_Medico INT NOT NULL,
@@ -201,7 +205,7 @@ CREATE TABLE Cirugias(
     Id_Procedimiento INT NOT NULL,
     Id_Horario INT NOT NULL,
     Id_Cita INT not null,
-    Estado BIT NOT NULL,
+    Estado int NOT NULL,
     CONSTRAINT FK_Cirugias_Paciente FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Cirugias_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
     CONSTRAINT FK_Cirugias_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento),
@@ -290,7 +294,7 @@ CREATE TABLE PreguntaSeguimiento (
     ValorMinimo INT NOT NULL,
     ValorMaximo INT NOT NULL,
     UmbralAlerta INT NOT NULL,
-    DireccionAlerta INT NOT NULL, -- enum: 0=MayorIgual, 1=MenorIgual
+    DireccionAlerta INT NOT NULL, 
     Estado BIT NOT NULL DEFAULT 1
 );
 
@@ -330,7 +334,7 @@ CREATE TABLE AlertaStaff (
 
 CREATE TABLE Notificaciones (
     Id_Notificacion INT IDENTITY(1,1) PRIMARY KEY,
-    Evento VARCHAR(100) NOT NULL, -- "RecordatorioCheckpoint", "AlertaRespuestaNegativa"
+    Evento VARCHAR(100) NOT NULL, 
     CanalPlataforma BIT NOT NULL DEFAULT 1,
     CanalEmail BIT NOT NULL DEFAULT 1,
     Estado BIT NOT NULL DEFAULT 1
@@ -479,7 +483,7 @@ INSERT INTO Icono (Codigo, Nombre) VALUES
 ('bi bi-clipboard2-plus', 'Historial Médico'),
 ('bi bi-person-arms-up', 'Rehabilitación'),
 ('bi bi-magic', 'Estética'),
-('bi bi-ribbon', 'Lazo'),
+('bi bi-award', 'Lazo'),
 ('bi bi-brain', 'Cerebro'),
 ('bi bi-clipboard2-heart', 'Cuidados generales'),
 ('bi bi-activity', 'Actividad'),
@@ -522,7 +526,7 @@ VALUES
  '1994-05-10', 'vk9oxOJiD5aPcsdU83YBvVgNVjLrvgij3NO2UQAh88I=', NEWID(), 0, NULL, 0, 0, 1),
 
 
-('Oscar', 'López', 'Varillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg',
+('Oscar', 'López', 'Barillas', 'oscar.medico@caces.com', '87654321', 'oscar.jpg',
  GETDATE(), NULL, 1, 'Cartago', 35, '8888-2222',
  '1989-08-20', '2nunQfIEgqm5rAd6Tj+JdJYsQbcdUyS3w/5F9oxe/Gk=', NEWID(), 0, NULL, 0, 0, 1),
 
@@ -544,14 +548,60 @@ GETDATE(), NULL, 1, 'Heredia', 38, '8888-6666',
 
 ('Juana', 'Solano', 'Castro', 'juana.paciente@caces.com', '55667788', 'maria.jpg',
 GETDATE(), NULL, 1, 'San José', 35, '8888-7777',
-'1990-09-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
+'1990-09-15', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Carlos', 'Méndez', 'Soto', 'carlos.medico@caces.com', '66778899', 'carlos.jpg',
+GETDATE(), NULL, 1, 'San José', 45, '8888-8881',
+'1981-02-18', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Laura', 'Vargas', 'Ramírez', 'laura.medico@caces.com', '77889900', 'laura.jpg',
+GETDATE(), NULL, 1, 'Heredia', 39, '8888-8882',
+'1987-10-05', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Andrés', 'Rojas', 'Campos', 'andres.medico@caces.com', '88990011', 'andres.jpg',
+GETDATE(), NULL, 1, 'Alajuela', 41, '8888-8883',
+'1985-06-27', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Gabriela', 'Castillo', 'León', 'gabriela.medico@caces.com', '99001122', 'gabriela.jpg',
+GETDATE(), NULL, 1, 'Cartago', 36, '8888-8884',
+'1990-01-13', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1),
+
+('Fernando', 'Pérez', 'Mora', 'fernando.medico@caces.com', '10111223', 'fernando.jpg',
+GETDATE(), NULL, 1, 'Puntarenas', 50, '8888-8885',
+'1976-09-30', 'JcBurUY9uDRE3vIxPnJxbyof74B3VLL0n5AQVU/k0yw=', NEWID(), 0, NULL, 0, 0, 1);
 GO
 
 -- MEDICOS
 INSERT INTO Medicos (Id_Especialidad, Id_Usuario, Experiencia, Certificaciones, FechaDeRegistro) VALUES
 (1, 2, 10, 'Especialista en Cirugía General y Laparoscópica', GETDATE()),
 (2, 4, 8, 'Especialista en Ginecología y Obstetricia', GETDATE()),
-(4, 5, 12, 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE());
+(4, 5, 12, 'Especialista en Cirugía Plástica y Reconstructiva', GETDATE()),
+
+
+-- Cirugía General
+(1, 8, 15,
+'Especialista en Cirugía General, Cirugía de Emergencias y Laparoscopía Avanzada',
+GETDATE()),
+
+-- Cirugía Oncológica Mamaria
+(3, 9, 11,
+'Especialista en Cirugía Oncológica Mamaria y Patología Mamaria',
+GETDATE()),
+
+-- Otorrinolaringología
+(6, 10, 9,
+'Especialista en Otorrinolaringología y Cirugía Endoscópica Nasosinusal',
+GETDATE()),
+
+-- Ortopedia y Traumatología
+(5, 11, 18,
+'Especialista en Ortopedia, Reemplazo Articular y Traumatología Deportiva',
+GETDATE()),
+
+-- Ginecología
+(2, 12, 13,
+'Especialista en Ginecología, Obstetricia y Cirugía Mínimamente Invasiva',
+GETDATE());
 GO
 
 -- HISTORIAL MEDICO
@@ -587,33 +637,6 @@ INSERT INTO HorariosDisponibles (Id_Medico, DiaSemana, HoraInicio,  Estado) VALU
 (3, 5, '12:00',  1);
 GO
 
--- CITAS
-INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario,Fecha, Motivo, FechaDeRegistro, FechaDeModificacion, Estado)VALUES
-(1, 1, 1, 1, '2026-07-01','Valoración para colecistectomía laparoscópica',GETDATE(), NULL, 1),
-(2, 2, 2, 2, '2026-07-02','Valoración para histerectomía',GETDATE(), NULL, 1),
-(3, 3, 4, 3, '2026-07-03', 'Consulta para lipoescultura',GETDATE(), NULL, 1);
-GO
-
--- ARCHIVOS HISTORIAL
-INSERT INTO ArchivosHistorial (Id_Historial, NombreArchivo, RutaArchivo, TipoArchivo, FechaDeSubida) VALUES
-(1, 'Radiografia_torax.pdf', '/archivos/radiografias/rxtoraz1.pdf', 'radiografía', GETDATE()),
-(2, 'Analisis_sangre.pdf', '/archivos/analisis/sangre2.pdf', 'análisis', GETDATE()),
-(3, 'EEG_2024.pdf', '/archivos/estudios/eeg3.pdf', 'estudio', GETDATE());
-GO
-
--- RECETAS
-INSERT INTO Recetas (Id_Cita, Medicamentos, Instrucciones, FechaDeRegistro, FechaDeVencimiento) VALUES
-(1, 'Omeprazol 20mg, Tramadol 100mg', 'Tomar según indicaciones postoperatorias', GETDATE(), DATEADD(DAY, 30, GETDATE())),
-(2, 'Doxorrubicina IV, Ciclofosfamida IV', 'Administrar según protocolo de quimioterapia', GETDATE(), DATEADD(DAY, 30, GETDATE())),
-(3, 'Cefazolina 1g, Paracetamol 500mg', 'Tomar antibiótico y analgésico postoperatorio', GETDATE(), DATEADD(DAY, 30, GETDATE()));
-GO
-
--- PAQUETES
-INSERT INTO Paquetes (Nombre, Descripcion, Duracion, Precio, FechaDeRegistro, Estado) VALUES
-('Paquete Laparoscopia', 'Paquete Laparoscopia - Cirugía mínimamente invasiva', '3 meses', '2500.00', GETDATE(), 1),
-('Paquete Oncología', 'Paquete Oncología - Tratamiento integral', '6 meses', '5000.00', GETDATE(), 1),
-('Paquete Cirugía', 'Paquete Cirugía - Procedimiento quirúrgico', '4 meses', '3500.00', GETDATE(), 1);
-GO
 
 INSERT INTO Procedimiento
 (Id_Especialidad, Nombre, Descripcion, PrecioBase, Estado)
@@ -639,6 +662,35 @@ VALUES
 (5, 'Osteosíntesis', 'Fijación interna de fracturas mediante implantes.', 2300.00, 1),
 (5, 'Artroscopia', 'Procedimiento mínimamente invasivo para articulaciones.', 1900.00, 1),
 (6, 'Cirugía de Senos Paranasales', 'Intervención quirúrgica de los senos paranasales.', 1400.00, 1);
+
+
+-- CITAS
+INSERT INTO Citas (Id_Paciente, Id_Medico, Id_Especialidad, Id_Horario,Fecha, Motivo, FechaDeRegistro, FechaDeModificacion, Estado, Id_Procedimiento)VALUES
+(1, 1, 1, 1, '2026-07-01','Valoración para colecistectomía laparoscópica',GETDATE(), NULL, 1,1),
+(2, 2, 2, 2, '2026-07-02','Valoración para histerectomía',GETDATE(), NULL, 1,9),
+(3, 3, 4, 3, '2026-07-03', 'Consulta para lipoescultura',GETDATE(), NULL, 1,14);
+GO
+
+-- ARCHIVOS HISTORIAL
+INSERT INTO ArchivosHistorial (Id_Historial, NombreArchivo, RutaArchivo, TipoArchivo, FechaDeSubida) VALUES
+(1, 'Radiografia_torax.pdf', '/archivos/radiografias/rxtoraz1.pdf', 'radiografía', GETDATE()),
+(2, 'Analisis_sangre.pdf', '/archivos/analisis/sangre2.pdf', 'análisis', GETDATE()),
+(3, 'EEG_2024.pdf', '/archivos/estudios/eeg3.pdf', 'estudio', GETDATE());
+GO
+
+-- RECETAS
+INSERT INTO Recetas (Id_Cita, Medicamentos, Instrucciones, FechaDeRegistro, FechaDeVencimiento) VALUES
+(1, 'Omeprazol 20mg, Tramadol 100mg', 'Tomar según indicaciones postoperatorias', GETDATE(), DATEADD(DAY, 30, GETDATE())),
+(2, 'Doxorrubicina IV, Ciclofosfamida IV', 'Administrar según protocolo de quimioterapia', GETDATE(), DATEADD(DAY, 30, GETDATE())),
+(3, 'Cefazolina 1g, Paracetamol 500mg', 'Tomar antibiótico y analgésico postoperatorio', GETDATE(), DATEADD(DAY, 30, GETDATE()));
+GO
+
+-- PAQUETES
+INSERT INTO Paquetes (Nombre, Descripcion, Duracion, Precio, FechaDeRegistro, Estado) VALUES
+('Paquete Laparoscopia', 'Paquete Laparoscopia - Cirugía mínimamente invasiva', '3 meses', '2500.00', GETDATE(), 1),
+('Paquete Oncología', 'Paquete Oncología - Tratamiento integral', '6 meses', '5000.00', GETDATE(), 1),
+('Paquete Cirugía', 'Paquete Cirugía - Procedimiento quirúrgico', '4 meses', '3500.00', GETDATE(), 1);
+GO
 
 -- PRECIOS
 INSERT INTO Precios
@@ -678,7 +730,12 @@ VALUES
 (2, '2'),
 (3, '3'),
 (4, '2'), -- Paciente
-(5, '2'); -- Paciente
+(5, '2'), -- Paciente
+(8, '2'),
+(9, '2'),
+(10, '2'),
+(11, '2'),
+(12, '2');
 GO
 
 
@@ -724,10 +781,17 @@ INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
 VALUES ('Smtp.Puerto', '587', 'int', 'Smtp', 'Puerto del servidor SMTP');
 
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
-VALUES ('Smtp.Usuario', 'notificaciones@caces.com', 'string', 'Smtp', 'Usuario/correo remitente del sistema');
+VALUES ('Smtp.Usuario', 'bebepulpo0403@gmail.com', 'string', 'Smtp', 'Usuario/correo remitente del sistema');
 
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
 VALUES ('Smtp.UsarSSL', 'true', 'bool', 'Smtp', 'Indica si la conexión SMTP usa SSL/TLS');
+
+INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
+VALUES ('Smtp.Password', 'sncy xtbl qoci zswc', 'string', 'Smtp', 'Contraseña del correo para enviar las notificaciones');
+
+
+
+
 
 -- ===== Notificaciones =====
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
@@ -751,6 +815,29 @@ VALUES ('DiasCheckpoint3', '15', 'int', 'Seguimiento', 'Día posterior a la ciru
 
 INSERT INTO Configuracion (Clave, Valor, Tipo, Categoria, Descripcion)
 VALUES ('HoraEnvioRecordatorios', '08:00', 'string', 'Seguimiento', 'Hora del día en que el job de Hangfire envía los recordatorios');
+INSERT INTO Convenios (Nombre, Descripcion, DescuentoPorcentaje, ContactoTelefono, ImagenUrl,  Estado, FechaCreacion
+) 
+VALUES (
+    'Convenio de Laboratorio Clínico', 
+    'Tu procesamiento de análisis clínicos cuenta con prioridad VIP en la línea de análisis para agilizar tu diagnóstico médico. El convenio te asegura tarifas corporativas exclusivas en perfiles hormonales, químicos e inmunológicos generales. Los resultados se envían automáticamente al sistema interno de CACES para que tu especialista los revise de inmediato.', 
+    20.00, 
+    '8584-6870', 
+    'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQAyBAy2__h8h1u-HyzGM-CPbIb5RcPQwdsxSHtB6iNX8i0k4lJ07e8eyow&s=10', 
+    1, 
+    GETDATE()
+);
+
+INSERT INTO Convenios (Nombre, Descripcion,  DescuentoPorcentaje, ContactoTelefono, ImagenUrl, Estado, FechaCreacion
+) 
+VALUES (
+    'Convenio de Imagenología Radiológica', 
+    'Acceso preferencial a estudios de Resonancia Magnética (RMN), Tomografía Computarizada (TAC), Ultrasonidos y Rayos X de última generación. Interpretación garantizada por radiólogos certificados internacionalmente, asegurando informes con precisión diagnóstica de estándar global. Recibe tus imágenes en formato digital compatible para que puedas descargarlas, llevarlas contigo o compartirlas con tus médicos en tu país de origen.', 
+    25.00, 
+    '8584-6990', 
+    'https://www.campustraining.es/wp-content/uploads/2024/01/Densidades-radiologicas.png',
+    1, 
+    GETDATE()
+);
 
 UPDATE Usuarios
 SET PasswordHash = 'R6GvfeUKq9IZPWHh9hvY0+1D2ywQMANwAYxuux6bYIE=' --Maria123+
@@ -1145,3 +1232,4 @@ SELECT
 FROM INFORMATION_SCHEMA.COLUMNS
 WHERE TABLE_NAME = 'Citas'
 ORDER BY ORDINAL_POSITION;
+

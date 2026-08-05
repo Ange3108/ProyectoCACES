@@ -27,7 +27,7 @@ namespace CACES.DAL.Entidades
         public int Id_Cita { get; set; }
 
         [Column("Estado")]
-        public bool Estado { get; set; }
+        public EstadoCirugia Estado { get; set; }
 
         [ForeignKey("Id_Cita")]
         public virtual Cita? Cita { get; set; }
@@ -45,5 +45,11 @@ namespace CACES.DAL.Entidades
         public virtual HorariosDisponibles Horario { get; set; } = null!;
 
         public ICollection<SeguimientoPaciente> Seguimientos { get; set; } = new List<SeguimientoPaciente>();
+    }
+    public enum EstadoCirugia
+    {
+        Pendiente=1,
+        Finalizada=2,
+        Canelada=0
     }
 }

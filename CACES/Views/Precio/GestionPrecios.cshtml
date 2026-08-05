@@ -1,4 +1,4 @@
-﻿@{
+@{
     ViewData["Title"] = "Gestión de Precios";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
@@ -13,10 +13,8 @@
 
                 <div>
                     <h3 class="mb-1 fw-bold text-white">
-
                         <i class="bi bi-cash-coin me-2"></i>
                         Gestión de Precios Médicos
-
                     </h3>
 
                     <p class="mb-0 text-white-50">
@@ -47,21 +45,22 @@
                  role="alert">
 
                 <i class="bi bi-exclamation-triangle-fill me-2"></i>
-
                 <span id="textoAlertaPrecios"></span>
 
             </div>
 
             <div id="sinPrecios"
-                 class="empty-state d-none">
+                 class="empty-state d-none text-center py-5">
 
-                <i class="bi bi-cash-stack fs-1 d-block mb-3"></i>
+                <i class="bi bi-cash-stack fs-1 d-block mb-3"
+                   style="color:#1AA6A6;"></i>
 
-                <h5 class="fw-bold">
+                <h5 class="fw-bold"
+                    style="color:#0B2E59;">
                     No hay precios registrados
                 </h5>
 
-                <p class="mb-0">
+                <p class="text-muted mb-0">
                     No existen honorarios médicos configurados actualmente.
                 </p>
 
@@ -75,7 +74,6 @@
                        style="width:100%;">
 
                     <thead class="table-light">
-
                         <tr>
                             <th>Procedimiento</th>
                             <th>Especialidad</th>
@@ -85,7 +83,6 @@
                             <th>Estado</th>
                             <th class="text-center">Acciones</th>
                         </tr>
-
                     </thead>
 
                     <tbody></tbody>
@@ -103,9 +100,6 @@
 @await Html.PartialAsync("EditarPrecio")
 
 @section Scripts {
-
     <script src="~/js/precios.js"
-            asp-append-version="true">
-    </script>
-
+            asp-append-version="true"></script>
 }

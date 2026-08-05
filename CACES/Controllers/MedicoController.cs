@@ -117,7 +117,7 @@ namespace CACES.Controllers
 
             if (!resultado.EsCorrecto)
             {
-                TempData["Error"] = resultado.mensaje; // 👈 agregado: para que se vea el error real de negocio, no solo de validación
+                TempData["Error"] = resultado.mensaje; 
                 return View("EditarMedico", dto); ;
             }
 
@@ -140,6 +140,20 @@ namespace CACES.Controllers
             return Json(resultado);
 
 
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> ObtenerPerfilPartial(int id)
+        {
+            var resultado = await _medicoServicio.GetMedicoPorIdAsync(id);
+
+            if (!resultado.EsCorrecto || resultado.Dato == null)
+            {
+                return BadRequest(new { mensaje = resultado.mensaje ?? "Médico no encontrado." });
+            }
+
+            // Retorna la vista parcial renderizada con el MedicoDTO como modelo
+            return PartialView("_DetalleMedicoPartial", resultado.Dato);
         }
     }
 }

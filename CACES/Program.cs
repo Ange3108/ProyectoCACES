@@ -2,6 +2,7 @@
 using CACES.BLL.Servicios.AlertaStaff;
 using CACES.BLL.Servicios.ArchivosHistorial;
 using CACES.BLL.Servicios.Auth;
+using CACES.BLL.Servicios.Cirugia;
 using CACES.BLL.Servicios.Citas;
 using CACES.BLL.Servicios.Configuracion;
 using CACES.BLL.Servicios.ConfiguracionCheckPoints;
@@ -18,6 +19,7 @@ using CACES.BLL.Servicios.Notificacion;
 using CACES.BLL.Servicios.Paciente;
 using CACES.BLL.Servicios.Paquete;
 using CACES.BLL.Servicios.Perfil;
+using CACES.BLL.Servicios.Precio;
 using CACES.BLL.Servicios.PreguntasPOp;
 using CACES.BLL.Servicios.Procedimientos;
 using CACES.BLL.Servicios.Quirofano;
@@ -30,6 +32,7 @@ using CACES.BLL.Servicios.Usuario;
 using CACES.DAL.DBContext;
 using CACES.DAL.Repositorios.ArchivosHistorial;
 using CACES.DAL.Repositorios.Base;
+using CACES.DAL.Repositorios.Cirugia;
 using CACES.DAL.Repositorios.Citas;
 using CACES.DAL.Repositorios.Convenios;
 using CACES.DAL.Repositorios.Cotizaciones;
@@ -40,6 +43,7 @@ using CACES.BLL.Servicios.Precio;
 using CACES.DAL.Repositorios.Medicos;
 using CACES.DAL.Repositorios.Pacientes;
 using CACES.DAL.Repositorios.Paquetes;
+using CACES.DAL.Repositorios.Precio;
 using CACES.DAL.Repositorios.Procedimientos;
 using CACES.DAL.Repositorios.Quirofano;
 using CACES.DAL.Repositorios.Recetas;
@@ -90,6 +94,8 @@ builder.Services.AddScoped<IConvenioRepositorio, ConvenioRepositorio>();
 builder.Services.AddScoped<INotificacionUsuarioRepositorio, NotificacionUsuarioRepositorio>();
 builder.Services.AddScoped<ISolicitudMedicoRepositorio,SolicitudMedicoRepositorio>();
 builder.Services.AddScoped(typeof(IRepositorioGenerico<>), typeof(RepositorioGenerico<>));
+builder.Services.AddScoped<IPrecioRepositorio, PrecioRepositorio>();
+builder.Services.AddScoped<ICirugiaRepositorio, CirugiaRepositorio>();
 // Servicios
 builder.Services.AddScoped<IUsuarioService, UsuarioServicio>();
 builder.Services.AddTransient<IEmailServicio, EmailServicio>();
@@ -119,6 +125,8 @@ builder.Services.AddScoped<ISeguimientoPacienteServicio, SeguimientoPacienteServ
 builder.Services.AddScoped<IRespuestaSeguimientoServicio, RespuestaSeguimientoServicio>();
 builder.Services.AddScoped<IAlertaStaffServicio, AlertaStaffServicio>();
 builder.Services.AddScoped<IConvenioServicio, ConvenioServicio>();
+builder.Services.AddScoped<IPrecioServicio, PrecioServicio>();
+builder.Services.AddScoped<ICirugiaServicio, CirugiaServicio>();
 
 
 builder.Services.AddScoped<INotificacionServicio, NotificacionServicio>();

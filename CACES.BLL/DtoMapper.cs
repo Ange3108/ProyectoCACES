@@ -1,7 +1,8 @@
-﻿using CACES.BLL.DTOs.Cita;
+﻿using CACES.BLL.DTOs.Cirugia;
+using CACES.BLL.DTOs.Cita;
+using CACES.BLL.DTOs.Configuracion;
 using CACES.BLL.DTOs.Convenios;
 using CACES.BLL.DTOs.Especialidad;
-using CACES.BLL.DTOs.Configuracion;
 using CACES.BLL.DTOs.Horario;
 using CACES.BLL.DTOs.Icono;
 using CACES.BLL.DTOs.Medico;
@@ -9,6 +10,7 @@ using CACES.BLL.DTOs.Notificacion;
 using CACES.BLL.DTOs.Paciente;
 using CACES.BLL.DTOs.Paquete;
 using CACES.BLL.DTOs.Perfil;
+using CACES.BLL.DTOs.Precio;
 using CACES.BLL.DTOs.Procedimientos;
 using CACES.BLL.DTOs.Receta;
 using CACES.BLL.DTOs.SeguimientoPostOperatorio;
@@ -94,7 +96,7 @@ namespace CACES.BLL.Mappers
             FechaCita = src.Fecha,
             Hora = src.Horario?.HoraInicio ?? TimeSpan.Zero,
             Motivo = src.Motivo,
-            IdProcedimiento = src.IdProcedimiento
+            IdProcedimiento = src.IdProcedimiento ?? 0
         };
 
         public static Cita? ToCita(this RegistrarCitaDTO src) => src == null ? null : new Cita
@@ -391,7 +393,7 @@ namespace CACES.BLL.Mappers
                 NombreMedico = $"{src.Cirugias?.FirstOrDefault()?.Medico?.Usuario?.Nombres} {src.Cirugias?.FirstOrDefault()?.Medico?.Usuario?.PrimerApellido}",
                 Fecha = src.Cirugias?.FirstOrDefault()?.Cita?.Fecha ?? DateTime.MinValue,
                 Descripcion = src.Descripcion,
-
+                PrecioBase = src.PrecioBase,
                 Estado = src.Estado
             };
         public static ProcedimientoDTO? ToProcedimientoDTO(this Procedimiento? src) => src == null ? null :
@@ -401,6 +403,44 @@ namespace CACES.BLL.Mappers
                 Nombre = src.Nombre,
                 PrecioBase = src.PrecioBase,
                 Estado = src.Estado
+            };
+
+        //======Cirugia======
+        public static MostrarCirugiaDTO? ToMostrarCirugiaDTO(this Cirugias? src) => src == null ? null :
+            new MostrarCirugiaDTO
+            {
+                NombrePaciente = src.Paciente.Usuario.Nombres,
+                Procedimiento = src.Procedimiento.Nombre,
+                FechaProcedimiento = src.Cita.Fecha,
+                HoraProcedimiento = src.Horario.HoraInicio,
+                Estado = src.Estado,
+                MedicoResponsable = $"{src.Medico.Usuario.Nombres} {src.Medico.Usuario.PrimerApellido} {src.Medico.Usuario.SegundoApellido}".Trim(),
+
+            };
+
+        public static CirugiaDTO? ToCirugiaDTO(this Cirugias? src) => src == null ? null :
+            new CirugiaDTO
+            {
+                Id_Cirugia = src.Id_Cirugia,
+                Paciente = src.Id_Paciente,
+                Procedimiento = src.Id_Procedimiento,
+                id_cita = src.Id_Cita,
+                idhorario = src.Id_Horario,
+                Estado = src.Estado,
+                Medico = src.Id_Medico
+
+            };
+
+        public static Cirugias? ToCirugia(this CirugiaDTO? src) => src == null ? null : 
+            new Cirugias
+            {
+                Id_Cirugia = src.Id_Cirugia,
+                Id_Paciente = src.Paciente,
+                Id_Procedimiento = src.Procedimiento,
+                Id_Cita = src.id_cita,
+                Id_Horario = src.idhorario,
+                Estado = src.Estado,
+                Id_Medico = src.Medico
             };
 
         // ===== Receta =====
@@ -667,6 +707,37 @@ namespace CACES.BLL.Mappers
             dest.ContactoTelefono = src.ContactoTelefono ?? dest.ContactoTelefono;
             dest.ImagenUrl = src.ImagenUrl ?? dest.ImagenUrl;
             dest.Estado = src.Estado;
+        }
+
+
+        // ===== Precios =====
+        public static MostrarPrecioDTO? ToMostrarPrecioDTO(this Precios src) => src == null ? null : new MostrarPrecioDTO
+        {
+            IdPrecio = src.Id_Precio,
+            IdMedico = src.Id_Medico,
+            NombreMedico = src.Medico?.Usuario != null
+                ? $"{src.Medico.Usuario.Nombres} {src.Medico.Usuario.PrimerApellido}"
+                : string.Empty,
+            IdProcedimiento = src.Id_Procedimiento,
+            NombreProcedimiento = src.Procedimiento?.Nombre ?? string.Empty,
+            Costo = src.Costo,
+            Detalles = src.Detalles
+        };
+
+        public static Precios? ToPrecio(this RegistrarPrecioDTO src) => src == null ? null : new Precios
+        {
+            Id_Medico = src.IdMedico,
+            Id_Procedimiento = src.IdProcedimiento,
+            Costo = src.Costo,
+            Detalles = src.Detalles
+        };
+
+        public static void UpdateFromEditarPrecioDTO(this Precios dest, EditarPrecioDTO src)
+        {
+            if (src == null || dest == null) return;
+
+            dest.Costo = src.Costo;
+            dest.Detalles = src.Detalles ?? dest.Detalles;
         }
 
     }

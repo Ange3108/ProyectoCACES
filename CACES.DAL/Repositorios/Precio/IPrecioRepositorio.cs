@@ -1,6 +1,3 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using CACES.DAL.Entidades;
 
 namespace CACES.DAL.Repositorios.Precio
@@ -11,6 +8,17 @@ namespace CACES.DAL.Repositorios.Precio
 
         Task<Precios?> ObtenerPorIdAsync(int idPrecio);
 
-        Task<Precios> ActualizarAsync(Precios precio);
+        Task<List<Precios>> ObtenerPorMedicoIdAsync(
+            int idMedico);
+
+        Task<Precios?> ObtenerPorMedicoYProcedimientoAsync(
+            int idMedico,
+            int idProcedimiento);
+
+        Task<Precios> AgregarAsync(
+            Precios precio);
+
+        Task<Precios> ActualizarAsync(
+            Precios precio);
     }
 }

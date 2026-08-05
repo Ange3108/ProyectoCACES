@@ -4,7 +4,7 @@
 
     init() {
         this.cargarEspecialidades();
-        this.cargarProcedimientos();
+        this.cargarProcedimientos(); // Carga inicial (todos o vacíos según idEspecialidad)
         this.registrarEventos();
 
         if ($('#tbMisCitas').length) {
@@ -19,7 +19,11 @@
     registrarEventos() {
         $('#idEspecialidad').on('change', function () {
             const idEspecialidad = $(this).val();
+
+            // Cargar médicos y procedimientos filtrados por especialidad
             Citas.cargarMedicos(idEspecialidad);
+            Citas.cargarProcedimientos(idEspecialidad);
+
             $('#idHorario').empty().append('<option value="">Seleccione un médico primero</option>');
             $('#hora').val('');
         });
@@ -35,7 +39,6 @@
             $('#hora').val(horaInicio ? horaInicio.substring(0, 5) : '');
         });
 
-        // Corregido: Coincide exactamente con el ID del formulario en Razor
         $('#formRegistrarCita').on('submit', function (e) {
             e.preventDefault();
             Citas.registrarCita();
@@ -60,22 +63,25 @@
             .catch(err => console.error('Error al cargar especialidades:', err));
     },
 
-    cargarProcedimientos() {
+    cargarProcedimientos(idEspecialidad = null) {
         const select = $('#idProcedimiento');
         if (!select.length) return;
 
-        fetch('/Cita/ObtenerProcedimientos')
+        // Construir la URL con el parámetro opcional idEspecialidad
+        let url = '/Cita/ObtenerProcedimientos';
+        if (idEspecialidad) {
+            url += `?idEspecialidad=${idEspecialidad}`;
+        }
+
+        fetch(url)
             .then(response => {
                 if (!response.ok) throw new Error('Error al obtener procedimientos');
                 return response.json();
             })
-            .then(res => {
+            .then(lista => {
                 select.empty().append('<option value="">-- Seleccione un procedimiento --</option>');
 
-                const lista = res.dato || res;
-
-                console.log("Objetos recibidos del backend:", lista);
-
+                // El endpoint del controller retorna directamente la lista de DTOs en JSON
                 if (Array.isArray(lista)) {
                     lista.forEach(p => {
                         const idVal = p.idProcedimiento
@@ -155,10 +161,7 @@
         const horarioSeleccionado = $('#idHorario option:selected');
         const horaInicio = horarioSeleccionado.data('hora');
 
-        // Obtenemos el valor del select
         const valProcedimiento = $('#idProcedimiento').val();
-
-        // Parseamos a entero solo si es un valor numérico real
         const parsedProc = parseInt(valProcedimiento, 10);
         const idProcedimientoLimpio = !isNaN(parsedProc) ? parsedProc : null;
 
@@ -166,13 +169,11 @@
             idEspecialidad: parseInt($('#idEspecialidad').val(), 10),
             idMedico: parseInt($('#idMedico').val(), 10),
             idHorario: parseInt($('#idHorario').val(), 10),
-            idProcedimiento: idProcedimientoLimpio, // Enviará un int válido o null, NUNCA NaN
+            idProcedimiento: idProcedimientoLimpio,
             fechaCita: $('#fechaCita').val(),
             hora: horaInicio,
             motivo: $('#motivo').val()
         };
-
-        console.log("DTO final a enviar:", dto);
 
         fetch('/Cita/RegistrarCitaJson', {
             method: 'POST',
@@ -344,14 +345,12 @@
                                 class="btn btn-sm btn-outline-primary rounded-3"
                                 title="Editar cita"
                                 onclick="Citas.abrirEditar(${data.idCita})">
-
                             <i class="bi bi-pencil-square"></i>
                         </button>
 
                         <a href="/Cita/Ticket/${data.idCita}"
                         class="btn btn-sm btn-outline-info rounded-3"
                         title="Ver ticket">
-
                             <i class="bi bi-receipt"></i>
                         </a>
                     `;
@@ -384,11 +383,9 @@
     },
 
     abrirEditar(idCita) {
-
         fetch(`/Cita/ObtenerCita?idCita=${idCita}`)
             .then(r => r.json())
             .then(res => {
-
                 if (!res.esCorrecto) {
                     Swal.fire("Error", res.mensaje, "error");
                     return;
@@ -412,27 +409,21 @@
 
                 modal.show();
             });
-
     },
 
     cargarEspecialidadesEditar(idEspecialidad, idMedico, idHorario) {
-
         fetch('/Cita/ObtenerEspecialidadesActivas')
             .then(r => r.json())
             .then(res => {
-
                 const select = $("#editarEspecialidad");
-
                 select.empty();
 
                 res.dato.forEach(e => {
-
                     select.append(`
                     <option value="${e.id}">
                         ${e.nombre}
                     </option>
                 `);
-
                 });
 
                 select.val(idEspecialidad);
@@ -442,29 +433,22 @@
                     idMedico,
                     idHorario
                 );
-
             });
-
     },
 
     cargarMedicosEditar(idEspecialidad, idMedico, idHorario) {
-
         fetch(`/Cita/ObtenerMedicos?idEspecialidad=${idEspecialidad}`)
             .then(r => r.json())
             .then(res => {
-
                 const select = $("#editarMedico");
-
                 select.empty();
 
                 res.dato.forEach(m => {
-
                     select.append(`
                     <option value="${m.id}">
                         ${m.nombre}
                     </option>
                 `);
-
                 });
 
                 select.val(idMedico);
@@ -473,66 +457,48 @@
                     idMedico,
                     idHorario
                 );
-
             });
-
     },
 
     cargarHorariosEditar(idMedico, idHorario) {
-
         fetch(`/Cita/ObtenerHorariosPorMedico?idMedico=${idMedico}`)
             .then(r => r.json())
             .then(res => {
-
                 const select = $("#editarHorario");
-
                 select.empty();
 
                 res.dato.forEach(h => {
-
                     select.append(`
                     <option value="${h.idHorario}">
                         ${h.horarioTexto}
                     </option>
                 `);
-
                 });
 
                 select.val(idHorario);
-
             });
-
     },
 
     guardarEdicion() {
-
         const dto = {
-
             idCita: parseInt($("#editarIdCita").val()),
             idEspecialidad: parseInt($("#editarEspecialidad").val()),
             idMedico: parseInt($("#editarMedico").val()),
             idHorario: parseInt($("#editarHorario").val()),
             fechaCita: $("#editarFecha").val(),
             motivo: $("#editarMotivo").val()
-
         };
 
         fetch("/Cita/EditarCita", {
-
             method: "POST",
-
             headers: {
                 "Content-Type": "application/json"
             },
-
             body: JSON.stringify(dto)
-
         })
             .then(r => r.json())
             .then(res => {
-
                 if (res.esCorrecto) {
-
                     Swal.fire(
                         "Correcto",
                         res.mensaje,
@@ -546,20 +512,14 @@
                         .hide();
 
                     Citas.tablaGestionCitas.ajax.reload();
-
-                }
-                else {
-
+                } else {
                     Swal.fire(
                         "Error",
                         res.mensaje,
                         "error"
                     );
-
                 }
-
             });
-
     },
 
     cancelarCita(idCita) {

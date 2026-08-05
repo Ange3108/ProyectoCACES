@@ -47,16 +47,18 @@ namespace CACES.Controllers
         {
             if (!ModelState.IsValid)
             {
-                return Json(new
-                {
-                    EsCorrecto = false,
-                    mensaje = "Debe completar todos los campos obligatorios.",
-                    codigo = 400
-                });
+                return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
             }
 
             var resultado = await _pacienteServicio.RegistrarPacienteAsync(dto);
-            return Json(resultado);
+
+            if (!resultado.EsCorrecto)
+            {
+                ModelState.AddModelError(string.Empty, resultado.mensaje); 
+                return View("~/Views/Pacientes/RegistroPaciente.cshtml", dto);
+            }
+
+            return RedirectToAction("Login", "Login_Logout");
         }
 
         [Authorize(Roles = "Administrador")]

@@ -3,7 +3,10 @@ using CACES.BLL.DTOs.Cita;
 using CACES.BLL.DTOs.Especialidad;
 using CACES.BLL.DTOs.Procedimientos;
 using CACES.DAL.Entidades;
+using CACES.DAL.Repositorios.Base;
+using CACES.DAL.Repositorios.Cirugia;
 using CACES.DAL.Repositorios.Citas;
+using Microsoft.EntityFrameworkCore;
 
 
 namespace CACES.BLL.Servicios.Citas
@@ -11,11 +14,13 @@ namespace CACES.BLL.Servicios.Citas
     public class CitaServicio : ICitaServicio
     {
         private readonly ICitaRepositorio _citaRepositorio;
+        private readonly IRepositorioGenerico<Cirugias> _repositorioGenerico;
 
 
-        public CitaServicio(ICitaRepositorio citaRepositorio)
+        public CitaServicio(ICitaRepositorio citaRepositorio, IRepositorioGenerico<Cirugias> repositorioGenerico)
         {
             _citaRepositorio = citaRepositorio;
+            _repositorioGenerico = repositorioGenerico;
 
         }
 
@@ -44,9 +49,11 @@ namespace CACES.BLL.Servicios.Citas
         }
 
         public async Task<respuestaErrores<MostrarCitaDTO>> RegistrarCitaAsync(
-            RegistrarCitaDTO dto,
-            int idPaciente)
+        RegistrarCitaDTO dto,
+        int idPaciente)
         {
+            
+
             try
             {
                 if (dto == null)
@@ -60,9 +67,6 @@ namespace CACES.BLL.Servicios.Citas
 
                 if (dto.IdEspecialidad <= 0)
                     return CrearError("Debe seleccionar una especialidad.", 400);
-
-                if (dto.IdProcedimiento <= 0)
-                    return CrearError("Puede seleccionar un procedimiento.", 400);
 
                 if (dto.FechaCita == default)
                     return CrearError("Debe seleccionar la fecha de la cita.", 400);
@@ -79,61 +83,34 @@ namespace CACES.BLL.Servicios.Citas
                 if (dto.Motivo.Trim().Length > 100)
                     return CrearError("El motivo no puede superar los 100 caracteres.", 400);
 
+                if (dto.IdProcedimiento <= 0)
+                    return CrearError("Debe seleccionar el procedimiento.", 400);
+
                 var diaSemana = ConvertirDiaSemana(dto.FechaCita.DayOfWeek);
 
-                var tieneHorario = await _citaRepositorio.TieneHorarioActivoAsync(
-                    dto.IdMedico,
-                    diaSemana
-                );
-
+                var tieneHorario = await _citaRepositorio.TieneHorarioActivoAsync(dto.IdMedico, diaSemana);
                 if (!tieneHorario)
-                {
-                    return CrearError(
-                        "El médico no tiene un horario estado para el día seleccionado.",
-                        400
-                    );
-                }
+                    return CrearError("El médico no tiene un horario estado para el día seleccionado.", 400);
 
                 var horarios = await _citaRepositorio.ObtenerHorariosAsync(dto.IdMedico);
 
                 var horarioSeleccionado = horarios.FirstOrDefault(h =>
-                    h.Id_Horario == dto.IdHorario &&
-                    h.Estado
-                );
+                    h.Id_Horario == dto.IdHorario && h.Estado);
 
                 if (horarioSeleccionado == null)
                     return CrearError("El horario seleccionado no es válido.", 400);
 
                 if (horarioSeleccionado.DiaSemana != diaSemana)
-                {
-                    return CrearError(
-                        "El horario seleccionado no corresponde con el día de la fecha elegida.",
-                        400
-                    );
-                }
+                    return CrearError("El horario seleccionado no corresponde con el día de la fecha elegida.", 400);
 
                 if (dto.Hora < horarioSeleccionado.HoraInicio)
-                {
-                    return CrearError(
-                        "La hora seleccionada está fuera del horario disponible del médico.",
-                        400
-                    );
-                }
+                    return CrearError("La hora seleccionada está fuera del horario disponible del médico.", 400);
 
-                var existeCita = await _citaRepositorio.ExisteCitaAsync(
-                    dto.IdMedico,
-                    dto.FechaCita.Date,
-                    dto.IdHorario
-                );
-
+                var existeCita = await _citaRepositorio.ExisteCitaAsync(dto.IdMedico, dto.FechaCita.Date, dto.IdHorario);
                 if (existeCita)
-                {
-                    return CrearError(
-                        "El médico ya tiene una cita registrada para esa fecha y hora.",
-                        409
-                    );
-                }
+                    return CrearError("El médico ya tiene una cita registrada para esa fecha y hora.", 409);
 
+                // 1. Crear la cita
                 var cita = new Cita
                 {
                     IdPaciente = idPaciente,
@@ -141,43 +118,47 @@ namespace CACES.BLL.Servicios.Citas
                     IdEspecialidad = dto.IdEspecialidad,
                     IdProcedimiento = dto.IdProcedimiento,
                     IdHorario = dto.IdHorario,
-
                     Fecha = dto.FechaCita.Date,
-
                     Motivo = dto.Motivo.Trim(),
-
                     FechaDeRegistro = DateTime.UtcNow,
                     FechaDeModificacion = null,
                     Estado = 1
                 };
 
-
                 var citaCreada = await _citaRepositorio.RegistrarAsync(cita);
 
-                var citaCompleta = await _citaRepositorio.ObtenerEntidadPorIdAsync(
-                    citaCreada.IdCita
-                );
+                // 2. Crear la cirugia asociada, con la misma info de la cita
+                var nuevaCirugia = new Cirugias
+                {
+                    Id_Cita = citaCreada.IdCita,
+                    Id_Paciente = idPaciente,
+                    Id_Procedimiento = dto.IdProcedimiento,
+                    Id_Horario= dto.IdHorario,
+                    Id_Medico = dto.IdMedico,
+                    Estado = EstadoCirugia.Pendiente
+                };
+
+                await _repositorioGenerico.Crear(nuevaCirugia);
+                await _repositorioGenerico.GuardarCambiosAsync();
+
+                var citaCompleta = await _citaRepositorio.ObtenerEntidadPorIdAsync(citaCreada.IdCita);
+
 
                 return new respuestaErrores<MostrarCitaDTO>
                 {
                     EsCorrecto = true,
                     codigo = 201,
-                    mensaje = "Cita registrada correctamente.",
-                    Dato = citaCompleta != null
-                        ? MapearCita(citaCompleta)
-                        : MapearCita(citaCreada)
+                    mensaje = "Cita y cirugia registradas correctamente.",
+                    Dato = citaCompleta != null ? MapearCita(citaCompleta) : MapearCita(citaCreada)
                 };
             }
             catch (Exception ex)
             {
                 var detalle = ex.InnerException?.Message ?? ex.Message;
-
-                return CrearError(
-                    "Error al registrar la cita: " + detalle,
-                    500
-                );
+                return CrearError("Error al registrar la cita: " + detalle, 500);
             }
         }
+
 
 
         public async Task<respuestaErrores<List<MostrarCitaDTO>>>
@@ -447,17 +428,34 @@ namespace CACES.BLL.Servicios.Citas
             return respuesta;
         }
 
-        public async Task<List<ProcedimientoDTO>> ObtenerProcedimientosFijosAsync()
+        public async Task<respuestaErrores<List<ProcedimientoDTO>>> ObtenerProcedimientosFijosAsync(int? idEspecialidad = null)
         {
-            var entidades = await _citaRepositorio.ObtenerProcedimientosFijosAsync();
+            var respuesta = new respuestaErrores<List<ProcedimientoDTO>>();
 
-            return entidades.Select(p => new ProcedimientoDTO
+            try
             {
-                Id_Procedimiento = p.Id_Procedimiento,
-                Nombre = p.Nombre,
-                PrecioBase = p.PrecioBase,
-                Estado = p.Estado
-            }).ToList();
+                var entidades = await _citaRepositorio.ObtenerProcedimientosFijosAsync(idEspecialidad);
+
+                respuesta.EsCorrecto = true;
+                respuesta.codigo = 200;
+                respuesta.mensaje = "Procedimientos obtenidos correctamente.";
+                respuesta.Dato = entidades.Select(p => new ProcedimientoDTO
+                {
+                    Id_Procedimiento = p.Id_Procedimiento,
+                    Nombre = p.Nombre,
+                    PrecioBase = p.PrecioBase,
+                    Estado = p.Estado
+                }).ToList();
+            }
+            catch (Exception ex)
+            {
+                respuesta.EsCorrecto = false;
+                respuesta.codigo = 500;
+                respuesta.mensaje = "Error al obtener los procedimientos: " + ex.Message;
+                respuesta.Dato = new List<ProcedimientoDTO>();
+            }
+
+            return respuesta;
         }
 
         public async Task<respuestaErrores<List<CitaHorarioDTO>>> ObtenerHorariosPorMedicoAsync(int idMedico)

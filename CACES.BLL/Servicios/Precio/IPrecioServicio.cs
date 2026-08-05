@@ -1,8 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using CACES.BLL.DTOs.Precio;
 using CACES.BLL.DTOs;
+using CACES.BLL.DTOs.Precio;
 
 namespace CACES.BLL.Servicios.Precio
 {

@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Text;
 using System.ComponentModel.DataAnnotations;
+using System.Text;
 
 namespace CACES.BLL.DTOs.Precio
 {
@@ -34,3 +34,4 @@ namespace CACES.BLL.DTOs.Precio
         public bool Estado { get; set; }
     }
 }
+
