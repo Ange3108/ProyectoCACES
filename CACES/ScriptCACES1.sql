@@ -201,7 +201,7 @@ CREATE TABLE Cirugias(
     Id_Procedimiento INT NOT NULL,
     Id_Horario INT NOT NULL,
     Id_Cita INT not null,
-    Estado BIT NOT NULL,
+    Estado int NOT NULL,
     CONSTRAINT FK_Cirugias_Paciente FOREIGN KEY (Id_Paciente) REFERENCES Pacientes(Id_Paciente),
     CONSTRAINT FK_Cirugias_Medico FOREIGN KEY (Id_Medico) REFERENCES Medicos(Id_Medico),
     CONSTRAINT FK_Cirugias_Procedimiento FOREIGN KEY (Id_Procedimiento) REFERENCES Procedimiento(Id_Procedimiento),
@@ -431,7 +431,6 @@ ALTER TABLE [dbo].[AspNetUserRoles] CHECK CONSTRAINT [FK_dbo.AspNetUserRoles_dbo
 GO
 
 
-use CACES
 CREATE TABLE [dbo].[UsuarioRoles](
 	[Id_Usuario] [int] NOT NULL,
 	[RoleId] [nvarchar](128) NOT NULL,
@@ -1311,14 +1310,9 @@ VALUES
     'maria_vargas.jpg'
 );
 
-UPDATE SeguimientoPaciente
-SET FechaProgramada = GETUTCDATE()
-WHERE Id_Seguimiento = 9; -- el que quieras probar
 
 
 
 INSERT INTO Notificaciones (Evento, CanalPlataforma, CanalEmail, Estado)
 VALUES ('RecordatorioCheckpoint', 1, 1, 1);
 
-ALTER TABLE NotificacionUsuario
-ALTER COLUMN FechaLectura DATETIME NULL;
