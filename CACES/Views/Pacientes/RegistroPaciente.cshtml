@@ -4,6 +4,31 @@
     ViewData["Title"] = "Registro de Paciente";
 }
 
+    <style >
+        .input-icon-wrap {
+            position: relative;
+        }
+
+        .toggle-password {
+            position: absolute;
+            right: 0.8rem;
+            top: 50%;
+            transform: translateY(-50%);
+            background: none;
+            border: none;
+            cursor: pointer;
+            color: #9ca3af;
+            padding: 0;
+            font-size: 1rem;
+            line-height: 1;
+        }
+
+            .toggle-password:hover {
+                color: #049DD9;
+            }
+</style>
+}
+
 <div class="container py-5">
     <div class="row justify-content-center">
         <div class="col-lg-10">
@@ -111,39 +136,50 @@
                                 <span asp-validation-for="Usuario.Nacimiento" class="text-danger small"></span>
                             </div>
 
-                            <div class="col-md-3 mb-3">
+                          <div class="col-md-3 mb-3">
+    <label asp-for="Usuario.passwordHash" class="form-label fw-semibold">
+        Contraseña
+    </label>
 
-                                <label asp-for="Usuario.passwordHash"
-                                       class="form-label fw-semibold">
-                                    Contraseña
-                                </label>
+    <div class="input-icon-wrap">
+        <input asp-for="Usuario.passwordHash"
+               type="password"
+               name="Password"
+               id="Password"
+               class="form-control rounded-3 login-input-style"
+               style="border-color:#D7E3EC; padding-right:2.6rem;"
+               placeholder="••••••••" />
 
-                                <input asp-for="Usuario.passwordHash"
-                                       type="password"
-                                       class="form-control rounded-3"
-                                       style="border-color:#D7E3EC;" />
+        <button type="button" class="toggle-password" id="togglePwd" aria-label="Mostrar/ocultar contraseña">
+            <i class="bi bi-eye" id="eyeIcon"></i>
+        </button>
+    </div>
 
-                                <span asp-validation-for="Usuario.passwordHash"
-                                      class="text-danger small"></span>
+    <span asp-validation-for="Usuario.passwordHash" class="text-danger small"></span>
+</div>
 
-                            </div>
+<div class="col-md-3 mb-3">
+    <label asp-for="Usuario.ConfirmarPassword" class="form-label fw-semibold">
+        Confirmar contraseña
+    </label>
 
-                            <div class="col-md-3 mb-3">
+    <div class="input-icon-wrap">
+        <input asp-for="Usuario.ConfirmarPassword"
+               type="password"
+               name="ConfirmPassword"
+               id="ConfirmPassword"
+               class="form-control rounded-3"
+               style="border-color:#D7E3EC; padding-right:2.6rem;"
+               placeholder="••••••••" />
 
-                                <label asp-for="Usuario.ConfirmarPassword"
-                                       class="form-label fw-semibold">
-                                    Confirmar contraseña
-                                </label>
+        <button type="button" class="toggle-password" id="toggleConfirmPwd" aria-label="Mostrar/ocultar contraseña">
+            <i class="bi bi-eye" id="eyeIconConfirm"></i>
+        </button>
+    </div>
 
-                                <input asp-for="Usuario.ConfirmarPassword"
-                                       type="password"
-                                       class="form-control rounded-3"
-                                       style="border-color:#D7E3EC;" />
-
-                                <span asp-validation-for="Usuario.ConfirmarPassword"
-                                      class="text-danger small"></span>
-
-                            </div>
+    <span asp-validation-for="Usuario.ConfirmarPassword" class="text-danger small"></span>
+</div>
+                           
                         </div>
 
                         <hr class="my-4" />
@@ -254,3 +290,22 @@
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
 }
+<script>
+    function toggleVisibilidad(inputId, iconId, btnId) {
+        const input = document.getElementById(inputId);
+        const icon = document.getElementById(iconId);
+
+        document.getElementById(btnId).addEventListener('click', function() {
+            if (input.type === 'password') {
+                input.type = 'text';
+                icon.className = 'bi bi-eye-slash';
+            } else {
+                input.type = 'password';
+                icon.className = 'bi bi-eye';
+            }
+        });
+    }
+
+    toggleVisibilidad('Password', 'eyeIcon', 'togglePwd');
+    toggleVisibilidad('ConfirmPassword', 'eyeIconConfirm', 'toggleConfirmPwd');
+</script>
