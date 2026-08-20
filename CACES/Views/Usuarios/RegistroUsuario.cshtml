@@ -81,15 +81,16 @@
 					<h3 class="mb-3">Seguridad</h3>
 					<div class="row">
 						<div class="col-md-6 mb-3">
-							<label for="passwordHash" class="form-label">Contraseña</label>
-							<input type="password" asp-for="passwordHash" class="form-control">
+							<label asp-for="passwordHash" class="form-label">Contraseña</label>
+							<input type="password" asp-for="passwordHash" class="form-control"/>
 							<small class="text-muted d-block mt-1">Mínimo 8 caracteres, con números y caracteres especiales</small>
 							<span asp-validation-for="passwordHash" class="text-danger"></span>
 						</div>
 
 						<div class="col-md-6 mb-3">
-							<label for="confirmPassword" class="form-label">Confirmar Contraseña</label>
-							<input type="password" id="confirmPassword" class="form-control" placeholder="Confirmar contraseña">
+							<label asp-for="ConfirmarPassword" class="form-label">Confirmar Contraseña</label>
+							<input type="password" asp-for="ConfirmarPassword" class="form-control" placeholder="Confirmar contraseña"/>
+							<span asp-validation-for="ConfirmarPassword" class="text-danger"></span>
 						</div>
 					</div>
 				</section>
@@ -101,7 +102,8 @@
 					</h3>
 
 					<div class="form-check">
-						<input class="form-check-input" type="checkbox" id="terms" required>
+						<!-- Se quita el 'required' de HTML5 para evitar bloqueos del navegador -->
+						<input class="form-check-input" type="checkbox" id="terms">
 						<label class="form-check-label" for="terms">
 							Acepto los términos y condiciones
 						</label>
