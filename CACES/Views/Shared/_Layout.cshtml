@@ -69,41 +69,47 @@
                     </ul>
                 </div>
 
-                <div class="dropdown ms-2" id="campanitaNotificaciones">
-                    <button class="btn btn-link text-decoration-none position-relative" type="button"
-                            id="btnCampanita" data-bs-toggle="dropdown" aria-expanded="false">
-                        <i class="bi bi-bell fs-5"></i>
-                        <span id="badgeCampanita"
-                              class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle d-none">
-                            0
-                        </span>
-                    </button>
-                    <div class="dropdown-menu dropdown-menu-end p-0 shadow" style="width:340px;" aria-labelledby="btnCampanita">
-                        <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
-                            <strong>Notificaciones</strong>
-                            <button type="button" class="btn btn-sm btn-link text-decoration-none p-0" id="btnMarcarTodasLeidas">
-                                Marcar todas como leídas
-                            </button>
-                        </div>
-                        <div id="listaCampanita" style="max-height:360px; overflow-y:auto;">
-                            <div class="text-center text-muted py-4">Cargando...</div>
+                <div class="d-flex align-items-center gap-2 ms-auto ms-lg-0">
+                    <div class="dropdown" id="campanitaNotificaciones">
+                        <button class="btn btn-link text-decoration-none position-relative p-1" type="button"
+                                id="btnCampanita" data-bs-toggle="dropdown" aria-expanded="false">
+                            <i class="bi bi-bell fs-5"></i>
+                            <span id="badgeCampanita"
+                                  class="badge rounded-pill bg-danger position-absolute top-0 start-100 translate-middle d-none">
+                                0
+                            </span>
+                        </button>
+                        <div class="dropdown-menu dropdown-menu-end p-0 shadow" style="width:340px;" aria-labelledby="btnCampanita">
+                            <div class="d-flex justify-content-between align-items-center px-3 py-2 border-bottom">
+                                <strong>Notificaciones</strong>
+                                <button type="button" class="btn btn-sm btn-link text-decoration-none p-0" id="btnMarcarTodasLeidas">
+                                    Marcar todas como leídas
+                                </button>
+                            </div>
+                            <div id="listaCampanita" style="max-height:360px; overflow-y:auto;">
+                                <div class="text-center text-muted py-4">Cargando...</div>
+                            </div>
                         </div>
                     </div>
-                </div>
 
-                @* Icono de cuenta *@
-                @if (User.Identity != null && User.Identity.IsAuthenticated)
-                {
-                    <a class="account-link" asp-area="" asp-controller="Perfil" asp-action="VerPerfil" aria-label="Cuenta">
-                        <i class="bi bi-person"></i>
-                    </a>
-                }
-                else
-                {
-                    <a class="account-link" asp-area="" asp-controller="Login_Logout" asp-action="Login" aria-label="Iniciar sesión">
-                        <i class="bi bi-person"></i>
-                    </a>
-                }
+                    @* Icono / Enlace de Perfil o Login *@
+                    @if (User.Identity != null && User.Identity.IsAuthenticated)
+                    {
+                        <a class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1 border-0 fw-semibold"
+                           asp-area="" asp-controller="Perfil" asp-action="VerPerfil" aria-label="Ver Perfil">
+                            <i class="bi bi-person-circle fs-5"></i>
+                            <span class="d-none d-sm-inline">Ver Perfil</span>
+                        </a>
+                    }
+                    else
+                    {
+                        <a class="btn btn-outline-primary btn-sm d-flex align-items-center gap-1 border-0 fw-semibold"
+                           asp-area="" asp-controller="Login_Logout" asp-action="Login" aria-label="Iniciar sesión">
+                            <i class="bi bi-person fs-5"></i>
+                            <span class="d-none d-sm-inline">Iniciar sesión</span>
+                        </a>
+                    }
+                </div>
             </div>
         </nav>
     </header>
