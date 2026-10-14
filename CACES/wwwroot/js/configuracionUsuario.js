@@ -104,7 +104,7 @@
                     data: { id: configuracionUsuario.idUsuarioActual },
                     success: function (resp) {
                         if (resp.esCorrecto) {
-                            window.location.href = '/Account/Login';
+                            window.location.href = '/Login_Logout/Login';
                         } else {
                             Swal.fire({ title: 'Error', text: resp.mensaje || 'No se pudo desactivar la cuenta', icon: 'error' });
                         }
