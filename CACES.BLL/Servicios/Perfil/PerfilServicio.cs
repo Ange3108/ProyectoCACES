@@ -56,7 +56,14 @@ namespace CACES.BLL.Servicios.Perfil
                     respuesta.codigo = 404;
                     return respuesta;
                 }
-
+                if (string.IsNullOrWhiteSpace(perfilDto.SegundoApellido))
+                {
+                    perfilDto.SegundoApellido = "";
+                }
+                else
+                {
+                    perfilDto.SegundoApellido = perfilDto.SegundoApellido.Trim();
+                }
 
                 usuario.UpdateFromActualizarPerfilDTO(perfilDto);
 
